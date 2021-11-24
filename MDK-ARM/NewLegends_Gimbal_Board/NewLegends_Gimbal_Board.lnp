@@ -64,6 +64,8 @@
 "newlegends_gimbal_board\usbd_ioreq.o"
 "newlegends_gimbal_board\usbd_cdc.o"
 "newlegends_gimbal_board\ins_task.o"
+"newlegends_gimbal_board\system_config.o"
+"newlegends_gimbal_board\ins.o"
 "newlegends_gimbal_board\bsp_adc.o"
 "newlegends_gimbal_board\bsp_buzzer.o"
 "newlegends_gimbal_board\bsp_can.o"

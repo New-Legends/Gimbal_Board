@@ -54,7 +54,7 @@
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>0</BrowseInformation>
+          <BrowseInformation>1</BrowseInformation>
           <ListingPath></ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -734,14 +734,26 @@
           <GroupName>App</GroupName>
           <Files>
             <File>
-              <FileName>INS_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\application\INS_task.c</FilePath>
+              <FileName>INS_task.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\application\INS_task.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>System_Config.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\application\System_Config.cpp</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>module</GroupName>
+          <Files>
+            <File>
+              <FileName>INS.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\module\INS.cpp</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>bsp</GroupName>

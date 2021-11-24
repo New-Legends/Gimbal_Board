@@ -58,5 +58,4 @@ newlegends_gimbal_board\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/i
 newlegends_gimbal_board\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 newlegends_gimbal_board\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 newlegends_gimbal_board\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
-newlegends_gimbal_board\freertos.o: ../application/INS_task.h
-newlegends_gimbal_board\freertos.o: ../application/struct_typedef.h
+newlegends_gimbal_board\freertos.o: ../application/System_Config.h

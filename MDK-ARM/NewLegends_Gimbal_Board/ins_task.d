@@ -1,6 +1,9 @@
-newlegends_gimbal_board\ins_task.o: ..\application\INS_task.c
+newlegends_gimbal_board\ins_task.o: ..\application\INS_task.cpp
 newlegends_gimbal_board\ins_task.o: ..\application\INS_task.h
-newlegends_gimbal_board\ins_task.o: ..\application\struct_typedef.h
+newlegends_gimbal_board\ins_task.o: ../module/INS.h
+newlegends_gimbal_board\ins_task.o: E:\MDK5\ARM\ARMCC\Bin\..\include\string.h
+newlegends_gimbal_board\ins_task.o: ../components/controller/pid.h
+newlegends_gimbal_board\ins_task.o: ../application/struct_typedef.h
 newlegends_gimbal_board\ins_task.o: ../Inc/main.h
 newlegends_gimbal_board\ins_task.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 newlegends_gimbal_board\ins_task.o: ../Inc/stm32f4xx_hal_conf.h
@@ -64,6 +67,5 @@ newlegends_gimbal_board\ins_task.o: ../boards/bsp_imu_pwm.h
 newlegends_gimbal_board\ins_task.o: ../boards/bsp_spi.h
 newlegends_gimbal_board\ins_task.o: ../components/devices/bmi088driver.h
 newlegends_gimbal_board\ins_task.o: ../components/devices/ist8310driver.h
-newlegends_gimbal_board\ins_task.o: ../components/controller/pid.h
 newlegends_gimbal_board\ins_task.o: ../components/algorithm/ahrs.h
 newlegends_gimbal_board\ins_task.o: ../components/algorithm/AHRS_MiddleWare.h
