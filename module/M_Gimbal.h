@@ -24,68 +24,67 @@ extern "C"{
 #include "motor_measure.h"
 #include "can.h"
 #include "user_lib.h"
-#include "Communication_task.h"
 #include <cmath>
 #include <math.h>
 #include "user_lib.h"
+#include "INS.h"
 
-
+extern CAN_Gimbal Can;
 
 //pitch speed close-loop PID params, max out and max iout
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
-#define PITCH_SPEED_PID_KP        2900.0f
-#define PITCH_SPEED_PID_KI        60.0f
-#define PITCH_SPEED_PID_KD        0.0f
+#define PITCH_SPEED_PID_KP        2000.0f  //2900
+#define PITCH_SPEED_PID_KI        0.0f
+#define PITCH_SPEED_PID_KD        0.4f
 #define PITCH_SPEED_PID_MAX_OUT   30000.0f
 #define PITCH_SPEED_PID_MAX_IOUT  10000.0f
 
 //yaw speed close-loop PID params, max out and max iout
 //yaw 速度环 PID参数以及 PID最大输出，积分输出
-#define YAW_SPEED_PID_KP        3600.0f
-#define YAW_SPEED_PID_KI        20.0f
+#define YAW_SPEED_PID_KP        1000.0f  //1800
+#define YAW_SPEED_PID_KI        0.0f   //20
 #define YAW_SPEED_PID_KD        0.0f
 #define YAW_SPEED_PID_MAX_OUT   30000.0f
 #define YAW_SPEED_PID_MAX_IOUT  5000.0f
 
 //pitch gyro angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define PITCH_GYRO_ABSOLUTE_PID_KP 15.0f
+#define PITCH_GYRO_ABSOLUTE_PID_KP 13.0f   //15
 #define PITCH_GYRO_ABSOLUTE_PID_KI 0.0f
-#define PITCH_GYRO_ABSOLUTE_PID_KD 0.0f
-
-#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 10.0f
+#define PITCH_GYRO_ABSOLUTE_PID_KD 0.1f
+#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 6.0f
 #define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 0.0f
 
 //yaw gyro angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define YAW_GYRO_ABSOLUTE_PID_KP        26.0f
+#define YAW_GYRO_ABSOLUTE_PID_KP        4.0f  //26
 #define YAW_GYRO_ABSOLUTE_PID_KI        0.0f
-#define YAW_GYRO_ABSOLUTE_PID_KD        0.3f
-#define YAW_GYRO_ABSOLUTE_PID_MAX_OUT   10.0f
+#define YAW_GYRO_ABSOLUTE_PID_KD        0.0f
+#define YAW_GYRO_ABSOLUTE_PID_MAX_OUT   4.0f
 #define YAW_GYRO_ABSOLUTE_PID_MAX_IOUT  0.0f
 
 //pitch encode angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define PITCH_ENCODE_RELATIVE_PID_KP 15.0f
-#define PITCH_ENCODE_RELATIVE_PID_KI 0.00f
+#define PITCH_ENCODE_RELATIVE_PID_KP 150.0f  //15
+#define PITCH_ENCODE_RELATIVE_PID_KI 0.0f
 #define PITCH_ENCODE_RELATIVE_PID_KD 0.0f
 
-#define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 10.0f
+#define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 10000.0f
 #define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 0.0f
 
 //yaw encode angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define YAW_ENCODE_RELATIVE_PID_KP        8.0f
+#define YAW_ENCODE_RELATIVE_PID_KP        150.0f  //8
 #define YAW_ENCODE_RELATIVE_PID_KI        0.0f
 #define YAW_ENCODE_RELATIVE_PID_KD        0.0f
-#define YAW_ENCODE_RELATIVE_PID_MAX_OUT   10.0f
+#define YAW_ENCODE_RELATIVE_PID_MAX_OUT   10000.0f
 #define YAW_ENCODE_RELATIVE_PID_MAX_IOUT  0.0f
 
 //任务开始空闲一段时间
 #define GIMBAL_TASK_INIT_TIME 201
 //yaw,pitch控制通道以及状态开关通道
-#define YAW_CHANNEL   2
-#define PITCH_CHANNEL 3
+#define YAW_CHANNEL   0
+#define PITCH_CHANNEL 1
 #define GIMBAL_MODE_CHANNEL 0
 
 //turn 180°
@@ -100,8 +99,8 @@ extern "C"{
 //遥控器输入死区，因为遥控器存在差异，摇杆在中间，其值不一定为零
 #define RC_DEADBAND   10
 
-#define YAW_RC_SEN    -0.000005f
-#define PITCH_RC_SEN  -0.000006f //0.005
+#define YAW_RC_SEN    -0.0000005f
+#define PITCH_RC_SEN  -0.0000006f //0.005
 
 #define YAW_MOUSE_SEN   0.00005f
 #define PITCH_MOUSE_SEN 0.00015f
@@ -122,6 +121,11 @@ extern "C"{
 //电机码盘值最大以及中值
 #define HALF_ECD_RANGE  4096
 #define ECD_RANGE       8191
+
+//限幅 需要自己手动校准
+#define YAW_OFFSET 6506   //编码器
+#define PITCH_OFFSET 3493 //编码器
+
 //云台初始化回中值，允许的误差,并且在误差范围内停止一段时间以及最大时间6s后解除初始化状态，
 #define GIMBAL_INIT_ANGLE_ERROR     0.1f
 #define GIMBAL_INIT_STOP_TIME       100
@@ -193,7 +197,7 @@ public:
     motor_3508 RIGHT_FRIC;                                          //右摩擦轮电机
     gimbal_motor_mode_e gimbal_motor_mode;                          //云台控制状态机
     gimbal_motor_mode_e last_gimbal_motor_mode;                     //云台上次控制状态机
-    gimbal_behaviour_e gimbal_behaviour = GIMBAL_ZERO_FORCE;        //云台行为模式
+    gimbal_behaviour_e gimbal_behaviour;                            //云台行为模式
 
     //IMU Gimbal_imu;                                                 //陀螺仪接口
 
@@ -215,9 +219,9 @@ public:
     uint8_t step;
 
     //发送的电机电流
-    int16_t yaw_can_set_current = 0;
-    int16_t pitch_can_set_current = 0;
-    int16_t shoot_can_set_current = 0;
+    int16_t yaw_can_set_current;
+    int16_t pitch_can_set_current;
+    int16_t shoot_can_set_current;
 
     void init();                                                    //云台初始化
     void set_mode();                                                //设置云台控制模式
@@ -244,11 +248,11 @@ public:
     void gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch);     //编码器模式
     void gimbal_motionless_control(fp32 *yaw, fp32 *pitch);         //无输入控制模式
 /***************************(C) GIMBAL control *******************************/
-
-    static void PID_clear(pid_type_def *gimbal_pid_clear);                   //清除pid
+		static void PID_clear(gimbal_PID_t *gimbal_pid_clear);                   //清除pid
     static fp32 gimbal_PID_calc(gimbal_PID_t *pid, fp32 get, fp32 set, fp32 error_delta);
     static void gimbal_PID_init(gimbal_PID_t *pid, fp32 maxout, fp32 max_iout, fp32 kp, fp32 ki, fp32 kd);
     static fp32 motor_ecd_to_angle_change(uint16_t ecd, uint16_t offset_ecd);
+
 };
 
 #endif

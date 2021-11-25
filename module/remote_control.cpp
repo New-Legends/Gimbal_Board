@@ -12,6 +12,10 @@
 extern UART_HandleTypeDef huart3;
 extern DMA_HandleTypeDef hdma_usart3_rx;
 
+remote_control::remote_control(){
+    data = &rc_ctrl;
+}
+
 void remote_control::RC_unable() {
     __HAL_UART_DISABLE(&huart3);
 }

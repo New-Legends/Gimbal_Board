@@ -44,7 +44,7 @@
   */
 
 #include "INS_task.h"
-#include "INS.h"
+
 
 #define IMU_TASK_INIT_TIME 357
 
@@ -62,7 +62,3 @@ void INS_task(void *pvParameters)
   }
 }
 
-void IMU_data::init(){
-    *INS_gyro = *imu.get_gyro_data_point();
-    *INS_angle = *imu.get_INS_angle_point();
-}

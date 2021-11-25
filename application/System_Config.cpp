@@ -5,6 +5,7 @@
 #include "System_Config.h"
 #include "freertos.h"
 #include "INS_task.h"
+#include "gimbal_task.h"
 #include "task.h"
 
 #define Tiny_Stack_Size       64
@@ -22,13 +23,8 @@
 #define PriorityRealtime      8
 
 TaskHandle_t INS_Task_Handle;
+TaskHandle_t Gimbal_Task_Handle;
 
-
-
-void Task_init() {
-    /* Syetem Service init --------------*/
-    /* Applications Init ----------------*/
-}
 
 /**
 * @brief Load and start User Tasks.
@@ -38,5 +34,6 @@ void Task_start(void) {
     /* Syetem Service init --------------*/
     /* Applications Init ----------------*/
     xTaskCreate(INS_task, "INS_task", Huge_Stack_Size, NULL, PriorityRealtime, &INS_Task_Handle);
+    xTaskCreate(gimbal_task, "gimbal_task", Normal_Stack_Size, NULL, PriorityAboveNormal, &Gimbal_Task_Handle);
 }
 

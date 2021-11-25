@@ -39,6 +39,7 @@
 #include "bsp_can.h"
 #include "bsp_delay.h"
 #include "bsp_usart.h"
+#include "remote_data.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -199,7 +200,11 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void Task_init() {
+    /* Syetem Service init --------------*/
+    remote_control_init();
+    /* Applications Init ----------------*/
+}
 
 /* USER CODE END 4 */
 

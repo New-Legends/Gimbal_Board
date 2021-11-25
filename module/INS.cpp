@@ -79,7 +79,6 @@ fp32 accel_offset[3];
 fp32 mag_scale_factor[3][3] = {IST8310_BOARD_INSTALL_SPIN_MATRIX};
 fp32 mag_offset[3];
 
-fp32 temp[4];
 /**
   * @brief          imu任务, 初始化 bmi088, ist8310, 计算欧拉角
   * @param[in]      pvParameters: NULL
@@ -114,10 +113,7 @@ void INS::init(void)
     PID_init(&imu_temp_pid, PID_POSITION, imu_temp_PID, TEMPERATURE_PID_MAX_OUT, TEMPERATURE_PID_MAX_IOUT);
 
     AHRS_init(INS_quat, INS_accel, INS_mag);
-    temp[0] = INS_quat[0];
-    temp[1] = INS_quat[1];
-    temp[2] = INS_quat[2];
-    temp[3] = INS_quat[3];
+
     accel_fliter_1[0] = accel_fliter_2[0] = accel_fliter_3[0] = INS_accel[0];
     accel_fliter_1[1] = accel_fliter_2[1] = accel_fliter_3[1] = INS_accel[1];
     accel_fliter_1[2] = accel_fliter_2[2] = accel_fliter_3[2] = INS_accel[2];
@@ -215,6 +211,7 @@ void INS::imu_cali_slove(fp32 gyro[3], fp32 accel[3], fp32 mag[3], bmi088_real_d
 /*********************************************(C) 陀螺仪校准 *************************************************/
 
 /*******************************************(C) 陀螺仪返回参数 ***********************************************/
+
 /**
   * @brief          获取四元数
   * @param[in]      none

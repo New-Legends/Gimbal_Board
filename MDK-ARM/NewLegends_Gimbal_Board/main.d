@@ -79,3 +79,4 @@ newlegends_gimbal_board\main.o: ../boards/bsp_can.h
 newlegends_gimbal_board\main.o: ../application/struct_typedef.h
 newlegends_gimbal_board\main.o: ../boards/bsp_delay.h
 newlegends_gimbal_board\main.o: ../boards/bsp_usart.h
+newlegends_gimbal_board\main.o: ../module/remote_data.h

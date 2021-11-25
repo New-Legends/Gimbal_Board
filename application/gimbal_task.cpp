@@ -47,10 +47,10 @@
   */
 #include "gimbal_task.h"
 
+M_Gimbal GIMBAL;
 
 void gimbal_task(void *pvParameters){
     vTaskDelay(GIMBAL_TASK_INIT_TIME);
-    M_Gimbal GIMBAL;
     //云台初始化
     GIMBAL.init();
     //云台数据反馈
@@ -78,8 +78,8 @@ void gimbal_task(void *pvParameters){
         GIMBAL.pitch_can_set_current = GIMBAL.gimbal_pitch_motor.given_current;
 #endif
 
-        GIMBAL.gimbal_can.CAN_cmd_gimbal(GIMBAL.yaw_can_set_current, GIMBAL.pitch_can_set_current, GIMBAL.shoot_can_set_current, GIMBAL.shoot_can_set_current);
-
+        GIMBAL.gimbal_can.CAN_cmd_gimbal(GIMBAL.yaw_can_set_current, GIMBAL.pitch_can_set_current, 0, 0);
+				//GIMBAL.gimbal_can.CAN_cmd_gimbal(0, 5500, 0, 0);
     }
 }
 

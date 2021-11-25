@@ -743,6 +743,11 @@
               <FileType>8</FileType>
               <FilePath>..\application\System_Config.cpp</FilePath>
             </File>
+            <File>
+              <FileName>gimbal_task.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\application\gimbal_task.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -752,6 +757,51 @@
               <FileName>INS.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\module\INS.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>can.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\module\can.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>first_order_filter.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\module\first_order_filter.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>M_Gimbal.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\module\M_Gimbal.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>motor_3508.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\module\motor_3508.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>motor_6020.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\module\motor_6020.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>motor_measure.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\module\motor_measure.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>remote_control.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\module\remote_control.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>remote_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\module\remote_data.c</FilePath>
+            </File>
+            <File>
+              <FileName>user_lib.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\module\user_lib.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -812,11 +862,6 @@
               <FileName>bsp_led.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\boards\bsp_led.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_rc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\boards\bsp_rc.c</FilePath>
             </File>
             <File>
               <FileName>bsp_rng.c</FileName>

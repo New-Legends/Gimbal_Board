@@ -33,7 +33,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+void Task_init();
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

@@ -5,8 +5,9 @@
 #include <first_order_filter.h>
 #include "M_Gimbal.h"
 #include "math.h"
+#include "INS_task.h"
 
-extern remote_control RC;
+fp32 temp[3];
 //motor enconde value format, range[0-8191]
 //电机编码值规整 0—8191
 #define ecd_format(ecd)         \
@@ -41,6 +42,12 @@ extern remote_control RC;
   * @Author         summerpray
   */
 void M_Gimbal::init() {
+    //初始化变量状态
+    gimbal_behaviour = GIMBAL_ZERO_FORCE;
+    yaw_can_set_current = 0;
+    pitch_can_set_current = 0;
+    shoot_can_set_current = 0;
+
     //电机速度环PID
     static const fp32 Pitch_speed_pid[3] = {PITCH_SPEED_PID_KP, PITCH_SPEED_PID_KI, PITCH_SPEED_PID_KD};
     static const fp32 Yaw_speed_pid[3] = {YAW_SPEED_PID_KP, YAW_SPEED_PID_KI, YAW_SPEED_PID_KD};
@@ -56,13 +63,16 @@ void M_Gimbal::init() {
     gimbal_yaw_motor.gimbal_motor_measure = gimbal_can.get_gimbal_motor_measure_point(YAW);
     gimbal_pitch_motor.gimbal_motor_measure = gimbal_can.get_gimbal_motor_measure_point(PITCH);
 
+    
     //TODO: 在INS初始化移植完毕后取消注释这里
-    gimbal_INT_angle_point = get_INS_angle_point();
-    gimbal_INT_gyro_point = get_gyro_data_point();
+    gimbal_INT_angle_point = imu.get_INS_angle_point();
+    gimbal_INT_gyro_point = imu.get_gyro_data_point();
+
+ 
 
     //遥控器数据指针获取
     Rc.data = &rc_ctrl;
-
+    
     //初始化电机控制模式
     gimbal_motor_mode = last_gimbal_motor_mode = GIMBAL_MOTOR_RAW;
 
@@ -78,11 +88,17 @@ void M_Gimbal::init() {
 
     //定义yaw和pitch的限位
     //TODO:需要测试,先关闭
-    //max_yaw = 0.0;
-    //min_yaw = 0.0;
-    //max_pitch = 0.0;
-    //min_pitch = 0.0;
+    max_yaw = 2*PI;
+    min_yaw = -2*PI;
+    max_pitch_ecd = max_pitch = 2.8f;
+    min_pitch_ecd = min_pitch = -2.0f;
+    gimbal_yaw_motor.offset_ecd = YAW_OFFSET;
+    gimbal_pitch_motor.offset_ecd = PITCH_OFFSET;
 
+    gimbal_yaw_motor.max_relative_angle = max_yaw;
+    gimbal_yaw_motor.min_relative_angle = min_yaw;
+    gimbal_pitch_motor.max_relative_angle = max_pitch;
+    gimbal_pitch_motor.min_relative_angle = min_pitch;
     //更新云台数据
     feedback_update();
 
@@ -101,16 +117,15 @@ void M_Gimbal::init() {
   */
 void M_Gimbal::feedback_update()
 {
-
     //云台数据更新
     gimbal_pitch_motor.absolute_angle = *(gimbal_INT_angle_point + INS_PITCH_ADDRESS_OFFSET);
 
 #if PITCH_TURN
-    gimbal_pitch_motor.relative_angle = -motor_ecd_to_angle_change(gimbal_pitch_motor.gimbal_motor_measure->ecd,
+    gimbal_pitch_motor.relative_angle = -motor_ecd_to_angle_change(Can.motor_gimbal[PITCH].ecd,
                                                                    gimbal_pitch_motor.offset_ecd);
 #else
 
-    gimbal_pitch_motor.relative_angle = motor_ecd_to_angle_change(gimbal_pitch_motor.gimbal_motor_measure->ecd,
+    gimbal_pitch_motor.relative_angle = motor_ecd_to_angle_change(Can.motor_gimbal[PITCH].ecd,
                                                                    gimbal_pitch_motor.offset_ecd);
 #endif
 
@@ -123,7 +138,7 @@ void M_Gimbal::feedback_update()
                                                                 gimbal_yaw_motor.offset_ecd);
 
 #else
-    gimbal_yaw_motor.relative_angle = motor_ecd_to_angle_change(gimbal_yaw_motor.gimbal_motor_measure->ecd,
+    gimbal_yaw_motor.relative_angle = motor_ecd_to_angle_change(Can.motor_gimbal[YAW].ecd,
                                                                 gimbal_yaw_motor.offset_ecd);
 #endif
     gimbal_yaw_motor.motor_gyro = cos(double(gimbal_pitch_motor.relative_angle)) * (*(gimbal_INT_gyro_point + INS_GYRO_Z_ADDRESS_OFFSET))
@@ -311,8 +326,9 @@ void M_Gimbal::set_control() {
     }
     else if (gimbal_motor_mode == GIMBAL_MOTOR_ENCONDE)
     {
-        //enconde模式下，电机编码角度控制
-        relative_angle_limit(&gimbal_yaw_motor, add_yaw_angle);
+        //enconde模式下，电机编码角度控制 YAW不需要限位所以不用进行判断
+        gimbal_yaw_motor.relative_angle_set += add_yaw_angle;
+        //relative_angle_limit(&gimbal_yaw_motor, add_yaw_angle);
         relative_angle_limit(&gimbal_pitch_motor, add_pitch_angle);
     }
 
@@ -505,7 +521,7 @@ void M_Gimbal::gimbal_control_loop(){
     else if (gimbal_motor_mode == GIMBAL_MOTOR_GYRO)
     {
         motor_absolute_angle_control(&gimbal_yaw_motor);
-        motor_relative_angle_control(&gimbal_pitch_motor);
+        motor_absolute_angle_control(&gimbal_pitch_motor);
     }
     else if (gimbal_motor_mode == GIMBAL_MOTOR_ENCONDE)
     {
@@ -672,10 +688,10 @@ fp32 M_Gimbal::gimbal_PID_calc(gimbal_PID_t *pid, fp32 get, fp32 set, fp32 error
 }
 
 
-void M_Gimbal::PID_clear(pid_type_def *gimbal_pid_clear) {
+void M_Gimbal::PID_clear(gimbal_PID_t *gimbal_pid_clear) {
     if (gimbal_pid_clear == NULL)
         return;
-    gimbal_pid_clear->error[3] = gimbal_pid_clear->set = gimbal_pid_clear->fdb = 0.0f;
+    gimbal_pid_clear->err = gimbal_pid_clear->set = gimbal_pid_clear->get = 0.0f;
     gimbal_pid_clear->out = gimbal_pid_clear->Pout = gimbal_pid_clear->Iout = gimbal_pid_clear->Dout = 0.0f;
 }
 

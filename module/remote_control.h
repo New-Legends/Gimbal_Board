@@ -53,7 +53,9 @@ extern RC_ctrl_t rc_ctrl;
 //遥控器控制
 class remote_control {
 public:
-    RC_ctrl_t* data = &rc_ctrl;
+    remote_control();
+
+    RC_ctrl_t* data;
 
     static void RC_unable();
 

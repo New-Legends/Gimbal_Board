@@ -1,8 +1,8 @@
 Dependencies for Project 'NewLegends_Gimbal_Board', Target 'NewLegends_Gimbal_Board': (DO NOT MODIFY !)
 CompilerVersion: 5060960::V5.06 update 7 (build 960)::.\ARMCC
 F (startup_stm32f407xx.s)(0x619EF302)(--cpu Cortex-M4.fp.sp -g --apcs=interwork -I ..\Inc-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include--pd "__UVISION_VERSION SETA 536" --pd "_RTE_ SETA 1" --pd "STM32F407xx SETA 1" --pd "_RTE_ SETA 1"--list startup_stm32f407xx.lst --xref -o newlegends_gimbal_board\startup_stm32f407xx.o --depend newlegends_gimbal_board\startup_stm32f407xx.d)
-F (../Src/main.c)(0x619E3CFD)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\main.o --omf_browse newlegends_gimbal_board\main.crf --depend newlegends_gimbal_board\main.d)
-I (../Inc/main.h)(0x619C5247)
+F (../Src/main.c)(0x619F4D4A)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\main.o --omf_browse newlegends_gimbal_board\main.crf --depend newlegends_gimbal_board\main.d)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -81,9 +81,10 @@ I (../boards/bsp_can.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
 I (../boards/bsp_delay.h)(0x61063AF7)
 I (../boards/bsp_usart.h)(0x61063AF7)
+I (../module/remote_data.h)(0x619EF65C)
 F (../Src/gpio.c)(0x619C5240)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\gpio.o --omf_browse newlegends_gimbal_board\gpio.crf --depend newlegends_gimbal_board\gpio.d)
 I (../Inc/gpio.h)(0x619C5240)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -139,7 +140,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h)(0x6181F5CC)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x6181F5CC)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x6181F5CC)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -189,7 +190,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x6181F5CC
 I (../application/System_Config.h)(0x618D2244)
 F (../Src/adc.c)(0x619C5245)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\adc.o --omf_browse newlegends_gimbal_board\adc.crf --depend newlegends_gimbal_board\adc.d)
 I (../Inc/adc.h)(0x619C5245)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -235,7 +236,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (../Src/can.c)(0x619C5245)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\can.o --omf_browse newlegends_gimbal_board\can.crf --depend newlegends_gimbal_board\can.d)
 I (../Inc/can.h)(0x619C5245)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -281,7 +282,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (../Src/crc.c)(0x619C5245)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\crc.o --omf_browse newlegends_gimbal_board\crc.crf --depend newlegends_gimbal_board\crc.d)
 I (../Inc/crc.h)(0x619C5245)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -327,7 +328,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (../Src/dma.c)(0x619C5246)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\dma.o --omf_browse newlegends_gimbal_board\dma.crf --depend newlegends_gimbal_board\dma.d)
 I (../Inc/dma.h)(0x619C5246)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -373,7 +374,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (../Src/i2c.c)(0x619C5246)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\i2c.o --omf_browse newlegends_gimbal_board\i2c.crf --depend newlegends_gimbal_board\i2c.d)
 I (../Inc/i2c.h)(0x619C5246)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -419,7 +420,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (../Src/rng.c)(0x619C5246)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\rng.o --omf_browse newlegends_gimbal_board\rng.crf --depend newlegends_gimbal_board\rng.d)
 I (../Inc/rng.h)(0x619C5246)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -465,7 +466,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (../Src/rtc.c)(0x619C5246)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\rtc.o --omf_browse newlegends_gimbal_board\rtc.crf --depend newlegends_gimbal_board\rtc.d)
 I (../Inc/rtc.h)(0x619C5246)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -511,7 +512,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (../Src/spi.c)(0x619C5246)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\spi.o --omf_browse newlegends_gimbal_board\spi.crf --depend newlegends_gimbal_board\spi.d)
 I (../Inc/spi.h)(0x619C5246)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -557,7 +558,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (../Src/tim.c)(0x619C5246)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\tim.o --omf_browse newlegends_gimbal_board\tim.crf --depend newlegends_gimbal_board\tim.d)
 I (../Inc/tim.h)(0x619C5246)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -603,7 +604,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (../Src/usart.c)(0x619C5247)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\usart.o --omf_browse newlegends_gimbal_board\usart.crf --depend newlegends_gimbal_board\usart.d)
 I (../Inc/usart.h)(0x619C5247)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -697,7 +698,7 @@ I (../Inc/usbd_conf.h)(0x619C5247)
 I (E:\MDK5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\stdlib.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h)(0x6181F5CA)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h)(0x6181F5CA)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h)(0x6181F5CA)
@@ -753,7 +754,7 @@ I (../Inc/usbd_conf.h)(0x619C5247)
 I (E:\MDK5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\stdlib.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h)(0x6181F5CA)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h)(0x6181F5CA)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h)(0x6181F5CA)
@@ -763,7 +764,7 @@ I (../Inc/usbd_conf.h)(0x619C5247)
 I (E:\MDK5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\stdlib.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -820,7 +821,7 @@ I (../Inc/usbd_conf.h)(0x619C5247)
 I (E:\MDK5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\stdlib.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -867,7 +868,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h)(0x6181F5CA)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h)(0x6181F5CA)
 F (../Src/stm32f4xx_it.c)(0x619C5247)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\stm32f4xx_it.o --omf_browse newlegends_gimbal_board\stm32f4xx_it.crf --depend newlegends_gimbal_board\stm32f4xx_it.d)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -927,7 +928,7 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x6181F5CC)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x6181F5CC)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x6181F5CC)
 F (../Src/stm32f4xx_hal_msp.c)(0x619C5247)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\stm32f4xx_hal_msp.o --omf_browse newlegends_gimbal_board\stm32f4xx_hal_msp.crf --depend newlegends_gimbal_board\stm32f4xx_hal_msp.d)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -2441,7 +2442,7 @@ I (../Inc/usbd_conf.h)(0x619C5247)
 I (E:\MDK5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\stdlib.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -2495,7 +2496,7 @@ I (../Inc/usbd_conf.h)(0x619C5247)
 I (E:\MDK5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\stdlib.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -2548,7 +2549,7 @@ I (../Inc/usbd_conf.h)(0x619C5247)
 I (E:\MDK5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\stdlib.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -2602,7 +2603,7 @@ I (../Inc/usbd_conf.h)(0x619C5247)
 I (E:\MDK5\ARM\ARMCC\include\stdio.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\stdlib.h)(0x60252374)
 I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -2648,13 +2649,13 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h)(0x6181F5CA)
 I (../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h)(0x6181F5CA)
-F (..\application\INS_task.cpp)(0x619EF431)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\ins_task.o --omf_browse newlegends_gimbal_board\ins_task.crf --depend newlegends_gimbal_board\ins_task.d)
-I (..\application\INS_task.h)(0x619EF448)
-I (../module/INS.h)(0x619EF4AD)
+F (..\application\INS_task.cpp)(0x619F0872)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\ins_task.o --omf_browse newlegends_gimbal_board\ins_task.crf --depend newlegends_gimbal_board\ins_task.d)
+I (..\application\INS_task.h)(0x619F086D)
+I (..\application\struct_typedef.h)(0x61063AF7)
+I (../module/INS.h)(0x619F082C)
 I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
 I (../components/controller/pid.h)(0x61063AF7)
-I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -2718,7 +2719,7 @@ I (../components/devices/bmi088driver.h)(0x61063AF7)
 I (../components/devices/ist8310driver.h)(0x61063AF7)
 I (../components/algorithm/ahrs.h)(0x61063AF7)
 I (../components/algorithm/AHRS_MiddleWare.h)(0x61063AF7)
-F (..\application\System_Config.cpp)(0x619E3AF5)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\system_config.o --omf_browse newlegends_gimbal_board\system_config.crf --depend newlegends_gimbal_board\system_config.d)
+F (..\application\System_Config.cpp)(0x619F01A8)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\system_config.o --omf_browse newlegends_gimbal_board\system_config.crf --depend newlegends_gimbal_board\system_config.d)
 I (..\application\System_Config.h)(0x618D2244)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/freertos.h)(0x6181F5CC)
 I (E:\MDK5\ARM\ARMCC\include\stddef.h)(0x6025237E)
@@ -2729,15 +2730,171 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h)(0x6181F5CC)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h)(0x6181F5CC)
 I (../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h)(0x6181F5CC)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h)(0x6181F5CC)
-I (..\application\INS_task.h)(0x619EF448)
+I (..\application\INS_task.h)(0x619F086D)
+I (..\application\struct_typedef.h)(0x61063AF7)
+I (../module/INS.h)(0x619F082C)
+I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
+I (../components/controller/pid.h)(0x61063AF7)
+I (../Inc/main.h)(0x619F01A0)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
+I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x6181F66F)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rng.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
+I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h)(0x6181F5CC)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x6181F5CC)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x6181F5CC)
-F (..\module\INS.cpp)(0x619EF424)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\ins.o --omf_browse newlegends_gimbal_board\ins.crf --depend newlegends_gimbal_board\ins.d)
-I (..\module\INS.h)(0x619EF4AD)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x6181F5CC)
+I (../boards/bsp_imu_pwm.h)(0x618E0CE0)
+I (../boards/bsp_spi.h)(0x61063AF7)
+I (../components/devices/bmi088driver.h)(0x61063AF7)
+I (../components/devices/ist8310driver.h)(0x61063AF7)
+I (../components/algorithm/ahrs.h)(0x61063AF7)
+I (../components/algorithm/AHRS_MiddleWare.h)(0x61063AF7)
+I (..\application\gimbal_task.h)(0x619EF71B)
+I (../module/M_Gimbal.h)(0x619F4B9E)
+I (../module/motor_3508.h)(0x61821D41)
+I (../module/motor_measure.h)(0x6182473D)
+I (../module/first_order_filter.h)(0x61821379)
+I (../module/motor_6020.h)(0x619EF65C)
+I (../module/remote_control.h)(0x619EF9A5)
+I (E:\MDK5\ARM\ARMCC\include\cstdint)(0x60252378)
+I (../module/remote_data.h)(0x619EF65C)
+I (../boards/bsp_usart.h)(0x61063AF7)
+I (../module/can.h)(0x619F3002)
+I (../module/user_lib.h)(0x618DCF3D)
+I (E:\MDK5\ARM\ARMCC\include\cmath)(0x6025237C)
+I (E:\MDK5\ARM\ARMCC\include\math.h)(0x60252378)
+F (..\application\gimbal_task.cpp)(0x619F4A66)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\gimbal_task.o --omf_browse newlegends_gimbal_board\gimbal_task.crf --depend newlegends_gimbal_board\gimbal_task.d)
+I (..\application\gimbal_task.h)(0x619EF71B)
+I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x6181F5CC)
+I (E:\MDK5\ARM\ARMCC\include\stddef.h)(0x6025237E)
+I (E:\MDK5\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (../Inc/FreeRTOSConfig.h)(0x619C5245)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x6181F5CC)
+I (..\application\System_Config.h)(0x618D2244)
+I (..\application\INS_task.h)(0x619F086D)
+I (..\application\struct_typedef.h)(0x61063AF7)
+I (../module/INS.h)(0x619F082C)
+I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
+I (../components/controller/pid.h)(0x61063AF7)
+I (../Inc/main.h)(0x619F01A0)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
+I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x6181F66F)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rng.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
+I (../boards/bsp_imu_pwm.h)(0x618E0CE0)
+I (../boards/bsp_spi.h)(0x61063AF7)
+I (../components/devices/bmi088driver.h)(0x61063AF7)
+I (../components/devices/ist8310driver.h)(0x61063AF7)
+I (../components/algorithm/ahrs.h)(0x61063AF7)
+I (../components/algorithm/AHRS_MiddleWare.h)(0x61063AF7)
+I (../module/M_Gimbal.h)(0x619F4B9E)
+I (../module/motor_3508.h)(0x61821D41)
+I (../module/motor_measure.h)(0x6182473D)
+I (../module/first_order_filter.h)(0x61821379)
+I (../module/motor_6020.h)(0x619EF65C)
+I (../module/remote_control.h)(0x619EF9A5)
+I (E:\MDK5\ARM\ARMCC\include\cstdint)(0x60252378)
+I (../module/remote_data.h)(0x619EF65C)
+I (../boards/bsp_usart.h)(0x61063AF7)
+I (../module/can.h)(0x619F3002)
+I (../module/user_lib.h)(0x618DCF3D)
+I (E:\MDK5\ARM\ARMCC\include\cmath)(0x6025237C)
+I (E:\MDK5\ARM\ARMCC\include\math.h)(0x60252378)
+F (..\module\INS.cpp)(0x619F0A6E)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\ins.o --omf_browse newlegends_gimbal_board\ins.crf --depend newlegends_gimbal_board\ins.d)
+I (..\module\INS.h)(0x619F082C)
 I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
 I (../components/controller/pid.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -2801,10 +2958,405 @@ I (../components/devices/bmi088driver.h)(0x61063AF7)
 I (../components/devices/ist8310driver.h)(0x61063AF7)
 I (../components/algorithm/ahrs.h)(0x61063AF7)
 I (../components/algorithm/AHRS_MiddleWare.h)(0x61063AF7)
+F (..\module\can.cpp)(0x619F2637)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\can_1.o --omf_browse newlegends_gimbal_board\can_1.crf --depend newlegends_gimbal_board\can_1.d)
+I (..\module\can.h)(0x619F3002)
+I (../application/struct_typedef.h)(0x61063AF7)
+I (../Inc/main.h)(0x619F01A0)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
+I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x6181F66F)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x6181F5C9)
+I (E:\MDK5\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x6181F66E)
+I (E:\MDK5\ARM\ARMCC\include\stddef.h)(0x6025237E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rng.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
+I (..\module\motor_measure.h)(0x6182473D)
+I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x6181F5CC)
+I (../Inc/FreeRTOSConfig.h)(0x619C5245)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x6181F5CC)
+F (..\module\first_order_filter.cpp)(0x61821379)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\first_order_filter.o --omf_browse newlegends_gimbal_board\first_order_filter.crf --depend newlegends_gimbal_board\first_order_filter.d)
+I (..\module\first_order_filter.h)(0x61821379)
+I (../application/struct_typedef.h)(0x61063AF7)
+F (..\module\M_Gimbal.cpp)(0x619F5139)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\m_gimbal.o --omf_browse newlegends_gimbal_board\m_gimbal.crf --depend newlegends_gimbal_board\m_gimbal.d)
+I (../module/first_order_filter.h)(0x61821379)
+I (../application/struct_typedef.h)(0x61063AF7)
+I (..\module\M_Gimbal.h)(0x619F4B9E)
+I (../components/controller/pid.h)(0x61063AF7)
+I (../application/INS_task.h)(0x619F086D)
+I (../module/INS.h)(0x619F082C)
+I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
+I (../Inc/main.h)(0x619F01A0)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
+I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x6181F66F)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x6181F5C9)
+I (E:\MDK5\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x6181F66E)
+I (E:\MDK5\ARM\ARMCC\include\stddef.h)(0x6025237E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rng.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
+I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x6181F5CC)
+I (../Inc/FreeRTOSConfig.h)(0x619C5245)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/task.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/list.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h)(0x6181F5CC)
+I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x6181F5CC)
+I (../boards/bsp_imu_pwm.h)(0x618E0CE0)
+I (../boards/bsp_spi.h)(0x61063AF7)
+I (../components/devices/bmi088driver.h)(0x61063AF7)
+I (../components/devices/ist8310driver.h)(0x61063AF7)
+I (../components/algorithm/ahrs.h)(0x61063AF7)
+I (../components/algorithm/AHRS_MiddleWare.h)(0x61063AF7)
+I (..\module\motor_3508.h)(0x61821D41)
+I (..\module\motor_measure.h)(0x6182473D)
+I (..\module\motor_6020.h)(0x619EF65C)
+I (..\module\remote_control.h)(0x619EF9A5)
+I (E:\MDK5\ARM\ARMCC\include\cstdint)(0x60252378)
+I (..\module\remote_data.h)(0x619EF65C)
+I (../boards/bsp_usart.h)(0x61063AF7)
+I (..\module\can.h)(0x619F3002)
+I (..\module\user_lib.h)(0x618DCF3D)
+I (E:\MDK5\ARM\ARMCC\include\cmath)(0x6025237C)
+I (E:\MDK5\ARM\ARMCC\include\math.h)(0x60252378)
+F (..\module\motor_3508.cpp)(0x61821379)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\motor_3508.o --omf_browse newlegends_gimbal_board\motor_3508.crf --depend newlegends_gimbal_board\motor_3508.d)
+I (..\module\motor_3508.h)(0x61821D41)
+I (..\module\motor_measure.h)(0x6182473D)
+I (../application/struct_typedef.h)(0x61063AF7)
+I (../Inc/main.h)(0x619F01A0)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
+I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x6181F66F)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x6181F5C9)
+I (E:\MDK5\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x6181F66E)
+I (E:\MDK5\ARM\ARMCC\include\stddef.h)(0x6025237E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rng.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
+F (..\module\motor_6020.cpp)(0x61821379)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\motor_6020.o --omf_browse newlegends_gimbal_board\motor_6020.crf --depend newlegends_gimbal_board\motor_6020.d)
+I (..\module\motor_6020.h)(0x619EF65C)
+I (../components/controller/pid.h)(0x61063AF7)
+I (../application/struct_typedef.h)(0x61063AF7)
+I (..\module\motor_measure.h)(0x6182473D)
+I (../Inc/main.h)(0x619F01A0)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
+I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x6181F66F)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x6181F5C9)
+I (E:\MDK5\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x6181F66E)
+I (E:\MDK5\ARM\ARMCC\include\stddef.h)(0x6025237E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rng.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
+F (..\module\motor_measure.cpp)(0x61823DB0)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\motor_measure.o --omf_browse newlegends_gimbal_board\motor_measure.crf --depend newlegends_gimbal_board\motor_measure.d)
+I (..\module\motor_measure.h)(0x6182473D)
+I (../application/struct_typedef.h)(0x61063AF7)
+I (../Inc/main.h)(0x619F01A0)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
+I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x6181F66F)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x6181F5C9)
+I (E:\MDK5\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x6181F66E)
+I (E:\MDK5\ARM\ARMCC\include\stddef.h)(0x6025237E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rng.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
+F (..\module\remote_control.cpp)(0x619EF9A9)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\remote_control.o --omf_browse newlegends_gimbal_board\remote_control.crf --depend newlegends_gimbal_board\remote_control.d)
+I (..\module\remote_control.h)(0x619EF9A5)
+I (E:\MDK5\ARM\ARMCC\include\cstdint)(0x60252378)
+I (E:\MDK5\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (..\module\remote_data.h)(0x619EF65C)
+I (../application/struct_typedef.h)(0x61063AF7)
+I (../boards/bsp_usart.h)(0x61063AF7)
+I (E:\MDK5\ARM\ARMCC\include\cstring)(0x60252374)
+I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
+I (../Inc/main.h)(0x619F01A0)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
+I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x6181F66F)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x6181F66E)
+I (E:\MDK5\ARM\ARMCC\include\stddef.h)(0x6025237E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rng.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
+F (..\module\remote_data.c)(0x619EF65C)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\remote_data.o --omf_browse newlegends_gimbal_board\remote_data.crf --depend newlegends_gimbal_board\remote_data.d)
+I (..\module\remote_data.h)(0x619EF65C)
+I (../application/struct_typedef.h)(0x61063AF7)
+I (../boards/bsp_usart.h)(0x61063AF7)
+I (../Inc/main.h)(0x619F01A0)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
+I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x6181F66F)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x6181F5C6)
+I (../Drivers/CMSIS/Include/core_cm4.h)(0x6181F5C9)
+I (E:\MDK5\ARM\ARMCC\include\stdint.h)(0x6025237E)
+I (../Drivers/CMSIS/Include/cmsis_version.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x6181F5C9)
+I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x6181F5C6)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x6181F66E)
+I (E:\MDK5\ARM\ARMCC\include\stddef.h)(0x6025237E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h)(0x6181F66E)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rng.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
+I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
+F (..\module\user_lib.cpp)(0x618DCF3D)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\user_lib.o --omf_browse newlegends_gimbal_board\user_lib.crf --depend newlegends_gimbal_board\user_lib.d)
+I (..\module\user_lib.h)(0x618DCF3D)
+I (../application/struct_typedef.h)(0x61063AF7)
 F (..\boards\bsp_adc.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_adc.o --omf_browse newlegends_gimbal_board\bsp_adc.crf --depend newlegends_gimbal_board\bsp_adc.d)
 I (..\boards\bsp_adc.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -2851,7 +3403,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (..\boards\bsp_buzzer.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_buzzer.o --omf_browse newlegends_gimbal_board\bsp_buzzer.crf --depend newlegends_gimbal_board\bsp_buzzer.d)
 I (..\boards\bsp_buzzer.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -2898,7 +3450,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (..\boards\bsp_can.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_can.o --omf_browse newlegends_gimbal_board\bsp_can.crf --depend newlegends_gimbal_board\bsp_can.d)
 I (..\boards\bsp_can.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -2945,7 +3497,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (..\boards\bsp_crc32.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_crc32.o --omf_browse newlegends_gimbal_board\bsp_crc32.crf --depend newlegends_gimbal_board\bsp_crc32.d)
 I (..\boards\bsp_crc32.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -2992,7 +3544,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (..\boards\bsp_delay.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_delay.o --omf_browse newlegends_gimbal_board\bsp_delay.crf --depend newlegends_gimbal_board\bsp_delay.d)
 I (..\boards\bsp_delay.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3039,7 +3591,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (..\boards\bsp_flash.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_flash.o --omf_browse newlegends_gimbal_board\bsp_flash.crf --depend newlegends_gimbal_board\bsp_flash.d)
 I (..\boards\bsp_flash.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3087,7 +3639,7 @@ I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
 F (..\boards\bsp_fric.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_fric.o --omf_browse newlegends_gimbal_board\bsp_fric.crf --depend newlegends_gimbal_board\bsp_fric.d)
 I (..\boards\bsp_fric.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3134,7 +3686,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (..\boards\bsp_i2c.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_i2c.o --omf_browse newlegends_gimbal_board\bsp_i2c.crf --depend newlegends_gimbal_board\bsp_i2c.d)
 I (..\boards\bsp_i2c.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3181,7 +3733,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (..\boards\bsp_imu_pwm.c)(0x618E0CE0)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_imu_pwm.o --omf_browse newlegends_gimbal_board\bsp_imu_pwm.crf --depend newlegends_gimbal_board\bsp_imu_pwm.d)
 I (..\boards\bsp_imu_pwm.h)(0x618E0CE0)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3228,7 +3780,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (..\boards\bsp_laser.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_laser.o --omf_browse newlegends_gimbal_board\bsp_laser.crf --depend newlegends_gimbal_board\bsp_laser.d)
 I (..\boards\bsp_laser.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3275,54 +3827,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (..\boards\bsp_led.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_led.o --omf_browse newlegends_gimbal_board\bsp_led.crf --depend newlegends_gimbal_board\bsp_led.d)
 I (..\boards\bsp_led.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
-I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h)(0x6181F66F)
-I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h)(0x6181F5C6)
-I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h)(0x6181F5C6)
-I (../Drivers/CMSIS/Include/core_cm4.h)(0x6181F5C9)
-I (E:\MDK5\ARM\ARMCC\include\stdint.h)(0x6025237E)
-I (../Drivers/CMSIS/Include/cmsis_version.h)(0x6181F5C9)
-I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x6181F5C9)
-I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x6181F5C9)
-I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x6181F5C9)
-I (../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h)(0x6181F5C6)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h)(0x6181F66E)
-I (E:\MDK5\ARM\ARMCC\include\stddef.h)(0x6025237E)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h)(0x6181F66E)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h)(0x6181F66E)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h)(0x6181F66E)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h)(0x6181F66E)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h)(0x6181F66E)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rng.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
-I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
-F (..\boards\bsp_rc.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_rc.o --omf_browse newlegends_gimbal_board\bsp_rc.crf --depend newlegends_gimbal_board\bsp_rc.d)
-I (..\boards\bsp_rc.h)(0x61063AF7)
-I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3369,7 +3874,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (..\boards\bsp_rng.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_rng.o --omf_browse newlegends_gimbal_board\bsp_rng.crf --depend newlegends_gimbal_board\bsp_rng.d)
 I (..\boards\bsp_rng.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3416,7 +3921,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (..\boards\bsp_servo_pwm.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_servo_pwm.o --omf_browse newlegends_gimbal_board\bsp_servo_pwm.crf --depend newlegends_gimbal_board\bsp_servo_pwm.d)
 I (..\boards\bsp_servo_pwm.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3463,7 +3968,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (..\boards\bsp_spi.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_spi.o --omf_browse newlegends_gimbal_board\bsp_spi.crf --depend newlegends_gimbal_board\bsp_spi.d)
 I (..\boards\bsp_spi.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3510,7 +4015,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (..\boards\bsp_usart.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bsp_usart.o --omf_browse newlegends_gimbal_board\bsp_usart.crf --depend newlegends_gimbal_board\bsp_usart.d)
 I (..\boards\bsp_usart.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3565,7 +4070,7 @@ I (../Drivers/CMSIS/Include/cmsis_compiler.h)(0x6181F5C9)
 I (../Drivers/CMSIS/Include/cmsis_armcc.h)(0x6181F5C9)
 I (E:\MDK5\ARM\ARMCC\include\string.h)(0x6025237E)
 I (E:\MDK5\ARM\ARMCC\include\math.h)(0x60252378)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3604,7 +4109,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h)(0x6181F66F)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h)(0x6181F66F)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h)(0x6181F66F)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
-F (..\components\algorithm\user_lib.c)(0x619C5907)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\user_lib.o --omf_browse newlegends_gimbal_board\user_lib.crf --depend newlegends_gimbal_board\user_lib.d)
+F (..\components\algorithm\user_lib.c)(0x619C5907)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\user_lib_1.o --omf_browse newlegends_gimbal_board\user_lib_1.crf --depend newlegends_gimbal_board\user_lib_1.d)
 I (..\components\algorithm\user_lib.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
 I (../components/algorithm/Include/arm_math.h)(0x61063AF7)
@@ -3620,7 +4125,7 @@ F (..\components\algorithm\arm_cortexM4lf_math.lib)(0x61063AF7)()
 F (..\components\controller\pid.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\pid.o --omf_browse newlegends_gimbal_board\pid.crf --depend newlegends_gimbal_board\pid.d)
 I (..\components\controller\pid.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3667,7 +4172,7 @@ I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h)(0x6181F66F)
 F (..\components\devices\BMI088driver.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bmi088driver.o --omf_browse newlegends_gimbal_board\bmi088driver.crf --depend newlegends_gimbal_board\bmi088driver.d)
 I (..\components\devices\BMI088driver.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3716,7 +4221,7 @@ I (..\components\devices\BMI088Middleware.h)(0x61063AF7)
 F (..\components\devices\BMI088Middleware.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\bmi088middleware.o --omf_browse newlegends_gimbal_board\bmi088middleware.crf --depend newlegends_gimbal_board\bmi088middleware.d)
 I (..\components\devices\BMI088Middleware.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3782,7 +4287,7 @@ I (..\components\devices\ist8310driver_middleware.h)(0x61063AF7)
 F (..\components\devices\ist8310driver_middleware.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\ist8310driver_middleware.o --omf_browse newlegends_gimbal_board\ist8310driver_middleware.crf --depend newlegends_gimbal_board\ist8310driver_middleware.d)
 I (..\components\devices\ist8310driver_middleware.h)(0x61063AF7)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
@@ -3844,7 +4349,7 @@ I (../boards/bsp_delay.h)(0x61063AF7)
 I (../boards/bsp_i2c.h)(0x61063AF7)
 F (..\components\support\CRC8_CRC16.c)(0x61063AF7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\crc8_crc16.o --omf_browse newlegends_gimbal_board\crc8_crc16.crf --depend newlegends_gimbal_board\crc8_crc16.d)
 I (..\components\support\crc8_crc16.h)(0x61063AF7)
-I (../Inc/main.h)(0x619C5247)
+I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h)(0x6181F66F)
