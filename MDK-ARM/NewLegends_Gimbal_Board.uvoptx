@@ -158,42 +158,47 @@
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>gimbal_imu</ItemText>
+          <ItemText>imu_start_dma_flag</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>imu_start_dma_flag</ItemText>
+          <ItemText>mag_update_flag</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>mag_update_flag</ItemText>
+          <ItemText>accel_temp_update_flag</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>accel_temp_update_flag</ItemText>
+          <ItemText>accel_update_flag</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>accel_update_flag</ItemText>
+          <ItemText>gyro_update_flag</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>gyro_update_flag</ItemText>
+          <ItemText>INS_quat</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>INS_quat</ItemText>
+          <ItemText>temp</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>temp</ItemText>
+          <ItemText>gyro_offset</ItemText>
+        </Ww>
+        <Ww>
+          <count>9</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>imu</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

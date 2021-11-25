@@ -5,4 +5,12 @@
 
 extern void INS_task(void *pvParameters);
 
+class IMU_data{
+public:
+    fp32 *INS_gyro;
+    fp32 *INS_angle;
+
+    void init();
+};
+
 #endif

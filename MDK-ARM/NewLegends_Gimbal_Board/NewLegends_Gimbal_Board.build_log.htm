@@ -27,11 +27,23 @@ Project File Date:  11/24/2021
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'E:\MDK5\ARM\ARMCC\Bin'
 Build target 'NewLegends_Gimbal_Board'
+compiling System_Config.cpp...
+..\application\INS_task.h(8): error:  #20: identifier "INS" is undefined
+  extern const INS *get_imu_data(void);                                        //获取imu数据
+..\application\System_Config.cpp: 0 warnings, 1 error
+assembling startup_stm32f407xx.s...
 compiling INS.cpp...
-linking...
-Program Size: Code=44208 RO-data=2708 RW-data=276 ZI-data=46660  
-FromELF: creating hex file...
-"NewLegends_Gimbal_Board\NewLegends_Gimbal_Board.axf" - 0 Error(s), 0 Warning(s).
+compiling INS_task.cpp...
+..\application\INS_task.h(8): error:  #20: identifier "INS" is undefined
+  extern const INS *get_imu_data(void);                                        //获取imu数据
+..\application\INS_task.cpp(66): error:  #311: cannot overload functions distinguished by return type alone
+  const INS *get_imu_data(void){
+..\application\INS_task.cpp(67): error:  #413: no suitable conversion function from "INS" to "const INS *" exists
+      return imu;
+..\application\INS_task.cpp(68): warning:  #1-D: last line of file ends without a newline
+  }
+..\application\INS_task.cpp: 1 warning, 3 errors
+"NewLegends_Gimbal_Board\NewLegends_Gimbal_Board.axf" - 4 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -55,6 +67,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.5.0
       Include file:  CMSIS\Core\Include\tz_context.h
+Target not created.
 Build Time Elapsed:  00:00:02
 </pre>
 </body>

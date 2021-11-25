@@ -175,67 +175,69 @@ extern void INS_cali_gyro(fp32 cali_scale[3], fp32 cali_offset[3], uint16_t *tim
   */
 extern void INS_set_cali_gyro(fp32 cali_scale[3], fp32 cali_offset[3]);
 
-/**
-  * @brief          get the quat
-  * @param[in]      none
-  * @retval         the point of INS_quat
-  */
-/**
-  * @brief          获取四元数
-  * @param[in]      none
-  * @retval         INS_quat的指针
-  */
-extern const fp32 *get_INS_quat_point(void);
+// /**
+//   * @brief          get the quat
+//   * @param[in]      none
+//   * @retval         the point of INS_quat
+//   */
+// /**
+//   * @brief          获取四元数
+//   * @param[in]      none
+//   * @retval         INS_quat的指针
+//   */
+// extern const fp32 *get_INS_quat_point(void);
 
 
-/**
-  * @brief          get the euler angle, 0:yaw, 1:pitch, 2:roll unit rad
-  * @param[in]      none
-  * @retval         the point of INS_angle
-  */
-/**
-  * @brief          获取欧拉角, 0:yaw, 1:pitch, 2:roll 单位 rad
-  * @param[in]      none
-  * @retval         INS_angle的指针
-  */
-extern const fp32 *get_INS_angle_point(void);
+// /**
+//   * @brief          get the euler angle, 0:yaw, 1:pitch, 2:roll unit rad
+//   * @param[in]      none
+//   * @retval         the point of INS_angle
+//   */
+// /**
+//   * @brief          获取欧拉角, 0:yaw, 1:pitch, 2:roll 单位 rad
+//   * @param[in]      none
+//   * @retval         INS_angle的指针
+//   */
+// extern const fp32 *get_INS_angle_point(void);
 
 
-/**
-  * @brief          get the rotation speed, 0:x-axis, 1:y-axis, 2:roll-axis,unit rad/s
-  * @param[in]      none
-  * @retval         the point of INS_gyro
-  */
-/**
-  * @brief          获取角速度,0:x轴, 1:y轴, 2:roll轴 单位 rad/s
-  * @param[in]      none
-  * @retval         INS_gyro的指针
-  */
-extern const fp32 *get_gyro_data_point(void);
+// /**
+//   * @brief          get the rotation speed, 0:x-axis, 1:y-axis, 2:roll-axis,unit rad/s
+//   * @param[in]      none
+//   * @retval         the point of INS_gyro
+//   */
+// /**
+//   * @brief          获取角速度,0:x轴, 1:y轴, 2:roll轴 单位 rad/s
+//   * @param[in]      none
+//   * @retval         INS_gyro的指针
+//   */
+// extern const fp32 *get_gyro_data_point(void);
 
 
-/**
-  * @brief          get aceel, 0:x-axis, 1:y-axis, 2:roll-axis unit m/s2
-  * @param[in]      none
-  * @retval         the point of INS_gyro
-  */
-/**
-  * @brief          获取加速度,0:x轴, 1:y轴, 2:roll轴 单位 m/s2
-  * @param[in]      none
-  * @retval         INS_gyro的指针
-  */
-extern const fp32 *get_accel_data_point(void);
+// /**
+//   * @brief          get aceel, 0:x-axis, 1:y-axis, 2:roll-axis unit m/s2
+//   * @param[in]      none
+//   * @retval         the point of INS_gyro
+//   */
+// /**
+//   * @brief          获取加速度,0:x轴, 1:y轴, 2:roll轴 单位 m/s2
+//   * @param[in]      none
+//   * @retval         INS_gyro的指针
+//   */
+// extern const fp32 *get_accel_data_point(void);
 
-/**
-  * @brief          get mag, 0:x-axis, 1:y-axis, 2:roll-axis unit ut
-  * @param[in]      none
-  * @retval         the point of INS_mag
-  */
-/**
-  * @brief          获取加速度,0:x轴, 1:y轴, 2:roll轴 单位 ut
-  * @param[in]      none
-  * @retval         INS_mag的指针
-  */
-extern const fp32 *get_mag_data_point(void);
+// /**
+//   * @brief          get mag, 0:x-axis, 1:y-axis, 2:roll-axis unit ut
+//   * @param[in]      none
+//   * @retval         the point of INS_mag
+//   */
+// /**
+//   * @brief          获取加速度,0:x轴, 1:y轴, 2:roll轴 单位 ut
+//   * @param[in]      none
+//   * @retval         INS_mag的指针
+//   */
+// extern const fp32 *get_mag_data_point(void);
+
+
 
 #endif

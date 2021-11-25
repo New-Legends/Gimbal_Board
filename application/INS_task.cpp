@@ -48,15 +48,21 @@
 
 #define IMU_TASK_INIT_TIME 357
 
-INS gimbal_imu;
+INS imu;
 
-void INS_task(void *pvParameters){
-		vTaskDelay(IMU_TASK_INIT_TIME);
-	  gimbal_imu.init();
-    while (true)
-    {
-        gimbal_imu.INS_Info_Get();
-				//vTaskDelay(IMU_CONTROL_TIME_MS);
-    }
+void INS_task(void *pvParameters)
+{
+  vTaskDelay(IMU_TASK_INIT_TIME);
+  imu.init();
+  while (true)
+  {
+    //gimbal_imu.init();
+    imu.INS_Info_Get();
+    //vTaskDelay(IMU_CONTROL_TIME_MS);
+  }
+}
 
+void IMU_data::init(){
+    *INS_gyro = *imu.get_gyro_data_point();
+    *INS_angle = *imu.get_INS_angle_point();
 }

@@ -70,6 +70,15 @@ uint8_t accel_dma_tx_buf[SPI_DMA_ACCEL_LENGHT] = {0x92, 0xFF, 0xFF, 0xFF, 0xFF, 
 uint8_t accel_temp_dma_rx_buf[SPI_DMA_ACCEL_TEMP_LENGHT];
 uint8_t accel_temp_dma_tx_buf[SPI_DMA_ACCEL_TEMP_LENGHT] = {0xA2, 0xFF, 0xFF, 0xFF};
 
+fp32 gyro_scale_factor[3][3] = {BMI088_BOARD_INSTALL_SPIN_MATRIX};
+fp32 gyro_offset[3];
+
+fp32 accel_scale_factor[3][3] = {BMI088_BOARD_INSTALL_SPIN_MATRIX};
+fp32 accel_offset[3];
+
+fp32 mag_scale_factor[3][3] = {IST8310_BOARD_INSTALL_SPIN_MATRIX};
+fp32 mag_offset[3];
+
 fp32 temp[4];
 /**
   * @brief          imu任务, 初始化 bmi088, ist8310, 计算欧拉角
@@ -106,9 +115,9 @@ void INS::init(void)
 
     AHRS_init(INS_quat, INS_accel, INS_mag);
     temp[0] = INS_quat[0];
-		temp[1] = INS_quat[1];
-		temp[2] = INS_quat[2];
-		temp[3] = INS_quat[3];
+    temp[1] = INS_quat[1];
+    temp[2] = INS_quat[2];
+    temp[3] = INS_quat[3];
     accel_fliter_1[0] = accel_fliter_2[0] = accel_fliter_3[0] = INS_accel[0];
     accel_fliter_1[1] = accel_fliter_2[1] = accel_fliter_3[1] = INS_accel[1];
     accel_fliter_1[2] = accel_fliter_2[2] = accel_fliter_3[2] = INS_accel[2];
@@ -127,6 +136,7 @@ void INS::init(void)
     SPI1_DMA_init((unsigned int)gyro_dma_tx_buf, (unsigned int)gyro_dma_rx_buf, SPI_DMA_GYRO_LENGHT);
 
     imu_start_dma_flag = 1;
+    
 }
 
 void INS::INS_Info_Get()
@@ -149,14 +159,14 @@ void INS::INS_Info_Get()
     }
 
     //TODO:这个任务是监测加速度计的温度，暂时没写
-    
-     if(accel_temp_update_flag & (1 << IMU_UPDATE_SHFITS))
-     {
-         accel_temp_update_flag &= ~(1 << IMU_UPDATE_SHFITS);
-         BMI088_temperature_read_over(accel_temp_dma_rx_buf + BMI088_ACCEL_RX_BUF_DATA_OFFSET, &bmi088_real_data.temp);
-         //imu_temp_control(bmi088_real_data.temp);
-     }
-        
+
+    if (accel_temp_update_flag & (1 << IMU_UPDATE_SHFITS))
+    {
+        accel_temp_update_flag &= ~(1 << IMU_UPDATE_SHFITS);
+        BMI088_temperature_read_over(accel_temp_dma_rx_buf + BMI088_ACCEL_RX_BUF_DATA_OFFSET, &bmi088_real_data.temp);
+        //imu_temp_control(bmi088_real_data.temp);
+    }
+
     //旋转零点漂移
     imu_cali_slove(INS_gyro, INS_accel, INS_mag, &bmi088_real_data, &ist8310_real_data);
 
@@ -193,14 +203,6 @@ void INS::INS_Info_Get()
 
 void INS::imu_cali_slove(fp32 gyro[3], fp32 accel[3], fp32 mag[3], bmi088_real_data_t *bmi088, ist8310_real_data_t *ist8310)
 {
-    fp32 gyro_scale_factor[3][3] = {BMI088_BOARD_INSTALL_SPIN_MATRIX};
-    fp32 gyro_offset[3];
-
-    fp32 accel_scale_factor[3][3] = {BMI088_BOARD_INSTALL_SPIN_MATRIX};
-    fp32 accel_offset[3];
-
-    fp32 mag_scale_factor[3][3] = {IST8310_BOARD_INSTALL_SPIN_MATRIX};
-    fp32 mag_offset[3];
 
     for (uint8_t i = 0; i < 3; i++)
     {
@@ -252,6 +254,8 @@ const fp32 *INS::get_accel_data_point(void)
 {
     return INS_accel;
 }
+
+
 
 /*******************************************(C) 陀螺仪返回参数 ***********************************************/
 
