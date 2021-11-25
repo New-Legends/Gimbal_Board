@@ -92,6 +92,8 @@ void M_Gimbal::init() {
     min_yaw = -2*PI;
     max_pitch_ecd = max_pitch = 2.8f;
     min_pitch_ecd = min_pitch = -2.0f;
+    max_yaw_ecd = max_yaw;
+    min_yaw_ecd = min_yaw;
     gimbal_yaw_motor.offset_ecd = YAW_OFFSET;
     gimbal_pitch_motor.offset_ecd = PITCH_OFFSET;
 

@@ -29,6 +29,8 @@ Project File Date:  11/25/2021
 Build target 'NewLegends_Gimbal_Board'
 Note: source file '..\module\can.cpp' - object file renamed from 'NewLegends_Gimbal_Board\can.o' to 'NewLegends_Gimbal_Board\can_1.o'.
 Note: source file '..\components\algorithm\user_lib.c' - object file renamed from 'NewLegends_Gimbal_Board\user_lib.o' to 'NewLegends_Gimbal_Board\user_lib_1.o'.
+compiling gimbal_task.cpp...
+compiling System_Config.cpp...
 compiling M_Gimbal.cpp...
 ..\module\M_Gimbal.cpp(52): warning:  #177-D: variable "Pitch_speed_pid"  was declared but never referenced
       static const fp32 Pitch_speed_pid[3] = {PITCH_SPEED_PID_KP, PITCH_SPEED_PID_KI, PITCH_SPEED_PID_KD};
@@ -40,7 +42,7 @@ compiling M_Gimbal.cpp...
       static const fp32 Yaw_angle_pid[3] = {YAW_GYRO_ABSOLUTE_PID_KP, YAW_GYRO_ABSOLUTE_PID_KI, YAW_GYRO_ABSOLUTE_PID_KD};
 ..\module\M_Gimbal.cpp: 4 warnings, 0 errors
 linking...
-Program Size: Code=57184 RO-data=2916 RW-data=424 ZI-data=47744  
+Program Size: Code=57280 RO-data=2916 RW-data=424 ZI-data=47808  
 FromELF: creating hex file...
 "NewLegends_Gimbal_Board\NewLegends_Gimbal_Board.axf" - 0 Error(s), 4 Warning(s).
 
@@ -66,7 +68,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.5.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>

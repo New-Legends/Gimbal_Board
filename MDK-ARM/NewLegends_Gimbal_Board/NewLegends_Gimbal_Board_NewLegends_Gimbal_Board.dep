@@ -1,7 +1,7 @@
 Dependencies for Project 'NewLegends_Gimbal_Board', Target 'NewLegends_Gimbal_Board': (DO NOT MODIFY !)
 CompilerVersion: 5060960::V5.06 update 7 (build 960)::.\ARMCC
 F (startup_stm32f407xx.s)(0x619EF302)(--cpu Cortex-M4.fp.sp -g --apcs=interwork -I ..\Inc-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include--pd "__UVISION_VERSION SETA 536" --pd "_RTE_ SETA 1" --pd "STM32F407xx SETA 1" --pd "_RTE_ SETA 1"--list startup_stm32f407xx.lst --xref -o newlegends_gimbal_board\startup_stm32f407xx.o --depend newlegends_gimbal_board\startup_stm32f407xx.d)
-F (../Src/main.c)(0x619F4D4A)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\main.o --omf_browse newlegends_gimbal_board\main.crf --depend newlegends_gimbal_board\main.d)
+F (../Src/main.c)(0x619F775E)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\main.o --omf_browse newlegends_gimbal_board\main.crf --depend newlegends_gimbal_board\main.d)
 I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
 I (../Inc/stm32f4xx_hal_conf.h)(0x619C5247)
@@ -2791,7 +2791,7 @@ I (../components/devices/ist8310driver.h)(0x61063AF7)
 I (../components/algorithm/ahrs.h)(0x61063AF7)
 I (../components/algorithm/AHRS_MiddleWare.h)(0x61063AF7)
 I (..\application\gimbal_task.h)(0x619EF71B)
-I (../module/M_Gimbal.h)(0x619F4B9E)
+I (../module/M_Gimbal.h)(0x619F9598)
 I (../module/motor_3508.h)(0x61821D41)
 I (../module/motor_measure.h)(0x6182473D)
 I (../module/first_order_filter.h)(0x61821379)
@@ -2800,11 +2800,11 @@ I (../module/remote_control.h)(0x619EF9A5)
 I (E:\MDK5\ARM\ARMCC\include\cstdint)(0x60252378)
 I (../module/remote_data.h)(0x619EF65C)
 I (../boards/bsp_usart.h)(0x61063AF7)
-I (../module/can.h)(0x619F3002)
+I (../module/can.h)(0x619F92C9)
 I (../module/user_lib.h)(0x618DCF3D)
 I (E:\MDK5\ARM\ARMCC\include\cmath)(0x6025237C)
 I (E:\MDK5\ARM\ARMCC\include\math.h)(0x60252378)
-F (..\application\gimbal_task.cpp)(0x619F4A66)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\gimbal_task.o --omf_browse newlegends_gimbal_board\gimbal_task.crf --depend newlegends_gimbal_board\gimbal_task.d)
+F (..\application\gimbal_task.cpp)(0x619F9497)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\gimbal_task.o --omf_browse newlegends_gimbal_board\gimbal_task.crf --depend newlegends_gimbal_board\gimbal_task.d)
 I (..\application\gimbal_task.h)(0x619EF71B)
 I (../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h)(0x6181F5CC)
 I (../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h)(0x6181F5CC)
@@ -2876,7 +2876,7 @@ I (../components/devices/bmi088driver.h)(0x61063AF7)
 I (../components/devices/ist8310driver.h)(0x61063AF7)
 I (../components/algorithm/ahrs.h)(0x61063AF7)
 I (../components/algorithm/AHRS_MiddleWare.h)(0x61063AF7)
-I (../module/M_Gimbal.h)(0x619F4B9E)
+I (../module/M_Gimbal.h)(0x619F9598)
 I (../module/motor_3508.h)(0x61821D41)
 I (../module/motor_measure.h)(0x6182473D)
 I (../module/first_order_filter.h)(0x61821379)
@@ -2885,7 +2885,7 @@ I (../module/remote_control.h)(0x619EF9A5)
 I (E:\MDK5\ARM\ARMCC\include\cstdint)(0x60252378)
 I (../module/remote_data.h)(0x619EF65C)
 I (../boards/bsp_usart.h)(0x61063AF7)
-I (../module/can.h)(0x619F3002)
+I (../module/can.h)(0x619F92C9)
 I (../module/user_lib.h)(0x618DCF3D)
 I (E:\MDK5\ARM\ARMCC\include\cmath)(0x6025237C)
 I (E:\MDK5\ARM\ARMCC\include\math.h)(0x60252378)
@@ -2958,8 +2958,8 @@ I (../components/devices/bmi088driver.h)(0x61063AF7)
 I (../components/devices/ist8310driver.h)(0x61063AF7)
 I (../components/algorithm/ahrs.h)(0x61063AF7)
 I (../components/algorithm/AHRS_MiddleWare.h)(0x61063AF7)
-F (..\module\can.cpp)(0x619F2637)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\can_1.o --omf_browse newlegends_gimbal_board\can_1.crf --depend newlegends_gimbal_board\can_1.d)
-I (..\module\can.h)(0x619F3002)
+F (..\module\can.cpp)(0x619F9154)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\can_1.o --omf_browse newlegends_gimbal_board\can_1.crf --depend newlegends_gimbal_board\can_1.d)
+I (..\module\can.h)(0x619F92C9)
 I (../application/struct_typedef.h)(0x61063AF7)
 I (../Inc/main.h)(0x619F01A0)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x6181F66E)
@@ -3023,10 +3023,10 @@ I (../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h)(0x6181F5CC
 F (..\module\first_order_filter.cpp)(0x61821379)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\first_order_filter.o --omf_browse newlegends_gimbal_board\first_order_filter.crf --depend newlegends_gimbal_board\first_order_filter.d)
 I (..\module\first_order_filter.h)(0x61821379)
 I (../application/struct_typedef.h)(0x61063AF7)
-F (..\module\M_Gimbal.cpp)(0x619F5139)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\m_gimbal.o --omf_browse newlegends_gimbal_board\m_gimbal.crf --depend newlegends_gimbal_board\m_gimbal.d)
+F (..\module\M_Gimbal.cpp)(0x619F942C)(--cpp -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F -I ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I ../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ../application -I ../boards -I ../components/algorithm -I ../components/algorithm/Include -I ../components/controller -I ../components/devices -I ../components/support -I ../module -I ../application/protocol-I.\RTE\_NewLegends_Gimbal_Board-IE:\MDK5\packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include-IE:\MDK5\packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="536" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx -DARM_MATH_CM4 -D__FPU_USED="1U" -D__FPU_PRESENT="1U" -D__CC_ARM -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING-o newlegends_gimbal_board\m_gimbal.o --omf_browse newlegends_gimbal_board\m_gimbal.crf --depend newlegends_gimbal_board\m_gimbal.d)
 I (../module/first_order_filter.h)(0x61821379)
 I (../application/struct_typedef.h)(0x61063AF7)
-I (..\module\M_Gimbal.h)(0x619F4B9E)
+I (..\module\M_Gimbal.h)(0x619F9598)
 I (../components/controller/pid.h)(0x61063AF7)
 I (../application/INS_task.h)(0x619F086D)
 I (../module/INS.h)(0x619F082C)
@@ -3102,7 +3102,7 @@ I (..\module\remote_control.h)(0x619EF9A5)
 I (E:\MDK5\ARM\ARMCC\include\cstdint)(0x60252378)
 I (..\module\remote_data.h)(0x619EF65C)
 I (../boards/bsp_usart.h)(0x61063AF7)
-I (..\module\can.h)(0x619F3002)
+I (..\module\can.h)(0x619F92C9)
 I (..\module\user_lib.h)(0x618DCF3D)
 I (E:\MDK5\ARM\ARMCC\include\cmath)(0x6025237C)
 I (E:\MDK5\ARM\ARMCC\include\math.h)(0x60252378)

@@ -33,6 +33,25 @@ void CAN_Gimbal::CAN_cmd_gimbal(int16_t motor1, int16_t motor2, int16_t motor3, 
     HAL_CAN_AddTxMessage(&GIMBAL_CAN, &gimbal_tx_message, gimbal_can_send_data, &send_mail_box);
 }
 
+// void CAN_Gimbal::CAN_cmd_gimbal_temp(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4)
+// {
+//     uint32_t send_mail_box;
+//     gimbal_tx_message.StdId = CAN_GIMBAL_YAW_ID;
+//     gimbal_tx_message.IDE = CAN_ID_STD;
+//     gimbal_tx_message.RTR = CAN_RTR_DATA;
+//     gimbal_tx_message.DLC = 0x08;
+//     gimbal_can_send_data[0] = motor1 >> 8;
+//     gimbal_can_send_data[1] = motor1;
+//     gimbal_can_send_data[2] = motor2 >> 8;
+//     gimbal_can_send_data[3] = motor2;
+//     gimbal_can_send_data[4] = motor3 >> 8;
+//     gimbal_can_send_data[5] = motor3;
+//     gimbal_can_send_data[6] = motor4 >> 8;
+//     gimbal_can_send_data[7] = motor4;
+
+//     HAL_CAN_AddTxMessage(&GIMBAL_CAN, &gimbal_tx_message, gimbal_can_send_data, &send_mail_box);
+// }
+
 void CAN_Gimbal::CAN_cmd_gimbal_reset_ID()
 {
     uint32_t send_mail_box;

@@ -80,6 +80,8 @@ void gimbal_task(void *pvParameters){
 
         GIMBAL.gimbal_can.CAN_cmd_gimbal(GIMBAL.yaw_can_set_current, GIMBAL.pitch_can_set_current, 0, 0);
 				//GIMBAL.gimbal_can.CAN_cmd_gimbal(0, 5500, 0, 0);
+        //GIMBAL.gimbal_can.CAN_cmd_gimbal_temp(0, GIMBAL.yaw_can_set_current, 0, 0);
+        //TODO:看到这两个can发送机械的大兄弟有什么要说的嘛
     }
 }
 

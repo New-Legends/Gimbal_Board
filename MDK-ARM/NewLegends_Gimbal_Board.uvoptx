@@ -170,11 +170,6 @@
           <WinNumber>1</WinNumber>
           <ItemText>Can</ItemText>
         </Ww>
-        <Ww>
-          <count>3</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>\\NewLegends_Gimbal_Board\../application/gimbal_task.cpp\GIMBAL.gimbal_yaw_motor.motor_gyro_set</ItemText>
-        </Ww>
       </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>

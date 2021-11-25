@@ -74,9 +74,9 @@ extern CAN_Gimbal Can;
 
 //yaw encode angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define YAW_ENCODE_RELATIVE_PID_KP        150.0f  //8
+#define YAW_ENCODE_RELATIVE_PID_KP        500.0f  //8
 #define YAW_ENCODE_RELATIVE_PID_KI        0.0f
-#define YAW_ENCODE_RELATIVE_PID_KD        0.0f
+#define YAW_ENCODE_RELATIVE_PID_KD        0.1f
 #define YAW_ENCODE_RELATIVE_PID_MAX_OUT   10000.0f
 #define YAW_ENCODE_RELATIVE_PID_MAX_IOUT  0.0f
 
