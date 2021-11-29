@@ -36,10 +36,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "bsp_can.h"
-#include "bsp_delay.h"
-#include "bsp_usart.h"
-#include "remote_data.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -126,9 +122,6 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
-	can_filter_init();
-  delay_init();
-  usart1_tx_dma_init();
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */
@@ -200,11 +193,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void Task_init() {
-    /* Syetem Service init --------------*/
-    remote_control_init();
-    /* Applications Init ----------------*/
-}
 
 /* USER CODE END 4 */
 

@@ -4,6 +4,7 @@
         "cmsis_os.h": "c",
         "main.h": "c",
         "bsp_can.h": "c",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "pid.h": "c"
     }
 }

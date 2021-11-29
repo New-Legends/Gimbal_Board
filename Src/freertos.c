@@ -157,11 +157,10 @@ __weak void test_task(void const * argument)
 __weak void start_task(void const * argument)
 {
     /* init code for USB_DEVICE */
-
+    System_Resource_Init();
     /* USER CODE BEGIN test_task */
     /* Infinite loop */
     while(1) {
-        Task_init();
         Task_start();
         /* Delete the default task. */
         osThreadTerminate(startTaskHandle);

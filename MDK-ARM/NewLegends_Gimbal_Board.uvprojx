@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx,USE_HAL_DRIVER,STM32F407xx,ARM_MATH_CM4,__FPU_USED=1U,__FPU_PRESENT=1U,__CC_ARM,ARM_MATH_MATRIX_CHECK,ARM_MATH_ROUNDING</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../application;../boards;../components/algorithm;../components/algorithm/Include;../components/controller;../components/devices;../components/support;../module;../application/protocol</IncludePath>
+              <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../user_code/algorithm;../user_code/application;../user_code/bsp;../user_code/componet/include;../user_code/componet/support;../user_code/device;../user_code/module;../user_code/protocol</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -734,19 +734,24 @@
           <GroupName>App</GroupName>
           <Files>
             <File>
-              <FileName>INS_task.cpp</FileName>
+              <FileName>communicate_task.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\application\INS_task.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>System_Config.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\application\System_Config.cpp</FilePath>
+              <FilePath>..\user_code\application\communicate_task.cpp</FilePath>
             </File>
             <File>
               <FileName>gimbal_task.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\application\gimbal_task.cpp</FilePath>
+              <FilePath>..\user_code\application\gimbal_task.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>INS_task.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\application\INS_task.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>System_Config.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\application\System_Config.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -754,54 +759,19 @@
           <GroupName>module</GroupName>
           <Files>
             <File>
+              <FileName>Communicate.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\module\Communicate.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>gimbal.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\module\gimbal.cpp</FilePath>
+            </File>
+            <File>
               <FileName>INS.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\module\INS.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>can.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\module\can.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>first_order_filter.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\module\first_order_filter.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>M_Gimbal.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\module\M_Gimbal.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>motor_3508.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\module\motor_3508.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>motor_6020.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\module\motor_6020.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>motor_measure.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\module\motor_measure.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>remote_control.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\module\remote_control.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>remote_data.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\module\remote_data.c</FilePath>
-            </File>
-            <File>
-              <FileName>user_lib.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\module\user_lib.cpp</FilePath>
+              <FilePath>..\user_code\module\INS.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -811,77 +781,82 @@
             <File>
               <FileName>bsp_adc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\boards\bsp_adc.c</FilePath>
+              <FilePath>..\user_code\bsp\bsp_adc.c</FilePath>
             </File>
             <File>
               <FileName>bsp_buzzer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\boards\bsp_buzzer.c</FilePath>
+              <FilePath>..\user_code\bsp\bsp_buzzer.c</FilePath>
             </File>
             <File>
               <FileName>bsp_can.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\boards\bsp_can.c</FilePath>
+              <FilePath>..\user_code\bsp\bsp_can.c</FilePath>
             </File>
             <File>
               <FileName>bsp_crc32.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\boards\bsp_crc32.c</FilePath>
+              <FilePath>..\user_code\bsp\bsp_crc32.c</FilePath>
             </File>
             <File>
               <FileName>bsp_delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\boards\bsp_delay.c</FilePath>
+              <FilePath>..\user_code\bsp\bsp_delay.c</FilePath>
             </File>
             <File>
               <FileName>bsp_flash.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\boards\bsp_flash.c</FilePath>
+              <FilePath>..\user_code\bsp\bsp_flash.c</FilePath>
             </File>
             <File>
               <FileName>bsp_fric.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\boards\bsp_fric.c</FilePath>
+              <FilePath>..\user_code\bsp\bsp_fric.c</FilePath>
             </File>
             <File>
               <FileName>bsp_i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\boards\bsp_i2c.c</FilePath>
+              <FilePath>..\user_code\bsp\bsp_i2c.c</FilePath>
             </File>
             <File>
               <FileName>bsp_imu_pwm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\boards\bsp_imu_pwm.c</FilePath>
+              <FilePath>..\user_code\bsp\bsp_imu_pwm.c</FilePath>
             </File>
             <File>
               <FileName>bsp_laser.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\boards\bsp_laser.c</FilePath>
+              <FilePath>..\user_code\bsp\bsp_laser.c</FilePath>
             </File>
             <File>
               <FileName>bsp_led.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\boards\bsp_led.c</FilePath>
+              <FilePath>..\user_code\bsp\bsp_led.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_rc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\bsp\bsp_rc.c</FilePath>
             </File>
             <File>
               <FileName>bsp_rng.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\boards\bsp_rng.c</FilePath>
+              <FilePath>..\user_code\bsp\bsp_rng.c</FilePath>
             </File>
             <File>
               <FileName>bsp_servo_pwm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\boards\bsp_servo_pwm.c</FilePath>
+              <FilePath>..\user_code\bsp\bsp_servo_pwm.c</FilePath>
             </File>
             <File>
               <FileName>bsp_spi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\boards\bsp_spi.c</FilePath>
+              <FilePath>..\user_code\bsp\bsp_spi.c</FilePath>
             </File>
             <File>
               <FileName>bsp_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\boards\bsp_usart.c</FilePath>
+              <FilePath>..\user_code\bsp\bsp_usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -889,34 +864,14 @@
           <GroupName>algorithm</GroupName>
           <Files>
             <File>
-              <FileName>AHRS_middleware.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\components\algorithm\AHRS_middleware.c</FilePath>
+              <FileName>First_order_filter.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\algorithm\First_order_filter.cpp</FilePath>
             </File>
-            <File>
-              <FileName>user_lib.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\components\algorithm\user_lib.c</FilePath>
-            </File>
-            <File>
-              <FileName>AHRS.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\components\algorithm\AHRS.lib</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cortexM4lf_math.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\components\algorithm\arm_cortexM4lf_math.lib</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>controller</GroupName>
-          <Files>
             <File>
               <FileName>pid.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\components\controller\pid.c</FilePath>
+              <FilePath>..\user_code\algorithm\pid.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -924,24 +879,9 @@
           <GroupName>devices</GroupName>
           <Files>
             <File>
-              <FileName>BMI088driver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\components\devices\BMI088driver.c</FilePath>
-            </File>
-            <File>
-              <FileName>BMI088Middleware.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\components\devices\BMI088Middleware.c</FilePath>
-            </File>
-            <File>
-              <FileName>ist8310driver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\components\devices\ist8310driver.c</FilePath>
-            </File>
-            <File>
-              <FileName>ist8310driver_middleware.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\components\devices\ist8310driver_middleware.c</FilePath>
+              <FileName>Motor.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\device\Motor.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -951,17 +891,77 @@
             <File>
               <FileName>CRC8_CRC16.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\components\support\CRC8_CRC16.c</FilePath>
+              <FilePath>..\user_code\componet\support\CRC8_CRC16.c</FilePath>
             </File>
             <File>
               <FileName>fifo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\components\support\fifo.c</FilePath>
+              <FilePath>..\user_code\componet\support\fifo.c</FilePath>
+            </File>
+            <File>
+              <FileName>ist8310driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\componet\support\ist8310driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>ist8310driver_middleware.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\componet\support\ist8310driver_middleware.c</FilePath>
             </File>
             <File>
               <FileName>mem_mang4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\components\support\mem_mang4.c</FilePath>
+              <FilePath>..\user_code\componet\support\mem_mang4.c</FilePath>
+            </File>
+            <File>
+              <FileName>OLED.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\componet\support\OLED.c</FilePath>
+            </File>
+            <File>
+              <FileName>AHRS_middleware.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\componet\support\AHRS_middleware.c</FilePath>
+            </File>
+            <File>
+              <FileName>BMI088driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\componet\support\BMI088driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>BMI088Middleware.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\componet\support\BMI088Middleware.c</FilePath>
+            </File>
+            <File>
+              <FileName>AHRS.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\user_code\componet\support\AHRS.lib</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cortexM4lf_math.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\user_code\componet\support\arm_cortexM4lf_math.lib</FilePath>
+            </File>
+            <File>
+              <FileName>user_lib.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\componet\support\user_lib.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>protocol</GroupName>
+          <Files>
+            <File>
+              <FileName>Can_receive.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\protocol\Can_receive.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>remote_control.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\protocol\remote_control.cpp</FilePath>
             </File>
           </Files>
         </Group>
