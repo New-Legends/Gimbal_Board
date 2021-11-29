@@ -59,6 +59,8 @@ volatile uint8_t accel_temp_update_flag = 0;
 volatile uint8_t mag_update_flag = 0;
 volatile uint8_t imu_start_dma_flag = 0; //IMU读取数据标志位
 /**********************************************(C) 标志位 **************************************************/
+
+/**********************************************(C) DMA传输 **************************************************/
 TaskHandle_t INS_task_local_handler; //任务句柄
 
 static const fp32 fliter_num[3] = {1.929454039488895f, -0.93178349823448126f, 0.002329458745586203f};
@@ -72,16 +74,21 @@ uint8_t accel_dma_tx_buf[SPI_DMA_ACCEL_LENGHT] = {0x92, 0xFF, 0xFF, 0xFF, 0xFF, 
 
 uint8_t accel_temp_dma_rx_buf[SPI_DMA_ACCEL_TEMP_LENGHT];
 uint8_t accel_temp_dma_tx_buf[SPI_DMA_ACCEL_TEMP_LENGHT] = {0xA2, 0xFF, 0xFF, 0xFF};
+/**********************************************(C) DMA传输 **************************************************/
 
+/**********************************************(C) 陀螺仪校准 **************************************************/
 fp32 gyro_scale_factor[3][3] = {BMI088_BOARD_INSTALL_SPIN_MATRIX};
 fp32 gyro_offset[3];
+fp32 gyro_cali_offset[3];
 
 fp32 accel_scale_factor[3][3] = {BMI088_BOARD_INSTALL_SPIN_MATRIX};
 fp32 accel_offset[3];
+fp32 accel_cali_offset[3];
 
 fp32 mag_scale_factor[3][3] = {IST8310_BOARD_INSTALL_SPIN_MATRIX};
 fp32 mag_offset[3];
-
+fp32 mag_cali_offset[3];
+/**********************************************(C) 陀螺仪校准 **************************************************/
 /**
   * @brief          imu任务, 初始化 bmi088, ist8310, 计算欧拉角
   * @param[in]      pvParameters: NULL
@@ -319,7 +326,7 @@ extern "C"
     {
         if (GPIO_Pin == INT1_ACCEL_Pin)
         {
-            //detect_hook(BOARD_ACCEL_TOE);
+            detect_hook(BOARD_ACCEL_TOE);
             accel_update_flag |= 1 << IMU_DR_SHFITS;
             accel_temp_update_flag |= 1 << IMU_DR_SHFITS;
             if (imu_start_dma_flag)
@@ -329,7 +336,7 @@ extern "C"
         }
         else if (GPIO_Pin == INT1_GYRO_Pin)
         {
-            //detect_hook(BOARD_GYRO_TOE);
+            detect_hook(BOARD_GYRO_TOE);
             gyro_update_flag |= 1 << IMU_DR_SHFITS;
             if (imu_start_dma_flag)
             {
@@ -338,7 +345,7 @@ extern "C"
         }
         else if (GPIO_Pin == DRDY_IST8310_Pin)
         {
-            //detect_hook(BOARD_MAG_TOE);
+            detect_hook(BOARD_MAG_TOE);
             mag_update_flag |= 1 << IMU_DR_SHFITS;
         }
         else if (GPIO_Pin == GPIO_PIN_0)
@@ -405,3 +412,67 @@ extern "C"
 #ifdef __cplusplus
 }
 #endif
+
+
+/*******************************************(C) 陀螺仪校准 ***********************************************/
+/**
+  * @brief          计算陀螺仪零漂
+  * @param[out]     gyro_offset:计算零漂
+  * @param[in]      gyro:角速度数据
+  * @param[out]     offset_time_count: 自动加1
+  * @retval         none
+  */
+void gyro_offset_calc(fp32 gyro_offset[3], fp32 gyro[3], uint16_t *offset_time_count)
+{
+    if (gyro_offset == NULL || gyro == NULL || offset_time_count == NULL)
+    {
+        return;
+    }
+
+        gyro_offset[0] = gyro_offset[0] - 0.0003f * gyro[0];
+        gyro_offset[1] = gyro_offset[1] - 0.0003f * gyro[1];
+        gyro_offset[2] = gyro_offset[2] - 0.0003f * gyro[2];
+        (*offset_time_count)++;
+}
+
+/**
+  * @brief          校准陀螺仪
+  * @param[out]     陀螺仪的比例因子，1.0f为默认值，不修改
+  * @param[out]     陀螺仪的零漂，采集陀螺仪的静止的输出作为offset
+  * @param[out]     陀螺仪的时刻，每次在gyro_offset调用会加1,
+  * @retval         none
+  */
+void INS_cali_gyro(fp32 cali_scale[3], fp32 cali_offset[3], uint16_t *time_count)
+{
+        if( *time_count == 0)
+        {
+            gyro_offset[0] = gyro_cali_offset[0];
+            gyro_offset[1] = gyro_cali_offset[1];
+            gyro_offset[2] = gyro_cali_offset[2];
+        }
+        gyro_offset_calc(gyro_offset, imu.INS_gyro, time_count);
+
+        cali_offset[0] = gyro_offset[0];
+        cali_offset[1] = gyro_offset[1];
+        cali_offset[2] = gyro_offset[2];
+        cali_scale[0] = 1.0f;
+        cali_scale[1] = 1.0f;
+        cali_scale[2] = 1.0f;
+
+}
+
+/**
+  * @brief          校准陀螺仪设置，将从flash或者其他地方传入校准值
+  * @param[in]      陀螺仪的比例因子，1.0f为默认值，不修改
+  * @param[in]      陀螺仪的零漂
+  * @retval         none
+  */
+void INS_set_cali_gyro(fp32 cali_scale[3], fp32 cali_offset[3])
+{
+    gyro_cali_offset[0] = cali_offset[0];
+    gyro_cali_offset[1] = cali_offset[1];
+    gyro_cali_offset[2] = cali_offset[2];
+    gyro_offset[0] = gyro_cali_offset[0];
+    gyro_offset[1] = gyro_cali_offset[1];
+    gyro_offset[2] = gyro_cali_offset[2];
+}

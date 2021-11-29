@@ -753,6 +753,16 @@
               <FileType>8</FileType>
               <FilePath>..\user_code\application\System_Config.cpp</FilePath>
             </File>
+            <File>
+              <FileName>calibrate_task.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\application\calibrate_task.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>detect_task.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\application\detect_task.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

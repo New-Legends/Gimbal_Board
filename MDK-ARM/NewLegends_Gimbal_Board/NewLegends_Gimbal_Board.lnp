@@ -67,6 +67,8 @@
 "newlegends_gimbal_board\gimbal_task.o"
 "newlegends_gimbal_board\ins_task.o"
 "newlegends_gimbal_board\system_config.o"
+"newlegends_gimbal_board\calibrate_task.o"
+"newlegends_gimbal_board\detect_task.o"
 "newlegends_gimbal_board\communicate.o"
 "newlegends_gimbal_board\gimbal.o"
 "newlegends_gimbal_board\ins.o"

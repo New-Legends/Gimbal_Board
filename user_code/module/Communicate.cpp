@@ -9,6 +9,8 @@
 #include "Remote_control.h"
 #include "Can_receive.h"
 
+#include "detect_task.h"
+
 Remote_control remote_control;
 CAN_Gimbal can_receive;
 
@@ -43,7 +45,7 @@ extern "C"
             static uint8_t i = 0;
             i = rx_header.StdId - CAN_YAW_MOTOR_ID;
             Can.motor_gimbal[i].get_motor_measure(rx_data);
-            // detect_hook(gimbal_MOTOR1_TOE + i);
+            detect_hook(YAW_GIMBAL_MOTOR_TOE + i);
             break;
         }
 
@@ -95,7 +97,7 @@ extern "C"
                 {
                     remote_control.unpack(0);
                     //记录数据接收时间
-                    //detect_hook(DBUS_TOE);
+                    detect_hook(DBUS_TOE);
                     remote_control.sbus_to_usart1(0);
                 }
             }

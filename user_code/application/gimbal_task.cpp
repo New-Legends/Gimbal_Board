@@ -47,6 +47,16 @@
   */
 #include "gimbal_task.h"
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+#include "bsp_buzzer.h"
+
+#ifdef __cplusplus
+}
+#endif
+
 void gimbal_task(void *pvParameters)
 {
     vTaskDelay(GIMBAL_TASK_INIT_TIME);
@@ -54,8 +64,10 @@ void gimbal_task(void *pvParameters)
     gimbal.init();
     //云台数据反馈
     gimbal.feedback_update();
+    //buzzer_on(31, 19999);
     while (1)
     {
+        
         //设置云台状态机
         gimbal.set_mode();
         //云台控制模式切换 控制数据过渡

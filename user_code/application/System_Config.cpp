@@ -17,6 +17,7 @@ extern "C" {
 #include "communicate_task.h"
 #include "gimbal_task.h"
 #include "INS_task.h"
+#include "calibrate_task.h"
 
 #define Tiny_Stack_Size       64
 #define Small_Stack_Size      128
@@ -34,6 +35,7 @@ extern "C" {
 
 TaskHandle_t INS_Task_Handle;
 TaskHandle_t Gimbal_Task_Handle;
+TaskHandle_t cali_task_handle;
 TaskHandle_t communicate_task_handle;
 
 void System_Resource_Init(void)
@@ -54,5 +56,6 @@ void Task_start(void) {
     xTaskCreate(INS_task, "INS_task", Huge_Stack_Size, NULL, PriorityRealtime, &INS_Task_Handle);
     xTaskCreate(gimbal_task, "gimbal_task", Normal_Stack_Size, NULL, PriorityHigh, &Gimbal_Task_Handle);
     xTaskCreate(communicate_task, "communicate_task", Large_Stack_Size, NULL, PriorityHigh, &communicate_task_handle);
+    xTaskCreate(calibrate_task, "calibrate_task", Normal_Stack_Size, NULL, PriorityHigh, &cali_task_handle);
 }
 

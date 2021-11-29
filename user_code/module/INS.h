@@ -41,6 +41,9 @@ extern "C"{
 }
 #endif
 
+#include "Communicate.h"
+#include "detect_task.h"
+
 #define SPI_DMA_GYRO_LENGHT       8
 #define SPI_DMA_ACCEL_LENGHT      9
 #define SPI_DMA_ACCEL_TEMP_LENGHT 4
