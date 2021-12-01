@@ -39,13 +39,16 @@ extern "C"
 
         switch (rx_header.StdId)
         {
+        case CAN_LEFT_FRIC_MOTOR_ID:
+        case CAN_RIGHT_FRIC_MOTOR_ID:
+        case CAN_TRIGGER_MOTOR_ID:
         case CAN_YAW_MOTOR_ID:
         case CAN_PIT_MOTOR_ID:
         {
             static uint8_t i = 0;
-            i = rx_header.StdId - CAN_YAW_MOTOR_ID;
-            Can.motor_gimbal[i].get_motor_measure(rx_data);
-            detect_hook(YAW_GIMBAL_MOTOR_TOE + i);
+            i = rx_header.StdId - CAN_LEFT_FRIC_MOTOR_ID;
+            Can.motor[i].get_motor_measure(rx_data);
+            detect_hook(CAN_LEFT_FRIC_MOTOR_ID + i);
             break;
         }
 

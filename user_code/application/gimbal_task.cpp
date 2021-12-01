@@ -47,16 +47,6 @@
   */
 #include "gimbal_task.h"
 
-#ifdef __cplusplus
-extern "C"{
-#endif
-
-#include "bsp_buzzer.h"
-
-#ifdef __cplusplus
-}
-#endif
-
 void gimbal_task(void *pvParameters)
 {
     vTaskDelay(GIMBAL_TASK_INIT_TIME);
@@ -64,7 +54,6 @@ void gimbal_task(void *pvParameters)
     gimbal.init();
     //云台数据反馈
     gimbal.feedback_update();
-    //buzzer_on(31, 19999);
     while (1)
     {
         
@@ -90,8 +79,8 @@ void gimbal_task(void *pvParameters)
         gimbal.pitch_can_set_current = gimbal.gimbal_pitch_motor.given_current;
 #endif
 
-        gimbal.gimbal_can.CAN_cmd_gimbal(gimbal.yaw_can_set_current, gimbal.pitch_can_set_current, 0, 0);
-        //GIMBAL.gimbal_can.CAN_cmd_gimbal(0, 5500, 0, 0);
+        //gimbal.gimbal_can.cmd_gimbal(gimbal.yaw_can_set_current, gimbal.pitch_can_set_current, 0, 0);
+        gimbal.gimbal_can.cmd_gimbal(0, 0, 0, 0);
         //gimbal.gimbal_can.CAN_cmd_gimbal_temp(0, gimbal.yaw_can_set_current, 0, 0);
         //TODO:看到这两个can发送机械的大兄弟有什么要说的嘛
     }

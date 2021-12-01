@@ -48,11 +48,11 @@ void Gimbal::init() {
     gimbal_behaviour = GIMBAL_ZERO_FORCE;
     yaw_can_set_current = 0;
     pitch_can_set_current = 0;
-    shoot_can_set_current = 0;
 
     //遥控器数据指针获取
     gimbal_RC = remote_control.get_remote_control_point();
-
+    
+    gimbal_can.init();
     //电机速度环PID
     static const fp32 Pitch_speed_pid[3] = {PITCH_SPEED_PID_KP, PITCH_SPEED_PID_KI, PITCH_SPEED_PID_KD};
     static const fp32 Yaw_speed_pid[3] = {YAW_SPEED_PID_KP, YAW_SPEED_PID_KI, YAW_SPEED_PID_KD};
@@ -124,7 +124,7 @@ void Gimbal::feedback_update()
     gimbal_pitch_motor.absolute_angle = *(gimbal_INT_angle_point + INS_PITCH_ADDRESS_OFFSET);
 
 #if PITCH_TURN
-    gimbal_pitch_motor.relative_angle = -motor_ecd_to_angle_change(Can.motor_gimbal[PITCH].ecd,
+    gimbal_pitch_motor.relative_angle = -motor_ecd_to_angle_change(Can.motor[PITCH].ecd,
                                                                    gimbal_pitch_motor.offset_ecd);
 #else
 
@@ -141,7 +141,7 @@ void Gimbal::feedback_update()
                                                                 gimbal_yaw_motor.offset_ecd);
 
 #else
-    gimbal_yaw_motor.relative_angle = motor_ecd_to_angle_change(Can.motor_gimbal[YAW].ecd,
+    gimbal_yaw_motor.relative_angle = motor_ecd_to_angle_change(Can.motor[YAW].ecd,
                                                                 gimbal_yaw_motor.offset_ecd);
 #endif
     gimbal_yaw_motor.motor_gyro = cos(double(gimbal_pitch_motor.relative_angle)) * (*(gimbal_INT_gyro_point + INS_GYRO_Z_ADDRESS_OFFSET))
@@ -877,6 +877,26 @@ bool_t Gimbal::cmd_cali_gimbal_hook(uint16_t *yaw_offset, uint16_t *pitch_offset
         gimbal_pitch_motor.max_relative_angle    = *max_pitch;
         gimbal_pitch_motor.min_relative_angle    = *min_pitch;
         gimbal_cali.step = 0;
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+
+
+/**
+  * @brief          云台在某些行为下，需要射击停止
+  * @param[in]      none
+  * @retval         1: no move 0:normal
+  */
+
+bool_t Gimbal::gimbal_cmd_to_shoot_stop(void)
+{
+    if (gimbal_behaviour == GIMBAL_INIT || gimbal_behaviour == GIMBAL_CALI || gimbal_behaviour == GIMBAL_ZERO_FORCE)
+    {
         return 1;
     }
     else

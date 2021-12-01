@@ -99,17 +99,44 @@ typedef __packed struct
 
 
 
-/*
-        记录当前鼠标值
-*/
-#define IF_MOUSE_PRESSED_L (rc_ctrl.mouse.press_l != 0)
-#define IF_MOUSE_PRESSED_R (rc_ctrl.mouse.press_r != 0)
+//遥控器控制
+class Remote_control
+{
+public:
+        //接收原始数据，为18个字节，给了36个字节长度，防止DMA传输越界
+        uint8_t sbus_rx_buf[2][SBUS_RX_BUF_NUM];
+        RC_ctrl_t rc_ctrl;
+        RC_ctrl_t last_rc_ctrl; 
+        
+        void init();     
+
+        const RC_ctrl_t *get_remote_control_point();
+        const RC_ctrl_t *get_last_remote_control_point();       
+
+
+
+        void unpack(uint8_t num);
+        void sbus_to_usart1(uint8_t num);
+
+        uint8_t RC_data_is_error();
+        void slove_RC_lost();
+        void slove_data_error();
+        int16_t RC_abs(int16_t value); //取正函数
+};
+
+extern Remote_control remote_control;
 
 /*
         记录当前鼠标值
 */
-#define LAST_IF_MOUSE_PRESSED_L (last_rc_ctrl.mouse.press_l != 0)
-#define LAST_IF_MOUSE_PRESSED_R (last_rc_ctrl.mouse.press_r != 0)
+#define IF_MOUSE_PRESSED_L (remote_control.rc_ctrl.mouse.press_l != 0)
+#define IF_MOUSE_PRESSED_R (remote_control.rc_ctrl.mouse.press_r != 0)
+
+/*
+        记录当前鼠标值
+*/
+#define LAST_IF_MOUSE_PRESSED_L (remote_control.last_rc_ctrl.mouse.press_l != 0)
+#define LAST_IF_MOUSE_PRESSED_R (remote_control.last_rc_ctrl.mouse.press_r != 0)
 
 /* 
         单击鼠标
@@ -188,32 +215,4 @@ typedef __packed struct
 #define IF_KEY_SINGAL_PRESSED_SHIFT (IF_KEY_PRESSED_SHIFT && !LAST_IF_KEY_PRESSED_SHIFT)
 
 /* ----------------------- Internal Data ----------------------------------- */
-
-
-//遥控器控制
-class Remote_control
-{
-public:
-        //接收原始数据，为18个字节，给了36个字节长度，防止DMA传输越界
-        uint8_t sbus_rx_buf[2][SBUS_RX_BUF_NUM];
-        RC_ctrl_t rc_ctrl;
-        RC_ctrl_t last_rc_ctrl; 
-        
-        void init();     
-
-        const RC_ctrl_t *get_remote_control_point();
-        const RC_ctrl_t *get_last_remote_control_point();       
-
-
-
-        void unpack(uint8_t num);
-        void sbus_to_usart1(uint8_t num);
-
-        uint8_t RC_data_is_error();
-        void slove_RC_lost();
-        void slove_data_error();
-        int16_t RC_abs(int16_t value); //取正函数
-};
-
-
 #endif

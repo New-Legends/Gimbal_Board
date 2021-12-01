@@ -16,6 +16,8 @@ typedef unsigned char bool_t;
 typedef float fp32;
 typedef double fp64;
 
+#define FALSE 0
+#define TRUE  1
 
 #endif
 

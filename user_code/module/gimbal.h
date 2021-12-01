@@ -2,8 +2,8 @@
 // Created by WSJ on 2021/11/2.
 //
 
-#ifndef GIMBAL_BOARD_M_GIMBAL_H
-#define GIMBAL_BOARD_M_GIMBAL_H
+#ifndef GIMBAL_BOARD_GIMBAL_H
+#define GIMBAL_BOARD_GIMBAL_H
 
 #ifdef __cplusplus
 extern "C"
@@ -22,7 +22,6 @@ extern "C"
 #include "remote_control.h"
 #include "Can_receive.h"
 #include "user_lib.h"
-#include <math.h>
 #include "INS.h"
 #include "Communicate.h"
 
@@ -206,8 +205,6 @@ public:
     const fp32 *gimbal_INT_gyro_point;          //获取陀螺仪角速度值
     motor_6020 gimbal_yaw_motor;                //yaw云台电机
     motor_6020 gimbal_pitch_motor;              //pitch云台电机
-    motor_3508 LEFT_FRIC;                       //左摩擦轮电机
-    motor_3508 RIGHT_FRIC;                      //右摩擦轮电机
     gimbal_motor_mode_e gimbal_motor_mode;      //云台控制状态机
     gimbal_motor_mode_e last_gimbal_motor_mode; //云台上次控制状态机
     gimbal_behaviour_e gimbal_behaviour;        //云台行为模式
@@ -234,7 +231,6 @@ public:
     //发送的电机电流
     int16_t yaw_can_set_current;
     int16_t pitch_can_set_current;
-    int16_t shoot_can_set_current;
 
     void init();                        //云台初始化
     void set_mode();                    //设置云台控制模式
@@ -277,6 +273,8 @@ public:
     static void calc_gimbal_cali(const gimbal_step_cali_t *gimbal_cali, uint16_t *yaw_offset, uint16_t *pitch_offset, fp32 *max_yaw, fp32 *min_yaw, fp32 *max_pitch, fp32 *min_pitch);
     //云台校准计算
     /***************************(C) GIMBAL CALI *******************************/
+
+    bool_t gimbal_cmd_to_shoot_stop(void);
 };
 
 extern Gimbal gimbal;

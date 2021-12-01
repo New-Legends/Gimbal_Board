@@ -763,6 +763,11 @@
               <FileType>8</FileType>
               <FilePath>..\user_code\application\detect_task.cpp</FilePath>
             </File>
+            <File>
+              <FileName>shoot_task.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\application\shoot_task.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -782,6 +787,11 @@
               <FileName>INS.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\user_code\module\INS.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>shoot.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\module\shoot.cpp</FilePath>
             </File>
           </Files>
         </Group>
