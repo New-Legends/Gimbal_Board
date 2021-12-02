@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : RNG.c
-  * Description        : This file provides code for the configuration
-  *                      of the RNG instances.
+  * @file    rng.c
+  * @brief   This file provides code for the configuration
+  *          of the RNG instances.
   ******************************************************************************
   * @attention
   *
@@ -30,11 +30,21 @@ RNG_HandleTypeDef hrng;
 void MX_RNG_Init(void)
 {
 
+  /* USER CODE BEGIN RNG_Init 0 */
+
+  /* USER CODE END RNG_Init 0 */
+
+  /* USER CODE BEGIN RNG_Init 1 */
+
+  /* USER CODE END RNG_Init 1 */
   hrng.Instance = RNG;
   if (HAL_RNG_Init(&hrng) != HAL_OK)
   {
     Error_Handler();
   }
+  /* USER CODE BEGIN RNG_Init 2 */
+
+  /* USER CODE END RNG_Init 2 */
 
 }
 

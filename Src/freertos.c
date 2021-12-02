@@ -121,12 +121,14 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of test */
-  //osThreadDef(test, test_task, osPriorityNormal, 0, 128);
-  //testHandle = osThreadCreate(osThread(test), NULL);
-  osThreadDef(start, start_task, osPriorityNormal, 0, 128);
-  startTaskHandle = osThreadCreate(osThread(start), NULL);
+  osThreadDef(test, test_task, osPriorityNormal, 0, 128);
+  testHandle = osThreadCreate(osThread(test), NULL);
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+  osThreadDef(start, start_task, osPriorityNormal, 0, 128);
+  startTaskHandle = osThreadCreate(osThread(start), NULL);
+
   /* USER CODE END RTOS_THREADS */
 
 }
@@ -142,7 +144,6 @@ __weak void test_task(void const * argument)
 {
   /* init code for USB_DEVICE */
   MX_USB_DEVICE_Init();
-
   /* USER CODE BEGIN test_task */
   /* Infinite loop */
   for(;;)

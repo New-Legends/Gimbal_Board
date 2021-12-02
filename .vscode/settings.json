@@ -5,6 +5,10 @@
         "main.h": "c",
         "bsp_can.h": "c",
         "cmath": "cpp",
-        "pid.h": "c"
+        "pid.h": "c",
+        "bsp_usart.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "stm32f4xx_hal_conf.h": "c",
+        "stm32f4xx_it.h": "c"
     }
 }

@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : RTC.c
-  * Description        : This file provides code for the configuration
-  *                      of the RTC instances.
+  * @file    rtc.c
+  * @brief   This file provides code for the configuration
+  *          of the RTC instances.
   ******************************************************************************
   * @attention
   *
@@ -30,6 +30,13 @@ RTC_HandleTypeDef hrtc;
 void MX_RTC_Init(void)
 {
 
+  /* USER CODE BEGIN RTC_Init 0 */
+
+  /* USER CODE END RTC_Init 0 */
+
+  /* USER CODE BEGIN RTC_Init 1 */
+
+  /* USER CODE END RTC_Init 1 */
   /** Initialize RTC Only
   */
   hrtc.Instance = RTC;
@@ -43,17 +50,30 @@ void MX_RTC_Init(void)
   {
     Error_Handler();
   }
+  /* USER CODE BEGIN RTC_Init 2 */
+
+  /* USER CODE END RTC_Init 2 */
 
 }
 
 void HAL_RTC_MspInit(RTC_HandleTypeDef* rtcHandle)
 {
 
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(rtcHandle->Instance==RTC)
   {
   /* USER CODE BEGIN RTC_MspInit 0 */
 
   /* USER CODE END RTC_MspInit 0 */
+  /** Initializes the peripherals clock
+  */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RTC;
+    PeriphClkInitStruct.RTCClockSelection = RCC_RTCCLKSOURCE_HSE_DIV30;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
     /* RTC clock enable */
     __HAL_RCC_RTC_ENABLE();
   /* USER CODE BEGIN RTC_MspInit 1 */

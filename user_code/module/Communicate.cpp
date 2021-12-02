@@ -8,6 +8,7 @@
 
 #include "Remote_control.h"
 #include "Can_receive.h"
+#include "vision.h"
 
 #include "detect_task.h"
 
@@ -20,6 +21,11 @@ void Communicate::init()
 {
     remote_control.init();
     can_receive.init();
+    //vision_init();
+}
+
+void Communicate::send(){
+    //vision_send_data(1);
 }
 
 #ifdef __cplusplus //告诉编译器，这部分代码按C语言的格式进行编译，而不是C++的
@@ -139,4 +145,42 @@ extern "C"
         }
     }
 }
+
+//视觉接收中断
+void USART1_IRQHandler(void)
+{
+    static volatile uint8_t res;
+    if (USART1->SR & UART_FLAG_IDLE)
+    {
+        __HAL_UART_CLEAR_PEFLAG(&huart1);
+
+        static uint16_t this_time_rx_len = 0;
+
+        if ((huart1.hdmarx->Instance->CR & DMA_SxCR_CT) == RESET)
+        {
+            __HAL_DMA_DISABLE(huart1.hdmarx);
+            this_time_rx_len = VISION_BUFFER_LEN - __HAL_DMA_GET_COUNTER(huart1.hdmarx);
+            __HAL_DMA_SET_COUNTER(huart1.hdmarx, VISION_BUFFER_LEN);
+            huart1.hdmarx->Instance->CR |= DMA_SxCR_CT;
+            __HAL_DMA_ENABLE(huart1.hdmarx);
+
+            vision_read_data(Vision_Buffer[0]); //读取视觉数据
+            memset(Vision_Buffer[0], 0, 200);
+        }
+        else
+        {
+            __HAL_DMA_DISABLE(huart1.hdmarx);
+            this_time_rx_len = VISION_BUFFER_LEN - __HAL_DMA_GET_COUNTER(huart1.hdmarx);
+            __HAL_DMA_SET_COUNTER(huart1.hdmarx, VISION_BUFFER_LEN);
+            huart1.hdmarx->Instance->CR &= ~(DMA_SxCR_CT);
+            __HAL_DMA_ENABLE(huart1.hdmarx);
+
+            vision_read_data(Vision_Buffer[1]); //读取视觉数据
+            memset(Vision_Buffer[1], 0, 200);   //对象   内容  长度
+        }
+    }
+}
+
+
+
 #endif

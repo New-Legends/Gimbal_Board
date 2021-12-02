@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : dma.c
-  * Description        : This file provides code for the configuration
-  *                      of all the requested memory to memory DMA transfers.
+  * @file    dma.c
+  * @brief   This file provides code for the configuration
+  *          of all the requested memory to memory DMA transfers.
   ******************************************************************************
   * @attention
   *
@@ -16,6 +16,7 @@
   *
   ******************************************************************************
   */
+
 /* Includes ------------------------------------------------------------------*/
 #include "dma.h"
 
@@ -36,6 +37,7 @@
   */
 void MX_DMA_Init(void)
 {
+
   /* DMA controller clock enable */
   __HAL_RCC_DMA2_CLK_ENABLE();
   __HAL_RCC_DMA1_CLK_ENABLE();
@@ -56,6 +58,9 @@ void MX_DMA_Init(void)
   /* DMA2_Stream3_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream3_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream3_IRQn);
+  /* DMA2_Stream5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream5_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream5_IRQn);
   /* DMA2_Stream6_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream6_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream6_IRQn);
@@ -68,13 +73,5 @@ void MX_DMA_Init(void)
 /* USER CODE BEGIN 2 */
 
 /* USER CODE END 2 */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

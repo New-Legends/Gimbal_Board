@@ -36,6 +36,10 @@ class Communicate
 public:
     void init();
 
+    void receive();
+
+    void send();
+
 
 };
 
