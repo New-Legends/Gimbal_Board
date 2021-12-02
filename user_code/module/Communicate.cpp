@@ -12,7 +12,7 @@
 
 #include "detect_task.h"
 
-Remote_control remote_control;
+Remote_control remote_control;  
 CAN_Gimbal can_receive;
 
 Communicate communicate;
@@ -21,11 +21,11 @@ void Communicate::init()
 {
     remote_control.init();
     can_receive.init();
-    //vision_init();
+    vision_init();
 }
 
 void Communicate::send(){
-    //vision_send_data(1);
+    vision_send_data(1);
 }
 
 #ifdef __cplusplus //告诉编译器，这部分代码按C语言的格式进行编译，而不是C++的
