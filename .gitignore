@@ -51,8 +51,8 @@ Mkfile.old
 dkms.conf
 
 
-#STM32CubeMX文件保存位置信息
-.mxproject
+# #STM32CubeMX文件保存位置信息
+# .mxproject
 
 
 #JLink调试信息文件
@@ -77,11 +77,11 @@ JLinkSettings.ini
 *.a
 !arm_cortexM4lf_math.lib
 
-#Keil工程记录和DeBug配置
-*.uvguix.*
-*.uvopt
-*.uvoptx
-*.dbgconf
+# #Keil工程记录和DeBug配置
+# *.uvguix.*
+# *.uvopt
+# *.uvoptx
+# *.dbgconf
 
 #其它文件
 *.exe
