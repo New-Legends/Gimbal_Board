@@ -52,7 +52,6 @@ void Gimbal::init() {
     //遥控器数据指针获取
     gimbal_RC = remote_control.get_remote_control_point();
     
-    gimbal_can.init();
     //电机速度环PID
     static const fp32 Pitch_speed_pid[3] = {PITCH_SPEED_PID_KP, PITCH_SPEED_PID_KI, PITCH_SPEED_PID_KD};
     static const fp32 Yaw_speed_pid[3] = {YAW_SPEED_PID_KP, YAW_SPEED_PID_KI, YAW_SPEED_PID_KD};
@@ -65,8 +64,8 @@ void Gimbal::init() {
     static const fp32 Pitch_encode_pid[3] = {PITCH_ENCODE_RELATIVE_PID_KP, PITCH_ENCODE_RELATIVE_PID_KI, PITCH_ENCODE_RELATIVE_PID_KD};
     static const fp32 Yaw_encode_pid[3] = {YAW_ENCODE_RELATIVE_PID_KP, YAW_ENCODE_RELATIVE_PID_KI, YAW_ENCODE_RELATIVE_PID_KD};
 
-    gimbal_yaw_motor.gimbal_motor_measure = gimbal_can.get_gimbal_motor_measure_point(YAW);
-    gimbal_pitch_motor.gimbal_motor_measure = gimbal_can.get_gimbal_motor_measure_point(PITCH);
+    gimbal_yaw_motor.gimbal_motor_measure = Can.get_gimbal_motor_measure_point(YAW);
+    gimbal_pitch_motor.gimbal_motor_measure = Can.get_gimbal_motor_measure_point(PITCH);
 
     
     //TODO: 在INS初始化移植完毕后取消注释这里
@@ -89,8 +88,8 @@ void Gimbal::init() {
 
     //定义yaw和pitch的限位
     //TODO:需要测试,先关闭
-    max_yaw = 2*PI;
-    min_yaw = -2*PI;
+    max_yaw = PI;
+    min_yaw = -PI;
     max_pitch_ecd = max_pitch = 0.3f;
     min_pitch_ecd = min_pitch = -0.3f;
     max_yaw_ecd = max_yaw;
@@ -331,7 +330,7 @@ void Gimbal::set_control() {
     {
         //enconde模式下，电机编码角度控制 YAW不需要限位所以不用进行判断
         gimbal_yaw_motor.relative_angle_set += add_yaw_angle;
-        //relative_angle_limit(&gimbal_yaw_motor, add_yaw_angle);
+        relative_angle_limit(&gimbal_yaw_motor, add_yaw_angle);
         relative_angle_limit(&gimbal_pitch_motor, add_pitch_angle);
     }
 

@@ -5,7 +5,7 @@
 #include "cmsis_os.h"
 #include "main.h"
 
-
+#define COM_CONTROL_TIME_MS 2
 
 //任务开始空闲一段时间
 #define COMMUNICATE_TASK_INIT_TIME 30

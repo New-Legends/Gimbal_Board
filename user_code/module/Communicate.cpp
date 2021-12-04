@@ -21,8 +21,8 @@ void Communicate::init()
 {
     remote_control.init();
     can_receive.init();
-    vision_init();
-}
+    //vision_init();
+}   
 
 void Communicate::send()
 {

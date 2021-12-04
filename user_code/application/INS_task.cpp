@@ -56,7 +56,7 @@ void INS_task(void *pvParameters)
   {
     //gimbal_imu.init();
     imu.INS_Info_Get();
-    //vTaskDelay(IMU_CONTROL_TIME_MS);
+    vTaskDelay(IMU_CONTROL_TIME_MS);
   }
 }
 

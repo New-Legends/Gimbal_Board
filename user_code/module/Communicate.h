@@ -7,6 +7,16 @@
 #include "Remote_control.h"
 #include "Can_receive.h"
 
+typedef enum
+{
+    LEFT_FRIC = 0,
+    RIGHT_FIRC,
+    trigger,
+    magezine,
+    YAW,
+    PITCH,
+} gimbal_motor_id;
+
 
 //错误码以及对应设备顺序
 enum errorList

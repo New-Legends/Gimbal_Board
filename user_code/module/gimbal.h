@@ -61,16 +61,16 @@ extern CAN_Gimbal Can;
 
 //pitch encode angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define PITCH_ENCODE_RELATIVE_PID_KP 150.0f //15
+#define PITCH_ENCODE_RELATIVE_PID_KP 500.0f //15
 #define PITCH_ENCODE_RELATIVE_PID_KI 0.0f
 #define PITCH_ENCODE_RELATIVE_PID_KD 0.0f
 
-#define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 10000.0f
+#define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 1000.0f
 #define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 0.0f
 
 //yaw encode angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define YAW_ENCODE_RELATIVE_PID_KP 500.0f //8
+#define YAW_ENCODE_RELATIVE_PID_KP 100.0f //8
 #define YAW_ENCODE_RELATIVE_PID_KI 0.0f
 #define YAW_ENCODE_RELATIVE_PID_KD 0.1f
 #define YAW_ENCODE_RELATIVE_PID_MAX_OUT 10000.0f
@@ -155,13 +155,6 @@ extern CAN_Gimbal Can;
 #ifndef MOTOR_ECD_TO_RAD
 #define MOTOR_ECD_TO_RAD 0.000766990394f //      2*  PI  /8192
 #endif
-typedef enum
-{
-    YAW = 0,
-    PITCH,
-    LEFT_FRIC,
-    RIGHT_FIRC,
-} gimbal_motor_id;
 
 //云台状态机
 typedef enum
@@ -213,7 +206,6 @@ public:
 
     pid_type_def gimbal_speed_pid[2]; //云台电机速度pid
     pid_type_def gimbal_angle_pid[2]; //云台电机角度pid
-    CAN_Gimbal gimbal_can;            //接收云台can数据
 
     First_order_filter gimbal_cmd_slow_set_vx; //使用一阶低通滤波减缓设定值
     First_order_filter gimbal_cmd_slow_set_vy; //使用一阶低通滤波减缓设定值

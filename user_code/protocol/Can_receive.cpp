@@ -27,7 +27,7 @@ void CAN_Gimbal::init()
 
 const motor_measure *CAN_Gimbal::get_gimbal_motor_measure_point(uint8_t i)
 {
-    return &motor[(i + 3)];
+    return &motor[i];
 }
 
 /**
