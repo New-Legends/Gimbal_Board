@@ -4,14 +4,16 @@
 #include "Can_receive.h"
 #include "cmsis_os.h"
 #include "main.h"
-#ifdef  __cplusplus
-extern "C" {
+#include "detect_task.h"
+#ifdef __cplusplus
+extern "C"
+{
 #endif
 
 #include "bsp_can.h"
 #include "can.h"
 
-#ifdef  __cplusplus
+#ifdef __cplusplus
 }
 #endif
 
@@ -27,7 +29,7 @@ void CAN_Gimbal::init()
 
 const motor_measure *CAN_Gimbal::get_gimbal_motor_measure_point(uint8_t i)
 {
-    return &motor[(i + 3)];
+    return &motor[i];
 }
 
 /**
@@ -44,7 +46,6 @@ const motor_measure *CAN_Gimbal::get_shoot_motor_measure_point(uint8_t i)
 {
     return &motor[i];
 }
-
 
 void CAN_Gimbal::cmd_gimbal(int16_t yaw, int16_t pitch, int16_t motor3, int16_t motor4)
 {
@@ -80,11 +81,8 @@ void CAN_Gimbal::cmd_shoot(int16_t left_fric, int16_t right_fric, int16_t trigge
     shoot_can_send_data[5] = trigger;
     shoot_can_send_data[6] = (rev >> 8);
     shoot_can_send_data[7] = rev;
-	
 
-	
     HAL_CAN_AddTxMessage(&SHOOT_CAN, &shoot_tx_message, shoot_can_send_data, &send_mail_box);
-
 }
 
 // void CAN_Gimbal::CAN_cmd_gimbal_temp(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4)
@@ -106,5 +104,36 @@ void CAN_Gimbal::cmd_shoot(int16_t left_fric, int16_t right_fric, int16_t trigge
 //     HAL_CAN_AddTxMessage(&GIMBAL_CAN, &gimbal_tx_message, gimbal_can_send_data, &send_mail_box);
 // }
 
+/**
+  * @brief          hal库CAN回调函数,接收电机数据
+  * @param[in]      hcan:CAN句柄指针
+  * @retval         none
+  */
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
+{
+    CAN_RxHeaderTypeDef rx_header;
+    uint8_t rx_data[8];
 
+    HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
 
+    switch (rx_header.StdId)
+    {
+    case CAN_LEFT_FRIC_MOTOR_ID:
+    case CAN_RIGHT_FRIC_MOTOR_ID:
+    case CAN_TRIGGER_MOTOR_ID:
+    case CAN_YAW_MOTOR_ID:
+    case CAN_PIT_MOTOR_ID:
+    {
+        static uint8_t i = 0;
+        i = rx_header.StdId - CAN_LEFT_FRIC_MOTOR_ID;
+        Can.motor[i].get_motor_measure(rx_data);
+        //detect_hook(CAN_LEFT_FRIC_MOTOR_ID + i);
+        break;
+    }
+
+    default:
+    {
+        break;
+    }
+    }
+}

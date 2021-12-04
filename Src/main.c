@@ -108,7 +108,7 @@ int main(void)
   MX_TIM4_Init();
   MX_TIM5_Init();
   MX_USART3_UART_Init();
-  MX_TIM8_Init(); 
+  MX_TIM8_Init();
   MX_CRC_Init();
   MX_RNG_Init();
   MX_I2C2_Init();
@@ -121,7 +121,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
-  //�?启蜂鸣器
+  //?????
   HAL_TIM_Base_Start(&htim4);
   HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
   /* USER CODE END 2 */

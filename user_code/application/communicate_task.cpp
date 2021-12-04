@@ -13,22 +13,14 @@ void communicate_task(void *pvParameters)
 {
   vTaskDelay(COMMUNICATE_TASK_INIT_TIME);
 
- 
   communicate.init();
 
   while (1)
   {
 
-    communicate.send();
+    //communicate.send();
 
     communicate_flag = HAL_GPIO_ReadPin(KEY_GPIO_Port, KEY_Pin);
-    HAL_Delay(20);
-
+    vTaskDelay(COM_CONTROL_TIME_MS);
   }
 }
-
-
-
-
-
-

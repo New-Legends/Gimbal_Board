@@ -31,13 +31,13 @@ extern CAN_Gimbal Can;
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
 #define PITCH_SPEED_PID_KP 2000.0f //2900
 #define PITCH_SPEED_PID_KI 0.0f
-#define PITCH_SPEED_PID_KD 0.4f
+#define PITCH_SPEED_PID_KD 0.0f
 #define PITCH_SPEED_PID_MAX_OUT 30000.0f
 #define PITCH_SPEED_PID_MAX_IOUT 10000.0f
 
 //yaw speed close-loop PID params, max out and max iout
 //yaw 速度环 PID参数以及 PID最大输出，积分输出
-#define YAW_SPEED_PID_KP 1000.0f //1800
+#define YAW_SPEED_PID_KP 2000.0f //1800
 #define YAW_SPEED_PID_KI 0.0f    //20
 #define YAW_SPEED_PID_KD 0.0f
 #define YAW_SPEED_PID_MAX_OUT 30000.0f
@@ -45,23 +45,23 @@ extern CAN_Gimbal Can;
 
 //pitch gyro angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define PITCH_GYRO_ABSOLUTE_PID_KP 13.0f //15
+#define PITCH_GYRO_ABSOLUTE_PID_KP 500.0f //15
 #define PITCH_GYRO_ABSOLUTE_PID_KI 0.0f
 #define PITCH_GYRO_ABSOLUTE_PID_KD 0.1f
-#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 6.0f
-#define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 0.0f
+#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 10000.0f
+#define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 100.0f
 
 //yaw gyro angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define YAW_GYRO_ABSOLUTE_PID_KP 4.0f //26
+#define YAW_GYRO_ABSOLUTE_PID_KP 300.0f //26
 #define YAW_GYRO_ABSOLUTE_PID_KI 0.0f
-#define YAW_GYRO_ABSOLUTE_PID_KD 0.0f
-#define YAW_GYRO_ABSOLUTE_PID_MAX_OUT 4.0f
+#define YAW_GYRO_ABSOLUTE_PID_KD 1.0f
+#define YAW_GYRO_ABSOLUTE_PID_MAX_OUT 10000.0f
 #define YAW_GYRO_ABSOLUTE_PID_MAX_IOUT 0.0f
 
 //pitch encode angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define PITCH_ENCODE_RELATIVE_PID_KP 150.0f //15
+#define PITCH_ENCODE_RELATIVE_PID_KP 100.0f //15
 #define PITCH_ENCODE_RELATIVE_PID_KI 0.0f
 #define PITCH_ENCODE_RELATIVE_PID_KD 0.0f
 
@@ -70,11 +70,11 @@ extern CAN_Gimbal Can;
 
 //yaw encode angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define YAW_ENCODE_RELATIVE_PID_KP 500.0f //8
-#define YAW_ENCODE_RELATIVE_PID_KI 0.0f
-#define YAW_ENCODE_RELATIVE_PID_KD 0.1f
+#define YAW_ENCODE_RELATIVE_PID_KP 300.0f //8
+#define YAW_ENCODE_RELATIVE_PID_KI 0.1f
+#define YAW_ENCODE_RELATIVE_PID_KD 10.0f
 #define YAW_ENCODE_RELATIVE_PID_MAX_OUT 10000.0f
-#define YAW_ENCODE_RELATIVE_PID_MAX_IOUT 0.0f
+#define YAW_ENCODE_RELATIVE_PID_MAX_IOUT 1.0f
 
 //任务开始空闲一段时间
 #define GIMBAL_TASK_INIT_TIME 201
@@ -95,8 +95,8 @@ extern CAN_Gimbal Can;
 //遥控器输入死区，因为遥控器存在差异，摇杆在中间，其值不一定为零
 #define RC_DEADBAND 10
 
-#define YAW_RC_SEN -0.0000005f
-#define PITCH_RC_SEN -0.0000006f //0.005
+#define YAW_RC_SEN -0.00000005f
+#define PITCH_RC_SEN -0.00000006f //0.005
 
 #define YAW_MOUSE_SEN 0.00005f
 #define PITCH_MOUSE_SEN 0.00015f
@@ -155,13 +155,6 @@ extern CAN_Gimbal Can;
 #ifndef MOTOR_ECD_TO_RAD
 #define MOTOR_ECD_TO_RAD 0.000766990394f //      2*  PI  /8192
 #endif
-typedef enum
-{
-    YAW = 0,
-    PITCH,
-    LEFT_FRIC,
-    RIGHT_FIRC,
-} gimbal_motor_id;
 
 //云台状态机
 typedef enum
@@ -213,7 +206,6 @@ public:
 
     pid_type_def gimbal_speed_pid[2]; //云台电机速度pid
     pid_type_def gimbal_angle_pid[2]; //云台电机角度pid
-    CAN_Gimbal gimbal_can;            //接收云台can数据
 
     First_order_filter gimbal_cmd_slow_set_vx; //使用一阶低通滤波减缓设定值
     First_order_filter gimbal_cmd_slow_set_vy; //使用一阶低通滤波减缓设定值

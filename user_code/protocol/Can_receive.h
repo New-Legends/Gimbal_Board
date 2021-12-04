@@ -18,6 +18,7 @@ typedef enum
     CAN_LEFT_FRIC_MOTOR_ID = 0x205,
     CAN_RIGHT_FRIC_MOTOR_ID = 0x206,
     CAN_TRIGGER_MOTOR_ID = 0x207,
+    CAN_MAGEZIN_MOTOR_ID = 0x208,
     CAN_SHOOT_ALL_ID = 0x1FF,
     //云台电机接收ID
     CAN_YAW_MOTOR_ID = 0x209,
@@ -28,13 +29,13 @@ typedef enum
 class CAN_Gimbal
 {
 public:
-    /*
+/*
 电机数据, 
-0:左摩擦轮电机 3508电机, 1右摩擦轮电机 3508电机, 2拨弹电机 2006电机,
-3:yaw云台电机 6020电机; 4:pitch云台电机 6020电机;
+0:左摩擦轮电机 3508电机, 1:右摩擦轮电机 3508电机, 2:拨弹电机 2006电机,
+3:弹舱电机 2006电机,4:yaw云台电机 6020电机; 5:pitch云台电机 6020电机;
 */
 
-    motor_measure motor[5];
+    motor_measure motor[6];
 
     CAN_TxHeaderTypeDef gimbal_tx_message;
 
