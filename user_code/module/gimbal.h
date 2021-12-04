@@ -37,25 +37,25 @@ extern CAN_Gimbal Can;
 
 //yaw speed close-loop PID params, max out and max iout
 //yaw 速度环 PID参数以及 PID最大输出，积分输出
-#define YAW_SPEED_PID_KP 1000.0f //1800
-#define YAW_SPEED_PID_KI 0.1f    //20
+#define YAW_SPEED_PID_KP 2000.0f //1800
+#define YAW_SPEED_PID_KI 0.0f    //20
 #define YAW_SPEED_PID_KD 0.0f
 #define YAW_SPEED_PID_MAX_OUT 30000.0f
 #define YAW_SPEED_PID_MAX_IOUT 5000.0f
 
 //pitch gyro angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define PITCH_GYRO_ABSOLUTE_PID_KP 100.0f //15
+#define PITCH_GYRO_ABSOLUTE_PID_KP 500.0f //15
 #define PITCH_GYRO_ABSOLUTE_PID_KI 0.0f
 #define PITCH_GYRO_ABSOLUTE_PID_KD 0.1f
-#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 6.0f
-#define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 0.0f
+#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 10000.0f
+#define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 100.0f
 
 //yaw gyro angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
 #define YAW_GYRO_ABSOLUTE_PID_KP 300.0f //26
 #define YAW_GYRO_ABSOLUTE_PID_KI 0.0f
-#define YAW_GYRO_ABSOLUTE_PID_KD 0.0f
+#define YAW_GYRO_ABSOLUTE_PID_KD 1.0f
 #define YAW_GYRO_ABSOLUTE_PID_MAX_OUT 10000.0f
 #define YAW_GYRO_ABSOLUTE_PID_MAX_IOUT 0.0f
 
@@ -71,8 +71,8 @@ extern CAN_Gimbal Can;
 //yaw encode angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
 #define YAW_ENCODE_RELATIVE_PID_KP 300.0f //8
-#define YAW_ENCODE_RELATIVE_PID_KI 0.0f
-#define YAW_ENCODE_RELATIVE_PID_KD 0.1f
+#define YAW_ENCODE_RELATIVE_PID_KI 0.1f
+#define YAW_ENCODE_RELATIVE_PID_KD 10.0f
 #define YAW_ENCODE_RELATIVE_PID_MAX_OUT 10000.0f
 #define YAW_ENCODE_RELATIVE_PID_MAX_IOUT 1.0f
 
@@ -95,7 +95,7 @@ extern CAN_Gimbal Can;
 //遥控器输入死区，因为遥控器存在差异，摇杆在中间，其值不一定为零
 #define RC_DEADBAND 10
 
-#define YAW_RC_SEN -0.0000005f
+#define YAW_RC_SEN -0.00000005f
 #define PITCH_RC_SEN -0.00000006f //0.005
 
 #define YAW_MOUSE_SEN 0.00005f
