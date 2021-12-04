@@ -79,9 +79,8 @@ void gimbal_task(void *pvParameters)
         gimbal.pitch_can_set_current = gimbal.gimbal_pitch_motor.given_current;
 #endif
 
-        Can.cmd_gimbal(0, gimbal.pitch_can_set_current, 0, 0);
-        //gimbal.gimbal_can.cmd_gimbal(0, 0, 0, 0);
-        //gimbal.gimbal_can.CAN_cmd_gimbal_temp(0, gimbal.yaw_can_set_current, 0, 0);
+        Can.cmd_gimbal(gimbal.yaw_can_set_current, gimbal.pitch_can_set_current, 0, 0);
+        //Can.cmd_gimbal(0,0,0,0);
         //TODO:看到这两个can发送机械的大兄弟有什么要说的嘛
     }
 }

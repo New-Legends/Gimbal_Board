@@ -353,7 +353,7 @@ void shoot::bullet_control(void)
     if (rad_format(set_angle - angle) > 0.05f)
     {
         //没到达一直设置旋转速度
-        trigger_speed_set = shoot_grigger_grade[1] * SHOOT_TRIGGER_DIRECTION;
+        trigger_speed_set = shoot_grigger_grade[1] * SHOOT_TRIGGER_DIRECTION / 10;
         trigger_motor_turn_back();
     }
     else

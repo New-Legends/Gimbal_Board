@@ -51,7 +51,6 @@ void Gimbal::init() {
 
     //遥控器数据指针获取
     gimbal_RC = remote_control.get_remote_control_point();
-    
     //电机速度环PID
     static const fp32 Pitch_speed_pid[3] = {PITCH_SPEED_PID_KP, PITCH_SPEED_PID_KI, PITCH_SPEED_PID_KD};
     static const fp32 Yaw_speed_pid[3] = {YAW_SPEED_PID_KP, YAW_SPEED_PID_KI, YAW_SPEED_PID_KD};
@@ -88,8 +87,8 @@ void Gimbal::init() {
 
     //定义yaw和pitch的限位
     //TODO:需要测试,先关闭
-    max_yaw = PI;
-    min_yaw = -PI;
+    max_yaw = 2 * PI;
+    min_yaw = -2 * PI;
     max_pitch_ecd = max_pitch = 0.3f;
     min_pitch_ecd = min_pitch = -0.3f;
     max_yaw_ecd = max_yaw;

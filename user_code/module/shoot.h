@@ -155,7 +155,7 @@ public:
     fp32 angle;
     fp32 set_angle;
     int16_t given_current;
-    int8_t ecd_count;
+    int16_t ecd_count;
 
     fric_motor_t fric_motor[2]; 
     pid_type_def fric_speed_pid[2];

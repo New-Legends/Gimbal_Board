@@ -54,7 +54,6 @@ public:
 };
 
 extern Remote_control remote_control;
-extern CAN_Gimbal can_receive;
 
 extern Communicate communicate;
 
