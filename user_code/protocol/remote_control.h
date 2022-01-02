@@ -124,8 +124,6 @@ public:
         int16_t RC_abs(int16_t value); //取正函数
 };
 
-extern Remote_control remote_control;
-
 /*
         记录当前鼠标值
 */

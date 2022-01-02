@@ -67,20 +67,7 @@ void gimbal_task(void *pvParameters)
         gimbal.set_control();
         //设置PID计算
         gimbal.gimbal_control_loop();
-#if YAW_TURN
-        gimbal.yaw_can_set_current = -gimbal.gimbal_yaw_motor.given_current;
-#else
-        gimbal.yaw_can_set_current = gimbal.gimbal_yaw_motor.given_current;
-#endif
-
-#if PITCH_TURN
-        gimbal.pitch_can_set_current = -gimbal.gimbal_pitch_motor.given_current;
-#else
-        gimbal.pitch_can_set_current = gimbal.gimbal_pitch_motor.given_current;
-#endif
-
-        Can.cmd_gimbal(gimbal.yaw_can_set_current, gimbal.pitch_can_set_current, 0, 0);
-        //Can.cmd_gimbal(0,0,0,0);
-        //TODO:看到这两个can发送机械的大兄弟有什么要说的嘛
+        //输出电流
+        gimbal.output();
     }
 }

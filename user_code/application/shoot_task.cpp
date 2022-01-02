@@ -31,9 +31,6 @@ void shoot_task(void *pvParameters){
         Shoot.feedback_update();    //更新数据
         Shoot.set_control();        //射击任务控制循环
 
-        //CAN发送
-        //Can.cmd_shoot(Shoot.fric_motor[LEFT].give_current, Shoot.fric_motor[RIGHT].give_current, Shoot.given_current, 0);
-        //Can.cmd_shoot(0, 0, Shoot.given_current, 0);
         vTaskDelay(SHOOT_CONTROL_TIME);
     }
     

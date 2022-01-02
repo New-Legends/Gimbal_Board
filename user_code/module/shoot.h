@@ -145,7 +145,6 @@ public:
     shoot_mode_e shoot_mode;                                        //射击模式参数结构体
     uint16_t shoot_last_key_v;
 
-    CAN_Gimbal shoot_can;
     //拨弹电机数据
     const motor_measure *trigger_motor_measure;
     pid_type_def trigger_motor_pid;
@@ -182,13 +181,18 @@ public:
     bool_t button_key;              
     uint8_t key_time;
 
-    void init(void);                                          //初始化
-    void set_mode(void);                                      //射击状态机设置
-    void feedback_update(void);                               //射击数据更新
-    void set_control(void);                                   //射击循环
-    void trigger_motor_turn_back(void);                       //堵转倒转处理
-    void bullet_control(void);                                //控制拨弹电机角度
-    bool_t cmd_to_gimbal_stop(void);                          //弹仓打开云台停止运动判断位
+    void init();                                          //初始化
+    void set_mode();                                      //射击状态机设置
+    void feedback_update();                               //射击数据更新
+    void set_control();                                   //射击循环
+    void output();                                        //电流输出
+
+
+
+
+    void trigger_motor_turn_back();                       //堵转倒转处理
+    void bullet_control();                                //控制拨弹电机角度
+    bool_t cmd_to_gimbal_stop();                          //弹仓打开云台停止运动判断位
 };
 
 extern shoot Shoot;

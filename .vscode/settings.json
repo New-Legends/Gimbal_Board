@@ -11,6 +11,7 @@
         "stm32f4xx_hal_conf.h": "c",
         "stm32f4xx_it.h": "c",
         "shoot_task.h": "c",
-        "can_receive.h": "c"
+        "can_receive.h": "c",
+        "struct_typedef.h": "c"
     }
 }

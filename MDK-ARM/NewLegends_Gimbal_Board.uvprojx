@@ -959,6 +959,16 @@
               <FileType>8</FileType>
               <FilePath>..\user_code\device\Motor.cpp</FilePath>
             </File>
+            <File>
+              <FileName>Oled.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\device\Oled.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Led.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\device\Led.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -988,11 +998,6 @@
               <FileName>mem_mang4.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user_code\componet\support\mem_mang4.c</FilePath>
-            </File>
-            <File>
-              <FileName>OLED.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user_code\componet\support\OLED.c</FilePath>
             </File>
             <File>
               <FileName>AHRS_middleware.c</FileName>

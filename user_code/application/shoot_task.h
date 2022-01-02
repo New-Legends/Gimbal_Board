@@ -26,6 +26,10 @@
 #define SHOOT_TASK_INIT_TIME 201 
 #define SHOOT_CONTROL_TIME 1
 
+//发射机构电机无电流输出
+#define SHOOT_FRIC_MOTOR_NO_CURRENT 1
+#define SHOOT_TRIGGER_MOTOR_NO_CURRENT 1
+
 extern void shoot_task(void *pvParameters);
 
 

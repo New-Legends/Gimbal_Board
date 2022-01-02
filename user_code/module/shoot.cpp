@@ -3,7 +3,7 @@
 //
 
 #include "shoot.h"
-
+#include "Can_receive.h"
 #include "math.h"
 
 /*这部分是裁判，后续需要删除*/
@@ -22,14 +22,14 @@ shoot Shoot;
 static const fp32 Trigger_speed_pid[3] = {TRIGGER_ANGLE_PID_KP, TRIGGER_ANGLE_PID_KI, TRIGGER_ANGLE_PID_KD};
 static const fp32 Fric_speed_pid[3] = {FRIC_SPEED_PID_KP, FRIC_SPEED_PID_KI, FRIC_SPEED_PID_KD};
 
-void shoot::init(void)
+void shoot::init()
 {
     //设置发射机构默认状态
     shoot_mode = SHOOT_STOP;
     //电机指针 拨弹 摩擦轮
-    trigger_motor_measure = Can.get_trigger_motor_measure_point();
-    fric_motor[LEFT].fric_motor_measure = Can.get_shoot_motor_measure_point(LEFT);
-    fric_motor[RIGHT].fric_motor_measure = Can.get_shoot_motor_measure_point(RIGHT);
+    trigger_motor_measure = can_receive.get_trigger_motor_measure_point();
+    fric_motor[LEFT].fric_motor_measure = can_receive.get_shoot_motor_measure_point(LEFT);
+    fric_motor[RIGHT].fric_motor_measure = can_receive.get_shoot_motor_measure_point(RIGHT);
 
     //初始化PID
     PID_init(&trigger_motor_pid, PID_POSITION, Trigger_speed_pid, TRIGGER_READY_PID_MAX_OUT, TRIGGER_READY_PID_MAX_IOUT);
@@ -104,8 +104,8 @@ void shoot::set_mode()
     else if (shoot_mode == SHOOT_READY_BULLET && button_key == SWITCH_TRIGGER_ON)
     {
         shoot_mode = SHOOT_READY;
-    }
-    else if (shoot_mode == SHOOT_READY && button_key == SWITCH_TRIGGER_OFF)
+    } 
+    else if (shoot_mode == SHOOT_READY && button_key == SWITCH_TRIGGER_OFF)    //TODO 拨盘疯转 可能和此处有关
     {
         shoot_mode = SHOOT_READY_BULLET;
     }
@@ -168,7 +168,7 @@ void shoot::set_mode()
 
 bool_t key_flag_test = 0;
 
-void shoot::feedback_update(void)
+void shoot::feedback_update()
 {
     //更新摩擦轮电机速度
 
@@ -250,7 +250,7 @@ void shoot::feedback_update(void)
   * @param[in]      void
   * @retval         返回can控制值
   */
-void shoot::set_control(void)
+void shoot::set_control()
 {
     if (shoot_mode == SHOOT_STOP)
     {
@@ -337,7 +337,22 @@ void shoot::set_control(void)
     }
 }
 
-void shoot::bullet_control(void)
+void shoot::output() 
+{
+#ifdef SHOOT_FRIC_MOTOR_NO_CURRENT
+    Shoot.fric_motor[LEFT].give_current = 0;
+    Shoot.fric_motor[RIGHT].give_current = 0;
+#endif
+#ifdef SHOOT_TRIGGER_MOTOR_NO_CURRENT
+    Shoot.given_current = 0;
+#endif
+
+    //CAN发送
+    can_receive.cmd_shoot(Shoot.fric_motor[LEFT].give_current, Shoot.fric_motor[RIGHT].give_current, Shoot.given_current, 0);
+}
+
+
+void shoot::bullet_control()
 {
     //每次拨动的角度
     if (move_flag == 0)
@@ -363,7 +378,7 @@ void shoot::bullet_control(void)
     }
 }
 
-void shoot::trigger_motor_turn_back(void)
+void shoot::trigger_motor_turn_back()
 {
     if (block_time < BLOCK_TIME)
     {
@@ -389,7 +404,7 @@ void shoot::trigger_motor_turn_back(void)
     }
 }
 
-bool_t shoot::cmd_to_gimbal_stop(void)
+bool_t shoot::cmd_to_gimbal_stop()
 {
     if (magazine_status == TRUE)
     {

@@ -2,8 +2,8 @@
 // Created by WSJ on 2021/11/2.
 //
 
-#ifndef GIMBAL_BOARD_GIMBAL_H
-#define GIMBAL_BOARD_GIMBAL_H
+#ifndef GIMBAL_H
+#define GIMBAL_H
 
 #ifdef __cplusplus
 extern "C"
@@ -25,7 +25,6 @@ extern "C"
 #include "INS.h"
 #include "Communicate.h"
 
-extern CAN_Gimbal Can;
 
 //pitch speed close-loop PID params, max out and max iout
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
@@ -231,6 +230,7 @@ public:
     void feedback_update();             //云台数据反馈
     void behaviour_mode_set();          //云台行为状态机及电机状态机设置
     void gimbal_control_loop();         //云台控制PID计算
+    void output();                      //输出电流
     void mode_change_control_transit(); //转换状态保存数据
 
     /***************************(C)  MOTOR control *******************************/
