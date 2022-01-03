@@ -18,7 +18,7 @@ void communicate_task(void *pvParameters)
   while (1)
   {
 
-    //communicate.send();
+    //communicate.run();
 
     communicate_flag = HAL_GPIO_ReadPin(KEY_GPIO_Port, KEY_Pin);
     vTaskDelay(COM_CONTROL_TIME_MS);

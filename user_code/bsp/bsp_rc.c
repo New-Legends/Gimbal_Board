@@ -47,6 +47,7 @@ void RC_unable(void)
 {
     __HAL_UART_DISABLE(&huart3);
 }
+
 void RC_restart(uint16_t dma_buf_num)
 {
     __HAL_UART_DISABLE(&huart3);

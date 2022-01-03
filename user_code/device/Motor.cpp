@@ -1,9 +1,19 @@
 #include "Motor.h"
 
-void motor_measure::get_motor_measure(const uint8_t *data) {
-    last_ecd = ecd;
-    ecd = (uint16_t) ((data)[0] << 8 | (data)[1]);
-    speed_rpm = (uint16_t) ((data)[2] << 8 | (data)[3]);
-    given_current = (uint16_t) ((data)[4] << 8 | (data)[5]);
-    temperate = (data)[6];
+#include "Pid.h"
+#include "Can_receive.h"
+
+void M3508_motor::init(const motor_measure_t *motor_measure_)
+{
+    motor_measure = motor_measure_;
+}
+
+void G6020_motor::init(const motor_measure_t *motor_measure_)
+{
+    motor_measure = motor_measure_;
+}
+
+void Gimbal_motor::init(const motor_measure_t *motor_measure_)
+{
+    motor_measure = motor_measure_;
 }

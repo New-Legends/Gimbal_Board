@@ -1,20 +1,34 @@
-//
-// Created by summerpray on 2021/11/3.
-//
+#ifndef CAN_RECEIVE_H
+#define CAN_RECEIVE_H
 
-#ifndef GIMBAL_BOARD_CAN_H
-#define GIMBAL_BOARD_CAN_H
+#include "main.h"
 
 #include "struct_typedef.h"
-#include "Motor.h"
 
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
 
-
-#define GIMBAL_CAN hcan1
 #define SHOOT_CAN hcan1
+#define GIMBAL_CAN hcan1
 #define BOARD_COM_CAN hcan1
+
+//云台电机编号
+enum gimbal_motor_id_e
+{
+    //底盘动力电机接收
+    YAW_MOTOR = 0,
+    PITCH_MOTOR,
+};
+
+//发射机构电机编号
+enum shoot_motor_id_e
+{
+    //底盘动力电机接收
+    LEFT_FRIC_MOTOR = 0,
+    RIGHT_FRIC_MOTOR,
+    TRIGGER_MOTOR,
+    COVER_MOTOR,
+};
 
 typedef enum
 {
@@ -30,12 +44,27 @@ typedef enum
     CAN_PITCH_MOTOR_ID = 0x206,
     CAN_GIMBAL_ALL_ID = 0x1FF,
 
+    // //云台电机接收ID CAN1
+    // CAN_YAW_MOTOR_ID = 0x209,
+    // CAN_PITCH_MOTOR_ID = 0x20A,
+    // CAN_GIMBAL_ALL_ID = 0x2FF,
+
     //板间通信ID
     CAN_RC_BOARM_COM_ID = 0x301,
     CAN_GIMBAL_BOARD_COM_ID = 0x302,
     CAN_COOLING_BOARM_COM_ID = 0x303,
     CAN_17MM_SPEED_BOARD_COM_ID = 0x304,
 } can_msg_id_e;
+
+//rm motor data
+typedef struct
+{
+    uint16_t ecd;
+    int16_t speed_rpm;
+    int16_t given_current;
+    uint8_t temperate;
+    int16_t last_ecd;
+} motor_measure_t;
 
 //云台发送数据结构体
 typedef struct
@@ -70,42 +99,43 @@ typedef struct
 
 } gimbal_receive_t;
 
+
 class Can_receive
 {
+
 public:
-/*
-电机数据, 
-0:左摩擦轮电机 3508电机, 1:右摩擦轮电机 3508电机, 2:拨弹电机 2006电机,
-3:弹舱电机 2006电机,4:yaw云台电机 6020电机; 5:pitch云台电机 6020电机;
-*/
-    motor_measure motor[6];
-    CAN_TxHeaderTypeDef gimbal_tx_message;
-    uint8_t gimbal_can_send_data[8];
+    //云台电机反馈数据结构体
+    motor_measure_t gimbal_motor[2];
+    //发射机构电机反馈数据结构体
+    motor_measure_t shoot_motor[4];
 
-
+    //发送数据结构体
+    CAN_TxHeaderTypeDef can_tx_message;
+    uint8_t can_send_data[8];
 
     //板间通信
-    //底盘接收信息
+    //云台接收信息
     gimbal_receive_t gimbal_receive;
-
+    //云台发送
     gimbal_send_t gimbal_send;
 
     void init();
 
-    void get_motor_measure(uint8_t num, uint8_t data[8]);
+    //云台电机数据接收
+    void get_gimbal_motor_measure(uint8_t num, uint8_t data[8]);
 
-    void cmd_gimbal(int16_t yaw, int16_t pitch, int16_t motor3, int16_t motor4);
+    void can_cmd_gimbal_motor(int16_t yaw, int16_t pitch, int16_t empty1, int16_t empty2);
 
-    void cmd_shoot(int16_t left_fric, int16_t right_fric, int16_t trigger, int16_t rev);
+    const motor_measure_t *get_gimbal_motor_measure_point(uint8_t i);
 
-    //void CAN_cmd_gimbal_temp(int16_t motor1, int16_t motor2, int16_t motor3, int16_t motor4);
+    //发射机构电机数据接收
+    void get_shoot_motor_measure(uint8_t num, uint8_t data[8]);
 
-    const motor_measure *get_trigger_motor_measure_point(void);
+    void can_cmd_shoot_motor_motor(int16_t left_fric, int16_t right_fric, int16_t tigger, int16_t cover); //动力电机数据
 
-    const motor_measure *get_shoot_motor_measure_point(uint8_t i);
+    void can_cmd_shoot_motor_reset_ID();
 
-    const motor_measure *get_gimbal_motor_measure_point(uint8_t i);
-
+    const motor_measure_t *get_shoot_motor_measure_point(uint8_t i);
 
     //板间通信函数
     void receive_cooling_and_id_board_com(uint8_t data[8]);
@@ -116,8 +146,7 @@ public:
     void send_rc_board_com(int16_t ch_1, int16_t ch_2, int16_t ch_3, uint16_t v);
     //发送云台模式及状态
     void send_gimbal_board_com(uint8_t s1, uint8_t gimbal_behaviour, fp32 gimbal_yaw_angle);
-
 };
 
 
-#endif //GIMBAL_BOARD_CAN_H
+#endif

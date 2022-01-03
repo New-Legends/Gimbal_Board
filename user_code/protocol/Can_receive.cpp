@@ -1,100 +1,136 @@
-//
-// Created by summerpray on 2021/11/3.
-//
 #include "Can_receive.h"
+
 #include "cmsis_os.h"
 #include "main.h"
-#include "detect_task.h"
-#ifdef __cplusplus
-extern "C"
-{
-#endif
 
 #include "bsp_can.h"
+
 #include "can.h"
 
-#ifdef __cplusplus
-}
-#endif
+#include "struct_typedef.h"
 
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
-
 
 void Can_receive::init()
 {
     can_filter_init();
 }
- 
-void Can_receive::get_motor_measure(uint8_t num, uint8_t data[8])
-{
-    motor[num].last_ecd = motor[num].ecd;
-    motor[num].ecd = (uint16_t)(data[0] << 8 | data[1]);
-    motor[num].speed_rpm = (uint16_t)(data[2] << 8 | data[3]);
-    motor[num].given_current = (uint16_t)(data[4] << 8 | data[5]);
-    motor[num].temperate = data[6];
-}
 
-const motor_measure *Can_receive::get_gimbal_motor_measure_point(uint8_t i)
+void Can_receive::get_gimbal_motor_measure(uint8_t num, uint8_t data[8])
 {
-    return &motor[i];
+    gimbal_motor[num].last_ecd = gimbal_motor[num].ecd;
+    gimbal_motor[num].ecd = (uint16_t)(data[0] << 8 | data[1]);
+    gimbal_motor[num].speed_rpm = (uint16_t)(data[2] << 8 | data[3]);
+    gimbal_motor[num].given_current = (uint16_t)(data[4] << 8 | data[5]);
+    gimbal_motor[num].temperate = data[6];
 }
 
 /**
-  * @brief          返回拨弹电机 2006电机数据指针
-  * @param[in]      none
+* @brief          
+* @param[in]      
+* @param[in]          
+* @retval         none
+*/
+void Can_receive::can_cmd_gimbal_motor(int16_t yaw, int16_t pitch, int16_t empty1, int16_t empty2)
+{
+    uint32_t send_mail_box;
+    can_tx_message.StdId = CAN_GIMBAL_ALL_ID;
+    can_tx_message.IDE = CAN_ID_STD;
+    can_tx_message.RTR = CAN_RTR_DATA;
+    can_tx_message.DLC = 0x08;
+    can_send_data[0] = yaw >> 8;
+    can_send_data[1] = yaw;
+    can_send_data[2] = pitch >> 8;
+    can_send_data[3] = pitch;
+    can_send_data[4] = 0;
+    can_send_data[5] = 0;
+    can_send_data[6] = 0;
+    can_send_data[7] = 0;
+
+    HAL_CAN_AddTxMessage(&GIMBAL_CAN, &can_tx_message, can_send_data, &send_mail_box);
+}
+
+/**
+  * @brief          返回云台电机 6020电机数据指针
+  * @param[in]      i: 电机编号,范围[0,1]
   * @retval         电机数据指针
   */
-const motor_measure *Can_receive::get_trigger_motor_measure_point(void)
+const motor_measure_t *Can_receive::get_gimbal_motor_measure_point(uint8_t i)
 {
-    return &motor[2];
+    return &gimbal_motor[i];
 }
 
-const motor_measure *Can_receive::get_shoot_motor_measure_point(uint8_t i)
+void Can_receive::get_shoot_motor_measure(uint8_t num, uint8_t data[8])
 {
-    return &motor[i];
+    shoot_motor[num].last_ecd = shoot_motor[num].ecd;
+    shoot_motor[num].ecd = (uint16_t)(data[0] << 8 | data[1]);
+    shoot_motor[num].speed_rpm = (uint16_t)(data[2] << 8 | data[3]);
+    shoot_motor[num].given_current = (uint16_t)(data[4] << 8 | data[5]);
+    shoot_motor[num].temperate = data[6];
 }
 
-
-void Can_receive::cmd_gimbal(int16_t yaw, int16_t pitch, int16_t motor3, int16_t motor4)
-{
-    uint32_t send_mail_box;
-    gimbal_tx_message.StdId = CAN_GIMBAL_ALL_ID;
-    gimbal_tx_message.IDE = CAN_ID_STD;
-    gimbal_tx_message.RTR = CAN_RTR_DATA;
-    gimbal_tx_message.DLC = 0x08;
-    gimbal_can_send_data[0] = yaw >> 8;
-    gimbal_can_send_data[1] = yaw;
-    gimbal_can_send_data[2] = pitch >> 8;
-    gimbal_can_send_data[3] = pitch;
-    gimbal_can_send_data[4] = motor3 >> 8;
-    gimbal_can_send_data[5] = motor3;
-    gimbal_can_send_data[6] = motor4 >> 8;
-    gimbal_can_send_data[7] = motor4;
-
-    HAL_CAN_AddTxMessage(&GIMBAL_CAN, &gimbal_tx_message, gimbal_can_send_data, &send_mail_box);
-}
-
-void Can_receive::cmd_shoot(int16_t left_fric, int16_t right_fric, int16_t trigger, int16_t rev)
+/**
+* @brief          发送电机控制电流(0x201,0x202,0x203,0x204)
+* @param[in]      left_fric: (0x201) 3508电机控制电流, 范围 [-16384,16384]
+* @param[in]      right_fric: (0x202) 3508电机控制电流, 范围 [-16384,16384]
+* @param[in]      tigger: (0x203) 3508电机控制电流, 范围 [-16384,16384]
+* @param[in]      cover: (0x204) 3508电机控制电流, 范围 [-16384,16384]
+* @retval         none
+*/
+void Can_receive::can_cmd_shoot_motor_motor(int16_t left_fric, int16_t right_fric, int16_t tigger, int16_t cover)
 {
     uint32_t send_mail_box;
-    gimbal_tx_message.StdId = CAN_SHOOT_ALL_ID;
-    gimbal_tx_message.IDE = CAN_ID_STD;
-    gimbal_tx_message.RTR = CAN_RTR_DATA;
-    gimbal_tx_message.DLC = 0x08;
-    gimbal_can_send_data[0] = (left_fric >> 8);
-    gimbal_can_send_data[1] = left_fric;
-    gimbal_can_send_data[2] = (right_fric >> 8);
-    gimbal_can_send_data[3] = right_fric;
-    gimbal_can_send_data[4] = (trigger >> 8);
-    gimbal_can_send_data[5] = trigger;
-    gimbal_can_send_data[6] = (rev >> 8);
-    gimbal_can_send_data[7] = rev;
+    can_tx_message.StdId = CAN_GIMBAL_ALL_ID;
+    can_tx_message.IDE = CAN_ID_STD;
+    can_tx_message.RTR = CAN_RTR_DATA;
+    can_tx_message.DLC = 0x08;
+    can_send_data[0] = left_fric >> 8;
+    can_send_data[1] = left_fric;
+    can_send_data[2] = right_fric >> 8;
+    can_send_data[3] = right_fric;
+    can_send_data[4] = tigger >> 8;
+    can_send_data[5] = tigger;
+    can_send_data[6] = cover >> 8;
+    can_send_data[7] = cover;
 
-    HAL_CAN_AddTxMessage(&SHOOT_CAN, &gimbal_tx_message, gimbal_can_send_data, &send_mail_box);
+    HAL_CAN_AddTxMessage(&SHOOT_CAN, &can_tx_message, can_send_data, &send_mail_box);
+}
+
+/**
+  * @brief          发送ID为0x700的CAN包,它会设置3508电机进入快速设置ID
+  * @param[in]      none
+  * @retval         none
+  */
+void Can_receive::can_cmd_shoot_motor_reset_ID(void)
+{
+    uint32_t send_mail_box;
+    can_tx_message.StdId = 0x700;
+    can_tx_message.IDE = CAN_ID_STD;
+    can_tx_message.RTR = CAN_RTR_DATA;
+    can_tx_message.DLC = 0x08;
+    can_send_data[0] = 0;
+    can_send_data[1] = 0;
+    can_send_data[2] = 0;
+    can_send_data[3] = 0;
+    can_send_data[4] = 0;
+    can_send_data[5] = 0;
+    can_send_data[6] = 0;
+    can_send_data[7] = 0;
+
+    HAL_CAN_AddTxMessage(&SHOOT_CAN, &can_tx_message, can_send_data, &send_mail_box);
 }
 
 
+/**
+  * @brief          返回云台电机 6020电机数据指针
+  * @param[in]      i: 电机编号,范围[0,1]
+  * @retval         电机数据指针
+  */
+const motor_measure_t *Can_receive::get_shoot_motor_measure_point(uint8_t i)
+{
+    return &shoot_motor[i];
+}
 
 void Can_receive::receive_cooling_and_id_board_com(uint8_t data[8])
 {
@@ -112,8 +148,6 @@ void Can_receive::receive_17mm_speed_and_mode_board_com(uint8_t data[8])
     gimbal_receive.chassis_behaviour = data[4];
 }
 
-
-
 void Can_receive::send_rc_board_com(int16_t ch_1, int16_t ch_2, int16_t ch_3, uint16_t v)
 {
     //数据填充
@@ -123,20 +157,20 @@ void Can_receive::send_rc_board_com(int16_t ch_1, int16_t ch_2, int16_t ch_3, ui
     gimbal_send.v = v;
 
     uint32_t send_mail_box;
-    gimbal_tx_message.StdId = CAN_RC_BOARM_COM_ID;
-    gimbal_tx_message.IDE = CAN_ID_STD;
-    gimbal_tx_message.RTR = CAN_RTR_DATA;
-    gimbal_tx_message.DLC = 0x08;
-    gimbal_can_send_data[0] = ch_1 >> 8;
-    gimbal_can_send_data[1] = ch_1;
-    gimbal_can_send_data[2] = ch_2 >> 8;
-    gimbal_can_send_data[3] = ch_2;
-    gimbal_can_send_data[4] = ch_3 >> 8;
-    gimbal_can_send_data[5] = ch_3;
-    gimbal_can_send_data[6] = v >> 8;
-    gimbal_can_send_data[7] = v;
+    can_tx_message.StdId = CAN_RC_BOARM_COM_ID;
+    can_tx_message.IDE = CAN_ID_STD;
+    can_tx_message.RTR = CAN_RTR_DATA;
+    can_tx_message.DLC = 0x08;
+    can_send_data[0] = ch_1 >> 8;
+    can_send_data[1] = ch_1;
+    can_send_data[2] = ch_2 >> 8;
+    can_send_data[3] = ch_2;
+    can_send_data[4] = ch_3 >> 8;
+    can_send_data[5] = ch_3;
+    can_send_data[6] = v >> 8;
+    can_send_data[7] = v;
 
-    HAL_CAN_AddTxMessage(&BOARD_COM_CAN, &gimbal_tx_message, gimbal_can_send_data, &send_mail_box);
+    HAL_CAN_AddTxMessage(&BOARD_COM_CAN, &can_tx_message, can_send_data, &send_mail_box);
 }
 
 void Can_receive::send_gimbal_board_com(uint8_t s1, uint8_t gimbal_behaviour, fp32 gimbal_yaw_angle)
@@ -147,18 +181,18 @@ void Can_receive::send_gimbal_board_com(uint8_t s1, uint8_t gimbal_behaviour, fp
     gimbal_send.gimbal_yaw_angle = gimbal_yaw_angle;
 
     uint32_t send_mail_box;
-    gimbal_tx_message.StdId = CAN_GIMBAL_BOARD_COM_ID;
-    gimbal_tx_message.IDE = CAN_ID_STD;
-    gimbal_tx_message.RTR = CAN_RTR_DATA;
-    gimbal_tx_message.DLC = 0x08;
-    gimbal_can_send_data[0] = s1;
-    gimbal_can_send_data[1] = gimbal_behaviour;
-    gimbal_can_send_data[2] = (uint8_t)((int16_t)gimbal_yaw_angle >> 8);
-    gimbal_can_send_data[3] = (uint8_t)(gimbal_yaw_angle);
-    gimbal_can_send_data[4] = 0;
-    gimbal_can_send_data[5] = 0;
-    gimbal_can_send_data[6] = 0;
-    gimbal_can_send_data[7] = 0;
+    can_tx_message.StdId = CAN_GIMBAL_BOARD_COM_ID;
+    can_tx_message.IDE = CAN_ID_STD;
+    can_tx_message.RTR = CAN_RTR_DATA;
+    can_tx_message.DLC = 0x08;
+    can_send_data[0] = s1;
+    can_send_data[1] = gimbal_behaviour;
+    can_send_data[2] = (uint8_t)((int16_t)gimbal_yaw_angle >> 8);
+    can_send_data[3] = (uint8_t)(gimbal_yaw_angle);
+    can_send_data[4] = 0;
+    can_send_data[5] = 0;
+    can_send_data[6] = 0;
+    can_send_data[7] = 0;
 
-    HAL_CAN_AddTxMessage(&BOARD_COM_CAN, &gimbal_tx_message, gimbal_can_send_data, &send_mail_box);
+    HAL_CAN_AddTxMessage(&BOARD_COM_CAN, &can_tx_message, can_send_data, &send_mail_box);
 }

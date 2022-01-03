@@ -1,55 +1,98 @@
 #ifndef MOTOR_H
 #define MOTOR_H
 
-#include "main.h"
-#include "pid.h"
-#include "struct_typedef.h"
+#include "Pid.h"
+#include "Can_receive.h"
 
-class motor_measure {
+//m3508电机
+class M3508_motor
+{
 public:
-    uint16_t ecd;
-    uint16_t speed_rpm;
-    uint16_t given_current;
-    uint8_t temperate;
-    uint16_t last_ecd;
+    const motor_measure_t *motor_measure;
+    //速度环pid和角度环pid, 用户可以选择性开启
+    Pid speed_pid;
+    Pid angle_pid;
 
-    void get_motor_measure(const uint8_t *data);
 
+    fp32 accel;
+    fp32 speed;
+    fp32 speed_set;
+
+    fp32 current_set;
+    int16_t current_give;
+
+    void init(const motor_measure_t *motor_measure_);
+} ;
+
+//G6020电机
+class G6020_motor
+{
+public:
+    const motor_measure_t *motor_measure;
+    //速度环pid和角度环pid, 用户可以选择性开启
+    Pid speed_pid;
+    Pid angle_pid;
+
+    uint16_t offset_ecd;  //用户定义的初始中值
+
+    fp32 max_angle; //rad   角度限幅
+    fp32 mid_angle; //rad
+    fp32 min_angle; //rad
+
+    fp32 angle;
+    fp32 angle_set;
+    fp32 speed;
+    fp32 speed_set;
+    fp32 current_set;
+    int16_t current_give;
+
+    void init(const motor_measure_t *motor_measure_);
 };
 
-class motor_6020 {
+//云台状态机
+typedef enum
+{
+    GIMBAL_MOTOR_RAW = 0, //电机原始值控制
+    GIMBAL_MOTOR_GYRO,    //电机陀螺仪角度控制
+    GIMBAL_MOTOR_ENCONDE, //电机编码值角度控制
+} gimbal_motor_mode_e;
+
+//gimbal电机
+class Gimbal_motor
+{
 public:
-    const motor_measure *gimbal_motor_measure;
-    gimbal_PID_t gimbal_motor_absolute_angle_pid;
-    gimbal_PID_t gimbal_motor_relative_angle_pid;
-    pid_type_def gimbal_motor_gyro_pid;
-    uint16_t offset_ecd;
-    fp32 max_relative_angle; //rad
+    const motor_measure_t *motor_measure;
+    //初始化电机控制模式
+    gimbal_motor_mode_e gimbal_motor_mode;
+    gimbal_motor_mode_e last_gimbal_motor_mode;
+
+    //速度环pid和角度环pid, 用户可以选择性开启
+    Pid speed_pid;
+    Pid absolute_angle_pid;
+    Pid relative_angle_pid;
+
+    uint16_t offset_ecd; //用户定义的初始中值
+
+    fp32 max_relative_angle; //rad   角度限幅
+    fp32 mid_relative_angle; //rad
     fp32 min_relative_angle; //rad
+
+    fp32 max_absolute_angle; //rad
+    fp32 min_absolute_angle; //rad
+    fp32 mid_absolute_angle; //rad
 
     fp32 relative_angle;     //rad
     fp32 relative_angle_set; //rad
     fp32 absolute_angle;     //rad
     fp32 absolute_angle_set; //rad
-    fp32 motor_gyro;         //rad/s
-    fp32 motor_gyro_set;
-    fp32 motor_speed;
-    fp32 raw_cmd_current;
-    fp32 current_set;
-    int16_t given_current;
-};
-
-class motor_3508 {
-public:
-    const motor_measure *gimbal_motor_measure;
-    fp32 accel;
     fp32 speed;
     fp32 speed_set;
-    int16_t give_current;
-};
+    fp32 current_set;
+    int16_t current_give;
 
+    void init(const motor_measure_t *motor_measure_);
+};
 
 
 
 #endif
-

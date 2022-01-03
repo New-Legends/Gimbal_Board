@@ -10,6 +10,7 @@
 extern "C" {
 #endif
 
+#include "struct_typedef.h"
 void Task_start(void);
 void System_Resource_Init(void);
 

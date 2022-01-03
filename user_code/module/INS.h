@@ -28,7 +28,7 @@ extern "C"{
 #endif
 
 #include <string.h>
-#include "pid.h"
+#include "Pid.h"
 #include "main.h"
 #include "cmsis_os.h"
 #include "bsp_imu_pwm.h"
@@ -137,7 +137,7 @@ public:
 /*******************************************(C) 陀螺仪返回参数 ***********************************************/
 
 /*************************************************(C) PID *************************************************/
-    pid_type_def imu_temp_pid;                                               //陀螺仪临时PID
+    Pid imu_temp_pid;                                               //陀螺仪临时PID
 /*************************************************(C) PID *************************************************/
     float timing_time;                               //tast run time , unit s.任务运行的时间 单位 s
     void imu_cali_slove(fp32 gyro[3], fp32 accel[3], fp32 mag[3],bmi088_real_data_t *bmi088, ist8310_real_data_t *ist8310);

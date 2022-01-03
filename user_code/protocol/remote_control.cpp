@@ -1,16 +1,9 @@
-#include "remote_control.h"
+#include "Remote_control.h"
 
 #include "main.h"
 
-#ifdef  __cplusplus
-extern "C" {
-#endif
-
 #include "bsp_usart.h"
 
-#ifdef  __cplusplus
-}
-#endif
 
 #include "string.h"
 

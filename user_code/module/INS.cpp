@@ -120,7 +120,11 @@ void INS::init(void)
     BMI088_read(bmi088_real_data.gyro, bmi088_real_data.accel, &bmi088_real_data.temp);
     //旋转零点漂移
     imu_cali_slove(INS_gyro, INS_accel, INS_mag, &bmi088_real_data, &ist8310_real_data);
-    PID_init(&imu_temp_pid, PID_POSITION, imu_temp_PID, TEMPERATURE_PID_MAX_OUT, TEMPERATURE_PID_MAX_IOUT);
+    
+    //TODO PID暂时不使用
+    //初始化pid
+    //fp32 imu_pid_parm[5] = {TEMPERATURE_PID_KP, TEMPERATURE_PID_KD, MOTIVE_MOTOR_SPEED_PID_KD, TEMPERATURE_PID_MAX_IOUT, TEMPERATURE_PID_MAX_OUT};
+    //imu_temp_pid.init(PID_SPEED, imu_pid_parm, imu_temp_pid.speed, );
 
     AHRS_init(INS_quat, INS_accel, INS_mag);
 
@@ -415,6 +419,45 @@ extern "C"
 
 
 /*******************************************(C) 陀螺仪校准 ***********************************************/
+// /**
+//   * @brief          控制bmi088的温度
+//   * @param[in]      temp:bmi088的温度
+//   * @retval         none
+//   */
+// static void imu_temp_control(fp32 temp)
+// {
+//     uint16_t tempPWM;
+//     static uint8_t temp_constant_time = 0;
+//     if (first_temperate)
+//     {
+//         PID_calc(&imu_temp_pid, temp, get_control_temperature());
+//         if (imu_temp_pid.out < 0.0f)
+//         {
+//             imu_temp_pid.out = 0.0f;
+//         }
+//         tempPWM = (uint16_t)imu_temp_pid.out;
+//         IMU_temp_PWM(tempPWM);
+//     }
+//     else
+//     {
+//         //在没有达到设置的温度，一直最大功率加热
+//         //in beginning, max power
+//         if (temp > get_control_temperature())
+//         {
+//             temp_constant_time++;
+//             if (temp_constant_time > 200)
+//             {
+//                 //达到设置温度，将积分项设置为一半最大功率，加速收敛
+//                 //
+//                 first_temperate = 1;
+//                 imu_temp_pid.Iout = MPU6500_TEMP_PWM_MAX / 2.0f;
+//             }
+//         }
+
+//         IMU_temp_PWM(MPU6500_TEMP_PWM_MAX - 1);
+//     }
+// }
+
 /**
   * @brief          计算陀螺仪零漂
   * @param[out]     gyro_offset:计算零漂

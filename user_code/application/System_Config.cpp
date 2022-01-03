@@ -2,7 +2,7 @@
 // Created by WSJ on 2021/11/2.
 //
 
-#include "System_Config.h"
+#include "system_config.h"
 #ifdef  __cplusplus
 extern "C" {
 #endif
@@ -16,9 +16,9 @@ extern "C" {
 #endif
 #include "communicate_task.h"
 #include "gimbal_task.h"
-#include "INS_task.h"
+#include "ins_task.h"
 #include "calibrate_task.h"
-#include "shoot_task.h"
+
 
 #define Tiny_Stack_Size       64
 #define Small_Stack_Size      128
@@ -34,11 +34,11 @@ extern "C" {
 #define PrioritySuperHigh     7
 #define PriorityRealtime      8
 
-TaskHandle_t INS_Task_Handle;
-TaskHandle_t Gimbal_Task_Handle;
+TaskHandle_t ins_task_Handle;
+TaskHandle_t gimbal_Task_Handle;
 TaskHandle_t cali_task_handle;
 TaskHandle_t communicate_task_handle;
-TaskHandle_t shoot_task_handle;
+
 
 void System_Resource_Init(void)
 {
@@ -55,10 +55,14 @@ void System_Resource_Init(void)
 void Task_start(void) {
     /* Syetem Service init --------------*/
     /* Applications Init ----------------*/
-    xTaskCreate(INS_task, "INS_task", Huge_Stack_Size, NULL, PriorityRealtime, &INS_Task_Handle);
-    xTaskCreate(gimbal_task, "gimbal_task", Normal_Stack_Size, NULL, PriorityHigh, &Gimbal_Task_Handle);
-    xTaskCreate(shoot_task, "shoot_task", Normal_Stack_Size, NULL, PriorityHigh, &shoot_task_handle);
+    xTaskCreate(INS_task, "INS_task", Huge_Stack_Size, NULL, PriorityRealtime, &ins_task_Handle);
+
+    //xTaskCreate(gimbal_task, "gimbal_task", Normal_Stack_Size, NULL, PriorityHigh, &Gimbal_Task_Handle);
+
+    //xTaskCreate(shoot_task, "shoot_task", Normal_Stack_Size, NULL, PriorityHigh, &shoot_task_handle);
+
     xTaskCreate(communicate_task, "communicate_task", Large_Stack_Size, NULL, PriorityHigh, &communicate_task_handle);
+
     xTaskCreate(calibrate_task, "calibrate_task", Normal_Stack_Size, NULL, PriorityHigh, &cali_task_handle);
 }
 

@@ -805,11 +805,6 @@
               <FilePath>..\user_code\application\INS_task.cpp</FilePath>
             </File>
             <File>
-              <FileName>System_Config.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\user_code\application\System_Config.cpp</FilePath>
-            </File>
-            <File>
               <FileName>calibrate_task.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\user_code\application\calibrate_task.cpp</FilePath>
@@ -820,9 +815,9 @@
               <FilePath>..\user_code\application\detect_task.cpp</FilePath>
             </File>
             <File>
-              <FileName>shoot_task.cpp</FileName>
+              <FileName>system_config.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\user_code\application\shoot_task.cpp</FilePath>
+              <FilePath>..\user_code\application\system_config.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -835,19 +830,14 @@
               <FilePath>..\user_code\module\Communicate.cpp</FilePath>
             </File>
             <File>
-              <FileName>gimbal.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\user_code\module\gimbal.cpp</FilePath>
-            </File>
-            <File>
               <FileName>INS.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\user_code\module\INS.cpp</FilePath>
             </File>
             <File>
-              <FileName>shoot.cpp</FileName>
+              <FileName>Gimbal.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\user_code\module\shoot.cpp</FilePath>
+              <FilePath>..\user_code\module\Gimbal.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -945,9 +935,9 @@
               <FilePath>..\user_code\algorithm\First_order_filter.cpp</FilePath>
             </File>
             <File>
-              <FileName>pid.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user_code\algorithm\pid.c</FilePath>
+              <FileName>Pid.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\algorithm\Pid.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1040,14 +1030,14 @@
               <FilePath>..\user_code\protocol\Can_receive.cpp</FilePath>
             </File>
             <File>
-              <FileName>remote_control.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\user_code\protocol\remote_control.cpp</FilePath>
-            </File>
-            <File>
               <FileName>vision.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\user_code\protocol\vision.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Remote_control.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\protocol\Remote_control.cpp</FilePath>
             </File>
           </Files>
         </Group>

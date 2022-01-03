@@ -100,9 +100,10 @@
 #define CALIBRATE_TASK_H
 
 #include "Can_receive.h"
-#include "remote_control.h"
+#include "Remote_control.h"
 #include "INS.h"
-#include "gimbal.h"
+#include "Gimbal.h"
+
 
 #ifdef __cplusplus
 extern "C"{
