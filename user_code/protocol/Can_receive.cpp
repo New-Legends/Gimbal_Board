@@ -4,7 +4,6 @@
 #include "main.h"
 
 #include "bsp_can.h"
-
 #include "can.h"
 
 #include "struct_typedef.h"
@@ -173,10 +172,10 @@ void Can_receive::send_rc_board_com(int16_t ch_1, int16_t ch_2, int16_t ch_3, ui
     HAL_CAN_AddTxMessage(&BOARD_COM_CAN, &can_tx_message, can_send_data, &send_mail_box);
 }
 
-void Can_receive::send_gimbal_board_com(uint8_t s1, uint8_t gimbal_behaviour, fp32 gimbal_yaw_angle)
+void Can_receive::send_gimbal_board_com(uint8_t s0, uint8_t gimbal_behaviour, fp32 gimbal_yaw_angle)
 {
     //数据填充
-    gimbal_send.s1 = s1;
+    gimbal_send.s0 = s0;
     gimbal_send.gimbal_behaviour = gimbal_behaviour;
     gimbal_send.gimbal_yaw_angle = gimbal_yaw_angle;
 
@@ -185,7 +184,7 @@ void Can_receive::send_gimbal_board_com(uint8_t s1, uint8_t gimbal_behaviour, fp
     can_tx_message.IDE = CAN_ID_STD;
     can_tx_message.RTR = CAN_RTR_DATA;
     can_tx_message.DLC = 0x08;
-    can_send_data[0] = s1;
+    can_send_data[0] = s0;
     can_send_data[1] = gimbal_behaviour;
     can_send_data[2] = (uint8_t)((int16_t)gimbal_yaw_angle >> 8);
     can_send_data[3] = (uint8_t)(gimbal_yaw_angle);

@@ -33,14 +33,14 @@ void Communicate::run()
     //向底盘发送遥控器和云台数据
     int16_t temp_ch1, temp_ch2, temp_ch3;
     uint16_t temp_v;
-    uint8_t temp_s1, temp_gimbal_behaviour_mode;
+    uint8_t temp_s0, temp_gimbal_behaviour_mode;
     fp32 temp_gimbal_yaw_angle;
 
     temp_ch1 = remote_control.rc_ctrl.rc.ch[1];
     temp_ch2 = remote_control.rc_ctrl.rc.ch[2];
     temp_ch3 = remote_control.rc_ctrl.rc.ch[3];
     temp_v = remote_control.rc_ctrl.key.v;
-    temp_s1 = remote_control.rc_ctrl.rc.s[1];
+    temp_s0 = remote_control.rc_ctrl.rc.s[0];
 
     temp_gimbal_behaviour_mode = gimbal.gimbal_behaviour_mode;
     if (temp_gimbal_behaviour_mode == GIMBAL_ABSOLUTE_ANGLE)
@@ -49,7 +49,7 @@ void Communicate::run()
         temp_gimbal_yaw_angle = gimbal.gimbal_yaw_motor.relative_angle;
 
     can_receive.send_rc_board_com(temp_ch1, temp_ch2, temp_ch3, temp_v);
-    can_receive.send_gimbal_board_com(temp_s1, temp_gimbal_behaviour_mode, temp_gimbal_yaw_angle);
+    can_receive.send_gimbal_board_com(temp_s0, temp_gimbal_behaviour_mode, temp_gimbal_yaw_angle);
 
 }
 
@@ -216,15 +216,15 @@ extern "C"
                 //                detect_hook(GIMBAL_PITCH_MOTOR_TOE);
                 break;
 
-                // case CAN_COOLING_BOARM_COM_ID:
-                //     can_receive.receive_cooling_and_id_board_com(rx_data);
-                //     //detect_hook(BOARD_COM);
-                //     break;
+            case CAN_COOLING_BOARM_COM_ID:
+                can_receive.receive_cooling_and_id_board_com(rx_data);
+                //detect_hook(BOARD_COM);
+                break;
 
-                // case CAN_17MM_SPEED_BOARD_COM_ID:
-                //     can_receive.receive_17mm_speed_and_mode_board_com(rx_data);
-                //     //detect_hook(BOARD_COM);
-                //     break;
+            case CAN_17MM_SPEED_BOARD_COM_ID:
+                can_receive.receive_17mm_speed_and_mode_board_com(rx_data);
+                //detect_hook(BOARD_COM);
+                break;
 
             default:
             {
