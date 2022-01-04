@@ -43,10 +43,10 @@ void Can_receive::can_cmd_gimbal_motor(int16_t yaw, int16_t pitch, int16_t empty
     can_send_data[1] = yaw;
     can_send_data[2] = pitch >> 8;
     can_send_data[3] = pitch;
-    can_send_data[4] = 0;
-    can_send_data[5] = 0;
-    can_send_data[6] = 0;
-    can_send_data[7] = 0;
+    can_send_data[4] = empty1 >> 8;
+    can_send_data[5] = empty1;
+    can_send_data[6] = empty2 >> 8;
+    can_send_data[7] = empty2;
 
     HAL_CAN_AddTxMessage(&GIMBAL_CAN, &can_tx_message, can_send_data, &send_mail_box);
 }

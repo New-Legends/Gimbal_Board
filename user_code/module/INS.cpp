@@ -44,6 +44,7 @@
   */
 
 #include "INS.h"
+#include "calibrate_task.h"
 
 extern SPI_HandleTypeDef hspi1;
 
@@ -88,6 +89,26 @@ fp32 accel_cali_offset[3];
 fp32 mag_scale_factor[3][3] = {IST8310_BOARD_INSTALL_SPIN_MATRIX};
 fp32 mag_offset[3];
 fp32 mag_cali_offset[3];
+
+static uint8_t first_temperate;
+
+#define IMU_temp_PWM(pwm) imu_pwm_set(pwm) //pwm给定
+
+#define BMI088_BOARD_INSTALL_SPIN_MATRIX \
+    {0.0f, 1.0f, 0.0f},                  \
+        {-1.0f, 0.0f, 0.0f},             \
+    {                                    \
+        0.0f, 0.0f, 1.0f                 \
+    }
+
+#define IST8310_BOARD_INSTALL_SPIN_MATRIX \
+    {1.0f, 0.0f, 0.0f},                   \
+        {0.0f, 1.0f, 0.0f},               \
+    {                                     \
+        0.0f, 0.0f, 1.0f                  \
+    }
+
+
 /**********************************************(C) 陀螺仪校准 **************************************************/
 /**
   * @brief          imu任务, 初始化 bmi088, ist8310, 计算欧拉角
@@ -123,8 +144,8 @@ void INS::init(void)
     
     //TODO PID暂时不使用
     //初始化pid
-    //fp32 imu_pid_parm[5] = {TEMPERATURE_PID_KP, TEMPERATURE_PID_KD, MOTIVE_MOTOR_SPEED_PID_KD, TEMPERATURE_PID_MAX_IOUT, TEMPERATURE_PID_MAX_OUT};
-    //imu_temp_pid.init(PID_SPEED, imu_pid_parm, imu_temp_pid.speed, );
+    fp32 imu_pid_parm[5] = {TEMPERATURE_PID_KP, TEMPERATURE_PID_KI, TEMPERATURE_PID_KD, TEMPERATURE_PID_MAX_IOUT, TEMPERATURE_PID_MAX_OUT};
+    //imu_temp_pid.init(PID_SPEED, imu_pid_parm, &bmi088_real_data.temp, get_control_temperature_fp32(), NULL);
 
     AHRS_init(INS_quat, INS_accel, INS_mag);
 
@@ -198,7 +219,7 @@ void INS::INS_Info_Get()
     accel_fliter_3[2] = accel_fliter_2[2] * fliter_num[0] + accel_fliter_1[2] * fliter_num[1] + INS_accel[2] * fliter_num[2];
 
     AHRS_update(INS_quat, timing_time, INS_gyro, accel_fliter_3, INS_mag);
-    get_angle(INS_quat, INS_angle + INS_YAW_ADDRESS_OFFSET, INS_angle + INS_PITCH_ADDRESS_OFFSET, INS_angle + INS_ROLL_ADDRESS_OFFSET);
+    get_angle(INS_quat, INS_angle + INS_YAW_ADDRESS_OFFSET, INS_angle + INS_ROLL_ADDRESS_OFFSET, INS_angle + INS_PITCH_ADDRESS_OFFSET);
 
     //because no use ist8310 and save time, no use
     if (mag_update_flag &= 1 << IMU_DR_SHFITS)
@@ -419,44 +440,44 @@ extern "C"
 
 
 /*******************************************(C) 陀螺仪校准 ***********************************************/
-// /**
-//   * @brief          控制bmi088的温度
-//   * @param[in]      temp:bmi088的温度
-//   * @retval         none
-//   */
-// static void imu_temp_control(fp32 temp)
-// {
-//     uint16_t tempPWM;
-//     static uint8_t temp_constant_time = 0;
-//     if (first_temperate)
-//     {
-//         PID_calc(&imu_temp_pid, temp, get_control_temperature());
-//         if (imu_temp_pid.out < 0.0f)
-//         {
-//             imu_temp_pid.out = 0.0f;
-//         }
-//         tempPWM = (uint16_t)imu_temp_pid.out;
-//         IMU_temp_PWM(tempPWM);
-//     }
-//     else
-//     {
-//         //在没有达到设置的温度，一直最大功率加热
-//         //in beginning, max power
-//         if (temp > get_control_temperature())
-//         {
-//             temp_constant_time++;
-//             if (temp_constant_time > 200)
-//             {
-//                 //达到设置温度，将积分项设置为一半最大功率，加速收敛
-//                 //
-//                 first_temperate = 1;
-//                 imu_temp_pid.Iout = MPU6500_TEMP_PWM_MAX / 2.0f;
-//             }
-//         }
+/**
+  * @brief          控制bmi088的温度
+  * @param[in]      temp:bmi088的温度
+  * @retval         none
+  */
+static void imu_temp_control(fp32 temp)
+{
+    uint16_t tempPWM;
+    static uint8_t temp_constant_time = 0;
+    if (first_temperate)
+    {
+        fp32 imu_temp_pid_out = imu.imu_temp_pid.pid_calc();
+        if (imu_temp_pid_out < 0.0f)
+        {
+            imu_temp_pid_out = 0.0f;
+        }
+        tempPWM = (uint16_t)imu_temp_pid_out;
+        IMU_temp_PWM(tempPWM);
+    }
+    else
+    {
+        //在没有达到设置的温度，一直最大功率加热
+        //in beginning, max power
+        if (temp > *get_control_temperature())
+        {
+            temp_constant_time++;
+            if (temp_constant_time > 200)
+            {
+                //达到设置温度，将积分项设置为一半最大功率，加速收敛
+                //
+                first_temperate = 1;
+                imu.imu_temp_pid.data.Iout = MPU6500_TEMP_PWM_MAX / 2.0f;
+            }
+        }
 
-//         IMU_temp_PWM(MPU6500_TEMP_PWM_MAX - 1);
-//     }
-// }
+        IMU_temp_PWM(MPU6500_TEMP_PWM_MAX - 1);
+    }
+}
 
 /**
   * @brief          计算陀螺仪零漂

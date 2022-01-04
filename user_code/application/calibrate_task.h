@@ -209,6 +209,8 @@ typedef __packed struct
     //'temperature' and 'latitude' should not be in the head_cali, because don't want to create a new sensor
     //'temperature' and 'latitude'不应该在head_cali,因为不想创建一个新的设备就放这了
     int8_t temperature;         // imu control temperature
+    fp32 temperature_fp32;         // imu control temperature
+
     fp32 latitude;              // latitude
 } head_cali_t;
 //gimbal device
@@ -250,19 +252,30 @@ extern void cali_param_init(void);
   * @param[in]      none
   * @retval         imu控制温度
   */
-extern int8_t get_control_temperature(void);
+extern int8_t *get_control_temperature(void);
 
 /**
+  * @brief          get imu control temperature, unit ℃
+  * @param[in]      none
+  * @retval         imu control temperature
+  */
+/**
+  * @brief          获取imu控制温度, 单位℃
+  * @param[in]      none
+  * @retval         imu控制温度
+  */
+extern fp32 *get_control_temperature_fp32(void);
+    /**
   * @brief          get latitude, default 22.0f
   * @param[out]     latitude: the point to fp32 
   * @retval         none
   */
-/**
+    /**
   * @brief          获取纬度,默认22.0f
   * @param[out]     latitude:fp32指针 
   * @retval         none
   */
-extern void get_flash_latitude(float *latitude);
+    extern void get_flash_latitude(float *latitude);
 
 /**
   * @brief          calibrate task, created by main function

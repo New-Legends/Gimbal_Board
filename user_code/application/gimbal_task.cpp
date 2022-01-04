@@ -7,10 +7,10 @@
   *             gyro mode: use euler angle to control, encond mode: use enconde
   *             angle to control. and has some special mode:cali mode, motionless
   *             mode.
-  *             Íê³ÉÔÆÌ¨¿ØÖÆÈÎÎñ£¬ÓÉÓÚÔÆÌ¨Ê¹ÓÃÍÓÂÝÒÇ½âËã³öµÄ½Ç¶È£¬Æä·¶Î§ÔÚ£¨-pi,pi£©
-  *             ¹Ê¶øÉèÖÃÄ¿±ê½Ç¶È¾ùÎª·¶Î§£¬´æÔÚÐí¶à¶Ô½Ç¶È¼ÆËãµÄº¯Êý¡£ÔÆÌ¨Ö÷Òª·ÖÎª2ÖÖ
-  *             ×´Ì¬£¬ÍÓÂÝÒÇ¿ØÖÆ×´Ì¬ÊÇÀûÓÃ°åÔØÍÓÂÝÒÇ½âËãµÄ×ËÌ¬½Ç½øÐÐ¿ØÖÆ£¬±àÂëÆ÷¿ØÖÆ
-  *             ×´Ì¬ÊÇÍ¨¹ýµç»ú·´À¡µÄ±àÂëÖµ¿ØÖÆµÄÐ£×¼£¬´ËÍâ»¹ÓÐÐ£×¼×´Ì¬£¬Í£Ö¹×´Ì¬µÈ¡£
+  *             å®Œæˆäº‘å°æŽ§åˆ¶ä»»åŠ¡ï¼Œç”±äºŽäº‘å°ä½¿ç”¨é™€èžºä»ªè§£ç®—å‡ºçš„è§’åº¦ï¼Œå…¶èŒƒå›´åœ¨ï¼ˆ-pi,piï¼‰
+  *             æ•…è€Œè®¾ç½®ç›®æ ‡è§’åº¦å‡ä¸ºèŒƒå›´ï¼Œå­˜åœ¨è®¸å¤šå¯¹è§’åº¦è®¡ç®—çš„å‡½æ•°ã€‚äº‘å°ä¸»è¦åˆ†ä¸º2ç§
+  *             çŠ¶æ€ï¼Œé™€èžºä»ªæŽ§åˆ¶çŠ¶æ€æ˜¯åˆ©ç”¨æ¿è½½é™€èžºä»ªè§£ç®—çš„å§¿æ€è§’è¿›è¡ŒæŽ§åˆ¶ï¼Œç¼–ç å™¨æŽ§åˆ¶
+  *             çŠ¶æ€æ˜¯é€šè¿‡ç”µæœºåé¦ˆçš„ç¼–ç å€¼æŽ§åˆ¶çš„æ ¡å‡†ï¼Œæ­¤å¤–è¿˜æœ‰æ ¡å‡†çŠ¶æ€ï¼Œåœæ­¢çŠ¶æ€ç­‰ã€‚
   * @note
   * @history
   *  Version    Date            Author          Modification
@@ -19,52 +19,59 @@
   *
   @verbatim
   ==============================================================================
- *      ©°©¤©´       ©°©¤©´
- *   ©°©¤©¤©¼ ©Ø©¤©¤©¤©¤©¤©¤©¤©¼ ©Ø©¤©¤©´
- *   ©¦                 ©¦
- *   ©¦       ©¤©¤©¤       ©¦
- *   ©¦  ©¤©Ð©¼       ©¸©Ð©¤  ©¦
- *   ©¦                 ©¦
- *   ©¦       ©¤©Ø©¤       ©¦
- *   ©¦                 ©¦
- *   ©¸©¤©¤©¤©´         ©°©¤©¤©¤©¼
- *       ©¦         ©¦
- *       ©¦         ©¦
- *       ©¦         ©¦
- *       ©¦         ©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
- *       ©¦                        ©¦
- *       ©¦                        ©À©¤©´
- *       ©¦                        ©°©¤©¼
- *       ©¦                        ©¦
- *       ©¸©¤©´  ©´  ©°©¤©¤©¤©¤©¤©¤©¤©Ð©¤©¤©´  ©°©¤©¤©¼
- *         ©¦ ©¤©È ©¤©È       ©¦ ©¤©È ©¤©È
- *         ©¸©¤©¤©Ø©¤©¤©¼       ©¸©¤©¤©Ø©¤©¤©¼
- *                ÉñÊÞ±£ÓÓ
- *               ´úÂëÎÞBUG!
+ *      â”Œâ”€â”       â”Œâ”€â”
+ *   â”Œâ”€â”€â”˜ â”´â”€â”€â”€â”€â”€â”€â”€â”˜ â”´â”€â”€â”
+ *   â”‚                 â”‚
+ *   â”‚       â”€â”€â”€       â”‚
+ *   â”‚  â”€â”¬â”˜       â””â”¬â”€  â”‚
+ *   â”‚                 â”‚
+ *   â”‚       â”€â”´â”€       â”‚
+ *   â”‚                 â”‚
+ *   â””â”€â”€â”€â”         â”Œâ”€â”€â”€â”˜
+ *       â”‚         â”‚
+ *       â”‚         â”‚
+ *       â”‚         â”‚
+ *       â”‚         â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+ *       â”‚                        â”‚
+ *       â”‚                        â”œâ”€â”
+ *       â”‚                        â”Œâ”€â”˜
+ *       â”‚                        â”‚
+ *       â””â”€â”  â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”  â”Œâ”€â”€â”˜
+ *         â”‚ â”€â”¤ â”€â”¤       â”‚ â”€â”¤ â”€â”¤
+ *         â””â”€â”€â”´â”€â”€â”˜       â””â”€â”€â”´â”€â”€â”˜
+ *                ç¥žå…½ä¿ä½‘
+ *               ä»£ç æ— BUG!
   ==============================================================================
   @endverbatim
   ****************************(C) COPYRIGHT 2021 *******************************
   */
 #include "gimbal_task.h"
 
+uint8_t gimbal_flag = 0;
+
+
 void gimbal_task(void *pvParameters)
 {
     vTaskDelay(GIMBAL_TASK_INIT_TIME);
-    //ÔÆÌ¨³õÊ¼»¯
+    //äº‘å°åˆå§‹åŒ–
     gimbal.init();
-    //ÔÆÌ¨Êý¾Ý·´À¡
+    //äº‘å°æ•°æ®åé¦ˆ
     gimbal.feedback_update();
     while (1)
     {
-        //ÉèÖÃÔÆÌ¨×´Ì¬»ú
-        gimbal.set_mode();
-        //ÔÆÌ¨Êý¾Ý·´À¡
-        gimbal.feedback_update();
-        //ÉèÖÃÔÆÌ¨¿ØÖÆÁ¿
-        gimbal.set_control();
-        //ÉèÖÃPID¼ÆËã
-        gimbal.solve();
-        //Êä³öµçÁ÷
-        gimbal.output();
+      gimbal_flag = HAL_GPIO_ReadPin(KEY_GPIO_Port, KEY_Pin);
+      // //è®¾ç½®äº‘å°çŠ¶æ€æœº
+      gimbal.set_mode();
+      // //äº‘å°æ•°æ®åé¦ˆ
+      gimbal.feedback_update();
+      // //è®¾ç½®äº‘å°æŽ§åˆ¶é‡
+      gimbal.set_control();
+      // //è®¾ç½®PIDè®¡ç®—
+      gimbal.solve();
+      // //è¾“å‡ºç”µæµ
+      gimbal.output();
+      //ç³»ç»Ÿå»¶æ—¶
+      vTaskDelay(GIMBAL_CONTROL_TIME_MS);
     }
+
 }

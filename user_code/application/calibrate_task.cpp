@@ -100,6 +100,7 @@
 #include "cmsis_os.h"
 
 #include "Remote_control.h"
+#include "Gimbal.h"
 
 //include head,gimbal,gyro,accel,mag. gyro,accel and mag have the same data struct. total 5(CALI_LIST_LENGHT) devices, need data lenght + 5 * 4 bytes(name[3]+cali)
 #define FLASH_WRITE_BUF_LENGHT  (sizeof(head_cali_t) + sizeof(gimbal_cali_t) + sizeof(imu_cali_t) * 3  + CALI_LIST_LENGHT * 4)
@@ -304,11 +305,32 @@ void calibrate_task(void *pvParameters)
   * @param[in]      none
   * @retval         imu控制温度
   */
-int8_t get_control_temperature(void)
+int8_t *get_control_temperature(void)
 {
 
-    return head_cali.temperature;
+    return &head_cali.temperature;
 }
+
+/**
+  * @brief          get imu control temperature, unit ℃
+  * @param[in]      none
+  * @retval         imu control temperature
+  */
+/**
+  * @brief          获取imu控制温度, 单位℃
+  * @param[in]      none
+  * @retval         imu控制温度
+  */
+ //TODO 返回指针变量有问题,暂时停止修改
+// fp32 *get_control_temperature_fp32(void)
+// {
+//   //head_cali.temperature_fp32 = (fp32)(head_cali.temperature);
+//   head_cali.temperature_fp32 = 0;
+
+//   return &head_cali.temperature_fp32;
+// }
+
+
 
 /**
   * @brief          get latitude, default 22.0f
@@ -637,6 +659,8 @@ static bool_t cali_head_hook(uint32_t *cali, bool_t cmd)
     return 1;
 }
 
+
+
 /**
   * @brief          gyro cali function
   * @param[in][out] cali:the point to gyro data, when cmd == CALI_FUNC_CMD_INIT, param is [in],cmd == CALI_FUNC_CMD_ON, param is [out]
@@ -711,21 +735,21 @@ static bool_t cali_gimbal_hook(uint32_t *cali, bool_t cmd)
     gimbal_cali_t *local_cali_t = (gimbal_cali_t *)cali;
     if (cmd == CALI_FUNC_CMD_INIT)
     {
-        gimbal.set_cali_gimbal_hook(local_cali_t->yaw_offset, local_cali_t->pitch_offset,
-                             local_cali_t->yaw_max_angle, local_cali_t->yaw_min_angle,
-                             local_cali_t->pitch_max_angle, local_cali_t->pitch_min_angle);
-        
-        return 0;
+      gimbal.set_hand_operator_gimbal_hook(local_cali_t->yaw_offset, local_cali_t->pitch_offset,
+                                           local_cali_t->yaw_max_angle, local_cali_t->yaw_min_angle,
+                                           local_cali_t->pitch_max_angle, local_cali_t->pitch_min_angle);
+
+      return 0;
     }
     else if (cmd == CALI_FUNC_CMD_ON)
     {
-        if (gimbal.cmd_cali_gimbal_hook(&local_cali_t->yaw_offset, &local_cali_t->pitch_offset,
+      if (gimbal.cmd_cali_gimbal_hook(&local_cali_t->yaw_offset, &local_cali_t->pitch_offset,
                                  &local_cali_t->yaw_max_angle, &local_cali_t->yaw_min_angle,
                                  &local_cali_t->pitch_max_angle, &local_cali_t->pitch_min_angle))
-        {
-            cali_buzzer_off();
-            
-            return 1;
+      {
+        cali_buzzer_off();
+
+        return 1;
         }
         else
         {

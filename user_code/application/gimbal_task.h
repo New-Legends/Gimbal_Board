@@ -52,9 +52,10 @@
 #include "INS.h"
 #include "gimbal.h"
 
-//云台电机无电流输出
-#define GIMBAL_YAW_MOTOR_NO_CURRENT 0
-#define GIMBAL_PITCH_MOTOR_NO_CURRENT 0
+
+
+
+
 
 
 

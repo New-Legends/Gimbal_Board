@@ -35,7 +35,7 @@ extern "C" {
 #define PriorityRealtime      8
 
 TaskHandle_t ins_task_Handle;
-TaskHandle_t gimbal_Task_Handle;
+TaskHandle_t gimbal_task_Handle;
 TaskHandle_t cali_task_handle;
 TaskHandle_t communicate_task_handle;
 
@@ -57,7 +57,7 @@ void Task_start(void) {
     /* Applications Init ----------------*/
     xTaskCreate(INS_task, "INS_task", Huge_Stack_Size, NULL, PriorityRealtime, &ins_task_Handle);
 
-    //xTaskCreate(gimbal_task, "gimbal_task", Normal_Stack_Size, NULL, PriorityHigh, &Gimbal_Task_Handle);
+    xTaskCreate(gimbal_task, "gimbal_task", Normal_Stack_Size, NULL, PriorityHigh, &gimbal_task_Handle);
 
     //xTaskCreate(shoot_task, "shoot_task", Normal_Stack_Size, NULL, PriorityHigh, &shoot_task_handle);
 
