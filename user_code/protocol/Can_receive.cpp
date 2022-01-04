@@ -147,10 +147,10 @@ void Can_receive::receive_17mm_speed_and_mode_board_com(uint8_t data[8])
     gimbal_receive.chassis_behaviour = data[4];
 }
 
-void Can_receive::send_rc_board_com(int16_t ch_1, int16_t ch_2, int16_t ch_3, uint16_t v)
+void Can_receive::send_rc_board_com(int16_t ch_0, int16_t ch_2, int16_t ch_3, uint16_t v)
 {
     //数据填充
-    gimbal_send.ch_1 = ch_1;
+    gimbal_send.ch_0 = ch_0;
     gimbal_send.ch_2 = ch_2;
     gimbal_send.ch_3 = ch_3;
     gimbal_send.v = v;
@@ -160,8 +160,8 @@ void Can_receive::send_rc_board_com(int16_t ch_1, int16_t ch_2, int16_t ch_3, ui
     can_tx_message.IDE = CAN_ID_STD;
     can_tx_message.RTR = CAN_RTR_DATA;
     can_tx_message.DLC = 0x08;
-    can_send_data[0] = ch_1 >> 8;
-    can_send_data[1] = ch_1;
+    can_send_data[0] = ch_0 >> 8;
+    can_send_data[1] = ch_0;
     can_send_data[2] = ch_2 >> 8;
     can_send_data[3] = ch_2;
     can_send_data[4] = ch_3 >> 8;
@@ -172,8 +172,11 @@ void Can_receive::send_rc_board_com(int16_t ch_1, int16_t ch_2, int16_t ch_3, ui
     HAL_CAN_AddTxMessage(&BOARD_COM_CAN, &can_tx_message, can_send_data, &send_mail_box);
 }
 
+
 void Can_receive::send_gimbal_board_com(uint8_t s0, uint8_t gimbal_behaviour, fp32 gimbal_yaw_angle)
 {
+    int32_t temp_gimbal_yaw_angle = (int32_t)(gimbal_yaw_angle * 1000);
+
     //数据填充
     gimbal_send.s0 = s0;
     gimbal_send.gimbal_behaviour = gimbal_behaviour;
@@ -186,10 +189,10 @@ void Can_receive::send_gimbal_board_com(uint8_t s0, uint8_t gimbal_behaviour, fp
     can_tx_message.DLC = 0x08;
     can_send_data[0] = s0;
     can_send_data[1] = gimbal_behaviour;
-    can_send_data[2] = (uint8_t)((int16_t)gimbal_yaw_angle >> 8);
-    can_send_data[3] = (uint8_t)(gimbal_yaw_angle);
-    can_send_data[4] = 0;
-    can_send_data[5] = 0;
+    can_send_data[2] = (uint8_t)((int32_t)temp_gimbal_yaw_angle >> 24);
+    can_send_data[3] = (uint8_t)((int32_t)temp_gimbal_yaw_angle >> 16);
+    can_send_data[4] = (uint8_t)((int32_t)temp_gimbal_yaw_angle >> 8);
+    can_send_data[5] = (uint8_t)((int32_t)temp_gimbal_yaw_angle);
     can_send_data[6] = 0;
     can_send_data[7] = 0;
 

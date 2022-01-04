@@ -170,6 +170,11 @@
           <WinNumber>1</WinNumber>
           <ItemText>remote_control</ItemText>
         </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>temp_angle</ItemText>
+        </Ww>
       </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
