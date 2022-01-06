@@ -787,7 +787,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>App</GroupName>
+          <GroupName>application</GroupName>
           <Files>
             <File>
               <FileName>communicate_task.cpp</FileName>
@@ -798,11 +798,6 @@
               <FileName>gimbal_task.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\user_code\application\gimbal_task.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>INS_task.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\user_code\application\INS_task.cpp</FilePath>
             </File>
             <File>
               <FileName>calibrate_task.cpp</FileName>
@@ -818,6 +813,11 @@
               <FileName>system_config.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\user_code\application\system_config.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>ins_task.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\application\ins_task.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -838,6 +838,121 @@
               <FileName>Gimbal.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\user_code\module\Gimbal.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>algorithm</GroupName>
+          <Files>
+            <File>
+              <FileName>First_order_filter.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\algorithm\First_order_filter.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Pid.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\algorithm\Pid.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>devices</GroupName>
+          <Files>
+            <File>
+              <FileName>Motor.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\device\Motor.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Oled.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\device\Oled.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Led.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\device\Led.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>protocol</GroupName>
+          <Files>
+            <File>
+              <FileName>Can_receive.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\protocol\Can_receive.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>vision.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\protocol\vision.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Remote_control.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\protocol\Remote_control.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>support</GroupName>
+          <Files>
+            <File>
+              <FileName>CRC8_CRC16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\componet\support\CRC8_CRC16.c</FilePath>
+            </File>
+            <File>
+              <FileName>fifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\componet\support\fifo.c</FilePath>
+            </File>
+            <File>
+              <FileName>ist8310driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\componet\support\ist8310driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>ist8310driver_middleware.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\componet\support\ist8310driver_middleware.c</FilePath>
+            </File>
+            <File>
+              <FileName>mem_mang4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\componet\support\mem_mang4.c</FilePath>
+            </File>
+            <File>
+              <FileName>AHRS_middleware.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\componet\support\AHRS_middleware.c</FilePath>
+            </File>
+            <File>
+              <FileName>BMI088driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\componet\support\BMI088driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>BMI088Middleware.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\componet\support\BMI088Middleware.c</FilePath>
+            </File>
+            <File>
+              <FileName>AHRS.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\user_code\componet\support\AHRS.lib</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cortexM4lf_math.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\user_code\componet\support\arm_cortexM4lf_math.lib</FilePath>
+            </File>
+            <File>
+              <FileName>user_lib.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\componet\support\user_lib.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -923,121 +1038,6 @@
               <FileName>bsp_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user_code\bsp\bsp_usart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>algorithm</GroupName>
-          <Files>
-            <File>
-              <FileName>First_order_filter.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\user_code\algorithm\First_order_filter.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Pid.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\user_code\algorithm\Pid.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>devices</GroupName>
-          <Files>
-            <File>
-              <FileName>Motor.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\user_code\device\Motor.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Oled.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\user_code\device\Oled.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Led.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\user_code\device\Led.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>support</GroupName>
-          <Files>
-            <File>
-              <FileName>CRC8_CRC16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user_code\componet\support\CRC8_CRC16.c</FilePath>
-            </File>
-            <File>
-              <FileName>fifo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user_code\componet\support\fifo.c</FilePath>
-            </File>
-            <File>
-              <FileName>ist8310driver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user_code\componet\support\ist8310driver.c</FilePath>
-            </File>
-            <File>
-              <FileName>ist8310driver_middleware.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user_code\componet\support\ist8310driver_middleware.c</FilePath>
-            </File>
-            <File>
-              <FileName>mem_mang4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user_code\componet\support\mem_mang4.c</FilePath>
-            </File>
-            <File>
-              <FileName>AHRS_middleware.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user_code\componet\support\AHRS_middleware.c</FilePath>
-            </File>
-            <File>
-              <FileName>BMI088driver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user_code\componet\support\BMI088driver.c</FilePath>
-            </File>
-            <File>
-              <FileName>BMI088Middleware.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\user_code\componet\support\BMI088Middleware.c</FilePath>
-            </File>
-            <File>
-              <FileName>AHRS.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\user_code\componet\support\AHRS.lib</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cortexM4lf_math.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\user_code\componet\support\arm_cortexM4lf_math.lib</FilePath>
-            </File>
-            <File>
-              <FileName>user_lib.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\user_code\componet\support\user_lib.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>protocol</GroupName>
-          <Files>
-            <File>
-              <FileName>Can_receive.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\user_code\protocol\Can_receive.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>vision.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\user_code\protocol\vision.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>Remote_control.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\user_code\protocol\Remote_control.cpp</FilePath>
             </File>
           </Files>
         </Group>
