@@ -16,9 +16,9 @@ extern "C" {
 #endif
 #include "communicate_task.h"
 #include "gimbal_task.h"
+#include "shoot_task.h"
 #include "ins_task.h"
 #include "calibrate_task.h"
-
 
 #define Tiny_Stack_Size       64
 #define Small_Stack_Size      128
@@ -34,8 +34,9 @@ extern "C" {
 #define PrioritySuperHigh     7
 #define PriorityRealtime      8
 
-TaskHandle_t ins_task_Handle;
-TaskHandle_t gimbal_task_Handle;
+TaskHandle_t ins_task_handle;
+TaskHandle_t gimbal_task_handle;
+TaskHandle_t shoot_task_handle;
 TaskHandle_t cali_task_handle;
 TaskHandle_t communicate_task_handle;
 
@@ -55,11 +56,11 @@ void System_Resource_Init(void)
 void Task_start(void) {
     /* Syetem Service init --------------*/
     /* Applications Init ----------------*/
-    xTaskCreate(INS_task, "INS_task", Huge_Stack_Size, NULL, PriorityRealtime, &ins_task_Handle);
+    xTaskCreate(INS_task, "ins_task", Huge_Stack_Size, NULL, PriorityRealtime, &ins_task_handle);
 
-    xTaskCreate(gimbal_task, "gimbal_task", Normal_Stack_Size, NULL, PriorityHigh, &gimbal_task_Handle);
+    xTaskCreate(gimbal_task, "gimbal_task", Normal_Stack_Size, NULL, PriorityHigh, &gimbal_task_handle);
 
-    //xTaskCreate(shoot_task, "shoot_task", Normal_Stack_Size, NULL, PriorityHigh, &shoot_task_handle);
+    xTaskCreate(shoot_task, "shoot_task", Normal_Stack_Size, NULL, PriorityHigh, &shoot_task_handle);
 
     xTaskCreate(communicate_task, "communicate_task", Large_Stack_Size, NULL, PriorityHigh, &communicate_task_handle);
 

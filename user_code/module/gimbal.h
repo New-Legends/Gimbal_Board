@@ -81,10 +81,7 @@
 //测试按键尚未使用
 #define TEST_KEYBOARD KEY_PRESSED_OFFSET_R
 
-//任务开始空闲一段时间
-#define GIMBAL_TASK_INIT_TIME 201
 
-#define GIMBAL_CONTROL_TIME_MS 10
 
 
 //rocker value deadband

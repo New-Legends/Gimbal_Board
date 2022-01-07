@@ -17,3 +17,13 @@ void Gimbal_motor::init(const motor_measure_t *motor_measure_)
 {
     motor_measure = motor_measure_;
 }
+
+void Firc_motor::init(const motor_measure_t *motor_measure_)
+{
+    motor_measure = motor_measure_;
+}
+
+void Trigger_motor::init(const motor_measure_t *motor_measure_)
+{
+    motor_measure = motor_measure_;
+}

@@ -10,9 +10,7 @@
 
 #include "math.h"
 #include "First_order_filter.h"
-
-//底盘模块 对象
-Gimbal gimbal;
+#include "Motor.h"
 
 //motor enconde value format, range[0-8191]
 //电机编码值规整 0—8191
@@ -42,7 +40,8 @@ Gimbal gimbal;
         }                                                \
     }
 
-
+//底盘模块 对象
+Gimbal gimbal;
 /**
   * @brief          初始化云台
   * @Author         summerpray

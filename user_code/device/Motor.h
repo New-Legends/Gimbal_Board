@@ -13,10 +13,11 @@ public:
     Pid speed_pid;
     Pid angle_pid;
 
-
     fp32 accel;
     fp32 speed;
     fp32 speed_set;
+    fp32 angle;
+    fp32 angle_set;
 
     fp32 current_set;
     int16_t current_give;
@@ -93,6 +94,50 @@ public:
     void init(const motor_measure_t *motor_measure_);
 };
 
+//摩擦轮电机
+class Firc_motor
+{
+public:
+    const motor_measure_t *motor_measure;
+    //速度环pid和角度环pid, 用户可以选择性开启
+    Pid speed_pid;
+    Pid angle_pid;
 
+    fp32 accel;
+    fp32 speed;
+    fp32 speed_set;
+
+    fp32 max_speed;     //摩擦轮旋转最大速度
+    fp32 min_speed;     //摩擦轮旋转最小速度
+    fp32 require_speed; //允许拨盘开启的最低速度
+
+    fp32 current_set;
+    int16_t current_give;
+
+    void init(const motor_measure_t *motor_measure_);
+};
+
+//拨弹电机
+class Trigger_motor
+{
+public:
+    const motor_measure_t *motor_measure;
+    //速度环pid和角度环pid, 用户可以选择性开启
+    Pid speed_pid;
+    Pid angle_pid;
+
+    fp32 accel;
+    fp32 speed;
+    fp32 speed_set;
+    fp32 angle;
+    fp32 angle_set;
+
+    fp32 current_set;
+    int16_t current_give;
+
+    int8_t ecd_count;    ///编码值计数
+
+    void init(const motor_measure_t *motor_measure_);
+};
 
 #endif

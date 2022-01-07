@@ -80,7 +80,7 @@ void Can_receive::get_shoot_motor_measure(uint8_t num, uint8_t data[8])
 void Can_receive::can_cmd_shoot_motor_motor(int16_t left_fric, int16_t right_fric, int16_t tigger, int16_t cover)
 {
     uint32_t send_mail_box;
-    can_tx_message.StdId = CAN_GIMBAL_ALL_ID;
+    can_tx_message.StdId = CAN_SHOOT_ALL_ID;
     can_tx_message.IDE = CAN_ID_STD;
     can_tx_message.RTR = CAN_RTR_DATA;
     can_tx_message.DLC = 0x08;

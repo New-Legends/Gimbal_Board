@@ -12,6 +12,9 @@
         "stm32f4xx_it.h": "c",
         "shoot_task.h": "c",
         "can_receive.h": "c",
-        "struct_typedef.h": "c"
+        "struct_typedef.h": "c",
+        "shoot.h": "c",
+        "remote_control.h": "c",
+        "communicate.h": "c"
     }
 }

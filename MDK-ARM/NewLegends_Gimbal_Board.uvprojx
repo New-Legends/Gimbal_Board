@@ -819,6 +819,11 @@
               <FileType>8</FileType>
               <FilePath>..\user_code\application\ins_task.cpp</FilePath>
             </File>
+            <File>
+              <FileName>shoot_task.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\application\shoot_task.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -838,6 +843,11 @@
               <FileName>Gimbal.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\user_code\module\Gimbal.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Shoot.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\module\Shoot.cpp</FilePath>
             </File>
           </Files>
         </Group>

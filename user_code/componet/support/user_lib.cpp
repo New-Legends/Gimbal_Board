@@ -3,6 +3,7 @@
 //
 
 #include "user_lib.h"
+#include "arm_math.h"
 
 //循环限幅函数
 fp32 loop_fp32_constrain(fp32 Input, fp32 minValue, fp32 maxValue) {
@@ -41,4 +42,24 @@ void abs_limit(fp32 Value, fp32 MaxValue){
     if (Value > MaxValue){
         Value = MaxValue;
     }
+}
+
+fp32 abs_fp32(fp32 Value)
+{
+    if (Value < 0)
+    {
+        Value = -Value;
+    }
+
+    return Value;
+}
+
+int16_t abs_int16(int16_t Value)
+{
+    if (Value < 0)
+    {
+        Value = -Value;
+    }
+
+    return Value;
 }

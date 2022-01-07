@@ -38,6 +38,9 @@ void Remote_control::unpack(uint8_t num)
         return;
     }
 
+    //保留上一次遥控器值
+    last_rc_ctrl = rc_ctrl;
+
     // if (rc_ctrl_updata >= 50)
     // {
     //     if(rc_ctrl_updata==50)
@@ -159,4 +162,187 @@ void Remote_control::slove_RC_lost(void)
 void Remote_control::slove_data_error(void)
 {
     RC_restart(SBUS_RX_BUF_NUM);
+}
+
+
+/*-----相比于官方的版本,将宏定义布尔值转化为可传参的函数,方便不同任务内的遥控器调用按键--*/
+
+//是否按下鼠标
+bool_t if_mouse_pessed(const RC_ctrl_t *_rc_ctrl, char mouse_num)
+{
+    bool_t ans = FALSE;
+    if (mouse_num == 'L')
+        ans = _rc_ctrl->mouse.press_l != 0;
+    else if (mouse_num == 'R')
+        ans = _rc_ctrl->mouse.press_r != 0;
+
+    return ans;
+}
+
+//是否单击鼠标
+bool_t if_mouse_singal_pessed(const RC_ctrl_t *_rc_ctrl, const RC_ctrl_t *_last_rc_ctrl, char mouse_num)
+{
+    bool_t ans = FALSE;
+    if (mouse_num == 'L')
+        ans = if_mouse_pessed(_rc_ctrl, 'L') && if_mouse_pessed(_last_rc_ctrl, 'L');
+    else if (mouse_num == 'R')
+        ans = if_mouse_pessed(_rc_ctrl, 'R') && if_mouse_pessed(_last_rc_ctrl, 'R');
+
+    return ans;
+}
+
+//是否按下对应按键
+bool_t if_key_pessed(const RC_ctrl_t *_rc_ctrl, char key_num)
+{
+    bool_t ans = FALSE;
+
+    switch (key_num)
+    {
+    case 'W':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_W) != 0);
+                break;
+
+    case 'S':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_S) != 0);
+                break;
+
+    case 'A':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_A) != 0);
+                break;
+
+    case 'D':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_D) != 0);
+                break;
+
+    case 'Q':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_Q) != 0);
+                break;
+
+    case 'E':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_E) != 0);
+                break;
+
+    case 'G':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_G) != 0);
+                break;
+
+    case 'X':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_X) != 0);
+                break;
+
+    case 'Z':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_Z) != 0);
+                break;
+
+    case 'C':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_C) != 0);
+                break;
+
+    case 'B':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_B) != 0);
+                break;
+
+    case 'V':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_V) != 0);
+                break;
+
+    case 'F':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_F) != 0);
+                break;
+
+    case 'R':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_R) != 0);
+                break;
+
+    case '$':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_CTRL) != 0);
+                break;
+
+    case '!':
+                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_SHIFT) != 0);
+                break;
+
+    default:
+        break;
+    }
+
+    return ans;
+}
+
+//是否单击对于按键
+bool_t if_key_singal_pessed(const RC_ctrl_t *_rc_ctrl, const RC_ctrl_t *_last_rc_ctrl, char key_num)
+{
+    bool_t ans = FALSE;
+
+    switch (key_num)
+    {
+    case 'W':
+        ans = if_key_pessed(_rc_ctrl, 'W') && if_key_pessed(_last_rc_ctrl, 'W');
+        break;
+
+    case 'S':
+        ans = if_key_pessed(_rc_ctrl, 'S') && if_key_pessed(_last_rc_ctrl, 'S');
+        break;
+
+    case 'A':
+        ans = if_key_pessed(_rc_ctrl, 'A') && if_key_pessed(_last_rc_ctrl, 'A');
+        break;
+
+    case 'D':
+        ans = if_key_pessed(_rc_ctrl, 'D') && if_key_pessed(_last_rc_ctrl, 'D');
+        break;
+
+    case 'Q':
+        ans = if_key_pessed(_rc_ctrl, 'Q') && if_key_pessed(_last_rc_ctrl, 'Q');
+        break;
+
+    case 'E':
+        ans = if_key_pessed(_rc_ctrl, 'E') && if_key_pessed(_last_rc_ctrl, 'E');
+        break;
+
+    case 'G':
+        ans = if_key_pessed(_rc_ctrl, 'G') && if_key_pessed(_last_rc_ctrl, 'G');
+        break;
+
+    case 'X':
+        ans = if_key_pessed(_rc_ctrl, 'X') && if_key_pessed(_last_rc_ctrl, 'X');
+        break;
+
+    case 'Z':
+        ans = if_key_pessed(_rc_ctrl, 'Z') && if_key_pessed(_last_rc_ctrl, 'Z');
+        break;
+
+    case 'C':
+        ans = if_key_pessed(_rc_ctrl, 'C') && if_key_pessed(_last_rc_ctrl, 'C');
+        break;
+
+    case 'B':
+        ans = if_key_pessed(_rc_ctrl, 'B') && if_key_pessed(_last_rc_ctrl, 'B');
+        break;
+
+    case 'V':
+        ans = if_key_pessed(_rc_ctrl, 'V') && if_key_pessed(_last_rc_ctrl, 'V');
+        break;
+
+    case 'F':
+        ans = if_key_pessed(_rc_ctrl, 'F') && if_key_pessed(_last_rc_ctrl, 'F');
+        break;
+
+    case 'R':
+        ans = if_key_pessed(_rc_ctrl, 'R') && if_key_pessed(_last_rc_ctrl, 'R');
+        break;
+
+    case '$':
+        ans = if_key_pessed(_rc_ctrl, '$') && if_key_pessed(_last_rc_ctrl, '$');
+        break;
+
+    case '!':
+        ans = if_key_pessed(_rc_ctrl, '!') && if_key_pessed(_last_rc_ctrl, '!');
+        break;
+
+    default:
+        break;
+    }
+
+    return ans;
 }
