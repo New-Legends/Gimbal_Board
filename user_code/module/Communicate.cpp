@@ -23,12 +23,12 @@ void Communicate::init()
 {
     remote_control.init();
     can_receive.init();
-    //vision_init();
+    vision_init();
 }
 
 void Communicate::run()
 {
-    //vision_send_data(1);
+    vision_send_data(1);
 
     //向底盘发送遥控器和云台数据
     int16_t temp_ch0, temp_ch2, temp_ch3;
@@ -47,7 +47,6 @@ void Communicate::run()
 
     can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_ch3, temp_v);
     can_receive.send_gimbal_board_com(temp_s0, temp_gimbal_behaviour_mode, temp_gimbal_yaw_angle);
-
 }
 
 #ifdef __cplusplus //告诉编译器，这部分代码按C语言的格式进行编译，而不是C++的
@@ -190,37 +189,38 @@ extern "C"
             //发射机构电机
             case CAN_LEFT_FRIC_MOTOR_ID:
                 can_receive.get_shoot_motor_measure(0, rx_data);
-                //detect_hook(CAN_LEFT_FRIC_MOTOR_ID);
+                detect_hook(CAN_LEFT_FRIC_MOTOR_ID);
                 break;
 
             case CAN_RIGHT_FRIC_MOTOR_ID:
                 can_receive.get_shoot_motor_measure(1, rx_data);
-                //detect_hook(CAN_RIGHT_FRIC_MOTOR_ID);
+                detect_hook(CAN_RIGHT_FRIC_MOTOR_ID);
                 break;
 
             case CAN_TRIGGER_MOTOR_ID:
                 can_receive.get_shoot_motor_measure(2, rx_data);
-                //detect_hook(CAN_TRIGGER_MOTOR_ID);
+                detect_hook(CAN_TRIGGER_MOTOR_ID);
                 break;
+
             //云台机构电机
             case CAN_YAW_MOTOR_ID:
                 can_receive.get_gimbal_motor_measure(0, rx_data);
-                //                detect_hook(GIMBAL_YAW_MOTOR_TOE);
+                detect_hook(GIMBAL_YAW_MOTOR_TOE);
                 break;
 
             case CAN_PITCH_MOTOR_ID:
                 can_receive.get_gimbal_motor_measure(1, rx_data);
-                //                detect_hook(GIMBAL_PITCH_MOTOR_TOE);
+                detect_hook(GIMBAL_PITCH_MOTOR_TOE);
                 break;
 
             case CAN_COOLING_BOARM_COM_ID:
                 can_receive.receive_cooling_and_id_board_com(rx_data);
-                //detect_hook(BOARD_COM);
+                detect_hook(BOARD_COM);
                 break;
 
             case CAN_17MM_SPEED_BOARD_COM_ID:
                 can_receive.receive_17mm_speed_and_mode_board_com(rx_data);
-                //detect_hook(BOARD_COM);
+                detect_hook(BOARD_COM);
                 break;
 
             default:

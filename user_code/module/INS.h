@@ -115,6 +115,9 @@ public:
 /*******************************************(C) 陀螺仪基本参数 ***********************************************/
     bmi088_real_data_t bmi088_real_data;                            //IMU数据存储
     ist8310_real_data_t ist8310_real_data;                          //磁力计数据存储
+    
+    
+    
     fp32 INS_gyro[3];
     fp32 INS_accel[3];
     fp32 INS_mag[3];
@@ -141,6 +144,7 @@ public:
 
 /*************************************************(C) PID *************************************************/
     Pid imu_temp_pid;                                               //陀螺仪临时PID
+    fp32 temperature_fp32;
 /*************************************************(C) PID *************************************************/
     float timing_time;                               //tast run time , unit s.任务运行的时间 单位 s
     void imu_cali_slove(fp32 gyro[3], fp32 accel[3], fp32 mag[3],bmi088_real_data_t *bmi088, ist8310_real_data_t *ist8310);
@@ -181,4 +185,10 @@ extern void INS_cali_gyro(fp32 cali_scale[3], fp32 cali_offset[3], uint16_t *tim
   */
 extern void INS_set_cali_gyro(fp32 cali_scale[3], fp32 cali_offset[3]);
 
+/**
+  * @brief          控制bmi088的温度
+  * @param[in]      temp:bmi088的温度
+  * @retval         none
+  */
+static void imu_temp_control(fp32 temp);
 #endif

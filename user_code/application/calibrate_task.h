@@ -209,7 +209,6 @@ typedef __packed struct
     //'temperature' and 'latitude' should not be in the head_cali, because don't want to create a new sensor
     //'temperature' and 'latitude'不应该在head_cali,因为不想创建一个新的设备就放这了
     int8_t temperature;         // imu control temperature
-    fp32 temperature_fp32;         // imu control temperature
 
     fp32 latitude;              // latitude
 } head_cali_t;
@@ -254,17 +253,7 @@ extern void cali_param_init(void);
   */
 extern int8_t *get_control_temperature(void);
 
-/**
-  * @brief          get imu control temperature, unit ℃
-  * @param[in]      none
-  * @retval         imu control temperature
-  */
-/**
-  * @brief          获取imu控制温度, 单位℃
-  * @param[in]      none
-  * @retval         imu控制温度
-  */
-extern fp32 *get_control_temperature_fp32(void);
+
     /**
   * @brief          get latitude, default 22.0f
   * @param[out]     latitude: the point to fp32 
@@ -289,5 +278,6 @@ extern fp32 *get_control_temperature_fp32(void);
   */
 extern void calibrate_task(void *pvParameters);
 
+extern head_cali_t head_cali; //head cali data
 
 #endif

@@ -87,7 +87,7 @@ typedef struct
     uint8_t robot_id;                //机器人编号
 
     //测速速度及底盘模式
-    uint16_t id1_17mm_speed_limi; //17mm测速射速上限
+    uint16_t id1_17mm_speed_limit; //17mm测速射速上限
     uint16_t bullet_speed;        //17mm测速实时射速
 
     uint8_t chassis_behaviour;

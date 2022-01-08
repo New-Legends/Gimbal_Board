@@ -16,6 +16,7 @@
 
 //云台电机无电流输出
 #define GIMBAL_YAW_MOTOR_NO_CURRENT 0
+
 #define GIMBAL_PITCH_MOTOR_NO_CURRENT 0
 
 /*----------------------pid系数------------------------*/
@@ -29,8 +30,8 @@
 
 //pitch speed close-loop PID params, max out and max iout
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
-#define PITCH_SPEED_PID_KP 2200.0f //2900
-#define PITCH_SPEED_PID_KI 0.1f
+#define PITCH_SPEED_PID_KP 2000.0f //2900
+#define PITCH_SPEED_PID_KI 0.0f
 #define PITCH_SPEED_PID_KD 0.0f
 #define PITCH_SPEED_PID_MAX_IOUT 25000.0f
 #define PITCH_SPEED_PID_MAX_OUT 30000.0f
@@ -45,7 +46,7 @@
 
 //pitch gyro angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define PITCH_GYRO_ABSOLUTE_PID_KP 10.0f //15
+#define PITCH_GYRO_ABSOLUTE_PID_KP 20.0f //15
 #define PITCH_GYRO_ABSOLUTE_PID_KI 0.0f
 #define PITCH_GYRO_ABSOLUTE_PID_KD 0.0f
 #define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 2.0f
@@ -56,16 +57,16 @@
 #define YAW_ENCODE_RELATIVE_PID_KP 10.0f //8
 #define YAW_ENCODE_RELATIVE_PID_KI 0.0f
 #define YAW_ENCODE_RELATIVE_PID_KD 0.0f
-#define YAW_ENCODE_RELATIVE_PID_MAX_IOUT 15000.0f
-#define YAW_ENCODE_RELATIVE_PID_MAX_OUT 30000.0f
+#define YAW_ENCODE_RELATIVE_PID_MAX_IOUT 2.0f
+#define YAW_ENCODE_RELATIVE_PID_MAX_OUT 6.0f
 
 //pitch encode angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define PITCH_ENCODE_RELATIVE_PID_KP 11.0f //15
+#define PITCH_ENCODE_RELATIVE_PID_KP 10.0f //15
 #define PITCH_ENCODE_RELATIVE_PID_KI 0.0f
 #define PITCH_ENCODE_RELATIVE_PID_KD 0.0f
-#define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 15000.0f
-#define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 30000.0f
+#define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 2.0f
+#define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 6.0f
 
 /*---------------------按键--------------------*/
 //yaw,pitch控制通道以及状态开关通道
@@ -82,8 +83,6 @@
 #define TEST_KEYBOARD KEY_PRESSED_OFFSET_R
 
 
-
-
 //rocker value deadband
 //遥控器输入死区，因为遥控器存在差异，摇杆在中间，其值不一定为零
 #define RC_DEADBAND 10
@@ -94,7 +93,7 @@
 #define PITCH_RC_SEN 0.00003f
 
 //云台 鼠标速度
-#define YAW_MOUSE_SEN 0.00003f
+#define YAW_MOUSE_SEN 0.00015f
 #define PITCH_MOUSE_SEN -0.00004f
 
 #define YAW_ENCODE_SEN 0.01f
@@ -105,8 +104,6 @@
 //test mode, 0 close, 1 open
 //云台测试模式 宏定义 0 为不使用测试模式
 #define GIMBAL_TEST_MODE 0
-
-
 
 /*---------------------云台限幅与安装参数--------------------*/
 #define YAW 0

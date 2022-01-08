@@ -8,9 +8,6 @@
 #include "Can_receive.h"
 
 
-
-
-
 class Communicate
 {
 public:
@@ -24,7 +21,6 @@ extern Remote_control remote_control;
 extern Can_receive can_receive;
 
 extern Communicate communicate;
-
 
 #endif
 

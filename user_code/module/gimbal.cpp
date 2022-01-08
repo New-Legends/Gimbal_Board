@@ -70,6 +70,10 @@ void Gimbal::init() {
     fp32 yaw_relative_angle_pid_parm[5] = {YAW_ENCODE_RELATIVE_PID_KP, YAW_ENCODE_RELATIVE_PID_KI, YAW_ENCODE_RELATIVE_PID_KD, YAW_ENCODE_RELATIVE_PID_MAX_IOUT, YAW_ENCODE_RELATIVE_PID_MAX_OUT};
     gimbal_yaw_motor.relative_angle_pid.init(PID_ANGLE, yaw_relative_angle_pid_parm, &gimbal_yaw_motor.relative_angle, &gimbal_yaw_motor.relative_angle_set, 0);
 
+    gimbal_yaw_motor.speed_pid.pid_clear();
+    gimbal_yaw_motor.absolute_angle_pid.pid_clear();
+    gimbal_yaw_motor.relative_angle_pid.pid_clear();
+
     //设置电机角度限幅和中值
     gimbal_yaw_motor.max_absolute_angle = MAX_ABSOULATE_YAW;
     gimbal_yaw_motor.min_absolute_angle = MIN_ABSOULATE_YAW;
@@ -90,6 +94,10 @@ void Gimbal::init() {
     gimbal_pitch_motor.absolute_angle_pid.init(PID_ANGLE, pitch_absoulute_angle_pid_parm, &gimbal_pitch_motor.absolute_angle, &gimbal_pitch_motor.absolute_angle_set, 0);
     fp32 pitch_relative_angle_pid_parm[5] = {PITCH_ENCODE_RELATIVE_PID_KP, PITCH_ENCODE_RELATIVE_PID_KI, PITCH_ENCODE_RELATIVE_PID_KD, PITCH_ENCODE_RELATIVE_PID_MAX_IOUT, PITCH_ENCODE_RELATIVE_PID_MAX_OUT};
     gimbal_pitch_motor.relative_angle_pid.init(PID_ANGLE, pitch_relative_angle_pid_parm, &gimbal_pitch_motor.relative_angle, &gimbal_pitch_motor.relative_angle_set, 0);
+
+    gimbal_pitch_motor.speed_pid.pid_clear();
+    gimbal_pitch_motor.absolute_angle_pid.pid_clear();
+    gimbal_pitch_motor.relative_angle_pid.pid_clear();
 
     //设置电机角度限幅和中值
     gimbal_pitch_motor.max_absolute_angle = MAX_ABSOULATE_PITCH;

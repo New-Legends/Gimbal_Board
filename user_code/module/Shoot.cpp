@@ -14,6 +14,7 @@ extern "C"
 
 
 #include "Communicate.h"
+#include "detect_task.h"
 
 #define shoot_fric1_on(pwm) fric1_on((pwm)) //摩擦轮1pwm宏定义
 #define shoot_fric2_on(pwm) fric2_on((pwm)) //摩擦轮2pwm宏定义
@@ -90,6 +91,7 @@ void Shoot::init()
         //初始化PID
         fp32 fric_speed_pid_parm[5] = {FRIC_SPEED_PID_KP, FRIC_SPEED_PID_KI, FRIC_SPEED_PID_KD, FRIC_PID_MAX_IOUT, FRIC_PID_MAX_OUT};
         fric_motor[i].speed_pid.init(PID_SPEED, fric_speed_pid_parm, &fric_motor[i].speed, &fric_motor[i].speed_set, NULL);
+        fric_motor[i].speed_pid.pid_clear();
 
         //设置最大 最小值  左摩擦轮顺时针转 右摩擦轮逆时针转
         fric_motor[i].max_speed = FRIC_MAX_SPEED;
@@ -101,7 +103,7 @@ void Shoot::init()
     //初始化PID
     fp32 trigger_speed_pid_parm[5] = {TRIGGER_ANGLE_PID_KP, TRIGGER_ANGLE_PID_KI, TRIGGER_ANGLE_PID_KD, TRIGGER_BULLET_PID_MAX_IOUT, TRIGGER_BULLET_PID_MAX_OUT};
     trigger_motor.speed_pid.init(PID_SPEED, trigger_speed_pid_parm, &trigger_motor.speed, &trigger_motor.speed_set, NULL);
-
+    trigger_motor.angle_pid.pid_clear();
     // //TODO,此处限幅,暂时不设置
     // //设置最大 最小值  左摩擦轮顺时针转 右摩擦轮逆时针转
     // trigger_motor.max_speed = FRIC_MAX_SPEED_RMP;
@@ -134,6 +136,10 @@ void Shoot::init()
   * @param[in]      void
   * @retval         void
   */
+bool_t temp_a;
+bool_t temp_b;
+bool_t temp_c;
+
 void Shoot::set_mode()
 {
     static int8_t last_s = RC_SW_UP; //记录上一次遥控器按键值
@@ -148,7 +154,10 @@ void Shoot::set_mode()
         shoot_mode = SHOOT_STOP;
     }
 
-    //TODO  此处键盘控制开启摩擦轮还未添加
+    temp_a = if_key_pessed(shoot_rc, 'G');
+    temp_b = if_key_pessed(last_shoot_rc, 'G');
+    temp_c = KEY_FRIC;
+
     //处于中档， 可以使用键盘开启摩擦轮
     if (switch_is_mid(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && KEY_FRIC && shoot_mode == SHOOT_STOP)
     {
@@ -160,7 +169,14 @@ void Shoot::set_mode()
         shoot_mode = SHOOT_STOP;
     }
 
-    shoot_last_key_v = shoot_rc->key.v;
+    //为了便于测试,右按键为下时关闭摩擦轮
+    if (switch_is_down(shoot_rc->rc.s[0]))
+    {
+        shoot_mode = SHOOT_STOP;
+    }
+
+
+
 
 
     //TODO 这里为了赶进度,对于abs函数使用了一种非常粗糙的方法完成,因为使用库函数abs编译器无法匹配正确的重载;后续需要修改
@@ -247,8 +263,10 @@ void Shoot::set_mode()
   */
 void Shoot::feedback_update()
 {
+    shoot_last_key_v = shoot_rc->key.v;
+    
     //更新摩擦轮电机速度
-    fric_motor[LEFT_FRIC].speed = fric_motor[LEFT_FRIC].motor_measure->speed_rpm * FRIC_RPM_TO_SPEED;
+    fric_motor[LEFT_FRIC].speed = -fric_motor[LEFT_FRIC].motor_measure->speed_rpm * FRIC_RPM_TO_SPEED;
     fric_motor[RIGHT_FRIC].speed = fric_motor[RIGHT_FRIC].motor_measure->speed_rpm * FRIC_RPM_TO_SPEED;
 
     static fp32 speed_fliter_1 = 0.0f;
@@ -388,21 +406,22 @@ void Shoot::solve()
     if (shoot_mode == SHOOT_STOP)
     {
         shoot_laser_off();
-        trigger_motor.current_set = 0;
-        fric_motor[LEFT_FRIC].current_set = 0;
-        fric_motor[RIGHT_FRIC].current_set = 0;
         fric_status = FALSE;
+        // trigger_motor.current_set = 0;
+        // fric_motor[LEFT_FRIC].current_set = 0;
+        // fric_motor[RIGHT_FRIC].current_set = 0;
+        // return ;
 
-        return ;
-        // trigger_motor.speed_set = 0;
-        // fric_motor[LEFT_FRIC].speed_set = 0;
-        // fric_motor[RIGHT_FRIC].speed_set = 0;
+
+        trigger_motor.speed_set = 0;
+        fric_motor[LEFT_FRIC].speed_set = 0;
+        fric_motor[RIGHT_FRIC].speed_set = 0;
     }
     else
     {
         shoot_laser_on(); //激光开启
         //设置摩擦轮转速
-        fric_motor[LEFT_FRIC].speed_set = -shoot_fric_grade[2];
+        fric_motor[LEFT_FRIC].speed_set = shoot_fric_grade[2];
         fric_motor[RIGHT_FRIC].speed_set = shoot_fric_grade[2];
 
         //连发模式 控制17mm发射机构射速和热量控制
@@ -419,18 +438,23 @@ void Shoot::solve()
         }
 
         //计算PID
-        // fric_motor[LEFT_FRIC].current_set = fric_motor[LEFT_FRIC].speed_pid.pid_calc();
-        // fric_motor[RIGHT_FRIC].current_set = fric_motor[RIGHT_FRIC].speed_pid.pid_calc();
-        // trigger_motor.current_set = trigger_motor.speed_pid.pid_calc();
+    //     // fric_motor[LEFT_FRIC].current_set = fric_motor[LEFT_FRIC].speed_pid.pid_calc();
+    //     // fric_motor[RIGHT_FRIC].current_set = fric_motor[RIGHT_FRIC].speed_pid.pid_calc();
+    //     // trigger_motor.current_set = trigger_motor.speed_pid.pid_calc();
     }
+
     if (fric_motor[LEFT_FRIC].speed_set > fric_motor[LEFT_FRIC].max_speed)
         fric_motor[LEFT_FRIC].speed_set = fric_motor[LEFT_FRIC].max_speed;
+    else if(fric_motor[LEFT_FRIC].speed_set < fric_motor[LEFT_FRIC].min_speed)
+        fric_motor[LEFT_FRIC].speed_set = fric_motor[LEFT_FRIC].min_speed;
 
     if (fric_motor[RIGHT_FRIC].speed_set > fric_motor[RIGHT_FRIC].max_speed)
         fric_motor[RIGHT_FRIC].speed_set = fric_motor[RIGHT_FRIC].max_speed;
+    else if (fric_motor[RIGHT_FRIC].speed_set < fric_motor[RIGHT_FRIC].min_speed)
+        fric_motor[RIGHT_FRIC].speed_set = fric_motor[RIGHT_FRIC].min_speed;
 
     //TODO PID输出累计应该只有6000 但是有8000现在
-    // //计算PID
+    //计算PID
     fric_motor[LEFT_FRIC].current_set = fric_motor[LEFT_FRIC].speed_pid.pid_calc();
     fric_motor[RIGHT_FRIC].current_set = fric_motor[RIGHT_FRIC].speed_pid.pid_calc();
     trigger_motor.current_set = trigger_motor.speed_pid.pid_calc();
@@ -443,69 +467,77 @@ void Shoot::solve()
 */
 void Shoot::cooling_ctrl()
 {
-    // //TODO 暂时未完善
-    // //17mm枪口热量上限, 17mm枪口实时热量
-    // uint16_t id1_17mm_cooling_limit;
-    // uint16_t id1_17mm_cooling_heat;
-    // //17mm枪口枪口射速上限,17mm实时射速
-    // uint16_t id1_17mm_speed_limit;
-    // fp32 bullet_speed;
+    //TODO 暂时未完善
+    //17mm枪口热量上限, 17mm枪口实时热量
+    uint16_t id1_17mm_cooling_limit;
+    uint16_t id1_17mm_cooling_heat;
+    uint16_t id1_17mm_cooling_rate;
 
-    // if (toe_is_error(REFEREE_TOE))
-    // {
-    //     grigger_speed_grade = 1;
-    //     fric_speed_grade = 1;
-    // }
-    // else
-    // {
-    //     get_shooter_id1_17mm_cooling_limit_and_heat(&id1_17mm_cooling_limit, &id1_17mm_cooling_heat); //获取17mm枪口热量上限, 17mm枪口实时热量
-    //     get_shooter_id1_17mm_speed_limit_and_bullet_speed(&id1_17mm_speed_limit, &bullet_speed);      // 获取17mm枪口枪口射速上限,17mm实时射速
+    //17mm枪口枪口射速上限,17mm实时射速
+    uint16_t id1_17mm_speed_limit;
+    fp32 bullet_speed;
 
-    //     //根据热量和射速上限修改等级
-    //     //热量
-    //     if (id1_17mm_cooling_limit <= 50)
-    //         grigger_speed_grade = 1;
-    //     else if (id1_17mm_cooling_limit <= 100)
-    //         grigger_speed_grade = 2;
-    //     else if (id1_17mm_cooling_limit <= 150)
-    //         grigger_speed_grade = 3;
-    //     else if (id1_17mm_cooling_limit <= 280)
-    //         grigger_speed_grade = 4;
-    //     else if (id1_17mm_cooling_limit <= 400)
-    //         grigger_speed_grade = 5;
 
-    //     //射速
-    //     if (id1_17mm_speed_limit <= 15)
-    //         fric_speed_grade = 1;
-    //     else if (id1_17mm_speed_limit <= 18)
-    //         fric_speed_grade = 2;
-    //     else if (id1_17mm_speed_limit <= 30)
-    //         fric_speed_grade = 3;
+    if (toe_is_error(REFEREE_TOE))
+    {
+        grigger_speed_grade = 1;
+        fric_speed_grade = 1;
+    }
+    else
+    {
+        //更新裁判数据
+        id1_17mm_cooling_limit = can_receive.gimbal_receive.id1_17mm_cooling_limit;
+        id1_17mm_cooling_heat = can_receive.gimbal_receive.id1_17mm_cooling_heat;
+        id1_17mm_cooling_rate = can_receive.gimbal_receive.id1_17mm_cooling_rate;
 
-    //     //当调试射速和射频等级数组时可以暂时注释
-    //     //根据当前热量和射速修改等级,确保不会因超限扣血,
+        id1_17mm_speed_limit = can_receive.gimbal_receive.id1_17mm_speed_limit;
+        bullet_speed = can_receive.gimbal_receive.bullet_speed;
 
-    //     //热量 当剩余热量低于30,强制制动
-    //     if (id1_17mm_cooling_limit - id1_17mm_cooling_heat <= 20 && grigger_speed_grade != 0)
-    //         grigger_speed_grade = 0;
+        //根据热量和射速上限修改等级
+        //热量
+        if (id1_17mm_cooling_limit <= 50)
+            grigger_speed_grade = 1;
+        else if (id1_17mm_cooling_limit <= 100)
+            grigger_speed_grade = 2;
+        else if (id1_17mm_cooling_limit <= 150)
+            grigger_speed_grade = 3;
+        else if (id1_17mm_cooling_limit <= 280)
+            grigger_speed_grade = 4;
+        else if (id1_17mm_cooling_limit <= 400)
+            grigger_speed_grade = 5;
 
-    //     //射速 超射速,强制降低摩擦轮转速
-    //     if (bullet_speed > id1_17mm_speed_limit)
-    //         fric_speed_grade--;
-    // }
+        //射速
+        if (id1_17mm_speed_limit <= 15)
+            fric_speed_grade = 1;
+        else if (id1_17mm_speed_limit <= 18)
+            fric_speed_grade = 2;
+        else if (id1_17mm_speed_limit <= 30)
+            fric_speed_grade = 3;
 
-    // //对拨盘电机输入控制值
-    // shoot_heat0_speed_and_cooling_control->trigger_speed_set = shoot_grigger_grade[grigger_speed_grade] * SHOOT_TRIGGER_DIRECTION;
-    // //对摩擦轮电机输入控制值
-    // shoot_heat0_speed_and_cooling_control->fric_motor[LEFT].speed_set = -shoot_fric_grade[fric_speed_grade];
-    // shoot_heat0_speed_and_cooling_control->fric_motor[RIGHT].speed_set = shoot_fric_grade[fric_speed_grade];
+        //当调试射速和射频等级数组时可以暂时注释
+        //根据当前热量和射速修改等级,确保不会因超限扣血,
+
+        //热量 当剩余热量低于30,强制制动
+        if (id1_17mm_cooling_limit - id1_17mm_cooling_heat <= 20 && grigger_speed_grade != 0)
+            grigger_speed_grade = 0;
+
+        //射速 超射速,强制降低摩擦轮转速
+        if (bullet_speed > id1_17mm_speed_limit)
+            fric_speed_grade--;
+    }
+
+    //对拨盘电机输入控制值
+    trigger_motor.speed_set = shoot_grigger_grade[grigger_speed_grade] * SHOOT_TRIGGER_DIRECTION;
+    //对摩擦轮电机输入控制值
+    fric_motor[LEFT_FRIC].speed_set = -shoot_fric_grade[fric_speed_grade];
+    fric_motor[RIGHT_FRIC].speed_set = shoot_fric_grade[fric_speed_grade];
 
 }
 
 void Shoot::output()
 {
     fric_motor[LEFT_FRIC].current_give = -(int16_t)(fric_motor[LEFT_FRIC].current_set);
-    fric_motor[RIGHT_FRIC].current_give = -(int16_t)(fric_motor[RIGHT_FRIC].current_set);
+    fric_motor[RIGHT_FRIC].current_give = (int16_t)(fric_motor[RIGHT_FRIC].current_set);
     trigger_motor.current_give = trigger_motor.current_set;
 
 //电流输出控制,通过调整宏定义控制

@@ -4,9 +4,9 @@
   * @brief      use bmi088 to calculate the euler angle. no use ist8310, so only
   *             enable data ready pin to save cpu time.enalbe bmi088 data ready
   *             enable spi DMA to save the time spi transmit
-  *             Ö÷ÒªÀûÓÃÍÓÂİÒÇbmi088£¬´ÅÁ¦¼Æist8310£¬Íê³É×ËÌ¬½âËã£¬µÃ³öÅ·À­½Ç£¬
-  *             Ìá¹©Í¨¹ıbmi088µÄdata ready ÖĞ¶ÏÍê³ÉÍâ²¿´¥·¢£¬¼õÉÙÊı¾İµÈ´ıÑÓ³Ù
-  *             Í¨¹ıDMAµÄSPI´«Êä½ÚÔ¼CPUÊ±¼ä.
+  *             ä¸»è¦åˆ©ç”¨é™€èºä»ªbmi088ï¼Œç£åŠ›è®¡ist8310ï¼Œå®Œæˆå§¿æ€è§£ç®—ï¼Œå¾—å‡ºæ¬§æ‹‰è§’ï¼Œ
+  *             æä¾›é€šè¿‡bmi088çš„data ready ä¸­æ–­å®Œæˆå¤–éƒ¨è§¦å‘ï¼Œå‡å°‘æ•°æ®ç­‰å¾…å»¶è¿Ÿ
+  *             é€šè¿‡DMAçš„SPIä¼ è¾“èŠ‚çº¦CPUæ—¶é—´.
   * @note       
   * @history
   *  Version    Date            Author          Modification
@@ -15,28 +15,28 @@
   @verbatim
   ==============================================================================
   ==============================================================================
- *      ©°©¤©´       ©°©¤©´
- *   ©°©¤©¤©¼ ©Ø©¤©¤©¤©¤©¤©¤©¤©¼ ©Ø©¤©¤©´
- *   ©¦                 ©¦
- *   ©¦       ©¤©¤©¤       ©¦
- *   ©¦  ©¤©Ğ©¼       ©¸©Ğ©¤  ©¦
- *   ©¦                 ©¦
- *   ©¦       ©¤©Ø©¤       ©¦
- *   ©¦                 ©¦
- *   ©¸©¤©¤©¤©´         ©°©¤©¤©¤©¼
- *       ©¦         ©¦
- *       ©¦         ©¦
- *       ©¦         ©¦
- *       ©¦         ©¸©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©´
- *       ©¦                        ©¦
- *       ©¦                        ©À©¤©´
- *       ©¦                        ©°©¤©¼
- *       ©¦                        ©¦
- *       ©¸©¤©´  ©´  ©°©¤©¤©¤©¤©¤©¤©¤©Ğ©¤©¤©´  ©°©¤©¤©¼
- *         ©¦ ©¤©È ©¤©È       ©¦ ©¤©È ©¤©È
- *         ©¸©¤©¤©Ø©¤©¤©¼       ©¸©¤©¤©Ø©¤©¤©¼
- *                ÉñÊŞ±£ÓÓ
- *               ´úÂëÎŞBUG!
+ *      â”Œâ”€â”       â”Œâ”€â”
+ *   â”Œâ”€â”€â”˜ â”´â”€â”€â”€â”€â”€â”€â”€â”˜ â”´â”€â”€â”
+ *   â”‚                 â”‚
+ *   â”‚       â”€â”€â”€       â”‚
+ *   â”‚  â”€â”¬â”˜       â””â”¬â”€  â”‚
+ *   â”‚                 â”‚
+ *   â”‚       â”€â”´â”€       â”‚
+ *   â”‚                 â”‚
+ *   â””â”€â”€â”€â”         â”Œâ”€â”€â”€â”˜
+ *       â”‚         â”‚
+ *       â”‚         â”‚
+ *       â”‚         â”‚
+ *       â”‚         â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+ *       â”‚                        â”‚
+ *       â”‚                        â”œâ”€â”
+ *       â”‚                        â”Œâ”€â”˜
+ *       â”‚                        â”‚
+ *       â””â”€â”  â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”  â”Œâ”€â”€â”˜
+ *         â”‚ â”€â”¤ â”€â”¤       â”‚ â”€â”¤ â”€â”¤
+ *         â””â”€â”€â”´â”€â”€â”˜       â””â”€â”€â”´â”€â”€â”˜
+ *                ç¥å…½ä¿ä½‘
+ *               ä»£ç æ— BUG!
   ==============================================================================
   ==============================================================================
   @endverbatim
@@ -50,19 +50,19 @@ extern SPI_HandleTypeDef hspi1;
 
 using namespace std;
 
-//ÊµÀı»¯¶ÔÏó
+//å®ä¾‹åŒ–å¯¹è±¡
 INS imu;
 
-/**********************************************(C) ±êÖ¾Î» **************************************************/
+/**********************************************(C) æ ‡å¿—ä½ **************************************************/
 volatile uint8_t gyro_update_flag = 0;
 volatile uint8_t accel_update_flag = 0;
 volatile uint8_t accel_temp_update_flag = 0;
 volatile uint8_t mag_update_flag = 0;
-volatile uint8_t imu_start_dma_flag = 0; //IMU¶ÁÈ¡Êı¾İ±êÖ¾Î»
-/**********************************************(C) ±êÖ¾Î» **************************************************/
+volatile uint8_t imu_start_dma_flag = 0; //IMUè¯»å–æ•°æ®æ ‡å¿—ä½
+/**********************************************(C) æ ‡å¿—ä½ **************************************************/
 
-/**********************************************(C) DMA´«Êä **************************************************/
-TaskHandle_t INS_task_local_handler; //ÈÎÎñ¾ä±ú
+/**********************************************(C) DMAä¼ è¾“ **************************************************/
+TaskHandle_t INS_task_local_handler; //ä»»åŠ¡å¥æŸ„
 
 static const fp32 fliter_num[3] = {1.929454039488895f, -0.93178349823448126f, 0.002329458745586203f};
 static const fp32 imu_temp_PID[3] = {TEMPERATURE_PID_KP, TEMPERATURE_PID_KI, TEMPERATURE_PID_KD};
@@ -75,9 +75,9 @@ uint8_t accel_dma_tx_buf[SPI_DMA_ACCEL_LENGHT] = {0x92, 0xFF, 0xFF, 0xFF, 0xFF, 
 
 uint8_t accel_temp_dma_rx_buf[SPI_DMA_ACCEL_TEMP_LENGHT];
 uint8_t accel_temp_dma_tx_buf[SPI_DMA_ACCEL_TEMP_LENGHT] = {0xA2, 0xFF, 0xFF, 0xFF};
-/**********************************************(C) DMA´«Êä **************************************************/
+/**********************************************(C) DMAä¼ è¾“ **************************************************/
 
-/**********************************************(C) ÍÓÂİÒÇĞ£×¼ **************************************************/
+/**********************************************(C) é™€èºä»ªæ ¡å‡† **************************************************/
 fp32 gyro_scale_factor[3][3] = {BMI088_BOARD_INSTALL_SPIN_MATRIX};
 fp32 gyro_offset[3];
 fp32 gyro_cali_offset[3];
@@ -92,7 +92,7 @@ fp32 mag_cali_offset[3];
 
 static uint8_t first_temperate;
 
-#define IMU_temp_PWM(pwm) imu_pwm_set(pwm) //pwm¸ø¶¨
+#define IMU_temp_PWM(pwm) imu_pwm_set(pwm) //pwmç»™å®š
 
 #define BMI088_BOARD_INSTALL_SPIN_MATRIX \
     {0.0f, 1.0f, 0.0f},                  \
@@ -109,9 +109,9 @@ static uint8_t first_temperate;
     }
 
 
-/**********************************************(C) ÍÓÂİÒÇĞ£×¼ **************************************************/
+/**********************************************(C) é™€èºä»ªæ ¡å‡† **************************************************/
 /**
-  * @brief          imuÈÎÎñ, ³õÊ¼»¯ bmi088, ist8310, ¼ÆËãÅ·À­½Ç
+  * @brief          imuä»»åŠ¡, åˆå§‹åŒ– bmi088, ist8310, è®¡ç®—æ¬§æ‹‰è§’
   * @param[in]      pvParameters: NULL
   * @retval         none
   */
@@ -139,13 +139,13 @@ void INS::init(void)
         osDelay(100);
     }
     BMI088_read(bmi088_real_data.gyro, bmi088_real_data.accel, &bmi088_real_data.temp);
-    //Ğı×ªÁãµãÆ¯ÒÆ
+    //æ—‹è½¬é›¶ç‚¹æ¼‚ç§»
     imu_cali_slove(INS_gyro, INS_accel, INS_mag, &bmi088_real_data, &ist8310_real_data);
     
-    //TODO PIDÔİÊ±²»Ê¹ÓÃ
-    //³õÊ¼»¯pid
+    //TODO PIDæš‚æ—¶ä¸ä½¿ç”¨
+    //åˆå§‹åŒ–pid
     fp32 imu_pid_parm[5] = {TEMPERATURE_PID_KP, TEMPERATURE_PID_KI, TEMPERATURE_PID_KD, TEMPERATURE_PID_MAX_IOUT, TEMPERATURE_PID_MAX_OUT};
-    //imu_temp_pid.init(PID_SPEED, imu_pid_parm, &bmi088_real_data.temp, get_control_temperature_fp32(), NULL);
+    imu_temp_pid.init(PID_SPEED, imu_pid_parm, &bmi088_real_data.temp, &temperature_fp32, NULL);
 
     AHRS_init(INS_quat, INS_accel, INS_mag);
 
@@ -153,10 +153,10 @@ void INS::init(void)
     accel_fliter_1[1] = accel_fliter_2[1] = accel_fliter_3[1] = INS_accel[1];
     accel_fliter_1[2] = accel_fliter_2[2] = accel_fliter_3[2] = INS_accel[2];
 
-    //»ñÈ¡µ±Ç°ÈÎÎñµÄÈÎÎñ¾ä±ú£¬
+    //è·å–å½“å‰ä»»åŠ¡çš„ä»»åŠ¡å¥æŸ„ï¼Œ
     INS_task_local_handler = xTaskGetHandle(pcTaskGetName(NULL));
 
-    //ÉèÖÃ´®ĞĞ½Ó¿Ú
+    //è®¾ç½®ä¸²è¡Œæ¥å£
     hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
 
     if (HAL_SPI_Init(&hspi1) != HAL_OK)
@@ -172,7 +172,7 @@ void INS::init(void)
 
 void INS::INS_Info_Get()
 {
-    //µÈ´ıSPI DMA´«Êä
+    //ç­‰å¾…SPI DMAä¼ è¾“
     while (ulTaskNotifyTake(pdTRUE, portMAX_DELAY) != pdPASS)
     {
     }
@@ -189,19 +189,19 @@ void INS::INS_Info_Get()
         BMI088_accel_read_over(accel_dma_rx_buf + BMI088_ACCEL_RX_BUF_DATA_OFFSET, bmi088_real_data.accel, &bmi088_real_data.time);
     }
 
-    //TODO:Õâ¸öÈÎÎñÊÇ¼à²â¼ÓËÙ¶È¼ÆµÄÎÂ¶È£¬ÔİÊ±Ã»Ğ´
+    //TODO:è¿™ä¸ªä»»åŠ¡æ˜¯ç›‘æµ‹åŠ é€Ÿåº¦è®¡çš„æ¸©åº¦ï¼Œæš‚æ—¶æ²¡å†™
 
     if (accel_temp_update_flag & (1 << IMU_UPDATE_SHFITS))
     {
         accel_temp_update_flag &= ~(1 << IMU_UPDATE_SHFITS);
         BMI088_temperature_read_over(accel_temp_dma_rx_buf + BMI088_ACCEL_RX_BUF_DATA_OFFSET, &bmi088_real_data.temp);
-        //imu_temp_control(bmi088_real_data.temp);
+        imu_temp_control(bmi088_real_data.temp);
     }
 
-    //Ğı×ªÁãµãÆ¯ÒÆ
+    //æ—‹è½¬é›¶ç‚¹æ¼‚ç§»
     imu_cali_slove(INS_gyro, INS_accel, INS_mag, &bmi088_real_data, &ist8310_real_data);
 
-    //¼ÓËÙ¶È¼ÆµÍÍ¨ÂË²¨
+    //åŠ é€Ÿåº¦è®¡ä½é€šæ»¤æ³¢
     //accel low-pass filter
     accel_fliter_1[0] = accel_fliter_2[0];
     accel_fliter_2[0] = accel_fliter_3[0];
@@ -228,9 +228,11 @@ void INS::INS_Info_Get()
         mag_update_flag |= (1 << IMU_SPI_SHFITS);
         //            ist8310_read_mag(ist8310_real_data.mag);
     }
+
+    temperature_fp32 = (fp32)head_cali.temperature;
 }
 
-/*********************************************(C) ÍÓÂİÒÇĞ£×¼ *************************************************/
+/*********************************************(C) é™€èºä»ªæ ¡å‡† *************************************************/
 
 void INS::imu_cali_slove(fp32 gyro[3], fp32 accel[3], fp32 mag[3], bmi088_real_data_t *bmi088, ist8310_real_data_t *ist8310)
 {
@@ -243,14 +245,14 @@ void INS::imu_cali_slove(fp32 gyro[3], fp32 accel[3], fp32 mag[3], bmi088_real_d
     }
 }
 
-/*********************************************(C) ÍÓÂİÒÇĞ£×¼ *************************************************/
+/*********************************************(C) é™€èºä»ªæ ¡å‡† *************************************************/
 
-/*******************************************(C) ÍÓÂİÒÇ·µ»Ø²ÎÊı ***********************************************/
+/*******************************************(C) é™€èºä»ªè¿”å›å‚æ•° ***********************************************/
 
 /**
-  * @brief          »ñÈ¡ËÄÔªÊı
+  * @brief          è·å–å››å…ƒæ•°
   * @param[in]      none
-  * @retval         INS_quatµÄÖ¸Õë
+  * @retval         INS_quatçš„æŒ‡é’ˆ
   */
 const fp32 *INS::get_INS_quat_point(void)
 {
@@ -258,9 +260,9 @@ const fp32 *INS::get_INS_quat_point(void)
 }
 
 /**
-  * @brief          »ñÈ¡Å·À­½Ç, 0:yaw, 1:pitch, 2:roll µ¥Î» rad
+  * @brief          è·å–æ¬§æ‹‰è§’, 0:yaw, 1:pitch, 2:roll å•ä½ rad
   * @param[in]      none
-  * @retval         INS_angleµÄÖ¸Õë
+  * @retval         INS_angleçš„æŒ‡é’ˆ
   */
 const fp32 *INS::get_INS_angle_point(void)
 {
@@ -268,9 +270,9 @@ const fp32 *INS::get_INS_angle_point(void)
 }
 
 /**
-  * @brief          »ñÈ¡½ÇËÙ¶È,0:xÖá, 1:yÖá, 2:rollÖá µ¥Î» rad/s
+  * @brief          è·å–è§’é€Ÿåº¦,0:xè½´, 1:yè½´, 2:rollè½´ å•ä½ rad/s
   * @param[in]      none
-  * @retval         INS_gyroµÄÖ¸Õë
+  * @retval         INS_gyroçš„æŒ‡é’ˆ
   */
 const fp32 *INS::get_gyro_data_point(void)
 {
@@ -278,9 +280,9 @@ const fp32 *INS::get_gyro_data_point(void)
 }
 
 /**
-  * @brief          »ñÈ¡¼ÓËÙ¶È,0:xÖá, 1:yÖá, 2:rollÖá µ¥Î» m/s2
+  * @brief          è·å–åŠ é€Ÿåº¦,0:xè½´, 1:yè½´, 2:rollè½´ å•ä½ m/s2
   * @param[in]      none
-  * @retval         INS_accelµÄÖ¸Õë
+  * @retval         INS_accelçš„æŒ‡é’ˆ
   */
 const fp32 *INS::get_accel_data_point(void)
 {
@@ -289,7 +291,7 @@ const fp32 *INS::get_accel_data_point(void)
 
 
 
-/*******************************************(C) ÍÓÂİÒÇ·µ»Ø²ÎÊı ***********************************************/
+/*******************************************(C) é™€èºä»ªè¿”å›å‚æ•° ***********************************************/
 
 #ifdef __cplusplus
 extern "C"
@@ -302,8 +304,8 @@ extern "C"
   * @retval         none
   */
     /**
-  * @brief          ¸ù¾İimu_update_flagµÄÖµ¿ªÆôSPI DMA
-  * @param[in]      temp:bmi088µÄÎÂ¶È
+  * @brief          æ ¹æ®imu_update_flagçš„å€¼å¼€å¯SPI DMA
+  * @param[in]      temp:bmi088çš„æ¸©åº¦
   * @retval         none
   */
     static void imu_cmd_spi_dma(void)
@@ -311,7 +313,7 @@ extern "C"
         UBaseType_t uxSavedInterruptStatus;
         uxSavedInterruptStatus = taskENTER_CRITICAL_FROM_ISR();
 
-        //¿ªÆôÍÓÂİÒÇµÄDMA´«Êä
+        //å¼€å¯é™€èºä»ªçš„DMAä¼ è¾“
         if ((gyro_update_flag & (1 << IMU_DR_SHFITS)) && !(hspi1.hdmatx->Instance->CR & DMA_SxCR_EN) && !(hspi1.hdmarx->Instance->CR & DMA_SxCR_EN) && !(accel_update_flag & (1 << IMU_SPI_SHFITS)) && !(accel_temp_update_flag & (1 << IMU_SPI_SHFITS)))
         {
             gyro_update_flag &= ~(1 << IMU_DR_SHFITS);
@@ -322,7 +324,7 @@ extern "C"
             taskEXIT_CRITICAL_FROM_ISR(uxSavedInterruptStatus);
             return;
         }
-        //¿ªÆô¼ÓËÙ¶È¼ÆµÄDMA´«Êä
+        //å¼€å¯åŠ é€Ÿåº¦è®¡çš„DMAä¼ è¾“
         if ((accel_update_flag & (1 << IMU_DR_SHFITS)) && !(hspi1.hdmatx->Instance->CR & DMA_SxCR_EN) && !(hspi1.hdmarx->Instance->CR & DMA_SxCR_EN) && !(gyro_update_flag & (1 << IMU_SPI_SHFITS)) && !(accel_temp_update_flag & (1 << IMU_SPI_SHFITS)))
         {
             accel_update_flag &= ~(1 << IMU_DR_SHFITS);
@@ -377,7 +379,7 @@ extern "C"
         {
 
             //wake up the task
-            //»½ĞÑÈÎÎñ
+            //å”¤é†’ä»»åŠ¡
             if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED)
             {
                 static BaseType_t xHigherPriorityTaskWoken;
@@ -395,7 +397,7 @@ extern "C"
             __HAL_DMA_CLEAR_FLAG(hspi1.hdmarx, __HAL_DMA_GET_TC_FLAG_INDEX(hspi1.hdmarx));
 
             //gyro read over
-            //ÍÓÂİÒÇ¶ÁÈ¡Íê±Ï
+            //é™€èºä»ªè¯»å–å®Œæ¯•
             if (gyro_update_flag & (1 << IMU_SPI_SHFITS))
             {
                 gyro_update_flag &= ~(1 << IMU_SPI_SHFITS);
@@ -405,7 +407,7 @@ extern "C"
             }
 
             //accel read over
-            //¼ÓËÙ¶È¼Æ¶ÁÈ¡Íê±Ï
+            //åŠ é€Ÿåº¦è®¡è¯»å–å®Œæ¯•
             if (accel_update_flag & (1 << IMU_SPI_SHFITS))
             {
                 accel_update_flag &= ~(1 << IMU_SPI_SHFITS);
@@ -414,7 +416,7 @@ extern "C"
                 HAL_GPIO_WritePin(CS1_ACCEL_GPIO_Port, CS1_ACCEL_Pin, GPIO_PIN_SET);
             }
             //temperature read over
-            //ÎÂ¶È¶ÁÈ¡Íê±Ï
+            //æ¸©åº¦è¯»å–å®Œæ¯•
             if (accel_temp_update_flag & (1 << IMU_SPI_SHFITS))
             {
                 accel_temp_update_flag &= ~(1 << IMU_SPI_SHFITS);
@@ -439,10 +441,10 @@ extern "C"
 #endif
 
 
-/*******************************************(C) ÍÓÂİÒÇĞ£×¼ ***********************************************/
+/*******************************************(C) é™€èºä»ªæ ¡å‡† ***********************************************/
 /**
-  * @brief          ¿ØÖÆbmi088µÄÎÂ¶È
-  * @param[in]      temp:bmi088µÄÎÂ¶È
+  * @brief          æ§åˆ¶bmi088çš„æ¸©åº¦
+  * @param[in]      temp:bmi088çš„æ¸©åº¦
   * @retval         none
   */
 static void imu_temp_control(fp32 temp)
@@ -461,14 +463,14 @@ static void imu_temp_control(fp32 temp)
     }
     else
     {
-        //ÔÚÃ»ÓĞ´ïµ½ÉèÖÃµÄÎÂ¶È£¬Ò»Ö±×î´ó¹¦ÂÊ¼ÓÈÈ
+        //åœ¨æ²¡æœ‰è¾¾åˆ°è®¾ç½®çš„æ¸©åº¦ï¼Œä¸€ç›´æœ€å¤§åŠŸç‡åŠ çƒ­
         //in beginning, max power
         if (temp > *get_control_temperature())
         {
             temp_constant_time++;
             if (temp_constant_time > 200)
             {
-                //´ïµ½ÉèÖÃÎÂ¶È£¬½«»ı·ÖÏîÉèÖÃÎªÒ»°ë×î´ó¹¦ÂÊ£¬¼ÓËÙÊÕÁ²
+                //è¾¾åˆ°è®¾ç½®æ¸©åº¦ï¼Œå°†ç§¯åˆ†é¡¹è®¾ç½®ä¸ºä¸€åŠæœ€å¤§åŠŸç‡ï¼ŒåŠ é€Ÿæ”¶æ•›
                 //
                 first_temperate = 1;
                 imu.imu_temp_pid.data.Iout = MPU6500_TEMP_PWM_MAX / 2.0f;
@@ -480,10 +482,10 @@ static void imu_temp_control(fp32 temp)
 }
 
 /**
-  * @brief          ¼ÆËãÍÓÂİÒÇÁãÆ¯
-  * @param[out]     gyro_offset:¼ÆËãÁãÆ¯
-  * @param[in]      gyro:½ÇËÙ¶ÈÊı¾İ
-  * @param[out]     offset_time_count: ×Ô¶¯¼Ó1
+  * @brief          è®¡ç®—é™€èºä»ªé›¶æ¼‚
+  * @param[out]     gyro_offset:è®¡ç®—é›¶æ¼‚
+  * @param[in]      gyro:è§’é€Ÿåº¦æ•°æ®
+  * @param[out]     offset_time_count: è‡ªåŠ¨åŠ 1
   * @retval         none
   */
 void gyro_offset_calc(fp32 gyro_offset[3], fp32 gyro[3], uint16_t *offset_time_count)
@@ -500,10 +502,10 @@ void gyro_offset_calc(fp32 gyro_offset[3], fp32 gyro[3], uint16_t *offset_time_c
 }
 
 /**
-  * @brief          Ğ£×¼ÍÓÂİÒÇ
-  * @param[out]     ÍÓÂİÒÇµÄ±ÈÀıÒò×Ó£¬1.0fÎªÄ¬ÈÏÖµ£¬²»ĞŞ¸Ä
-  * @param[out]     ÍÓÂİÒÇµÄÁãÆ¯£¬²É¼¯ÍÓÂİÒÇµÄ¾²Ö¹µÄÊä³ö×÷Îªoffset
-  * @param[out]     ÍÓÂİÒÇµÄÊ±¿Ì£¬Ã¿´ÎÔÚgyro_offsetµ÷ÓÃ»á¼Ó1,
+  * @brief          æ ¡å‡†é™€èºä»ª
+  * @param[out]     é™€èºä»ªçš„æ¯”ä¾‹å› å­ï¼Œ1.0fä¸ºé»˜è®¤å€¼ï¼Œä¸ä¿®æ”¹
+  * @param[out]     é™€èºä»ªçš„é›¶æ¼‚ï¼Œé‡‡é›†é™€èºä»ªçš„é™æ­¢çš„è¾“å‡ºä½œä¸ºoffset
+  * @param[out]     é™€èºä»ªçš„æ—¶åˆ»ï¼Œæ¯æ¬¡åœ¨gyro_offsetè°ƒç”¨ä¼šåŠ 1,
   * @retval         none
   */
 void INS_cali_gyro(fp32 cali_scale[3], fp32 cali_offset[3], uint16_t *time_count)
@@ -526,9 +528,9 @@ void INS_cali_gyro(fp32 cali_scale[3], fp32 cali_offset[3], uint16_t *time_count
 }
 
 /**
-  * @brief          Ğ£×¼ÍÓÂİÒÇÉèÖÃ£¬½«´Óflash»òÕßÆäËûµØ·½´«ÈëĞ£×¼Öµ
-  * @param[in]      ÍÓÂİÒÇµÄ±ÈÀıÒò×Ó£¬1.0fÎªÄ¬ÈÏÖµ£¬²»ĞŞ¸Ä
-  * @param[in]      ÍÓÂİÒÇµÄÁãÆ¯
+  * @brief          æ ¡å‡†é™€èºä»ªè®¾ç½®ï¼Œå°†ä»flashæˆ–è€…å…¶ä»–åœ°æ–¹ä¼ å…¥æ ¡å‡†å€¼
+  * @param[in]      é™€èºä»ªçš„æ¯”ä¾‹å› å­ï¼Œ1.0fä¸ºé»˜è®¤å€¼ï¼Œä¸ä¿®æ”¹
+  * @param[in]      é™€èºä»ªçš„é›¶æ¼‚
   * @retval         none
   */
 void INS_set_cali_gyro(fp32 cali_scale[3], fp32 cali_offset[3])

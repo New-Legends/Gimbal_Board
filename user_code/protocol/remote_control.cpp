@@ -277,67 +277,67 @@ bool_t if_key_singal_pessed(const RC_ctrl_t *_rc_ctrl, const RC_ctrl_t *_last_rc
     switch (key_num)
     {
     case 'W':
-        ans = if_key_pessed(_rc_ctrl, 'W') && if_key_pessed(_last_rc_ctrl, 'W');
+        ans = if_key_pessed(_rc_ctrl, 'W') && !if_key_pessed(_last_rc_ctrl, 'W');
         break;
 
     case 'S':
-        ans = if_key_pessed(_rc_ctrl, 'S') && if_key_pessed(_last_rc_ctrl, 'S');
+        ans = if_key_pessed(_rc_ctrl, 'S') && !if_key_pessed(_last_rc_ctrl, 'S');
         break;
 
     case 'A':
-        ans = if_key_pessed(_rc_ctrl, 'A') && if_key_pessed(_last_rc_ctrl, 'A');
+        ans = if_key_pessed(_rc_ctrl, 'A') && !if_key_pessed(_last_rc_ctrl, 'A');
         break;
 
     case 'D':
-        ans = if_key_pessed(_rc_ctrl, 'D') && if_key_pessed(_last_rc_ctrl, 'D');
+        ans = if_key_pessed(_rc_ctrl, 'D') && !if_key_pessed(_last_rc_ctrl, 'D');
         break;
 
     case 'Q':
-        ans = if_key_pessed(_rc_ctrl, 'Q') && if_key_pessed(_last_rc_ctrl, 'Q');
+        ans = if_key_pessed(_rc_ctrl, 'Q') && !if_key_pessed(_last_rc_ctrl, 'Q');
         break;
 
     case 'E':
-        ans = if_key_pessed(_rc_ctrl, 'E') && if_key_pessed(_last_rc_ctrl, 'E');
+        ans = if_key_pessed(_rc_ctrl, 'E') && !if_key_pessed(_last_rc_ctrl, 'E');
         break;
 
     case 'G':
-        ans = if_key_pessed(_rc_ctrl, 'G') && if_key_pessed(_last_rc_ctrl, 'G');
+        ans = if_key_pessed(_rc_ctrl, 'G') && !if_key_pessed(_last_rc_ctrl, 'G');
         break;
 
     case 'X':
-        ans = if_key_pessed(_rc_ctrl, 'X') && if_key_pessed(_last_rc_ctrl, 'X');
+        ans = if_key_pessed(_rc_ctrl, 'X') && !if_key_pessed(_last_rc_ctrl, 'X');
         break;
 
     case 'Z':
-        ans = if_key_pessed(_rc_ctrl, 'Z') && if_key_pessed(_last_rc_ctrl, 'Z');
+        ans = if_key_pessed(_rc_ctrl, 'Z') && !if_key_pessed(_last_rc_ctrl, 'Z');
         break;
 
     case 'C':
-        ans = if_key_pessed(_rc_ctrl, 'C') && if_key_pessed(_last_rc_ctrl, 'C');
+        ans = if_key_pessed(_rc_ctrl, 'C') && !if_key_pessed(_last_rc_ctrl, 'C');
         break;
 
     case 'B':
-        ans = if_key_pessed(_rc_ctrl, 'B') && if_key_pessed(_last_rc_ctrl, 'B');
+        ans = if_key_pessed(_rc_ctrl, 'B') && !if_key_pessed(_last_rc_ctrl, 'B');
         break;
 
     case 'V':
-        ans = if_key_pessed(_rc_ctrl, 'V') && if_key_pessed(_last_rc_ctrl, 'V');
+        ans = if_key_pessed(_rc_ctrl, 'V') && !if_key_pessed(_last_rc_ctrl, 'V');
         break;
 
     case 'F':
-        ans = if_key_pessed(_rc_ctrl, 'F') && if_key_pessed(_last_rc_ctrl, 'F');
+        ans = if_key_pessed(_rc_ctrl, 'F') && !if_key_pessed(_last_rc_ctrl, 'F');
         break;
 
     case 'R':
-        ans = if_key_pessed(_rc_ctrl, 'R') && if_key_pessed(_last_rc_ctrl, 'R');
+        ans = if_key_pessed(_rc_ctrl, 'R') && !if_key_pessed(_last_rc_ctrl, 'R');
         break;
 
     case '$':
-        ans = if_key_pessed(_rc_ctrl, '$') && if_key_pessed(_last_rc_ctrl, '$');
+        ans = if_key_pessed(_rc_ctrl, '$') && !if_key_pessed(_last_rc_ctrl, '$');
         break;
 
     case '!':
-        ans = if_key_pessed(_rc_ctrl, '!') && if_key_pessed(_last_rc_ctrl, '!');
+        ans = if_key_pessed(_rc_ctrl, '!') && !if_key_pessed(_last_rc_ctrl, '!');
         break;
 
     default:

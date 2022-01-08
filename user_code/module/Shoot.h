@@ -56,20 +56,28 @@
 #define ECD_RANGE 8191
 
 //摩擦轮电机rmp 变化成 旋转速度的比例
-#define FRIC_RPM_TO_SPEED 0.000415809748903494517209f * 5
+// #define FRIC_RPM_TO_SPEED 0.000415809748903494517209f * 5
+#define FRIC_RPM_TO_SPEED 0.000415809748903494517209f 
 
+// //摩擦轮电机PID
+// #define FRIC_SPEED_PID_KP 1800.0f
+// #define FRIC_SPEED_PID_KI 0.5f
+// #define FRIC_SPEED_PID_KD 2.0f
+// #define FRIC_PID_MAX_IOUT 200.0f
+// #define FRIC_PID_MAX_OUT 2000.0f
 //摩擦轮电机PID
 #define FRIC_SPEED_PID_KP 1800.0f
-#define FRIC_SPEED_PID_KI 0.5f
-#define FRIC_SPEED_PID_KD 2.0f
+#define FRIC_SPEED_PID_KI 0.0f
+#define FRIC_SPEED_PID_KD 0.0f
 #define FRIC_PID_MAX_IOUT 200.0f
-#define FRIC_PID_MAX_OUT 8000.0f
+#define FRIC_PID_MAX_OUT 2000.0f
+
 
 #define FRIC_REQUIRE_SPEED_RMP 500.0f
 #define FRIC_MAX_SPEED_RMP 4000.0f
 
-#define FRIC_MAX_SPEED 6.0f
-#define FRIC_MAX_REQUUIRE_SPEED 3.0f
+#define FRIC_MAX_SPEED 4.0f
+#define FRIC_MAX_REQUUIRE_SPEED 2.0f
 
 //拨盘电机rmp 变化成 旋转速度的比例
 #define MOTOR_RPM_TO_SPEED 0.00290888208665721596153948461415f
@@ -116,16 +124,20 @@
 
 //TODO 还需改进
 //摩擦轮按键控制
-#define KEY_FRIC if_key_singal_pessed(shoot.shoot_rc, shoot.last_shoot_rc, 'G')
+//#define KEY_FRIC if_key_singal_pessed(shoot.shoot_rc, shoot.last_shoot_rc, 'G')
+//暂时使用这种方法
+#define KEY_FRIC ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_G) && !(shoot.shoot_last_key_v & KEY_PRESSED_OFFSET_G))
 
-    typedef enum { SHOOT_STOP = 0,        //停止发射结构
-                   SHOOT_READY_FRIC,      //摩擦轮准备中
-                   SHOOT_READY_BULLET,    //拨盘准备中,摩擦轮已达到转速
-                   SHOOT_READY,           //整个发射机构准备完成
-                   SHOOT_BULLET,          //单发
-                   SHOOT_CONTINUE_BULLET, //连发
-                   SHOOT_DONE,
-    } shoot_mode_e;
+typedef enum
+{
+  SHOOT_STOP = 0,        //停止发射结构
+  SHOOT_READY_FRIC,      //摩擦轮准备中
+  SHOOT_READY_BULLET,    //拨盘准备中,摩擦轮已达到转速
+  SHOOT_READY,           //整个发射机构准备完成
+  SHOOT_BULLET,          //单发
+  SHOOT_CONTINUE_BULLET, //连发
+  SHOOT_DONE,
+} shoot_mode_e;
 
 
 class Shoot
@@ -135,7 +147,6 @@ public:
     const RC_ctrl_t *last_shoot_rc;
 
     uint16_t shoot_last_key_v;
-    uint16_t last_shoot_last_key_v;
 
     shoot_mode_e shoot_mode;
 

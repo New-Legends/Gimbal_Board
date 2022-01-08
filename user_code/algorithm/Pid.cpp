@@ -50,27 +50,28 @@ void Pid::init(pid_mode_e mode_, const fp32 *pid_parm, fp32 *ref_, fp32 *set_, f
   * @param[in]      set: 设定值
   * @retval         pid输出
   */
-fp32 Pid::pid_calc()
-{   
-    data.last_error = data.error;
-    data.error = *data.set - *data.ref;
-    if (mode == PID_SPEED)
-        *data.error_delta = data.error - data.last_error;
-    
-    if (mode == PID_ANGLE)
-        data.error = rad_format(data.error);
-
-    data.Pout = data.Kp * data.error;
-    data.Iout += data.Ki * data.error;
-    data.Dout = data.Kd * (*data.error_delta);
 
 
-    LimitMax(data.Iout, data.max_iout);
+ fp32 Pid::pid_calc()
+ {
+     data.last_error = data.error;
+     data.error = *data.set - *data.ref;
+     if (mode == PID_SPEED)
+         *data.error_delta = data.error - data.last_error;
 
-    data.out = data.Pout + data.Iout + data.Dout;
-    LimitMax(data.out, data.max_out);
+     if (mode == PID_ANGLE)
+         data.error = rad_format(data.error);
 
-    return data.out;
+     data.Pout = data.Kp * data.error;
+     data.Iout += data.Ki * data.error;
+     data.Dout = data.Kd * (*data.error_delta);
+
+     LimitMax(data.Iout, data.max_iout);
+
+     data.out = data.Pout + data.Iout + data.Dout;
+     LimitMax(data.out, data.max_out);
+
+     return data.out;
 }
 
 /**
@@ -80,16 +81,6 @@ fp32 Pid::pid_calc()
   */
 void Pid::pid_clear()
 {
-    mode = 0;
-    data.Kp = 0;
-    data.Ki = 0;
-    data.Kd = 0;
-    data.max_out = 0;
-    data.max_iout = 0;
-
-    data.set = 0;
-    data.ref = 0;
-    data.error = 0;
-
-    data.error_delta = 0;
+    data.last_error =data.error = *data.set = *data.ref = 0;
+    data.out =  data.Pout = data.Iout = data.Dout = 0;
 }
