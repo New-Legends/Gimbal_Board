@@ -46,7 +46,7 @@ extern "C"
 一发42mm 100热量
 */
 
-#define FRIC_REFEREE_PARA  0.5            //射速裁判规定数值转实际输入
+#define FRIC_REFEREE_PARA  0.1            //射速裁判规定数值转实际输入
 #define GRIGGER_SPEED_TO_RADIO  0.8      //射频裁判规定数值转实际输入
 
 // //便于测试,把值调低

@@ -56,21 +56,15 @@
 #define ECD_RANGE 8191
 
 //摩擦轮电机rmp 变化成 旋转速度的比例
-// #define FRIC_RPM_TO_SPEED 0.000415809748903494517209f * 5
 #define FRIC_RPM_TO_SPEED 0.000415809748903494517209f 
 
-// //摩擦轮电机PID
-// #define FRIC_SPEED_PID_KP 1800.0f
-// #define FRIC_SPEED_PID_KI 0.5f
-// #define FRIC_SPEED_PID_KD 2.0f
-// #define FRIC_PID_MAX_IOUT 200.0f
-// #define FRIC_PID_MAX_OUT 2000.0f
 //摩擦轮电机PID
 #define FRIC_SPEED_PID_KP 1800.0f
-#define FRIC_SPEED_PID_KI 0.0f
-#define FRIC_SPEED_PID_KD 0.0f
+#define FRIC_SPEED_PID_KI 0.5f
+#define FRIC_SPEED_PID_KD 2.0f
 #define FRIC_PID_MAX_IOUT 200.0f
 #define FRIC_PID_MAX_OUT 2000.0f
+
 
 
 #define FRIC_REQUIRE_SPEED_RMP 500.0f

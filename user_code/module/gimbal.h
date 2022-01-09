@@ -18,9 +18,9 @@
 #include "gimbal_task.h"
 
 //云台电机无电流输出
-#define GIMBAL_YAW_MOTOR_NO_CURRENT 1
+#define GIMBAL_YAW_MOTOR_NO_CURRENT 0
 
-#define GIMBAL_PITCH_MOTOR_NO_CURRENT 0
+#define GIMBAL_PITCH_MOTOR_NO_CURRENT 1
 
 /*----------------------pid系数------------------------*/
 //yaw speed close-loop PID params, max out and max iout
@@ -51,7 +51,7 @@
 //pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
 #define PITCH_GYRO_ABSOLUTE_PID_KP 15.0f //15
 #define PITCH_GYRO_ABSOLUTE_PID_KI 0.0f
-#define PITCH_GYRO_ABSOLUTE_PID_KD 0.0f
+#define PITCH_GYRO_ABSOLUTE_PID_KD 3.0f
 #define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 2.0f
 #define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 6.0f
 
