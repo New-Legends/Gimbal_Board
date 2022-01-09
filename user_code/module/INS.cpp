@@ -465,7 +465,7 @@ static void imu_temp_control(fp32 temp)
     {
         //在没有达到设置的温度，一直最大功率加热
         //in beginning, max power
-        if (temp > *get_control_temperature())
+        if (temp > get_control_temperature())
         {
             temp_constant_time++;
             if (temp_constant_time > 200)

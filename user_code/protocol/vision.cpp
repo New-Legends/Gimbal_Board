@@ -41,6 +41,13 @@ float SB_K_comps = 3.f;
 void vision_init()
 {
   usart1_init(Vision_Buffer[0], Vision_Buffer[1], VISION_BUFFER_LEN);
+
+  VisionRecvData.pitch_angle = 0;
+  VisionRecvData.yaw_angle = 0;
+  VisionRecvData.distance = 0; //距离
+  VisionRecvData.centre_lock = 0; //是否瞄准到了中间  0没有  1瞄准到了
+  VisionRecvData.identify_target = 0; //视野内是否有目标/是否识别到了目标   0否  1是
+  VisionRecvData.identify_buff = 0;   //打符时是否识别到了目标，1是，2识别到切换了装甲，0没识别到
 }
 
 /**
@@ -114,8 +121,8 @@ void vision_send_data(uint8_t CmdID)
 
 void vision_error_angle(float *yaw_angle_error, float *pitch_angle_error)
 {
-  *yaw_angle_error = VisionRecvData.yaw_angle / PI;
-  *pitch_angle_error = VisionRecvData.pitch_angle / PI;
+  *yaw_angle_error = VisionRecvData.yaw_angle / PI / 180;
+  *pitch_angle_error = VisionRecvData.pitch_angle / PI / 180;
 
   if (VisionRecvData.yaw_angle == 0)
   {

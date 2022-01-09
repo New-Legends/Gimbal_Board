@@ -407,11 +407,6 @@ void Shoot::solve()
     {
         shoot_laser_off();
         fric_status = FALSE;
-        // trigger_motor.current_set = 0;
-        // fric_motor[LEFT_FRIC].current_set = 0;
-        // fric_motor[RIGHT_FRIC].current_set = 0;
-        // return ;
-
 
         trigger_motor.speed_set = 0;
         fric_motor[LEFT_FRIC].speed_set = 0;
@@ -436,11 +431,6 @@ void Shoot::solve()
         {
             trigger_motor.current_set = 0;
         }
-
-        //计算PID
-    //     // fric_motor[LEFT_FRIC].current_set = fric_motor[LEFT_FRIC].speed_pid.pid_calc();
-    //     // fric_motor[RIGHT_FRIC].current_set = fric_motor[RIGHT_FRIC].speed_pid.pid_calc();
-    //     // trigger_motor.current_set = trigger_motor.speed_pid.pid_calc();
     }
 
     if (fric_motor[LEFT_FRIC].speed_set > fric_motor[LEFT_FRIC].max_speed)
@@ -453,7 +443,6 @@ void Shoot::solve()
     else if (fric_motor[RIGHT_FRIC].speed_set < fric_motor[RIGHT_FRIC].min_speed)
         fric_motor[RIGHT_FRIC].speed_set = fric_motor[RIGHT_FRIC].min_speed;
 
-    //TODO PID输出累计应该只有6000 但是有8000现在
     //计算PID
     fric_motor[LEFT_FRIC].current_set = fric_motor[LEFT_FRIC].speed_pid.pid_calc();
     fric_motor[RIGHT_FRIC].current_set = fric_motor[RIGHT_FRIC].speed_pid.pid_calc();

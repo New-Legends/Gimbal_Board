@@ -45,6 +45,7 @@ void System_Resource_Init(void)
 {
     /* Syetem Service init --------------*/
     delay_init();
+    cali_param_init();
 
     /* Applications Init ----------------*/
 }

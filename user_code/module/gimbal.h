@@ -14,8 +14,11 @@
 #include "INS.h"
 #include "Communicate.h"
 
+
+#include "gimbal_task.h"
+
 //云台电机无电流输出
-#define GIMBAL_YAW_MOTOR_NO_CURRENT 0
+#define GIMBAL_YAW_MOTOR_NO_CURRENT 1
 
 #define GIMBAL_PITCH_MOTOR_NO_CURRENT 0
 
@@ -30,8 +33,8 @@
 
 //pitch speed close-loop PID params, max out and max iout
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
-#define PITCH_SPEED_PID_KP 2000.0f //2900
-#define PITCH_SPEED_PID_KI 0.0f
+#define PITCH_SPEED_PID_KP 8000.0f //2900
+#define PITCH_SPEED_PID_KI 0.1f
 #define PITCH_SPEED_PID_KD 0.0f
 #define PITCH_SPEED_PID_MAX_IOUT 25000.0f
 #define PITCH_SPEED_PID_MAX_OUT 30000.0f
@@ -46,7 +49,7 @@
 
 //pitch gyro angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define PITCH_GYRO_ABSOLUTE_PID_KP 20.0f //15
+#define PITCH_GYRO_ABSOLUTE_PID_KP 15.0f //15
 #define PITCH_GYRO_ABSOLUTE_PID_KI 0.0f
 #define PITCH_GYRO_ABSOLUTE_PID_KD 0.0f
 #define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 2.0f
@@ -90,11 +93,11 @@
 // #define YAW_RC_SEN -0.000005f
 // #define PITCH_RC_SEN 0.000006f
 #define YAW_RC_SEN -0.00005f
-#define PITCH_RC_SEN 0.00003f
+#define PITCH_RC_SEN 0.000015f
 
 //云台 鼠标速度
 #define YAW_MOUSE_SEN 0.00015f
-#define PITCH_MOUSE_SEN -0.00004f
+#define PITCH_MOUSE_SEN -0.00006f
 
 #define YAW_ENCODE_SEN 0.01f
 #define PITCH_ENCODE_SEN 0.01f
@@ -125,8 +128,8 @@
 #define MAX_ABSOULATE_YAW 6.0f
 #define MIN_ABSOULATE_YAW -6.0f
 
-#define MAX_ABSOULATE_PITCH 0.2f
-#define MIN_ABSOULATE_PITCH -0.2f
+#define MAX_ABSOULATE_PITCH 0.1f
+#define MIN_ABSOULATE_PITCH -0.3f
 
 #define MAX_RELATIVE_YAW PI
 #define MIN_RELATIVE_YAW -PI
@@ -142,9 +145,9 @@
 #define GIMBAL_INIT_STOP_TIME 100
 #define GIMBAL_INIT_TIME 6000
 #define GIMBAL_CALI_REDUNDANT_ANGLE 0.1f
-//云台初始化回中值的速度以及控制到的角度
-#define GIMBAL_INIT_PITCH_SPEED 0.05f
-#define GIMBAL_INIT_YAW_SPEED 0.05f
+// //云台初始化回中值的速度以及控制到的角度
+#define GIMBAL_INIT_PITCH_SPEED 0.02f
+#define GIMBAL_INIT_YAW_SPEED 0.02f
 
 #define INIT_YAW_SET 0.0f
 #define INIT_PITCH_SET 0.0f
@@ -152,7 +155,7 @@
 //云台校准中值的时候，发送原始电流值，以及堵转时间，通过陀螺仪判断堵转
 #define GIMBAL_CALI_MOTOR_SET 8000
 #define GIMBAL_CALI_STEP_TIME 2000
-#define GIMBAL_CALI_GYRO_LIMIT 0.1f
+#define GIMBAL_CALI_STEP_TIME 0.1f
 
 #define GIMBAL_CALI_PITCH_MAX_STEP 1
 #define GIMBAL_CALI_PITCH_MIN_STEP 2
@@ -171,6 +174,8 @@
 #define MOTOR_ECD_TO_RAD 0.000766990394f //      2*  PI  /8192
 #endif
 
+//gm6020转化成底盘速度(m/s)的比例，
+#define GM6020_MOTOR_RPM_TO_VECTOR 0.000415809748903494517209f * 187 / 3591
 
 //云台行为模式
 typedef enum
@@ -200,8 +205,6 @@ typedef struct
 class Gimbal
 {
 public:
-    fp32 temp_imu_angle[3];
-
     const RC_ctrl_t *gimbal_RC; //云台使用的遥控器指针
     uint16_t gimbal_last_key_v; //遥控器上次按键
 

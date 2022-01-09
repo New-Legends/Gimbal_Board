@@ -60,4 +60,6 @@
 
 extern void gimbal_task(void *pvParameters);
 
+extern uint8_t gimbal_imu_open_flag ;
+
 #endif //GIMBAL_BOARD_GIMBAL_TASK_H

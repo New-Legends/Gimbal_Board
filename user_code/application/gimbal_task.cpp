@@ -48,7 +48,8 @@
 #include "gimbal_task.h"
 
 uint8_t gimbal_flag = 0;
-
+//为了让陀螺仪每次的初始位姿一致,等云台归中后再开启陀螺仪
+uint8_t gimbal_imu_open_flag = 0;
 
 void gimbal_task(void *pvParameters)
 {
