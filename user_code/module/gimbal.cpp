@@ -979,7 +979,7 @@ void Gimbal::set_hand_operator_gimbal_hook(const uint16_t yaw_offset, const uint
     gimbal_yaw_motor.offset_ecd = yaw_offset;
     gimbal_yaw_motor.max_relative_angle = max_yaw;
     gimbal_yaw_motor.min_relative_angle = min_yaw;
-
+    
     gimbal_pitch_motor.offset_ecd = pitch_offset;
     gimbal_pitch_motor.max_relative_angle = max_pitch;
     gimbal_pitch_motor.min_relative_angle = min_pitch;
