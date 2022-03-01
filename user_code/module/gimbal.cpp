@@ -1,7 +1,3 @@
-//
-// Created by summerpray on 2021/11/2.
-//
-
 #include "Gimbal.h"
 #include "Communicate.h"
 #include "INS.h"
@@ -45,9 +41,11 @@
 bool_t auto_switch = 1; //自瞄开关
 
 
-//底盘模块 对象
+//云台模块 对象
 Gimbal gimbal;
 
+//云台debug结构体
+gimbal_debug_data_t gimbal_debug_data;
 
 
 /**
@@ -131,6 +129,9 @@ void Gimbal::init() {
     gimbal_pitch_motor.absolute_angle_set = gimbal_pitch_motor.absolute_angle;
     gimbal_pitch_motor.relative_angle_set = gimbal_pitch_motor.relative_angle;
     gimbal_pitch_motor.speed_set = gimbal_pitch_motor.speed_set;
+
+
+    gimbal_debug_data.init_flag = 0;
 }
 
 
@@ -215,8 +216,14 @@ void Gimbal::feedback_update()
     else
         gimbal_pitch_motor.speed = gimbal_INT_gyro_point[INS_GYRO_Y_ADDRESS_OFFSET];
 
-        //记录上一次遥控器值
-        gimbal_last_key_v = gimbal_RC->key.v;
+    //记录上一次遥控器值
+    gimbal_last_key_v = gimbal_RC->key.v;
+
+    //debug 模式
+#if GIMBAL_DEBUG_MODE
+    gimbal_debug();
+
+#endif
 }
 
 /**
@@ -1052,4 +1059,65 @@ bool_t Gimbal::gimbal_cmd_to_shoot_stop(void)
     {
         return 0;
     }
+}
+
+void gimbal_debug()
+{
+    if (gimbal_debug_data.init_flag == 0)
+    {
+        gimbal_debug_data.init_flag = 1;
+
+        //初始化pid系数
+        // gimbal_debug_data.yaw_speed_kp = YAW_SPEED_PID_KP;
+        // gimbal_debug_data.yaw_speed_ki = YAW_SPEED_PID_KI;
+        // gimbal_debug_data.yaw_speed_kd = YAW_SPEED_PID_KD;
+
+        // gimbal_debug_data.yaw_relatice_kp = YAW_ENCODE_RELATIVE_PID_KP;
+        // gimbal_debug_data.yaw_relatice_ki = YAW_ENCODE_RELATIVE_PID_KI;
+        // gimbal_debug_data.yaw_relatice_kd = YAW_ENCODE_RELATIVE_PID_KD;
+
+        // gimbal_debug_data.yaw_absolute_kp = YAW_GYRO_ABSOLUTE_PID_KP;
+        // gimbal_debug_data.yaw_absolute_ki = YAW_GYRO_ABSOLUTE_PID_KI;
+        // gimbal_debug_data.yaw_absolute_kd = YAW_GYRO_ABSOLUTE_PID_KD;
+
+        // gimbal_debug_data.pitch_speed_kp = PITCH_SPEED_PID_KP;
+        // gimbal_debug_data.pitch_speed_ki = PITCH_SPEED_PID_KI;
+        // gimbal_debug_data.pitch_speed_kd = PITCH_SPEED_PID_KD;
+
+        // gimbal_debug_data.pitch_relatice_kp = PITCH_ENCODE_RELATIVE_PID_KP;
+        // gimbal_debug_data.pitch_relatice_ki = PITCH_ENCODE_RELATIVE_PID_KI;
+        // gimbal_debug_data.pitch_relatice_kd = PITCH_ENCODE_RELATIVE_PID_KD;
+
+
+        // gimbal_debug_data.pitch_absolute_kp = PITCH_GYRO_ABSOLUTE_PID_KP;
+        // gimbal_debug_data.pitch_absolute_ki = PITCH_GYRO_ABSOLUTE_PID_KI;
+        // gimbal_debug_data.pitch_absolute_kd = PITCH_GYRO_ABSOLUTE_PID_KD;
+
+    }
+    else 
+    {   
+        //持续修改pid系数
+
+
+        //读取曲线绘制数据
+        gimbal_debug_data.yaw_speed_ref = *gimbal.gimbal_yaw_motor.speed_pid.data.ref;
+        gimbal_debug_data.yaw_speed_set = *gimbal.gimbal_yaw_motor.speed_pid.data.set;
+
+        gimbal_debug_data.yaw_absolute_ref = *gimbal.gimbal_yaw_motor.absolute_angle_pid.data.ref;
+        gimbal_debug_data.yaw_absolute_set = *gimbal.gimbal_yaw_motor.absolute_angle_pid.data.set;
+
+        gimbal_debug_data.yaw_relative_ref = *gimbal.gimbal_yaw_motor.relative_angle_pid.data.ref;
+        gimbal_debug_data.yaw_relative_set = *gimbal.gimbal_yaw_motor.relative_angle_pid.data.set;
+
+        gimbal_debug_data.pitch_speed_ref = *gimbal.gimbal_pitch_motor.speed_pid.data.ref;
+        gimbal_debug_data.pitch_speed_set = *gimbal.gimbal_pitch_motor.speed_pid.data.set;
+
+        gimbal_debug_data.pitch_absolute_ref = *gimbal.gimbal_pitch_motor.absolute_angle_pid.data.ref;
+        gimbal_debug_data.pitch_absolute_set = *gimbal.gimbal_pitch_motor.absolute_angle_pid.data.set;
+
+        gimbal_debug_data.pitch_relative_ref = *gimbal.gimbal_pitch_motor.relative_angle_pid.data.ref;
+        gimbal_debug_data.pitch_relative_set = *gimbal.gimbal_pitch_motor.relative_angle_pid.data.set;
+    }
+
+
 }
