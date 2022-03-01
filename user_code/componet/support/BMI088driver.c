@@ -373,13 +373,10 @@ void BMI088_read_accel_who_am_i(void)
 
 }
 
-
-
-
-
+int16_t bmi088_raw_temp;
 void BMI088_temperature_read_over(uint8_t *rx_buf, fp32 *temperate)
 {
-    int16_t bmi088_raw_temp;
+    
     bmi088_raw_temp = (int16_t)((rx_buf[0] << 3) | (rx_buf[1] >> 5));
 
     if (bmi088_raw_temp > 1023)

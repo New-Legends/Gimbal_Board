@@ -62,10 +62,7 @@ void INS_task(void *pvParameters)
 
     vTaskDelay(IMU_CONTROL_TIME_MS);
   }
-  
-
   imu.init();
-
 
   while (1)
   {
@@ -78,7 +75,7 @@ void INS_task(void *pvParameters)
     //   gimbal_imu_open_flag = 0;
     // }
     imu.INS_Info_Get();
-    vTaskDelay(IMU_CONTROL_TIME_MS);
+    // vTaskDelay(IMU_CONTROL_TIME_MS);
   }
 }
 

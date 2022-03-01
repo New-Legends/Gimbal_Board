@@ -16,7 +16,6 @@
 
 
 #include "gimbal_task.h"
-
 //云台电机无电流输出
 #define GIMBAL_YAW_MOTOR_NO_CURRENT 0
 
