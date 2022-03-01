@@ -93,7 +93,6 @@ extern "C"{
 #define INS_MAG_Y_ADDRESS_OFFSET 1
 #define INS_MAG_Z_ADDRESS_OFFSET 2
 
-#define IMU_temp_PWM(pwm)  imu_pwm_set(pwm)                    //pwm给定
 
 #define BMI088_BOARD_INSTALL_SPIN_MATRIX    \
     {0.0f, 1.0f, 0.0f},                     \
@@ -115,8 +114,6 @@ public:
 /*******************************************(C) 陀螺仪基本参数 ***********************************************/
     bmi088_real_data_t bmi088_real_data;                            //IMU数据存储
     ist8310_real_data_t ist8310_real_data;                          //磁力计数据存储
-    
-    
     
     fp32 INS_gyro[3];
     fp32 INS_accel[3];
@@ -191,4 +188,19 @@ extern void INS_set_cali_gyro(fp32 cali_scale[3], fp32 cali_offset[3]);
   * @retval         none
   */
 static void imu_temp_control(fp32 temp);
+
+/**
+ * @brief          open the SPI DMA accord to the value of imu_update_flag
+ * @param[in]      none
+ * @retval         none
+ */
+/**
+ * @brief          根据imu_update_flag的值开启SPI DMA
+ * @param[in]      temp:bmi088的温度
+ * @retval         none
+ */
+static void imu_cmd_spi_dma(void);
+
+
+
 #endif

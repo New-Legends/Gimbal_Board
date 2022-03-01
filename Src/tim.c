@@ -609,8 +609,9 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
     HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /* USER CODE BEGIN TIM10_MspPostInit 1 */
-
-  /* USER CODE END TIM10_MspPostInit 1 */
+    HAL_TIM_Base_Start(&htim10);
+    HAL_TIM_PWM_Start(&htim10, TIM_CHANNEL_1);
+    /* USER CODE END TIM10_MspPostInit 1 */
   }
 
 }

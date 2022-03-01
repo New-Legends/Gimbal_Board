@@ -16,17 +16,19 @@
 
 
 #include "gimbal_task.h"
-
 //云台电机无电流输出
 #define GIMBAL_YAW_MOTOR_NO_CURRENT 0
 
 #define GIMBAL_PITCH_MOTOR_NO_CURRENT 0
 
+//云台电机debug模式
+#define GIMBAL_DEBUG_MODE  1
+
 /*----------------------pid系数------------------------*/
 //yaw speed close-loop PID params, max out and max iout
 //yaw 速度环 PID参数以及 PID最大输出，积分输出
-#define YAW_SPEED_PID_KP 8000.0f //1800
-#define YAW_SPEED_PID_KI 0.0f    //20
+#define YAW_SPEED_PID_KP 8000.0f 
+#define YAW_SPEED_PID_KI 0.0f    
 #define YAW_SPEED_PID_KD 0.0f
 #define YAW_SPEED_PID_MAX_IOUT 20000.0f
 #define YAW_SPEED_PID_MAX_OUT 30000.0f
@@ -41,7 +43,7 @@
 
 //yaw gyro angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define YAW_GYRO_ABSOLUTE_PID_KP 10.0f //26
+#define YAW_GYRO_ABSOLUTE_PID_KP 10.0f 
 #define YAW_GYRO_ABSOLUTE_PID_KI 0.0f
 #define YAW_GYRO_ABSOLUTE_PID_KD 3.0f
 #define YAW_GYRO_ABSOLUTE_PID_MAX_IOUT 2.0f
@@ -49,15 +51,15 @@
 
 //pitch gyro angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define PITCH_GYRO_ABSOLUTE_PID_KP 15.0f //15
+#define PITCH_GYRO_ABSOLUTE_PID_KP 8.8f 
 #define PITCH_GYRO_ABSOLUTE_PID_KI 0.0f
-#define PITCH_GYRO_ABSOLUTE_PID_KD 3.0f
+#define PITCH_GYRO_ABSOLUTE_PID_KD 0.05f  //0.1
 #define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 2.0f
 #define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 6.0f
 
 //yaw encode angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define YAW_ENCODE_RELATIVE_PID_KP 10.0f //8
+#define YAW_ENCODE_RELATIVE_PID_KP 10.0f 
 #define YAW_ENCODE_RELATIVE_PID_KI 0.0f
 #define YAW_ENCODE_RELATIVE_PID_KD 0.0f
 #define YAW_ENCODE_RELATIVE_PID_MAX_IOUT 2.0f
@@ -65,7 +67,7 @@
 
 //pitch encode angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define PITCH_ENCODE_RELATIVE_PID_KP 10.0f //15
+#define PITCH_ENCODE_RELATIVE_PID_KP 6.0f 
 #define PITCH_ENCODE_RELATIVE_PID_KI 0.0f
 #define PITCH_ENCODE_RELATIVE_PID_KD 0.0f
 #define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 2.0f
@@ -78,7 +80,7 @@
 #define GIMBAL_MODE_CHANNEL 0
 //turn 180°
 //掉头180 按键
-#define TURN_KEYBOARD KEY_PRESSED_OFFSET_F
+#define TURN_KEYBOARD KEY_PRESSED_OFFSET_V
 //turn speed
 //掉头云台速度
 #define TURN_SPEED 0.04f
@@ -96,8 +98,11 @@
 #define PITCH_RC_SEN 0.000015f
 
 //云台 鼠标速度
-#define YAW_MOUSE_SEN 0.00015f
-#define PITCH_MOUSE_SEN -0.00006f
+// #define YAW_MOUSE_SEN 0.00015f
+// #define PITCH_MOUSE_SEN -0.00006f
+#define YAW_MOUSE_SEN 0.00025f
+#define PITCH_MOUSE_SEN -0.00016f
+
 
 #define YAW_ENCODE_SEN 0.01f
 #define PITCH_ENCODE_SEN 0.01f
@@ -202,6 +207,53 @@ typedef struct
     uint8_t step;
 } gimbal_step_cali_t;
 
+typedef struct 
+{
+    bool_t init_flag;
+
+    //kp, ki kd为可调参数
+    //ref set 为绘制的曲线,分别是测量值,设定值
+    //使用stm stdio进行调试 直接输入下列的变量 注意修改debug模式的宏定义
+
+    fp32 yaw_speed_kp;
+    fp32 yaw_speed_ki;
+    fp32 yaw_speed_kd;
+    fp32 yaw_speed_ref;
+    fp32 yaw_speed_set;
+
+    fp32 yaw_relative_kp;
+    fp32 yaw_relative_ki;
+    fp32 yaw_relative_kd;
+    fp32 yaw_relative_ref;
+    fp32 yaw_relative_set;
+
+    fp32 yaw_absolute_kp;
+    fp32 yaw_absolute_ki;
+    fp32 yaw_absolute_kd;
+    fp32 yaw_absolute_ref;
+    fp32 yaw_absolute_set;
+
+    fp32 pitch_speed_kp;
+    fp32 pitch_speed_ki;
+    fp32 pitch_speed_kd;
+    fp32 pitch_speed_ref;
+    fp32 pitch_speed_set;
+
+    fp32 pitch_relative_kp;
+    fp32 pitch_relative_ki;
+    fp32 pitch_relative_kd;
+    fp32 pitch_relative_ref;
+    fp32 pitch_relative_set;
+
+    fp32 pitch_absolute_kp;
+    fp32 pitch_absolute_ki;
+    fp32 pitch_absolute_kd;
+    fp32 pitch_absolute_ref;
+    fp32 pitch_absolute_set;
+
+} gimbal_debug_data_t;
+
+
 class Gimbal
 {
 public:
@@ -265,6 +317,10 @@ public:
 
     bool_t gimbal_cmd_to_shoot_stop(void);
 };
+
+
+void gimbal_debug();
+
 
 extern Gimbal gimbal;
 
