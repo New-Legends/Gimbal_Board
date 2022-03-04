@@ -72,7 +72,7 @@ void Task_start(void) {
 
     xTaskCreate(calibrate_task, "calibrate_task", Normal_Stack_Size, NULL, PriorityHigh, &cali_task_handle);
 
-    xTaskCreate(oled_task, "oled_task", Normal_Stack_Size, NULL, PriorityLow, &oled_task_handle);
+    //xTaskCreate(oled_task, "oled_task", Normal_Stack_Size, NULL, PriorityLow, &oled_task_handle);
 
     xTaskCreate(led_RGB_flow_task, "led_flow_task", Normal_Stack_Size, NULL, PriorityNormal, &led_flow_task_handle);
 

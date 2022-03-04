@@ -153,24 +153,7 @@
           <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0STM32F4xx_1024 -FS08000000 -FL0100000 -FP0($$Device:STM32F407IGHx$CMSIS\Flash\STM32F4xx_1024.FLM))</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint>
-        <Bp>
-          <Number>0</Number>
-          <Type>0</Type>
-          <LineNumber>511</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134278896</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\user_code\module\Shoot.cpp</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\NewLegends_Gimbal_Board\../user_code/module/Shoot.cpp\511</Expression>
-        </Bp>
-      </Breakpoint>
+      <Breakpoint/>
       <WatchWindow1>
         <Ww>
           <count>0</count>
@@ -200,62 +183,62 @@
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>can_receive</ItemText>
+          <ItemText>VisionRecvData</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>shoot_grigger_grade</ItemText>
+          <ItemText>VisionSendData</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>shoot_fric_grade</ItemText>
+          <ItemText>temp_yaw</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>grigger_speed_to_radio</ItemText>
+          <ItemText>bmi088_raw_temp,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>1</WinNumber>
-          <ItemText>fric_refree_para</ItemText>
+          <ItemText>tempPWM</ItemText>
         </Ww>
         <Ww>
           <count>10</count>
           <WinNumber>1</WinNumber>
-          <ItemText>grigger_speed_grade</ItemText>
+          <ItemText>accel_temp_dma_rx_buf,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>11</count>
           <WinNumber>1</WinNumber>
-          <ItemText>last_grigger_speed_grade</ItemText>
+          <ItemText>gyro_dma_rx_buf</ItemText>
         </Ww>
         <Ww>
           <count>12</count>
           <WinNumber>1</WinNumber>
-          <ItemText>fric_speed_grade</ItemText>
+          <ItemText>accel_dma_rx_buf</ItemText>
         </Ww>
         <Ww>
           <count>13</count>
           <WinNumber>1</WinNumber>
-          <ItemText>press_ctrl</ItemText>
+          <ItemText>accel_temp_dma_rx_buf</ItemText>
         </Ww>
         <Ww>
           <count>14</count>
           <WinNumber>1</WinNumber>
-          <ItemText>signal_press_z</ItemText>
+          <ItemText>gimbal_debug_data</ItemText>
         </Ww>
         <Ww>
           <count>15</count>
           <WinNumber>1</WinNumber>
-          <ItemText>signal_press_x</ItemText>
+          <ItemText>error_num_display</ItemText>
         </Ww>
         <Ww>
           <count>16</count>
           <WinNumber>1</WinNumber>
-          <ItemText>signal_press_g</ItemText>
+          <ItemText>error_list</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
