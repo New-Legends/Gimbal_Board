@@ -340,7 +340,6 @@ void Gimbal::behavour_set()
         gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
     }
 
-    // TODO:测试此段代码(遥控器离线检测使云台不上电)
     if (toe_is_error(GIMBAL_YAW_MOTOR_TOE) || toe_is_error(GIMBAL_PITCH_MOTOR_TOE))
     {
         gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
@@ -351,6 +350,11 @@ void Gimbal::behavour_set()
         buzzer_off();
     }
 
+    //遥控器电线保护
+    if (toe_is_error(DBUS_TOE))
+    {
+        gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
+    }
 
     // enter init mode
     //判断进入init状态机

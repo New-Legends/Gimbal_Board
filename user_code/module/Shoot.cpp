@@ -46,25 +46,29 @@ extern "C"
 一发42mm 100热量
 */
 
-#define FRIC_REFEREE_PARA  0.1            //射速裁判规定数值转实际输入
-#define GRIGGER_SPEED_TO_RADIO  0.8      //射频裁判规定数值转实际输入
-
-// //便于测试,把值调低
-// #define FRIC_REFEREE_PARA 0.1      //射速裁判规定数值转实际输入
-// #define GRIGGER_SPEED_TO_RADIO 0.2 //射频裁判规定数值转实际输入
+fp32 fric_refree_para = 0.1;
+fp32 grigger_speed_to_radio = 0.2;
 
 //通过读取裁判数据,直接修改射速和射频等级
 //射速等级  摩擦电机
-fp32 shoot_fric_grade[4] = {0, 15*FRIC_REFEREE_PARA, 18*FRIC_REFEREE_PARA, 30*FRIC_REFEREE_PARA};
+fp32 shoot_fric_grade[4] = {0, 15 * fric_refree_para, 18 * fric_refree_para, 30 * fric_refree_para};
 
 //射频等级 拨弹电机
-fp32 shoot_grigger_grade[6] = {0, 5.0f*GRIGGER_SPEED_TO_RADIO, 10.0f*GRIGGER_SPEED_TO_RADIO, 15.0f*GRIGGER_SPEED_TO_RADIO, 28.0f*GRIGGER_SPEED_TO_RADIO, 40.0f*GRIGGER_SPEED_TO_RADIO};
+fp32 shoot_grigger_grade[6] = {0, 5.0f * grigger_speed_to_radio, 10.0f * grigger_speed_to_radio, 15.0f * grigger_speed_to_radio, 28.0f * grigger_speed_to_radio, 40.0f * grigger_speed_to_radio};
 
 //拨盘等级 摩擦轮等级
 uint8_t grigger_speed_grade;
 uint8_t fric_speed_grade;
 
 Shoot shoot;
+
+
+
+uint8_t press_ctrl = 0;
+uint8_t signal_press_z = 0;
+uint8_t signal_press_x = 0;
+uint8_t signal_press_g = 0;
+
 
 /**
   * @brief          射击初始化，初始化PID，遥控器指针，电机指针
@@ -174,7 +178,6 @@ void Shoot::set_mode()
     {
         shoot_mode = SHOOT_STOP;
     }
-
 
 
 
@@ -339,6 +342,21 @@ void Shoot::feedback_update()
         rc_s_time = 0;
     }
 
+    //便于调参:
+
+    //射速等级  摩擦电机
+    shoot_fric_grade[0] = 0;
+    shoot_fric_grade[1] = 15 * fric_refree_para;
+    shoot_fric_grade[2] = 18 * fric_refree_para;
+    shoot_fric_grade[3] = 30 * fric_refree_para;
+
+    //射频等级 拨弹电机
+    shoot_grigger_grade[0] = 0;
+    shoot_grigger_grade[1] = 5.0f * grigger_speed_to_radio;
+    shoot_grigger_grade[2] = 10.0f * grigger_speed_to_radio; 
+    shoot_grigger_grade[3] = 15.0f * grigger_speed_to_radio;
+    shoot_grigger_grade[4] = 28.0f * grigger_speed_to_radio;
+    shoot_grigger_grade[5] = 40.0f * grigger_speed_to_radio;
 }
 
 /**
@@ -386,7 +404,7 @@ void Shoot::set_control()
     else if (shoot_mode == SHOOT_CONTINUE_BULLET)
     {
         //设置拨弹轮的拨动速度,并开启堵转反转处理
-        trigger_motor.speed_set = shoot_grigger_grade[2] * SHOOT_TRIGGER_DIRECTION;
+        trigger_motor.speed_set = shoot_grigger_grade[1] * SHOOT_TRIGGER_DIRECTION;
     }
     else if (shoot_mode == SHOOT_DONE)
     {
@@ -416,11 +434,11 @@ void Shoot::solve()
     {
         shoot_laser_on(); //激光开启
         //设置摩擦轮转速
-        fric_motor[LEFT_FRIC].speed_set = shoot_fric_grade[2];
-        fric_motor[RIGHT_FRIC].speed_set = shoot_fric_grade[2];
+        // fric_motor[LEFT_FRIC].speed_set = shoot_fric_grade[1];
+        // fric_motor[RIGHT_FRIC].speed_set = shoot_fric_grade[1];
 
         //连发模式 控制17mm发射机构射速和热量控制
-        if(shoot_mode == SHOOT_CONTINUE_BULLET)
+        //if(shoot_mode == SHOOT_CONTINUE_BULLET)
             cooling_ctrl();
 
         if (shoot_mode == SHOOT_READY_BULLET || shoot_mode == SHOOT_CONTINUE_BULLET)
@@ -449,6 +467,8 @@ void Shoot::solve()
     trigger_motor.current_set = trigger_motor.speed_pid.pid_calc();
 }
 
+
+
 /**
 * @brief          发射机构弹速和热量控制
 * @param[in]      void
@@ -466,13 +486,30 @@ void Shoot::cooling_ctrl()
     uint16_t id1_17mm_speed_limit;
     fp32 bullet_speed;
 
+    //保留被强制降速前的射频
+    static uint8_t last_grigger_speed_grade = 1;
 
-    if (toe_is_error(REFEREE_TOE))
-    {
-        grigger_speed_grade = 1;
-        fric_speed_grade = 1;
+    press_ctrl = ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_CTRL) != 0);
+    signal_press_z = ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_Z) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_OFFSET_Z) != 0);
+    signal_press_x = ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_X) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_OFFSET_X) != 0);
+    signal_press_g = KEY_FRIC;
+
+    //手动调整射频
+#if SHOOT_SET_TRIGGER_SPEED_BY_HAND
+        if (KEY_TRIGGER_SPEED_UP && grigger_speed_grade < 5){
+        grigger_speed_grade++;
+    } else if (KEY_TRIGGER_SPEED_DOWN && grigger_speed_grade>0) {
+        grigger_speed_grade--;
     }
-    else
+#endif
+
+    //离线监测暂时没有添加
+    // if (toe_is_error(REFEREE_TOE))
+    // {
+    //     grigger_speed_grade = 1;
+    //     fric_speed_grade = 1;
+    // }
+    // else
     {
         //更新裁判数据
         id1_17mm_cooling_limit = can_receive.gimbal_receive.id1_17mm_cooling_limit;
@@ -482,18 +519,25 @@ void Shoot::cooling_ctrl()
         id1_17mm_speed_limit = can_receive.gimbal_receive.id1_17mm_speed_limit;
         bullet_speed = can_receive.gimbal_receive.bullet_speed;
 
+        //手动调整射频
+#if SHOOT_SET_TRIGGER_SPEED_BY_HAND
+
+#else
         //根据热量和射速上限修改等级
         //热量
         if (id1_17mm_cooling_limit <= 50)
             grigger_speed_grade = 1;
         else if (id1_17mm_cooling_limit <= 100)
             grigger_speed_grade = 2;
-        else if (id1_17mm_cooling_limit <= 150)
+        else if (id1_17mm_cooling_limit <= 200)
             grigger_speed_grade = 3;
         else if (id1_17mm_cooling_limit <= 280)
             grigger_speed_grade = 4;
         else if (id1_17mm_cooling_limit <= 400)
             grigger_speed_grade = 5;
+
+
+#endif
 
         //射速
         if (id1_17mm_speed_limit <= 15)
@@ -503,22 +547,32 @@ void Shoot::cooling_ctrl()
         else if (id1_17mm_speed_limit <= 30)
             fric_speed_grade = 3;
 
-        //当调试射速和射频等级数组时可以暂时注释
         //根据当前热量和射速修改等级,确保不会因超限扣血,
-
         //热量 当剩余热量低于30,强制制动
-        if (id1_17mm_cooling_limit - id1_17mm_cooling_heat <= 20 && grigger_speed_grade != 0)
+        if (id1_17mm_cooling_limit - id1_17mm_cooling_heat <= 30 && grigger_speed_grade != 0)
+        {
+            last_grigger_speed_grade = grigger_speed_grade;
             grigger_speed_grade = 0;
+        } else {
+            grigger_speed_grade = last_grigger_speed_grade;
+        }
 
-        //射速 超射速,强制降低摩擦轮转速
+        //超射速,强制降低摩擦轮转速
         if (bullet_speed > id1_17mm_speed_limit)
+        {
             fric_speed_grade--;
+        }
     }
 
-    //对拨盘电机输入控制值
-    trigger_motor.speed_set = shoot_grigger_grade[grigger_speed_grade] * SHOOT_TRIGGER_DIRECTION;
+    
+    
+
+
+    //连发模式下，对拨盘电机输入控制值
+    if(shoot_mode == SHOOT_CONTINUE_BULLET)
+        trigger_motor.speed_set = shoot_grigger_grade[grigger_speed_grade] * SHOOT_TRIGGER_DIRECTION;
     //对摩擦轮电机输入控制值
-    fric_motor[LEFT_FRIC].speed_set = -shoot_fric_grade[fric_speed_grade];
+    fric_motor[LEFT_FRIC].speed_set = shoot_fric_grade[fric_speed_grade];
     fric_motor[RIGHT_FRIC].speed_set = shoot_fric_grade[fric_speed_grade];
 
 }
