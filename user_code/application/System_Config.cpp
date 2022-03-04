@@ -19,6 +19,9 @@ extern "C" {
 #include "shoot_task.h"
 #include "ins_task.h"
 #include "calibrate_task.h"
+#include "oled_task.h" 
+#include "led_flow_task.h"
+#include "detect_task.h"
 
 #define Tiny_Stack_Size       64
 #define Small_Stack_Size      128
@@ -39,7 +42,9 @@ TaskHandle_t gimbal_task_handle;
 TaskHandle_t shoot_task_handle;
 TaskHandle_t cali_task_handle;
 TaskHandle_t communicate_task_handle;
-
+TaskHandle_t oled_task_handle;
+TaskHandle_t led_flow_task_handle;
+TaskHandle_t detect_task_handle;
 
 void System_Resource_Init(void)
 {
@@ -66,5 +71,11 @@ void Task_start(void) {
     xTaskCreate(communicate_task, "communicate_task", Large_Stack_Size, NULL, PriorityHigh, &communicate_task_handle);
 
     xTaskCreate(calibrate_task, "calibrate_task", Normal_Stack_Size, NULL, PriorityHigh, &cali_task_handle);
+
+    xTaskCreate(oled_task, "oled_task", Normal_Stack_Size, NULL, PriorityLow, &oled_task_handle);
+
+    xTaskCreate(led_RGB_flow_task, "led_flow_task", Normal_Stack_Size, NULL, PriorityNormal, &led_flow_task_handle);
+
+    xTaskCreate(detect_task, "detect_task", Normal_Stack_Size, NULL, PriorityHigh, &detect_task_handle);
 }
 

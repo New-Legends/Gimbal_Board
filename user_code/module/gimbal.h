@@ -14,6 +14,16 @@
 #include "INS.h"
 #include "Communicate.h"
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+#include "bsp_buzzer.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #include "gimbal_task.h"
 //云台电机无电流输出

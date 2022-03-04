@@ -3,13 +3,12 @@
 #include "INS.h"
 #include "detect_task.h"
 
-
 #include "math.h"
 #include "First_order_filter.h"
 #include "Motor.h"
 #include "vision.h"
 
-//motor enconde value format, range[0-8191]
+// motor enconde value format, range[0-8191]
 //电机编码值规整 0—8191
 #define ecd_format(ecd)         \
     {                           \
@@ -20,11 +19,11 @@
     }
 
 /**
-  * @brief          遥控器的死区判断，因为遥控器的拨杆在中位的时候，不一定为0，
-  * @param          输入的遥控器值
-  * @param          输出的死区处理后遥控器值
-  * @param          死区值
-  */
+ * @brief          遥控器的死区判断，因为遥控器的拨杆在中位的时候，不一定为0，
+ * @param          输入的遥控器值
+ * @param          输出的死区处理后遥控器值
+ * @param          死区值
+ */
 #define rc_deadband_limit(input, output, dealine)        \
     {                                                    \
         if ((input) > (dealine) || (input) < -(dealine)) \
@@ -40,19 +39,18 @@
 //自瞄相关数据
 bool_t auto_switch = 1; //自瞄开关
 
-
 //云台模块 对象
 Gimbal gimbal;
 
 //云台debug结构体
 gimbal_debug_data_t gimbal_debug_data;
 
-
 /**
-  * @brief          初始化云台
-  * @Author         summerpray
-  */
-void Gimbal::init() {
+ * @brief          初始化云台
+ * @Author         summerpray
+ */
+void Gimbal::init()
+{
 
     //由于自动校准有问题,只能暂时手动校准
     set_hand_operator_gimbal_hook(YAW_OFFSET, PITCH_OFFSET, MAX_RELATIVE_YAW, MIN_RELATIVE_YAW, MAX_RELATIVE_PITCH, MIN_RELATIVE_PITCH);
@@ -64,7 +62,7 @@ void Gimbal::init() {
     //设置初试状态机
     gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
     last_gimbal_behaviour_mode = gimbal_behaviour_mode;
-    
+
     /*----------------------yaw电机数据------------------------------*/
     gimbal_yaw_motor.init(can_receive.get_gimbal_motor_measure_point(YAW));
 
@@ -130,21 +128,18 @@ void Gimbal::init() {
     gimbal_pitch_motor.relative_angle_set = gimbal_pitch_motor.relative_angle;
     gimbal_pitch_motor.speed_set = gimbal_pitch_motor.speed_set;
 
-
     gimbal_debug_data.init_flag = 0;
 }
 
-
-
 /**
-  * @brief          更新云台数据
-  * @Author         summerpray
-  */
+ * @brief          更新云台数据
+ * @Author         summerpray
+ */
 void Gimbal::feedback_update()
 {
     //切换模式数据保存
-    //TODO:思考一下pitch和yaw真的需要分开保存吗
-    //yaw电机状态机切换保存数据
+    // TODO:思考一下pitch和yaw真的需要分开保存吗
+    // yaw电机状态机切换保存数据
     if (gimbal_yaw_motor.last_gimbal_motor_mode != GIMBAL_MOTOR_RAW && gimbal_yaw_motor.gimbal_motor_mode == GIMBAL_MOTOR_RAW)
     {
         gimbal_yaw_motor.current_set = gimbal_yaw_motor.current_give;
@@ -159,7 +154,7 @@ void Gimbal::feedback_update()
     }
     gimbal_yaw_motor.last_gimbal_motor_mode = gimbal_yaw_motor.gimbal_motor_mode;
 
-    //pitch电机状态机切换保存数据
+    // pitch电机状态机切换保存数据
     if (gimbal_pitch_motor.last_gimbal_motor_mode != GIMBAL_MOTOR_RAW && gimbal_pitch_motor.gimbal_motor_mode == GIMBAL_MOTOR_RAW)
     {
         gimbal_pitch_motor.current_set = gimbal_pitch_motor.current_give;
@@ -174,21 +169,19 @@ void Gimbal::feedback_update()
     }
     gimbal_pitch_motor.last_gimbal_motor_mode = gimbal_pitch_motor.gimbal_motor_mode;
 
-
-
-    //TODO 此处由于读取指针出现问题,改为使用数组方式读取,后续可以改进
-        //云台数据更新
-        //yaw电机
+    // TODO 此处由于读取指针出现问题,改为使用数组方式读取,后续可以改进
+    //云台数据更新
+    // yaw电机
     /*------------yaw电机数据更新---------------------------------------  */
     gimbal_yaw_motor.absolute_angle = gimbal_INT_angle_point[INS_YAW_ADDRESS_OFFSET];
 
-    #if YAW_TURN
-        gimbal_yaw_motor.relative_angle = -motor_ecd_to_angle_change(gimbal_yaw_motor.motor_measure->ecd,
-                                                                     gimbal_yaw_motor.offset_ecd);
-    #else
-        gimbal_yaw_motor.relative_angle = motor_ecd_to_angle_change(gimbal_yaw_motor.motor_measure->ecd,
-                                                                     gimbal_yaw_motor.offset_ecd);
-    #endif
+#if YAW_TURN
+    gimbal_yaw_motor.relative_angle = -motor_ecd_to_angle_change(gimbal_yaw_motor.motor_measure->ecd,
+                                                                 gimbal_yaw_motor.offset_ecd);
+#else
+    gimbal_yaw_motor.relative_angle = motor_ecd_to_angle_change(gimbal_yaw_motor.motor_measure->ecd,
+                                                                gimbal_yaw_motor.offset_ecd);
+#endif
 
     //在云台归中时,读取的速度为编码器反馈的
     if (gimbal_behaviour_mode == GIMBAL_INIT)
@@ -196,19 +189,17 @@ void Gimbal::feedback_update()
     else
         gimbal_yaw_motor.speed = cos(gimbal_pitch_motor.relative_angle) * (gimbal_INT_gyro_point[INS_GYRO_Z_ADDRESS_OFFSET]) - sin(gimbal_pitch_motor.relative_angle) * (gimbal_INT_gyro_point[INS_GYRO_X_ADDRESS_OFFSET]);
 
-
-
     /*------------yaw电机数据更新---------------------------------------  */
-    //pitch电机
+    // pitch电机
     gimbal_pitch_motor.absolute_angle = -gimbal_INT_angle_point[INS_PITCH_ADDRESS_OFFSET];
 
-    #if PITCH_TURN
-        gimbal_pitch_motor.relative_angle = -motor_ecd_to_angle_change(gimbal_pitch_motor.motor_measure->ecd,
-                                                                       gimbal_pitch_motor.offset_ecd);
-    #else
-        gimbal_pitch_motor.relative_angle = motor_ecd_to_angle_change(gimbal_pitch_motor.motor_measure->ecd,
-                                                                      gimbal_pitch_motor.offset_ecd);
-    #endif
+#if PITCH_TURN
+    gimbal_pitch_motor.relative_angle = -motor_ecd_to_angle_change(gimbal_pitch_motor.motor_measure->ecd,
+                                                                   gimbal_pitch_motor.offset_ecd);
+#else
+    gimbal_pitch_motor.relative_angle = motor_ecd_to_angle_change(gimbal_pitch_motor.motor_measure->ecd,
+                                                                  gimbal_pitch_motor.offset_ecd);
+#endif
 
     //在云台归中时,读取的速度为编码器反馈的
     if (gimbal_behaviour_mode == GIMBAL_INIT)
@@ -219,7 +210,7 @@ void Gimbal::feedback_update()
     //记录上一次遥控器值
     gimbal_last_key_v = gimbal_RC->key.v;
 
-    //debug 模式
+    // debug 模式
 #if GIMBAL_DEBUG_MODE
     gimbal_debug();
 
@@ -227,21 +218,22 @@ void Gimbal::feedback_update()
 }
 
 /**
-  * @brief          设置云台控制模式,主要在'behaviour_mode_set'函数中改变
-  * @Author         summerpray
-  */
-void Gimbal::set_mode() {
+ * @brief          设置云台控制模式,主要在'behaviour_mode_set'函数中改变
+ * @Author         summerpray
+ */
+void Gimbal::set_mode()
+{
     //虽然这边就一个函数,但还是先留着,不要不知好歹
     behaviour_mode_set();
 }
 
-
-void Gimbal::behaviour_mode_set() {
+void Gimbal::behaviour_mode_set()
+{
 
     //云台行为状态机设置
     behavour_set();
 
-    //accoring to gimbal_behaviour, set motor control mode
+    // accoring to gimbal_behaviour, set motor control mode
     //根据云台行为状态机设置电机状态机
     if (gimbal_behaviour_mode == GIMBAL_ZERO_FORCE)
     {
@@ -276,15 +268,14 @@ void Gimbal::behaviour_mode_set() {
 }
 
 /**
-  * @brief          云台行为状态机设置
-  * @Author         summerpray
-  */
-void Gimbal::behavour_set(){
+ * @brief          云台行为状态机设置
+ * @Author         summerpray
+ */
+void Gimbal::behavour_set()
+{
 
     last_gimbal_behaviour_mode = gimbal_behaviour_mode;
 
-
-    //TODO:校准模式未写
     //校准行为，return 不会设置其他的模式
     if (gimbal_behaviour_mode == GIMBAL_CALI && gimbal_cali.step != GIMBAL_CALI_END_STEP)
     {
@@ -299,25 +290,30 @@ void Gimbal::behavour_set(){
     }
 
     //初始化模式判断是否到达中值位置
-    if (gimbal_behaviour_mode == GIMBAL_INIT){
+    if (gimbal_behaviour_mode == GIMBAL_INIT)
+    {
         static uint16_t init_time = 0;
         static uint16_t init_stop_time = 0;
         init_time++;
 
         if ((fabs(gimbal_yaw_motor.relative_angle - INIT_YAW_SET) < GIMBAL_INIT_ANGLE_ERROR &&
-             fabs(gimbal_pitch_motor.absolute_angle - INIT_PITCH_SET) < GIMBAL_INIT_ANGLE_ERROR)){
-            if (init_stop_time < GIMBAL_INIT_STOP_TIME){
+             fabs(gimbal_pitch_motor.absolute_angle - INIT_PITCH_SET) < GIMBAL_INIT_ANGLE_ERROR))
+        {
+            if (init_stop_time < GIMBAL_INIT_STOP_TIME)
+            {
                 init_stop_time++;
             }
         }
-        else{
-            if (init_time < GIMBAL_INIT_TIME){
+        else
+        {
+            if (init_time < GIMBAL_INIT_TIME)
+            {
                 init_time++;
             }
         }
 
         //超过初始化最大时间，或者已经稳定到中值一段时间，退出初始化状态开关打下档，或者掉线
-        //TODO:掉线未写
+        // TODO:掉线未写
         if (init_time < GIMBAL_INIT_TIME && init_stop_time < GIMBAL_INIT_STOP_TIME &&
             !switch_is_down(gimbal_RC->rc.s[GIMBAL_MODE_CHANNEL]))
         {
@@ -328,7 +324,6 @@ void Gimbal::behavour_set(){
             init_stop_time = 0;
             init_time = 0;
         }
-
     }
 
     //开关控制 云台状态
@@ -345,15 +340,19 @@ void Gimbal::behavour_set(){
         gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
     }
 
-    //TODO:此处要设置一个遥控器离线检测使云台不上电
-    /*
-    if( toe_is_error(DBUS_TOE))
+    // TODO:测试此段代码(遥控器离线检测使云台不上电)
+    if (toe_is_error(GIMBAL_YAW_MOTOR_TOE) || toe_is_error(GIMBAL_PITCH_MOTOR_TOE))
     {
         gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
+        buzzer_on(95, 10000);
     }
-    */
+    else
+    {
+        buzzer_off();
+    }
 
-    //enter init mode
+
+    // enter init mode
     //判断进入init状态机
     {
         if (last_gimbal_behaviour_mode == GIMBAL_ZERO_FORCE && gimbal_behaviour_mode != GIMBAL_ZERO_FORCE)
@@ -370,13 +369,14 @@ void Gimbal::behavour_set(){
 }
 
 /**
-  * @brief          计算ecd与offset_ecd之间的相对角度
-  * @param[in]      ecd: 电机当前编码
-  * @param[in]      offset_ecd: 电机中值编码
-  * @retval         相对角度，单位rad
-  * @Author         summerpray
-  */
-fp32 Gimbal::motor_ecd_to_angle_change(uint16_t ecd, uint16_t offset_ecd){
+ * @brief          计算ecd与offset_ecd之间的相对角度
+ * @param[in]      ecd: 电机当前编码
+ * @param[in]      offset_ecd: 电机中值编码
+ * @retval         相对角度，单位rad
+ * @Author         summerpray
+ */
+fp32 Gimbal::motor_ecd_to_angle_change(uint16_t ecd, uint16_t offset_ecd)
+{
     int32_t relative_ecd = ecd - offset_ecd;
     if (relative_ecd > HALF_ECD_RANGE)
     {
@@ -390,62 +390,63 @@ fp32 Gimbal::motor_ecd_to_angle_change(uint16_t ecd, uint16_t offset_ecd){
     return relative_ecd * MOTOR_ECD_TO_RAD;
 }
 
-
 /**
-  * @brief          设置云台控制设定值，控制值是通过behaviour_control_set函数设置的
-  * @retval         none
-  * Author          summerpray
-  */
-void Gimbal::set_control() {
+ * @brief          设置云台控制设定值，控制值是通过behaviour_control_set函数设置的
+ * @retval         none
+ * Author          summerpray
+ */
+void Gimbal::set_control()
+{
     fp32 add_yaw_angle = 0.0f;
     fp32 add_pitch_angle = 0.0f;
 
     behaviour_control_set(&add_yaw_angle, &add_pitch_angle);
 
-    //TODO:这么一想好像yaw用陀螺仪的时候pitch用编码器还是得分开写
+    // TODO:这么一想好像yaw用陀螺仪的时候pitch用编码器还是得分开写
 
-    // yaw电机模式控制 
+    // yaw电机模式控制
     if (gimbal_yaw_motor.gimbal_motor_mode == GIMBAL_MOTOR_RAW)
     {
-        //raw模式下，直接发送控制值
+        // raw模式下，直接发送控制值
         gimbal_yaw_motor.current_set = add_yaw_angle;
     }
     else if (gimbal_yaw_motor.gimbal_motor_mode == GIMBAL_MOTOR_GYRO)
     {
-        //gyro模式下，陀螺仪角度控制
+        // gyro模式下，陀螺仪角度控制
         absolute_angle_limit(&gimbal_yaw_motor, add_yaw_angle);
     }
     else if (gimbal_yaw_motor.gimbal_motor_mode == GIMBAL_MOTOR_ENCONDE)
     {
-        //enconde模式下，电机编码角度控制
+        // enconde模式下，电机编码角度控制
         relative_angle_limit(&gimbal_yaw_motor, add_yaw_angle);
     }
 
-    //pitch电机模式控制
+    // pitch电机模式控制
     if (gimbal_pitch_motor.gimbal_motor_mode == GIMBAL_MOTOR_RAW)
     {
-        //raw模式下，直接发送控制值
+        // raw模式下，直接发送控制值
         gimbal_pitch_motor.current_set = add_pitch_angle;
     }
     else if (gimbal_pitch_motor.gimbal_motor_mode == GIMBAL_MOTOR_GYRO)
     {
-        //gyro模式下，陀螺仪角度控制
+        // gyro模式下，陀螺仪角度控制
         absolute_angle_limit(&gimbal_pitch_motor, add_pitch_angle);
     }
     else if (gimbal_pitch_motor.gimbal_motor_mode == GIMBAL_MOTOR_ENCONDE)
     {
-        //enconde模式下，电机编码角度控制
+        // enconde模式下，电机编码角度控制
         relative_angle_limit(&gimbal_pitch_motor, add_pitch_angle);
     }
 
-    //TODO:但其实吧 写一块好像也行
+    // TODO:但其实吧 写一块好像也行
 }
 
 /**
-  * @brief          云台行为控制
-  * Author          summerpray
-  */
-void Gimbal::behaviour_control_set(fp32 *add_yaw, fp32 *add_pitch){
+ * @brief          云台行为控制
+ * Author          summerpray
+ */
+void Gimbal::behaviour_control_set(fp32 *add_yaw, fp32 *add_pitch)
+{
 
     if (add_yaw == NULL || add_pitch == NULL)
     {
@@ -476,13 +477,14 @@ void Gimbal::behaviour_control_set(fp32 *add_yaw, fp32 *add_pitch){
 
 /***************************(C) GIMBAL control *******************************/
 /**
-  * @brief          当云台行为模式是GIMBAL_ZERO_FORCE, 这个函数会被调用,云台控制模式是raw模式.原始模式意味着
-  *                 设定值会直接发送到CAN总线上,这个函数将会设置所有为0.
-  * @param[in]      yaw:发送yaw电机的原始值，会直接通过can 发送到电机
-  * @param[in]      pitch:发送pitch电机的原始值，会直接通过can 发送到电机
-  * @retval         none
-  */
-void Gimbal::gimbal_zero_force_control(fp32 *yaw, fp32 *pitch) {
+ * @brief          当云台行为模式是GIMBAL_ZERO_FORCE, 这个函数会被调用,云台控制模式是raw模式.原始模式意味着
+ *                 设定值会直接发送到CAN总线上,这个函数将会设置所有为0.
+ * @param[in]      yaw:发送yaw电机的原始值，会直接通过can 发送到电机
+ * @param[in]      pitch:发送pitch电机的原始值，会直接通过can 发送到电机
+ * @retval         none
+ */
+void Gimbal::gimbal_zero_force_control(fp32 *yaw, fp32 *pitch)
+{
     if (yaw == NULL || pitch == NULL)
     {
         return;
@@ -493,12 +495,13 @@ void Gimbal::gimbal_zero_force_control(fp32 *yaw, fp32 *pitch) {
 }
 
 /**
-  * @brief          云台初始化控制，电机是陀螺仪角度控制，云台先抬起pitch轴，后旋转yaw轴
-  * @param[out]     yaw轴角度控制，为角度的增量 单位 rad
-  * @param[out]     pitch轴角度控制，为角度的增量 单位 rad
-  * @retval         返回空
-  */
-void Gimbal::gimbal_init_control(fp32 *yaw, fp32 *pitch) {
+ * @brief          云台初始化控制，电机是陀螺仪角度控制，云台先抬起pitch轴，后旋转yaw轴
+ * @param[out]     yaw轴角度控制，为角度的增量 单位 rad
+ * @param[out]     pitch轴角度控制，为角度的增量 单位 rad
+ * @retval         返回空
+ */
+void Gimbal::gimbal_init_control(fp32 *yaw, fp32 *pitch)
+{
     if (yaw == NULL || pitch == NULL)
     {
         return;
@@ -519,27 +522,28 @@ void Gimbal::gimbal_init_control(fp32 *yaw, fp32 *pitch) {
 }
 
 /**
-  * @brief          云台陀螺仪控制，电机是陀螺仪角度控制，
-  * @param[out]     yaw: yaw轴角度控制，为角度的增量 单位 rad
-  * @param[out]     pitch:pitch轴角度控制，为角度的增量 单位 rad
-  * @retval         none
-  */
-void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch){
+ * @brief          云台陀螺仪控制，电机是陀螺仪角度控制，
+ * @param[out]     yaw: yaw轴角度控制，为角度的增量 单位 rad
+ * @param[out]     pitch:pitch轴角度控制，为角度的增量 单位 rad
+ * @retval         none
+ */
+void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
+{
     if (yaw == NULL || pitch == NULL)
     {
         return;
     }
 
-    //TODO 暂时未写
-    // //单击右键 打开自瞄 再次单击 关闭自瞄
-    // if (IF_MOUSE_SINGAL_PRESSED_R && auto_switch == FALSE)
-    // {
-    //     auto_switch = TRUE;
-    // }
-    // else if (IF_MOUSE_SINGAL_PRESSED_R && auto_switch == TRUE)
-    // {
-    //     auto_switch = FALSE;
-    // }
+    // TODO 暂时未写
+    //  //单击右键 打开自瞄 再次单击 关闭自瞄
+    //  if (IF_MOUSE_SINGAL_PRESSED_R && auto_switch == FALSE)
+    //  {
+    //      auto_switch = TRUE;
+    //  }
+    //  else if (IF_MOUSE_SINGAL_PRESSED_R && auto_switch == TRUE)
+    //  {
+    //      auto_switch = FALSE;
+    //  }
 
     // //当在自瞄模式下且识别到目标,云台控制权交给mini pc
     // if (auto_switch == TRUE && vision_if_find_target() == TRUE)
@@ -549,74 +553,71 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch){
     // }
     // else
     // {
-        static int16_t yaw_channel = 0, pitch_channel = 0;
+    static int16_t yaw_channel = 0, pitch_channel = 0;
 
-        rc_deadband_limit(gimbal_RC->rc.ch[YAW_CHANNEL], yaw_channel, RC_DEADBAND);
-        rc_deadband_limit(gimbal_RC->rc.ch[PITCH_CHANNEL], pitch_channel, RC_DEADBAND);
+    rc_deadband_limit(gimbal_RC->rc.ch[YAW_CHANNEL], yaw_channel, RC_DEADBAND);
+    rc_deadband_limit(gimbal_RC->rc.ch[PITCH_CHANNEL], pitch_channel, RC_DEADBAND);
 
-        *yaw = yaw_channel * YAW_RC_SEN - gimbal_RC->mouse.x * YAW_MOUSE_SEN;
-        *pitch = pitch_channel * PITCH_RC_SEN + gimbal_RC->mouse.y * PITCH_MOUSE_SEN;
+    *yaw = yaw_channel * YAW_RC_SEN - gimbal_RC->mouse.x * YAW_MOUSE_SEN;
+    *pitch = pitch_channel * PITCH_RC_SEN + gimbal_RC->mouse.y * PITCH_MOUSE_SEN;
 
+    {
+        static uint16_t last_turn_keyboard = 0;
+        static uint8_t gimbal_turn_flag = 0;
+        static fp32 gimbal_end_angle = 0.0f;
+
+        if ((gimbal_RC->key.v & TURN_KEYBOARD) && !(last_turn_keyboard & TURN_KEYBOARD))
         {
-            static uint16_t last_turn_keyboard = 0;
-            static uint8_t gimbal_turn_flag = 0;
-            static fp32 gimbal_end_angle = 0.0f;
-
-            if ((gimbal_RC->key.v & TURN_KEYBOARD) && !(last_turn_keyboard & TURN_KEYBOARD))
+            if (gimbal_turn_flag == 0)
             {
-                if (gimbal_turn_flag == 0)
-                {
-                    gimbal_turn_flag = 1;
-                    //保存掉头的目标值
-                    gimbal_end_angle = rad_format(gimbal_yaw_motor.absolute_angle + PI);
-                }
-            }
-            last_turn_keyboard = gimbal_RC->key.v;
-
-            if (gimbal_turn_flag)
-            {
-                //不断控制到掉头的目标值，正转，反装是随机
-                if (rad_format(gimbal_end_angle - gimbal_yaw_motor.absolute_angle) > 0.0f)
-                {
-                    *yaw += TURN_SPEED;
-                }
-                else
-                {
-                    *yaw -= TURN_SPEED;
-                }
-            }
-            //到达pi （180°）后停止
-            if (gimbal_turn_flag && fabs(rad_format(gimbal_end_angle - gimbal_yaw_motor.absolute_angle)) < 0.01f)
-            {
-                gimbal_turn_flag = 0;
+                gimbal_turn_flag = 1;
+                //保存掉头的目标值
+                gimbal_end_angle = rad_format(gimbal_yaw_motor.absolute_angle + PI);
             }
         }
+        last_turn_keyboard = gimbal_RC->key.v;
+
+        if (gimbal_turn_flag)
+        {
+            //不断控制到掉头的目标值，正转，反装是随机
+            if (rad_format(gimbal_end_angle - gimbal_yaw_motor.absolute_angle) > 0.0f)
+            {
+                *yaw += TURN_SPEED;
+            }
+            else
+            {
+                *yaw -= TURN_SPEED;
+            }
+        }
+        //到达pi （180°）后停止
+        if (gimbal_turn_flag && fabs(rad_format(gimbal_end_angle - gimbal_yaw_motor.absolute_angle)) < 0.01f)
+        {
+            gimbal_turn_flag = 0;
+        }
+    }
     //}
-    
 }
 
 fp32 temp_yaw = 0;
 /**
-  * @brief          云台编码值控制，电机是相对角度控制，
-  * @param[in]      yaw: yaw轴角度控制，为角度的增量 单位 rad
-  * @param[in]      pitch: pitch轴角度控制，为角度的增量 单位 rad
-  * @retval         none
-  */
-void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch){
+ * @brief          云台编码值控制，电机是相对角度控制，
+ * @param[in]      yaw: yaw轴角度控制，为角度的增量 单位 rad
+ * @param[in]      pitch: pitch轴角度控制，为角度的增量 单位 rad
+ * @retval         none
+ */
+void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
+{
     if (yaw == NULL || pitch == NULL)
     {
         return;
     }
 
-    
     //当在自瞄模式下且识别到目标,云台控制权交给mini pc ,这里为了方便调自瞄,先这么写
-    //if (auto_switch == TRUE && vision_if_find_target() == TRUE)
+    // if (auto_switch == TRUE && vision_if_find_target() == TRUE)
     if (vision_if_find_target() == TRUE)
     {
         vision_error_angle(yaw, pitch); //获取yaw 和 pitch的偏移量
         vision_send_data(CmdID);        //发送指令给小电脑
-
-
     }
     else
     {
@@ -633,12 +634,13 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch){
 }
 
 /**
-  * @brief          云台进入遥控器无输入控制，电机是相对角度控制，
-  * @param[in]      yaw: yaw轴角度控制，为角度的增量 单位 rad
-  * @param[in]      pitch: pitch轴角度控制，为角度的增量 单位 rad
-  * @retval         none
-  */
-void Gimbal::gimbal_motionless_control(fp32 *yaw, fp32 *pitch) {
+ * @brief          云台进入遥控器无输入控制，电机是相对角度控制，
+ * @param[in]      yaw: yaw轴角度控制，为角度的增量 单位 rad
+ * @param[in]      pitch: pitch轴角度控制，为角度的增量 单位 rad
+ * @retval         none
+ */
+void Gimbal::gimbal_motionless_control(fp32 *yaw, fp32 *pitch)
+{
     if (yaw == NULL || pitch == NULL)
     {
         return;
@@ -651,13 +653,13 @@ void Gimbal::gimbal_motionless_control(fp32 *yaw, fp32 *pitch) {
 
 /***************************(C)  MOTOR control *******************************/
 /**
-  * @brief          控制循环，根据控制设定值，计算电机电流值，进行控制
-  * @retval         none
-  * @Author         summerpray
-  */
+ * @brief          控制循环，根据控制设定值，计算电机电流值，进行控制
+ * @retval         none
+ * @Author         summerpray
+ */
 void Gimbal::solve()
 {
-    //yaw电机
+    // yaw电机
     if (gimbal_yaw_motor.gimbal_motor_mode == GIMBAL_MOTOR_RAW)
     {
         motor_raw_angle_control(&gimbal_yaw_motor);
@@ -671,7 +673,7 @@ void Gimbal::solve()
         motor_relative_angle_control(&gimbal_yaw_motor);
     }
 
-    //pitch电机
+    // pitch电机
     if (gimbal_pitch_motor.gimbal_motor_mode == GIMBAL_MOTOR_RAW)
     {
         motor_raw_angle_control(&gimbal_pitch_motor);
@@ -687,10 +689,10 @@ void Gimbal::solve()
 }
 
 /**
-  * @brief         输出电流
-  * @retval         none
-  * @Author         summerpray
-  */
+ * @brief         输出电流
+ * @retval         none
+ * @Author         summerpray
+ */
 void Gimbal::output()
 {
 
@@ -715,88 +717,87 @@ void Gimbal::output()
     gimbal_pitch_motor.current_give = 0;
 #endif
 
-    //TODO:看到这两个can发送机械的大兄弟有什么要说的嘛
     can_receive.can_cmd_gimbal_motor(gimbal_yaw_motor.current_give, gimbal_pitch_motor.current_give, 0, 0);
 }
 
+/**
+ * @brief          云台控制模式:GIMBAL_MOTOR_RAW，电流值直接发送到CAN总线.
+ * @param[out]     gimbal_motor:yaw电机或者pitch电机
+ * @retval         none
+ */
 
-/**
-  * @brief          云台控制模式:GIMBAL_MOTOR_RAW，电流值直接发送到CAN总线.
-  * @param[out]     gimbal_motor:yaw电机或者pitch电机
-  * @retval         none
-      */ 
-   
-void     Gimbal::motor_raw_angle_control(Gimbal_motor *gimbal_motor) {
-if (gimbal_motor == NULL)
-{    
-    return;
-}
-        gimbal_motor->current_set = gimbal_motor->current_set;
-}
-    
-/**
-  * @brief          云台控制模式:GIMBAL_MOTOR_ENCONDE，使用编码相对角进行控制
-  * @param[out]     gimbal_motor:yaw电机或者pitch电机
-  * @retval         none
-      */ 
-void Gimbal::motor_relative_angle_control(Gimbal_motor *gimbal_motor)
-{    
+void Gimbal::motor_raw_angle_control(Gimbal_motor *gimbal_motor)
+{
     if (gimbal_motor == NULL)
-    {    
+    {
         return;
     }
-    
+    gimbal_motor->current_set = gimbal_motor->current_set;
+}
+
+/**
+ * @brief          云台控制模式:GIMBAL_MOTOR_ENCONDE，使用编码相对角进行控制
+ * @param[out]     gimbal_motor:yaw电机或者pitch电机
+ * @retval         none
+ */
+void Gimbal::motor_relative_angle_control(Gimbal_motor *gimbal_motor)
+{
+    if (gimbal_motor == NULL)
+    {
+        return;
+    }
+
     //角度环，速度环串级pid调试
     gimbal_motor->speed_set = gimbal_motor->relative_angle_pid.pid_calc();
     gimbal_motor->current_set = gimbal_motor->speed_pid.pid_calc();
 }
-    
+
 /**
-  * @brief          云台控制模式:GIMBAL_speed，使用陀螺仪计算的欧拉角进行控制
-  * @param[out]     gimbal_motor:yaw电机或者pitch电机
-  * @retval         none
-      */ 
+ * @brief          云台控制模式:GIMBAL_speed，使用陀螺仪计算的欧拉角进行控制
+ * @param[out]     gimbal_motor:yaw电机或者pitch电机
+ * @retval         none
+ */
 void Gimbal::motor_absolute_angle_control(Gimbal_motor *gimbal_motor)
-{    
+{
     if (gimbal_motor == NULL)
-    {    
+    {
         return;
     }
 
     //角度环，速度环串级pid调试
     gimbal_motor->speed_set = gimbal_motor->absolute_angle_pid.pid_calc();
     gimbal_motor->current_set = gimbal_motor->speed_pid.pid_calc();
-
 }
-    
+
 /**
-  * @brief          云台控制模式:GIMBAL_speed，使用陀螺仪计算的欧拉角进行控制
-  * @param[out]     gimbal_motor:yaw电机或者pitch电机
-  * @retval         none
-      */  
-    
-void Gimbal::absolute_angle_limit(Gimbal_motor *gimbal_motor,fp32 add){
+ * @brief          云台控制模式:GIMBAL_speed，使用陀螺仪计算的欧拉角进行控制
+ * @param[out]     gimbal_motor:yaw电机或者pitch电机
+ * @retval         none
+ */
+
+void Gimbal::absolute_angle_limit(Gimbal_motor *gimbal_motor, fp32 add)
+{
     static fp32 bias_angle;
     static fp32 angle_set;
-    //now angle error
+    // now angle error
     //当前控制误差角度
     bias_angle = rad_format(gimbal_motor->absolute_angle_set - gimbal_motor->absolute_angle);
-    //relative angle + angle error + add_angle > max_relative angle
+    // relative angle + angle error + add_angle > max_relative angle
     //云台相对角度+ 误差角度 + 新增角度 如果大于 最大机械角度
     if (gimbal_motor->relative_angle + bias_angle + add > gimbal_motor->max_relative_angle)
-{    
+    {
         //如果是往最大机械角度控制方向
         if (add > 0.0f)
-    {    
-            //calculate max add_angle
+        {
+            // calculate max add_angle
             //计算出一个最大的添加角度，
             add = gimbal_motor->max_relative_angle - gimbal_motor->relative_angle - bias_angle;
         }
     }
     else if (gimbal_motor->relative_angle + bias_angle + add < gimbal_motor->min_relative_angle)
-{    
+    {
         if (add < 0.0f)
-    {    
+        {
             add = gimbal_motor->min_relative_angle - gimbal_motor->relative_angle - bias_angle;
         }
     }
@@ -812,15 +813,16 @@ void Gimbal::absolute_angle_limit(Gimbal_motor *gimbal_motor,fp32 add){
         gimbal_motor->absolute_angle_set = gimbal_motor->min_absolute_angle;
     }
 }
-    
+
 /**
-  * @brief          云台控制模式:GIMBAL_MOTOR_ENCONDE，使用编码相对角进行控制
-  * @param[out]     gimbal_motor:yaw电机或者pitch电机
-  * @retval         none
-      */ 
-   
-void Gimbal::relative_angle_limit(Gimbal_motor *gimbal_motor, fp32 add) {
-    
+ * @brief          云台控制模式:GIMBAL_MOTOR_ENCONDE，使用编码相对角进行控制
+ * @param[out]     gimbal_motor:yaw电机或者pitch电机
+ * @retval         none
+ */
+
+void Gimbal::relative_angle_limit(Gimbal_motor *gimbal_motor, fp32 add)
+{
+
     gimbal_motor->relative_angle_set += add;
     //是否超过最大 最小值
     if (gimbal_motor->relative_angle_set > gimbal_motor->max_relative_angle)
@@ -833,25 +835,25 @@ void Gimbal::relative_angle_limit(Gimbal_motor *gimbal_motor, fp32 add) {
     }
 }
 
-    
-    /*****************************(C) CALI GIMBAL *******************************/
+/*****************************(C) CALI GIMBAL *******************************/
 /**
-  * @brief          云台校准计算，将校准记录的中值,最大 最小值
-  * @param[out]     yaw 中值 指针
-  * @param[out]     pitch 中值 指针
-  * @param[out]     yaw 最大相对角度 指针
-  * @param[out]     yaw 最小相对角度 指针
-  * @param[out]     pitch 最大相对角度 指针
-  * @param[out]     pitch 最小相对角度 指针
-  * @retval         none
-      */
-    
-void Gimbal::calc_gimbal_cali(const gimbal_step_cali_t *gimbal_cali, uint16_t *yaw_offset, uint16_t *pitch_offset, fp32 *max_yaw, fp32 *min_yaw, fp32 *max_pitch, fp32 *min_pitch){
+ * @brief          云台校准计算，将校准记录的中值,最大 最小值
+ * @param[out]     yaw 中值 指针
+ * @param[out]     pitch 中值 指针
+ * @param[out]     yaw 最大相对角度 指针
+ * @param[out]     yaw 最小相对角度 指针
+ * @param[out]     pitch 最大相对角度 指针
+ * @param[out]     pitch 最小相对角度 指针
+ * @retval         none
+ */
+
+void Gimbal::calc_gimbal_cali(const gimbal_step_cali_t *gimbal_cali, uint16_t *yaw_offset, uint16_t *pitch_offset, fp32 *max_yaw, fp32 *min_yaw, fp32 *max_pitch, fp32 *min_pitch)
+{
     if (gimbal_cali == NULL || yaw_offset == NULL || pitch_offset == NULL || max_yaw == NULL || min_yaw == NULL || max_pitch == NULL || min_pitch == NULL)
-        {
-            return;
+    {
+        return;
     }
-    
+
     int16_t temp_max_ecd = 0, temp_min_ecd = 0, temp_ecd = 0;
 
 #if YAW_TURN
@@ -877,7 +879,7 @@ void Gimbal::calc_gimbal_cali(const gimbal_step_cali_t *gimbal_cali, uint16_t *y
         temp_ecd += ECD_RANGE;
     }
     temp_ecd = gimbal_cali->max_yaw_ecd - (temp_ecd / 2);
-    
+
     ecd_format(temp_ecd);
     *yaw_offset = temp_ecd;
     *max_yaw = motor_ecd_to_angle_change(gimbal_cali->max_yaw_ecd, *yaw_offset);
@@ -954,13 +956,14 @@ void Gimbal::calc_gimbal_cali(const gimbal_step_cali_t *gimbal_cali, uint16_t *y
 /**
   * @brief          云台设备校准
   * @param[in][out] cali:指针指向云台数据,当cmd为CALI_FUNC_CMD_INIT, 参数是输入,CALI_FUNC_CMD_ON,参数是输出
-  * @param[in]      cmd: 
+  * @param[in]      cmd:
                     CALI_FUNC_CMD_INIT: 代表用校准数据初始化原始数据
                     CALI_FUNC_CMD_ON: 代表需要校准
   * @retval         0:校准任务还没有完
                     1:校准任务已经完成
   */
-void Gimbal::set_cali_gimbal_hook(const uint16_t yaw_offset, const uint16_t pitch_offset, const fp32 max_yaw, const fp32 min_yaw, const fp32 max_pitch, const fp32 min_pitch){
+void Gimbal::set_cali_gimbal_hook(const uint16_t yaw_offset, const uint16_t pitch_offset, const fp32 max_yaw, const fp32 min_yaw, const fp32 max_pitch, const fp32 min_pitch)
+{
     gimbal_yaw_motor.offset_ecd = yaw_offset;
     gimbal_yaw_motor.max_relative_angle = max_yaw;
     gimbal_yaw_motor.min_relative_angle = min_yaw;
@@ -971,52 +974,52 @@ void Gimbal::set_cali_gimbal_hook(const uint16_t yaw_offset, const uint16_t pitc
 }
 
 /*
-  * @brief          手动设置云台编码器中值，最小最大机械相对角度
-  * @param[in]      yaw_offse:yaw 中值
-  * @param[in]      pitch_offset:pitch 中值
-  * @param[in]      max_yaw:max_yaw:yaw 最大相对角度
-  * @param[in]      min_yaw:yaw 最小相对角度
-  * @param[in]      max_yaw:pitch 最大相对角度
-  * @param[in]      min_yaw:pitch 最小相对角度
-  * @retval         返回空
-  * @waring         这个函数使用到gimbal_control 静态变量导致函数不适用以上通用指针复用
-  */
+ * @brief          手动设置云台编码器中值，最小最大机械相对角度
+ * @param[in]      yaw_offse:yaw 中值
+ * @param[in]      pitch_offset:pitch 中值
+ * @param[in]      max_yaw:max_yaw:yaw 最大相对角度
+ * @param[in]      min_yaw:yaw 最小相对角度
+ * @param[in]      max_yaw:pitch 最大相对角度
+ * @param[in]      min_yaw:pitch 最小相对角度
+ * @retval         返回空
+ * @waring         这个函数使用到gimbal_control 静态变量导致函数不适用以上通用指针复用
+ */
 void Gimbal::set_hand_operator_gimbal_hook(const uint16_t yaw_offset, const uint16_t pitch_offset, const fp32 max_yaw, const fp32 min_yaw, const fp32 max_pitch, const fp32 min_pitch)
 {
     gimbal_yaw_motor.offset_ecd = yaw_offset;
     gimbal_yaw_motor.max_relative_angle = max_yaw;
     gimbal_yaw_motor.min_relative_angle = min_yaw;
-    
+
     gimbal_pitch_motor.offset_ecd = pitch_offset;
     gimbal_pitch_motor.max_relative_angle = max_pitch;
     gimbal_pitch_motor.min_relative_angle = min_pitch;
 }
 
 /**
-  * @brief          云台校准计算，将校准记录的中值,最大 最小值返回
-  * @param[out]     yaw 中 指针
-  * @param[out]     pitch 中值 指针
-  * @param[out]     yaw 最大相对角度 指针
-  * @param[out]     yaw 最小相对角度 指针
-  * @param[out]     pitch 最大相对角度 指针
-  * @param[out]     pitch 最小相对角度 指针
-  * @retval         返回1 代表成功校准完毕， 返回0 代表未校准完
-  * @waring         这个函数使用到gimbal_control 静态变量导致函数不适用以上通用指针复用
-  */
+ * @brief          云台校准计算，将校准记录的中值,最大 最小值返回
+ * @param[out]     yaw 中 指针
+ * @param[out]     pitch 中值 指针
+ * @param[out]     yaw 最大相对角度 指针
+ * @param[out]     yaw 最小相对角度 指针
+ * @param[out]     pitch 最大相对角度 指针
+ * @param[out]     pitch 最小相对角度 指针
+ * @retval         返回1 代表成功校准完毕， 返回0 代表未校准完
+ * @waring         这个函数使用到gimbal_control 静态变量导致函数不适用以上通用指针复用
+ */
 bool_t Gimbal::cmd_cali_gimbal_hook(uint16_t *yaw_offset, uint16_t *pitch_offset, fp32 *max_yaw, fp32 *min_yaw, fp32 *max_pitch, fp32 *min_pitch)
 {
     if (gimbal_cali.step == 0)
     {
-        gimbal_cali.step             = GIMBAL_CALI_START_STEP;
+        gimbal_cali.step = GIMBAL_CALI_START_STEP;
         //保存进入时候的数据，作为起始数据，来判断最大，最小值
-        gimbal_cali.max_pitch        = gimbal_pitch_motor.absolute_angle;
-        gimbal_cali.max_pitch_ecd    = gimbal_pitch_motor.motor_measure->ecd;
-        gimbal_cali.max_yaw          = gimbal_yaw_motor.absolute_angle;
-        gimbal_cali.max_yaw_ecd      = gimbal_yaw_motor.motor_measure->ecd;
-        gimbal_cali.min_pitch        = gimbal_pitch_motor.absolute_angle;
-        gimbal_cali.min_pitch_ecd    = gimbal_pitch_motor.motor_measure->ecd;
-        gimbal_cali.min_yaw          = gimbal_yaw_motor.absolute_angle;
-        gimbal_cali.min_yaw_ecd      = gimbal_yaw_motor.motor_measure->ecd;
+        gimbal_cali.max_pitch = gimbal_pitch_motor.absolute_angle;
+        gimbal_cali.max_pitch_ecd = gimbal_pitch_motor.motor_measure->ecd;
+        gimbal_cali.max_yaw = gimbal_yaw_motor.absolute_angle;
+        gimbal_cali.max_yaw_ecd = gimbal_yaw_motor.motor_measure->ecd;
+        gimbal_cali.min_pitch = gimbal_pitch_motor.absolute_angle;
+        gimbal_cali.min_pitch_ecd = gimbal_pitch_motor.motor_measure->ecd;
+        gimbal_cali.min_yaw = gimbal_yaw_motor.absolute_angle;
+        gimbal_cali.min_yaw_ecd = gimbal_yaw_motor.motor_measure->ecd;
         return 0;
     }
     else if (gimbal_cali.step == GIMBAL_CALI_END_STEP)
@@ -1026,12 +1029,12 @@ bool_t Gimbal::cmd_cali_gimbal_hook(uint16_t *yaw_offset, uint16_t *pitch_offset
         (*min_yaw) += GIMBAL_CALI_REDUNDANT_ANGLE;
         (*max_pitch) -= GIMBAL_CALI_REDUNDANT_ANGLE;
         (*min_pitch) += GIMBAL_CALI_REDUNDANT_ANGLE;
-        gimbal_yaw_motor.offset_ecd              = *yaw_offset;
-        gimbal_yaw_motor.max_relative_angle      = *max_yaw;
-        gimbal_yaw_motor.min_relative_angle      = *min_yaw;
-        gimbal_pitch_motor.offset_ecd            = *pitch_offset;
-        gimbal_pitch_motor.max_relative_angle    = *max_pitch;
-        gimbal_pitch_motor.min_relative_angle    = *min_pitch;
+        gimbal_yaw_motor.offset_ecd = *yaw_offset;
+        gimbal_yaw_motor.max_relative_angle = *max_yaw;
+        gimbal_yaw_motor.min_relative_angle = *min_yaw;
+        gimbal_pitch_motor.offset_ecd = *pitch_offset;
+        gimbal_pitch_motor.max_relative_angle = *max_pitch;
+        gimbal_pitch_motor.min_relative_angle = *min_pitch;
         gimbal_cali.step = 0;
         return 1;
     }
@@ -1041,13 +1044,11 @@ bool_t Gimbal::cmd_cali_gimbal_hook(uint16_t *yaw_offset, uint16_t *pitch_offset
     }
 }
 
-
-
 /**
-  * @brief          云台在某些行为下，需要射击停止
-  * @param[in]      none
-  * @retval         1: no move 0:normal
-  */
+ * @brief          云台在某些行为下，需要射击停止
+ * @param[in]      none
+ * @retval         1: no move 0:normal
+ */
 
 bool_t Gimbal::gimbal_cmd_to_shoot_stop(void)
 {
@@ -1088,16 +1089,13 @@ void gimbal_debug()
         // gimbal_debug_data.pitch_relatice_ki = PITCH_ENCODE_RELATIVE_PID_KI;
         // gimbal_debug_data.pitch_relatice_kd = PITCH_ENCODE_RELATIVE_PID_KD;
 
-
         // gimbal_debug_data.pitch_absolute_kp = PITCH_GYRO_ABSOLUTE_PID_KP;
         // gimbal_debug_data.pitch_absolute_ki = PITCH_GYRO_ABSOLUTE_PID_KI;
         // gimbal_debug_data.pitch_absolute_kd = PITCH_GYRO_ABSOLUTE_PID_KD;
-
     }
-    else 
-    {   
+    else
+    {
         //持续修改pid系数
-
 
         //读取曲线绘制数据
         gimbal_debug_data.yaw_speed_ref = *gimbal.gimbal_yaw_motor.speed_pid.data.ref;
@@ -1118,6 +1116,4 @@ void gimbal_debug()
         gimbal_debug_data.pitch_relative_ref = *gimbal.gimbal_pitch_motor.relative_angle_pid.data.ref;
         gimbal_debug_data.pitch_relative_set = *gimbal.gimbal_pitch_motor.relative_angle_pid.data.set;
     }
-
-
 }

@@ -61,15 +61,15 @@ void gimbal_task(void *pvParameters)
     while (1)
     {
       gimbal_flag = HAL_GPIO_ReadPin(KEY_GPIO_Port, KEY_Pin);
-      // //设置云台状态机
+      //设置云台状态机
       gimbal.set_mode();
-      // //云台数据反馈
+      //云台数据反馈
       gimbal.feedback_update();
-      // //设置云台控制量
+      //设置云台控制量
       gimbal.set_control();
-      // //设置PID计算
+      //设置PID计算
       gimbal.solve();
-      // //输出电流
+      //输出电流
       gimbal.output();
       //系统延时
       vTaskDelay(GIMBAL_CONTROL_TIME_MS);

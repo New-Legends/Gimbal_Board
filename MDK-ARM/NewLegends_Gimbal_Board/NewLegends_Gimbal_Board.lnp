@@ -71,6 +71,8 @@
 "newlegends_gimbal_board\system_config.o"
 "newlegends_gimbal_board\ins_task.o"
 "newlegends_gimbal_board\shoot_task.o"
+"newlegends_gimbal_board\led_flow_task.o"
+"newlegends_gimbal_board\oled_task.o"
 "newlegends_gimbal_board\communicate.o"
 "newlegends_gimbal_board\ins.o"
 "newlegends_gimbal_board\gimbal.o"

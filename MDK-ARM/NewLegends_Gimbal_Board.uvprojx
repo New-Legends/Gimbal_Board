@@ -824,6 +824,16 @@
               <FileType>8</FileType>
               <FilePath>..\user_code\application\shoot_task.cpp</FilePath>
             </File>
+            <File>
+              <FileName>led_flow_task.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\application\led_flow_task.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>oled_task.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\application\oled_task.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

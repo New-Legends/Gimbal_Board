@@ -116,7 +116,7 @@ public:
 };
 
 
-
+extern Oled OLED;
 
 
 #endif

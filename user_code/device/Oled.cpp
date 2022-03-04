@@ -23,6 +23,8 @@ extern "C"
 #include "detect_task.h"
 using namespace std;
 
+Oled OLED;
+
 void Oled::init()
 {
 
@@ -125,9 +127,9 @@ void Oled::run()
                 oled_show_graphic(show_col + 18, show_row, &check_box[error_list_local[i].error_exist]);
             }
 
-            for (i = CHASSIS_MOTIVE_FR_MOTOR_TOE; i < CHASSIS_MOTIVE_BR_MOTOR_TOE + 1; i++)
+            for (i = CHASSIS_RUDDER_FR_MOTOR_TOE; i < CHASSIS_RUDDER_BR_MOTOR_TOE + 1; i++)
             {
-                uint8_t j = i - CHASSIS_MOTIVE_FR_MOTOR_TOE;
+                uint8_t j = i - CHASSIS_RUDDER_FR_MOTOR_TOE;
                 show_col = (j * 32) % 128;
                 show_row = 26;
                 oled_show_char(show_col, show_row, 'M');
@@ -162,6 +164,7 @@ void Oled::run()
     osDelay(OLED_CONTROL_TIME);
 }
 
+//TODO:暂时没用到
 void Oled::oled_com_reset(void)
 {
     static uint16_t time = 0;
