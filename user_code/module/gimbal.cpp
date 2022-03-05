@@ -57,6 +57,8 @@ void Gimbal::init()
 
     //遥控器数据指针获取
     gimbal_RC = remote_control.get_remote_control_point();
+    last_gimbal_RC = remote_control.get_last_remote_control_point();
+
     gimbal_last_key_v = 0;
 
     //设置初试状态机
@@ -137,10 +139,11 @@ void Gimbal::init()
  */
 void Gimbal::feedback_update()
 {
-    temp_turn_180 = KEY_GIMBAL_TURN_180;
-    
+    //记录上一次遥控器值
+    last_gimbal_RC->key.v = gimbal_RC->key.v;
+    gimbal_last_key_v = gimbal_RC->key.v;
+
     //切换模式数据保存
-    // TODO:思考一下pitch和yaw真的需要分开保存吗
     // yaw电机状态机切换保存数据
     if (gimbal_yaw_motor.last_gimbal_motor_mode != GIMBAL_MOTOR_RAW && gimbal_yaw_motor.gimbal_motor_mode == GIMBAL_MOTOR_RAW)
     {
@@ -209,8 +212,7 @@ void Gimbal::feedback_update()
     else
         gimbal_pitch_motor.speed = gimbal_INT_gyro_point[INS_GYRO_Y_ADDRESS_OFFSET];
 
-    //记录上一次遥控器值
-    gimbal_last_key_v = gimbal_RC->key.v;
+
 
     // debug 模式
 #if GIMBAL_DEBUG_MODE
@@ -541,6 +543,9 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
         return;
     }
 
+
+#if SHOOT_LASER_OPEN
+
     // TODO 暂时未写
     //  //单击右键 打开自瞄 再次单击 关闭自瞄
     //  if (IF_MOUSE_SINGAL_PRESSED_R && auto_switch == FALSE)
@@ -552,14 +557,58 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
     //      auto_switch = FALSE;
     //  }
 
-    // //当在自瞄模式下且识别到目标,云台控制权交给mini pc
-    // if (auto_switch == TRUE && vision_if_find_target() == TRUE)
-    // {
-    //     vision_error_angle(yaw, pitch); //获取yaw 和 pitch的偏移量
-    //     vision_send_data(CmdID);        //发送指令给小电脑
-    // }
-    // else
-    // {
+    
+    //当在自瞄模式下且识别到目标,云台控制权交给mini pc
+    if (auto_switch == TRUE && vision_if_find_target() == TRUE)
+    {
+        vision_error_angle(yaw, pitch); //获取yaw 和 pitch的偏移量
+        vision_send_data(CmdID);        //发送指令给小电脑
+    }
+    else
+    {
+        static int16_t yaw_channel = 0, pitch_channel = 0;
+
+        rc_deadband_limit(gimbal_RC->rc.ch[YAW_CHANNEL], yaw_channel, RC_DEADBAND);
+        rc_deadband_limit(gimbal_RC->rc.ch[PITCH_CHANNEL], pitch_channel, RC_DEADBAND);
+
+        *yaw = yaw_channel * YAW_RC_SEN - gimbal_RC->mouse.x * YAW_MOUSE_SEN;
+        *pitch = pitch_channel * PITCH_RC_SEN + gimbal_RC->mouse.y * PITCH_MOUSE_SEN;
+
+        {
+            static uint8_t gimbal_turn_flag = 0;
+            static fp32 gimbal_end_angle = 0.0f;
+
+            if (KEY_GIMBAL_TURN_180)
+            {
+                if (gimbal_turn_flag == 0)
+                {
+                    gimbal_turn_flag = 1;
+                    //保存掉头的目标值
+                    gimbal_end_angle = rad_format(gimbal_yaw_motor.absolute_angle + PI);
+                }
+            }
+
+            if (gimbal_turn_flag)
+            {
+                //不断控制到掉头的目标值，正转，反装是随机
+                if (rad_format(gimbal_end_angle - gimbal_yaw_motor.absolute_angle) > 0.0f)
+                {
+                    *yaw += TURN_SPEED;
+                }
+                else
+                {
+                    *yaw -= TURN_SPEED;
+                }
+            }
+            //到达pi （180°）后停止
+            if (gimbal_turn_flag && fabs(rad_format(gimbal_end_angle - gimbal_yaw_motor.absolute_angle)) < 0.01f)
+            {
+                gimbal_turn_flag = 0;
+            }
+        }
+    }
+#else
+
     static int16_t yaw_channel = 0, pitch_channel = 0;
 
     rc_deadband_limit(gimbal_RC->rc.ch[YAW_CHANNEL], yaw_channel, RC_DEADBAND);
@@ -572,8 +621,6 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
         static uint8_t gimbal_turn_flag = 0;
         static fp32 gimbal_end_angle = 0.0f;
 
-
-
         if (KEY_GIMBAL_TURN_180)
         {
             if (gimbal_turn_flag == 0)
@@ -583,7 +630,6 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
                 gimbal_end_angle = rad_format(gimbal_yaw_motor.absolute_angle + PI);
             }
         }
-        //gimbal_last_key_v = gimbal_RC->key.v;
 
         if (gimbal_turn_flag)
         {
@@ -603,7 +649,9 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
             gimbal_turn_flag = 0;
         }
     }
-    //}
+
+#endif
+
 }
 
 fp32 temp_yaw = 0;

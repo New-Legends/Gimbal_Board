@@ -88,10 +88,8 @@ extern "C"
 //turn speed
 //掉头云台速度
 #define TURN_SPEED 0.04f
-//测试按键尚未使用
-#define TEST_KEYBOARD KEY_PRESSED_OFFSET_R
 
-#define KEY_GIMBAL_TURN_180 ((gimbal.gimbal_RC->key.v & KEY_PRESSED_GIMBAL_TURN_180) != 0) && !((gimbal.gimbal_last_key_v & KEY_PRESSED_GIMBAL_TURN_180) != 0)
+#define KEY_GIMBAL_TURN_180 if_key_singal_pessed(gimbal_RC, last_gimbal_RC, KEY_PRESSED_GIMBAL_TURN_180)
 
 //rocker value deadband
 //遥控器输入死区，因为遥控器存在差异，摇杆在中间，其值不一定为零
@@ -261,6 +259,8 @@ class Gimbal
 {
 public:
     const RC_ctrl_t *gimbal_RC; //云台使用的遥控器指针
+    RC_ctrl_t *last_gimbal_RC; //云台使用的遥控器指针
+
     uint16_t gimbal_last_key_v; //遥控器上次按键
 
     gimbal_behaviour_e gimbal_behaviour_mode;        //云台行为模式

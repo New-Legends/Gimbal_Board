@@ -18,13 +18,14 @@ const RC_ctrl_t * Remote_control::get_remote_control_point()
     return &rc_ctrl;
 }
 
-const RC_ctrl_t *Remote_control::get_last_remote_control_point()
+RC_ctrl_t *Remote_control::get_last_remote_control_point()
 {
     return &last_rc_ctrl;
 }
 
 
 
+uint8_t last_rc_delay = 0;
 /**
   * @brief          遥控器协议解析
   * @param[in]      sbus_rx_buf[num]: 原生数据指针
@@ -38,19 +39,16 @@ void Remote_control::unpack(uint8_t num)
         return;
     }
 
-    //保留上一次遥控器值
-    last_rc_ctrl = rc_ctrl;
-
-    // if (rc_ctrl_updata >= 50)
+    // if (last_rc_delay == 1000)
     // {
-    //     if(rc_ctrl_updata==50)
-    //         last_rc_ctrl = *rc_ctrl;             //当遥控器有输入时保留上一次数据
-    //     rc_ctrl_updata++;
-    //     if(rc_ctrl_updata >= 100)
-    //      rc_ctrl_updata = 0;
+    //     //保留上一次遥控器值
+    //     last_rc_delay == 0;
+    last_rc_ctrl = rc_ctrl;
+    // } else
+    // {
+    //     last_rc_delay++;
     // }
-    // else
-    //     rc_ctrl_updata ++;
+
 
     rc_ctrl.rc.ch[0] = (sbus_rx_buf[num][0] | (sbus_rx_buf[num][1] << 8)) & 0x07ff;        //!< Channel 0
     rc_ctrl.rc.ch[1] = ((sbus_rx_buf[num][1] >> 3) | (sbus_rx_buf[num][2] << 5)) & 0x07ff; //!< Channel 1

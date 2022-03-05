@@ -123,14 +123,18 @@
 
 #define COVER_MOTOR_SPEED 1.0f
 
-// TODO 还需改进
-//摩擦轮按键控制
-//#define KEY_SHOOT_FRIC if_key_singal_pessed(shoot.shoot_rc, shoot.last_shoot_rc, 'G')
-//暂时使用这种方法
-#define KEY_SHOOT_FRIC ((shoot.shoot_rc->key.v & KEY_PRESSED_SHOOT_FRIC) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_SHOOT_FRIC) != 0)
+
+/*-------------------按键-------------------*/
+//摩擦轮开关
+#define KEY_SHOOT_FRIC if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_FRIC)
+
+//弹仓电机开关
+#define KEY_SHOOT_COVER if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_COVER)
+
 //射频手动调整:
-#define KEY_SHOOT_TRIGGER_SPEED_UP ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_CTRL) != 0) && ((shoot.shoot_rc->key.v & KEY_PRESSED_SHOOT_TRIGGER_SPEED_UP) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_SHOOT_TRIGGER_SPEED_UP) != 0)
-#define KEY_SHOOT_TRIGGER_SPEED_DOWN ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_CTRL) != 0) && ((shoot.shoot_rc->key.v & KEY_PRESSED_SHOOT_TRIGGER_SPEED_DOWN) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_SHOOT_TRIGGER_SPEED_DOWN) != 0)
+#define KEY_SHOOT_TRIGGER_SPEED_UP if_key_pessed(shoot_rc, 'CTRL') && if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_TRIGGER_SPEED_UP)
+#define KEY_SHOOT_TRIGGER_SPEED_DOWN if_key_pessed(shoot_rc, 'CTRL') && if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_TRIGGER_SPEED_DOWN)
+
 
 typedef enum
 {
@@ -155,7 +159,7 @@ class Shoot
 {
 public:
   const RC_ctrl_t *shoot_rc;
-  const RC_ctrl_t *last_shoot_rc;
+  RC_ctrl_t *last_shoot_rc;
 
   uint16_t shoot_last_key_v;
 

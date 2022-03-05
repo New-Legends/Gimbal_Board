@@ -108,7 +108,7 @@ public:
         void init();
 
         const RC_ctrl_t *get_remote_control_point();
-        const RC_ctrl_t *get_last_remote_control_point();
+        RC_ctrl_t *get_last_remote_control_point();
 
         void unpack(uint8_t num);
         void sbus_to_usart1(uint8_t num);
