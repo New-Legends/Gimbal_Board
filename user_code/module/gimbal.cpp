@@ -7,6 +7,7 @@
 #include "First_order_filter.h"
 #include "Motor.h"
 #include "vision.h"
+#include "Interaction.h"
 
 // motor enconde value format, range[0-8191]
 //电机编码值规整 0—8191
@@ -52,7 +53,7 @@ uint8_t temp_turn_180 = 0;
  */
 void Gimbal::init()
 {
-
+    led.init();
     //由于自动校准有问题,只能暂时手动校准
     set_hand_operator_gimbal_hook(YAW_OFFSET, PITCH_OFFSET, MAX_RELATIVE_YAW, MIN_RELATIVE_YAW, MAX_RELATIVE_PITCH, MIN_RELATIVE_PITCH);
 
@@ -139,7 +140,9 @@ void Gimbal::init()
 void Gimbal::feedback_update()
 {
     temp_turn_180 = KEY_GIMBAL_TURN_180;
-
+    
+    //保证程序未死
+    led.RGB_flow();
     //切换模式数据保存
     // TODO:思考一下pitch和yaw真的需要分开保存吗
     // yaw电机状态机切换保存数据

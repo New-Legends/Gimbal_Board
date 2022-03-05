@@ -859,6 +859,11 @@
               <FileType>8</FileType>
               <FilePath>..\user_code\module\Shoot.cpp</FilePath>
             </File>
+            <File>
+              <FileName>Interaction.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\module\Interaction.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

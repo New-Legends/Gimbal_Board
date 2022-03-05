@@ -23,8 +23,6 @@ extern "C"
 #include "detect_task.h"
 using namespace std;
 
-Oled OLED;
-
 void Oled::init()
 {
 
