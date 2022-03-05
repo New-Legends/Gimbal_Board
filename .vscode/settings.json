@@ -15,6 +15,7 @@
         "struct_typedef.h": "c",
         "shoot.h": "c",
         "remote_control.h": "c",
-        "communicate.h": "c"
+        "communicate.h": "c",
+        "*.tcc": "cpp"
     }
 }

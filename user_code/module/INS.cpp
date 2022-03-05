@@ -10,7 +10,7 @@
   * @note       
   * @history
   *  Version    Date            Author          Modification
-  *  V1.0.0     NOV-06-2021     summerpray      1. doing
+  *  V1.0.0     NOV-06-2021     summerpray      1. done
   *
   @verbatim
   ==============================================================================

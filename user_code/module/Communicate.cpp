@@ -12,22 +12,27 @@
 #include "Remote_control.h"
 #include "Can_receive.h"
 #include "vision.h"
+#include "Interaction.h"
+
 Remote_control remote_control;
 
 Can_receive can_receive;
 
 Communicate communicate;
 
+// LED led1;
 
 void Communicate::init()
 {
     remote_control.init();
     can_receive.init();
+    // led1.init();
     vision_init();
 }
 
 void Communicate::run()
 {
+    // led1.RGB_flow();
     vision_send_data(1);
 
     //向底盘发送遥控器和云台数据
