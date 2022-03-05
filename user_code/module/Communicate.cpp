@@ -207,6 +207,11 @@ extern "C"
                 detect_hook(CAN_TRIGGER_MOTOR_ID);
                 break;
 
+            case CAN_COVER_MOTOR_ID:
+                can_receive.get_shoot_motor_measure(3, rx_data);
+                detect_hook(CAN_COVER_MOTOR_ID);
+                break;
+
             //云台机构电机
             case CAN_YAW_MOTOR_ID:
                 can_receive.get_gimbal_motor_measure(0, rx_data);

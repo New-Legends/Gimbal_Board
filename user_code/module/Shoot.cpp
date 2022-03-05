@@ -85,6 +85,8 @@ void Shoot::init()
     //设置初试模式
     shoot_mode = SHOOT_STOP;
 
+    cover_mode = COVER_CLOSE_DONE;
+
     //摩擦轮电机
     for(int i = 0; i < 2; ++i)
     {
@@ -112,14 +114,10 @@ void Shoot::init()
     // trigger_motor.min_speed = -FRIC_MAX_SPEED_RMP;
     // trigger_motor.require_speed = -FRIC_REQUIRE_SPEED_RMP;
 
-    //摩擦轮,弹仓舵机,限位舵机状态
+    
+    //摩擦轮 限位舵机状态
     fric_status = FALSE;
-    cover_status = FALSE;
     limit_switch_status = FALSE;
-
-
-    //更新数据
-    feedback_update();
 
     //TODO 此处先添加,后面可能会删去
     trigger_motor.angle = trigger_motor.motor_measure->ecd * MOTOR_ECD_TO_ANGLE;
@@ -128,8 +126,26 @@ void Shoot::init()
     trigger_motor.angle_set = trigger_motor.angle;
     trigger_motor.speed = 0.0f;
     trigger_motor.speed_set = 0.0f;
-		
+
+    //弹仓电机初始化
+    cover_motor.init(can_receive.get_shoot_motor_measure_point(COVER));
+    //初始化PID
+    fp32 cover_speed_pid_parm[5] = {COVER_ANGLE_PID_KP, COVER_ANGLE_PID_KI, COVER_ANGLE_PID_KD, COVER_BULLET_PID_MAX_IOUT, COVER_BULLET_PID_MAX_OUT};
+    cover_motor.speed_pid.init(PID_SPEED, cover_speed_pid_parm, &cover_motor.speed, &cover_motor.speed_set, NULL);
+    cover_motor.angle_pid.pid_clear();
+
+    cover_motor.angle = cover_motor.motor_measure->ecd * MOTOR_ECD_TO_ANGLE;
+	cover_motor.ecd_count = 0;
+    cover_motor.current_give = 0;
+    cover_motor.angle_set = cover_motor.angle;
+    cover_motor.speed = 0.0f;
+    cover_motor.speed_set = 0.0f;
+
+    //更新数据
+    feedback_update();
+
     move_flag = 0;
+    cover_move_flag = 0;
     key_time = 0;
 }
 
@@ -250,6 +266,17 @@ void Shoot::set_mode()
     //     shoot_mode = SHOOT_STOP;
     // }
 
+
+    if(if_key_singal_pessed(shoot_rc,last_shoot_rc,'R') && cover_mode == COVER_OPEN_DONE)//单击R并且开启完毕
+    {
+        cover_mode = COVER_CLOSE;
+    }
+
+    if(press_R_time == PRESS_R_LONG_TIME && cover_mode == COVER_CLOSE_DONE)//长按R并且关闭完毕
+    {
+        cover_mode = COVER_OPEN;
+    }
+
     last_s = shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL];
 }
 
@@ -282,6 +309,9 @@ void Shoot::feedback_update()
     speed_fliter_3 = speed_fliter_2 * fliter_num[0] + speed_fliter_1 * fliter_num[1] + (trigger_motor.motor_measure->speed_rpm * MOTOR_RPM_TO_SPEED) * fliter_num[2];
     trigger_motor.speed = speed_fliter_3;
 
+    speed_fliter_3 = speed_fliter_2 * fliter_num[0] + speed_fliter_1 * fliter_num[1] + (cover_motor.motor_measure->speed_rpm * MOTOR_RPM_TO_SPEED) * fliter_num[2];
+    cover_motor.speed = speed_fliter_3;
+
     //电机圈数重置， 因为输出轴旋转一圈， 电机轴旋转 36圈，将电机轴数据处理成输出轴数据，用于控制输出轴角度
     if (trigger_motor.motor_measure->ecd - trigger_motor.motor_measure->last_ecd > HALF_ECD_RANGE)
     {
@@ -300,9 +330,32 @@ void Shoot::feedback_update()
     {
         trigger_motor.ecd_count = FULL_COUNT - 1;
     }
+    //计算拨盘电机输出轴角度
+    trigger_motor.angle = (trigger_motor.ecd_count * ECD_RANGE + trigger_motor.motor_measure->ecd) * MOTOR_ECD_TO_ANGLE;
+    
+    //电机圈数重置， 因为输出轴旋转一圈， 电机轴旋转 36圈，将电机轴数据处理成输出轴数据，用于控制输出轴角度
+    if (cover_motor.motor_measure->ecd - cover_motor.motor_measure->last_ecd > HALF_ECD_RANGE)
+    {
+        cover_motor.ecd_count--;
+    }
+    else if (cover_motor.motor_measure->ecd - cover_motor.motor_measure->last_ecd < -HALF_ECD_RANGE)
+    {
+        cover_motor.ecd_count++;
+    }
+
+    if (cover_motor.ecd_count == FULL_COUNT)
+    {
+        cover_motor.ecd_count = -(FULL_COUNT - 1);
+    }
+    else if (cover_motor.ecd_count == -FULL_COUNT)
+    {
+        cover_motor.ecd_count = FULL_COUNT - 1;
+    }
 
     //计算输出轴角度
-    trigger_motor.angle = (trigger_motor.ecd_count * ECD_RANGE + trigger_motor.motor_measure->ecd) * MOTOR_ECD_TO_ANGLE;
+    cover_motor.angle = (cover_motor.ecd_count * ECD_RANGE + cover_motor.motor_measure->ecd) * MOTOR_ECD_TO_ANGLE;
+   
+   
     //TODO 此处没有安装微动开关,暂时把key设置为1
     //微动开关 
     key = 0;
@@ -311,6 +364,10 @@ void Shoot::feedback_update()
     last_press_r = press_r;
     press_l = shoot_rc->mouse.press_l;
     press_r = shoot_rc->mouse.press_r;
+
+
+    last_press_R = press_R;
+    press_R = if_key_pessed(shoot_rc,'R');
 
 
     //长按计时
@@ -324,6 +381,19 @@ void Shoot::feedback_update()
     else
     {
         press_l_time = 0;
+    }
+
+    //长按计时
+    if (press_R)
+    {
+        if (press_R_time < PRESS_R_LONG_TIME)
+        {
+            press_R_time++;
+        }
+    }
+    else
+    {
+        press_R_time = 0;
     }
 
     //射击开关下档时间计时
@@ -409,6 +479,24 @@ void Shoot::set_control()
         trigger_motor.speed_set = 0.0f;
     }
 
+    
+
+    
+    if (cover_mode == COVER_OPEN_DONE || cover_mode == COVER_CLOSE_DONE)
+    {
+        //设置拨弹轮的速度
+        cover_motor.speed_set = 0.0f;
+    }
+    else
+    {
+        cover_motor.speed_pid.data.max_out = COVER_BULLET_PID_MAX_OUT;
+        cover_motor.speed_pid.data.max_iout = COVER_BULLET_PID_MAX_IOUT;
+        cover_control();
+    }
+
+
+    
+
 }
 
 /**
@@ -467,6 +555,8 @@ void Shoot::solve()
     fric_motor[LEFT_FRIC].current_set = fric_motor[LEFT_FRIC].speed_pid.pid_calc();
     fric_motor[RIGHT_FRIC].current_set = fric_motor[RIGHT_FRIC].speed_pid.pid_calc();
     trigger_motor.current_set = trigger_motor.speed_pid.pid_calc();
+
+    cover_motor.current_set = cover_motor.speed_pid.pid_calc();
 }
 
 
@@ -583,6 +673,7 @@ void Shoot::output()
     fric_motor[LEFT_FRIC].current_give = -(int16_t)(fric_motor[LEFT_FRIC].current_set);
     fric_motor[RIGHT_FRIC].current_give = (int16_t)(fric_motor[RIGHT_FRIC].current_set);
     trigger_motor.current_give = trigger_motor.current_set;
+    cover_motor.current_give = cover_motor.current_set;
 
 //电流输出控制,通过调整宏定义控制
 #if SHOOT_FRIC_MOTOR_NO_CURRENT
@@ -596,7 +687,7 @@ void Shoot::output()
 #endif
 
     //发送电流
-    can_receive.can_cmd_shoot_motor_motor(fric_motor[LEFT_FRIC].current_give, fric_motor[RIGHT_FRIC].current_give, trigger_motor.current_give, 0);
+    can_receive.can_cmd_shoot_motor_motor(fric_motor[LEFT_FRIC].current_give, fric_motor[RIGHT_FRIC].current_give, trigger_motor.current_give,cover_motor.current_give);
 }
 
     /**
@@ -663,6 +754,55 @@ void Shoot::shoot_bullet_control()
 }
 
 /**
+  * @brief          弹仓控制，控制弹仓电机运动
+  * @param[in]      void
+  * @retval         void
+  */
+void Shoot::cover_control()
+{
+    if(cover_move_flag == 0)
+    {
+        if (cover_mode == COVER_OPEN)
+        {
+            cover_motor.angle_set = rad_format(cover_motor.angle + COVER_OPEN_ANGLE);
+        }
+        else if (cover_mode == COVER_CLOSE)
+        {
+            cover_motor.angle_set = rad_format(cover_motor.angle - COVER_OPEN_ANGLE);
+        }
+        cover_move_flag = 1;
+    }
+    if(cover_mode == COVER_OPEN)
+    {    //到达角度判断
+        if (rad_format(cover_motor.angle_set - cover_motor.angle) > 0.05f)
+        {
+            //没到达一直设置旋转速度
+            cover_motor.speed_set = COVER_MOTOR_SPEED;
+        }
+        else
+        {
+            cover_mode = COVER_OPEN_DONE;
+            cover_move_flag = 0;
+        }
+    }
+    else if(cover_mode == COVER_CLOSE)
+    {
+			if (rad_format(cover_motor.angle_set - cover_motor.angle) < -0.05f)
+        {
+            //没到达一直设置旋转速度
+            cover_motor.speed_set = -COVER_MOTOR_SPEED;
+        }
+        else
+        {
+            cover_mode = COVER_CLOSE_DONE;
+            cover_move_flag = 0;
+        }
+    }
+
+}
+
+
+/**
   * @brief          弹仓打开时,云台要停止运动
   * @param[in]      none
   * @retval         1: no move 0:normal
@@ -670,7 +810,7 @@ void Shoot::shoot_bullet_control()
 
 bool_t Shoot::shoot_cmd_to_gimbal_stop()
 {
-    if (cover_status == TRUE)
+    if (cover_mode == COVER_OPEN)
     {
         return 1;
     }
