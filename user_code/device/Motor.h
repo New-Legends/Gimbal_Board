@@ -140,4 +140,27 @@ public:
     void init(const motor_measure_t *motor_measure_);
 };
 
+//弹仓开合电机
+class Cover_motor
+{
+public:
+    const motor_measure_t *motor_measure;
+    //速度环pid和角度环pid, 用户可以选择性开启
+    Pid speed_pid;
+    Pid angle_pid;
+
+    fp32 accel;
+    fp32 speed;
+    fp32 speed_set;
+    fp32 angle;
+    fp32 angle_set;
+
+    fp32 current_set;
+    int16_t current_give;
+
+    int8_t ecd_count;    ///编码值计数
+
+    void init(const motor_measure_t *motor_measure_);
+};
+
 #endif

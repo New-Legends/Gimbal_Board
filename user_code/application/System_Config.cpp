@@ -76,6 +76,6 @@ void Task_start(void) {
 
     xTaskCreate(led_RGB_flow_task, "led_flow_task", Normal_Stack_Size, NULL, PriorityNormal, &led_flow_task_handle);
 
-    xTaskCreate(detect_task, "detect_task", Normal_Stack_Size, NULL, PriorityHigh, &detect_task_handle);
+    // xTaskCreate(detect_task, "detect_task", Normal_Stack_Size, NULL, PriorityHigh, &detect_task_handle);
 }
 

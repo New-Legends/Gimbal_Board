@@ -40,6 +40,8 @@
 #define SHOOT_DONE_KEY_OFF_TIME 15
 //鼠标长按判断
 #define PRESS_LONG_TIME 400
+//弹仓R键长按判断
+#define PRESS_R_LONG_TIME 400
 //摩擦轮开启按键延时
 #define KEY_FRIC_LONG_TIME 200
 
@@ -52,15 +54,14 @@
 #define ECD_RANGE 8191
 
 //摩擦轮电机rmp 变化成 旋转速度的比例
-#define FRIC_RPM_TO_SPEED 0.000415809748903494517209f 
+#define FRIC_RPM_TO_SPEED 0.000415809748903494517209f
 
 //摩擦轮电机PID
 #define FRIC_SPEED_PID_KP 4000.0f //1800
-#define FRIC_SPEED_PID_KI 0.4f //0.5
-#define FRIC_SPEED_PID_KD 2.0f //2.0
+#define FRIC_SPEED_PID_KI 0.4f    //0.5
+#define FRIC_SPEED_PID_KD 2.0f    //2.0
 #define FRIC_PID_MAX_IOUT 200.0f
 #define FRIC_PID_MAX_OUT 2000.0f
-
 
 #define FRIC_REQUIRE_SPEED_RMP 500.0f
 #define FRIC_MAX_SPEED_RMP 4000.0f
@@ -98,18 +99,29 @@
 #define TRIGGER_BULLET_PID_MAX_IOUT 200.0f
 #define TRIGGER_BULLET_PID_MAX_OUT 10000.0f
 
+//弹仓开合电机PID
+#define COVER_ANGLE_PID_KP 1000.0f //800
+#define COVER_ANGLE_PID_KI 0.0f    //0.5
+#define COVER_ANGLE_PID_KD 0.0f
+#define COVER_BULLET_PID_MAX_IOUT 200.0f
+#define COVER_BULLET_PID_MAX_OUT 10000.0f
+
 #define TRIGGER_READY_PID_MAX_IOUT 200.0f
 #define TRIGGER_READY_PID_MAX_OUT 10000.0f
-
 
 #define SHOOT_HEAT_REMAIN_VALUE 80
 //拨盘格数
 #define TRIGGER_GRID_NUM 8
 #define TRIGGER_ONCE 2 * PI / TRIGGER_GRID_NUM
 
+#define COVER_OPEN_ANGLE 2 * PI / TRIGGER_GRID_NUM
+
 #define LEFT_FRIC 0
 #define RIGHT_FRIC 1
 #define TRIGGER 2
+#define COVER 3
+
+#define COVER_MOTOR_SPEED 1.0f
 
 // TODO 还需改进
 //摩擦轮按键控制
@@ -131,67 +143,77 @@ typedef enum
   SHOOT_DONE,
 } shoot_mode_e;
 
+typedef enum
+{
+  COVER_OPEN = 0,   //弹仓电机打开
+  COVER_CLOSE,      //弹仓电机关闭
+  COVER_OPEN_DONE,  //弹仓电机开启完毕
+  COVER_CLOSE_DONE, //弹仓电机关闭完毕
+} cover_mode_e;
 
 class Shoot
 {
 public:
-    const RC_ctrl_t *shoot_rc;
-    const RC_ctrl_t *last_shoot_rc;
+  const RC_ctrl_t *shoot_rc;
+  const RC_ctrl_t *last_shoot_rc;
 
-    uint16_t shoot_last_key_v;
+  uint16_t shoot_last_key_v;
 
-    shoot_mode_e shoot_mode;
+  shoot_mode_e shoot_mode;
+  cover_mode_e cover_mode;
 
-    //摩擦轮电机
-    Firc_motor fric_motor[2];
-    //拨弹电机
-    Trigger_motor trigger_motor;
-    
+  //摩擦轮电机
+  Firc_motor fric_motor[2];
+  //拨弹电机
+  Trigger_motor trigger_motor;
+  //弹仓开合电机
+  Cover_motor cover_motor;
 
-    //摩擦轮电机 弹仓舵机 限位开关 状态 
-    bool_t fric_status;
-    bool_t cover_status;
-    bool_t limit_switch_status;
-    //TODO 添加收到开关激光
+  //摩擦轮电机 限位开关 状态
+  bool_t fric_status;
+  bool_t limit_switch_status;
+  //TODO 添加收到开关激光
 
-    //鼠标状态
-    bool_t press_l;
-    bool_t press_r;
-    bool_t last_press_l;
-    bool_t last_press_r;
-    uint16_t press_l_time;
-    uint16_t press_r_time;
-    uint16_t rc_s_time;
+  //鼠标状态
+  bool_t press_l;
+  bool_t press_r;
+  bool_t last_press_l;
+  bool_t last_press_r;
+  uint16_t press_l_time;
+  uint16_t press_r_time;
+  uint16_t rc_s_time;
+  //弹仓电机按键状态
+  bool_t press_R;
+  bool_t last_press_R;
+  uint16_t press_R_time;
 
-    uint16_t block_time;
-    uint16_t reverse_time;
-    bool_t move_flag;
+  uint16_t block_time;
+  uint16_t reverse_time;
+  bool_t move_flag;
+  bool_t cover_move_flag;
 
-    //TODO 暂时未安装微动开关
-    //微动开关
-    bool_t key;
-    uint8_t key_time;
+  //TODO 暂时未安装微动开关
+  //微动开关
+  bool_t key;
+  uint8_t key_time;
 
-    void init();            //云台初始化
-    void set_mode();        //设置发射机构控制模式
-    void feedback_update(); //发射数据反馈
-    void set_control();     //设置发射机构控制量
-    void cooling_ctrl();    //发射机构弹速和热量控制
-    void solve();           //发射机构控制PID计算
-    void output();          //输出电流
+  void init();            //云台初始化
+  void set_mode();        //设置发射机构控制模式
+  void feedback_update(); //发射数据反馈
+  void set_control();     //设置发射机构控制量
+  void cooling_ctrl();    //发射机构弹速和热量控制
+  void solve();           //发射机构控制PID计算
+  void output();          //输出电流
 
-    //拨盘旋转相关函数
-    void trigger_motor_turn_back();  //拨盘电机回转
-    void shoot_bullet_control();
+  //拨盘旋转相关函数
+  void trigger_motor_turn_back(); //拨盘电机回转
+  void shoot_bullet_control();
 
-    bool_t shoot_cmd_to_gimbal_stop();
+  void cover_control();
+
+  bool_t shoot_cmd_to_gimbal_stop();
 };
-
 
 extern Shoot shoot;
 
-
-
-
 #endif
-
