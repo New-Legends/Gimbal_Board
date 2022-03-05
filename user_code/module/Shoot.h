@@ -23,12 +23,7 @@
 #include "Motor.h"
 #include "user_lib.h"
 
-//摩擦轮电机无电流输出
-#define SHOOT_FRIC_MOTOR_NO_CURRENT 0
-//拨弹电机无电流输出
-#define SHOOT_TRIGGER_MOTOR_NO_CURRENT 0
-//手动设置射频
-#define SHOOT_SET_TRIGGER_SPEED_BY_HAND 1
+#include "Config.h"
 
 #define TRIGGER_CCW 1 //拨盘顺时针
 #define TRIGGER_CW -1 //拨盘逆时针
@@ -116,14 +111,14 @@
 #define RIGHT_FRIC 1
 #define TRIGGER 2
 
-//TODO 还需改进
+// TODO 还需改进
 //摩擦轮按键控制
-//#define KEY_FRIC if_key_singal_pessed(shoot.shoot_rc, shoot.last_shoot_rc, 'G')
+//#define KEY_SHOOT_FRIC if_key_singal_pessed(shoot.shoot_rc, shoot.last_shoot_rc, 'G')
 //暂时使用这种方法
-#define KEY_FRIC (((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_G) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_OFFSET_G) != 0))
+#define KEY_SHOOT_FRIC ((shoot.shoot_rc->key.v & KEY_PRESSED_SHOOT_FRIC) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_SHOOT_FRIC) != 0)
 //射频手动调整:
-#define KEY_TRIGGER_SPEED_UP (((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_CTRL) != 0) && ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_Z) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_OFFSET_Z)!=0))
-#define KEY_TRIGGER_SPEED_DOWN (((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_CTRL) != 0) && ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_X) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_OFFSET_X)!=0))
+#define KEY_SHOOT_TRIGGER_SPEED_UP ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_CTRL) != 0) && ((shoot.shoot_rc->key.v & KEY_PRESSED_SHOOT_TRIGGER_SPEED_UP) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_SHOOT_TRIGGER_SPEED_UP) != 0)
+#define KEY_SHOOT_TRIGGER_SPEED_DOWN ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_CTRL) != 0) && ((shoot.shoot_rc->key.v & KEY_PRESSED_SHOOT_TRIGGER_SPEED_DOWN) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_SHOOT_TRIGGER_SPEED_DOWN) != 0)
 
 typedef enum
 {

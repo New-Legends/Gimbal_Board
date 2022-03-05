@@ -14,6 +14,8 @@
 #include "INS.h"
 #include "Communicate.h"
 
+#include "config.h"
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -26,13 +28,8 @@ extern "C"
 #endif
 
 #include "gimbal_task.h"
-//云台电机无电流输出
-#define GIMBAL_YAW_MOTOR_NO_CURRENT 0
 
-#define GIMBAL_PITCH_MOTOR_NO_CURRENT 0
 
-//云台电机debug模式
-#define GIMBAL_DEBUG_MODE  1
 
 /*----------------------pid系数------------------------*/
 //yaw speed close-loop PID params, max out and max iout
@@ -88,15 +85,13 @@ extern "C"
 #define YAW_CHANNEL 0
 #define PITCH_CHANNEL 1
 #define GIMBAL_MODE_CHANNEL 0
-//turn 180°
-//掉头180 按键
-#define TURN_KEYBOARD KEY_PRESSED_OFFSET_V
 //turn speed
 //掉头云台速度
 #define TURN_SPEED 0.04f
 //测试按键尚未使用
 #define TEST_KEYBOARD KEY_PRESSED_OFFSET_R
 
+#define KEY_GIMBAL_TURN_180 ((gimbal.gimbal_RC->key.v & KEY_PRESSED_GIMBAL_TURN_180) != 0) && !((gimbal.gimbal_last_key_v & KEY_PRESSED_GIMBAL_TURN_180) != 0)
 
 //rocker value deadband
 //遥控器输入死区，因为遥控器存在差异，摇杆在中间，其值不一定为零

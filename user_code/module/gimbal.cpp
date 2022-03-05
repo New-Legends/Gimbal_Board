@@ -45,6 +45,7 @@ Gimbal gimbal;
 //云台debug结构体
 gimbal_debug_data_t gimbal_debug_data;
 
+uint8_t temp_turn_180 = 0;
 /**
  * @brief          初始化云台
  * @Author         summerpray
@@ -137,6 +138,8 @@ void Gimbal::init()
  */
 void Gimbal::feedback_update()
 {
+    temp_turn_180 = KEY_GIMBAL_TURN_180;
+
     //切换模式数据保存
     // TODO:思考一下pitch和yaw真的需要分开保存吗
     // yaw电机状态机切换保存数据
@@ -525,6 +528,7 @@ void Gimbal::gimbal_init_control(fp32 *yaw, fp32 *pitch)
     }
 }
 
+
 /**
  * @brief          云台陀螺仪控制，电机是陀螺仪角度控制，
  * @param[out]     yaw: yaw轴角度控制，为角度的增量 单位 rad
@@ -566,11 +570,12 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
     *pitch = pitch_channel * PITCH_RC_SEN + gimbal_RC->mouse.y * PITCH_MOUSE_SEN;
 
     {
-        static uint16_t last_turn_keyboard = 0;
         static uint8_t gimbal_turn_flag = 0;
         static fp32 gimbal_end_angle = 0.0f;
 
-        if ((gimbal_RC->key.v & TURN_KEYBOARD) && !(last_turn_keyboard & TURN_KEYBOARD))
+
+
+        if (KEY_GIMBAL_TURN_180)
         {
             if (gimbal_turn_flag == 0)
             {
@@ -579,7 +584,7 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
                 gimbal_end_angle = rad_format(gimbal_yaw_motor.absolute_angle + PI);
             }
         }
-        last_turn_keyboard = gimbal_RC->key.v;
+        //gimbal_last_key_v = gimbal_RC->key.v;
 
         if (gimbal_turn_flag)
         {

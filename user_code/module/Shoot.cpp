@@ -25,8 +25,6 @@ extern "C"
 //微动开关IO
 #define BUTTEN_TRIG_PIN HAL_GPIO_ReadPin(BUTTON_TRIG_GPIO_Port, BUTTON_TRIG_Pin)
 
-
-
 #define POWER_LIMIT         80.0f
 #define WARNING_POWER       40.0f   
 #define WARNING_POWER_BUFF  50.0f   
@@ -160,15 +158,15 @@ void Shoot::set_mode()
 
     temp_a = if_key_pessed(shoot_rc, 'G');
     temp_b = if_key_pessed(last_shoot_rc, 'G');
-    temp_c = KEY_FRIC;
+    temp_c = KEY_SHOOT_FRIC;
 
     //处于中档， 可以使用键盘开启摩擦轮
-    if (switch_is_mid(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && KEY_FRIC && shoot_mode == SHOOT_STOP)
+    if (switch_is_mid(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && KEY_SHOOT_FRIC && shoot_mode == SHOOT_STOP)
     {
         shoot_mode = SHOOT_READY_FRIC;
     }
     //处于中档， 可以使用键盘关闭摩擦轮
-    else if (switch_is_mid(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && KEY_FRIC && shoot_mode != SHOOT_STOP)
+    else if (switch_is_mid(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && KEY_SHOOT_FRIC && shoot_mode != SHOOT_STOP)
     {
         shoot_mode = SHOOT_STOP;
     }
@@ -431,8 +429,12 @@ void Shoot::solve()
         fric_motor[RIGHT_FRIC].speed_set = 0;
     }
     else
-    {
+    {   
+#if SHOOT_LASER_OPEN
         shoot_laser_on(); //激光开启
+#else
+        shoot_laser_off(); //激光关闭
+#endif
         //设置摩擦轮转速
         // fric_motor[LEFT_FRIC].speed_set = shoot_fric_grade[1];
         // fric_motor[RIGHT_FRIC].speed_set = shoot_fric_grade[1];
@@ -468,7 +470,6 @@ void Shoot::solve()
 }
 
 
-
 /**
 * @brief          发射机构弹速和热量控制
 * @param[in]      void
@@ -492,13 +493,13 @@ void Shoot::cooling_ctrl()
     press_ctrl = ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_CTRL) != 0);
     signal_press_z = ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_Z) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_OFFSET_Z) != 0);
     signal_press_x = ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_X) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_OFFSET_X) != 0);
-    signal_press_g = KEY_FRIC;
+    signal_press_g = KEY_SHOOT_FRIC;
 
     //手动调整射频
 #if SHOOT_SET_TRIGGER_SPEED_BY_HAND
-        if (KEY_TRIGGER_SPEED_UP && grigger_speed_grade < 5){
+        if (KEY_SHOOT_TRIGGER_SPEED_UP && grigger_speed_grade < 5){
         grigger_speed_grade++;
-    } else if (KEY_TRIGGER_SPEED_DOWN && grigger_speed_grade>0) {
+    } else if (KEY_SHOOT_TRIGGER_SPEED_DOWN && grigger_speed_grade>0) {
         grigger_speed_grade--;
     }
 #endif

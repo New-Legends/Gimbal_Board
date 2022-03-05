@@ -45,7 +45,6 @@
 
 #include "INS_task.h"
 
-
 #include "gimbal_task.h"
 
 #define IMU_TASK_INIT_TIME 357
@@ -66,16 +65,7 @@ void INS_task(void *pvParameters)
 
   while (1)
   {
-
-    //TODO 暂时有问题
-    // //为了让陀螺仪每次的初始位姿一致,等云台归中后再初始化一次陀螺仪
-    // if (gimbal_imu_open_flag == 1)
-    // {
-    //   imu.init();
-    //   gimbal_imu_open_flag = 0;
-    // }
     imu.INS_Info_Get();
-    // vTaskDelay(IMU_CONTROL_TIME_MS);
   }
 }
 
