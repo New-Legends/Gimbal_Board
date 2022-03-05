@@ -48,7 +48,6 @@
 #ifndef GIMBAL_BOARD_GIMBAL_TASK_H
 #define GIMBAL_BOARD_GIMBAL_TASK_H
 #include "cmsis_os.h"
-#include "System_Config.h"
 #include "INS.h"
 #include "gimbal.h"
 

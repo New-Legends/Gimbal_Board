@@ -40,7 +40,6 @@
 #ifndef SHOOT_TASK_H
 #define SHOOT_TASK_H
 #include "cmsis_os.h"
-#include "system_config.h"
 #include "Shoot.h"
 
 //任务初始化 空闲一段时间

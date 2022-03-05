@@ -14,7 +14,7 @@
   @endverbatim
   ****************************(C) COPYRIGHT 2019 DJI****************************
   */
-#include "Interaction.h"
+#include "interact.h"
 
 #ifdef __cplusplus
 extern "C"

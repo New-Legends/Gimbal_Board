@@ -2,9 +2,8 @@
 // Created by WSJ on 2021/11/2.
 //
 
-#ifndef GIMBAL_BOARD_SYSTEM_CONFIG_H
-#define GIMBAL_BOARD_SYSTEM_CONFIG_H
-
+#ifndef START_TASK_H
+#define START_TASK_H
 
 #ifdef  __cplusplus
 extern "C" {
@@ -18,4 +17,4 @@ void System_Resource_Init(void);
 }
 #endif
 
-#endif //GIMBAL_BOARD_SYSTEM_CONFIG_H
+#endif 

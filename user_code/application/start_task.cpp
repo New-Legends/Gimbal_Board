@@ -2,7 +2,7 @@
 // Created by WSJ on 2021/11/2.
 //
 
-#include "system_config.h"
+#include "start_task.h"
 #ifdef  __cplusplus
 extern "C" {
 #endif
@@ -19,9 +19,8 @@ extern "C" {
 #include "shoot_task.h"
 #include "ins_task.h"
 #include "calibrate_task.h"
-#include "oled_task.h" 
-#include "led_flow_task.h"
 #include "detect_task.h"
+#include "interact_task.h"
 
 #define Tiny_Stack_Size       64
 #define Small_Stack_Size      128
@@ -45,6 +44,7 @@ TaskHandle_t communicate_task_handle;
 TaskHandle_t oled_task_handle;
 TaskHandle_t led_flow_task_handle;
 TaskHandle_t detect_task_handle;
+TaskHandle_t interact_task_handle;
 
 void System_Resource_Init(void)
 {
@@ -62,7 +62,7 @@ void System_Resource_Init(void)
 void Task_start(void) {
     /* Syetem Service init --------------*/
     /* Applications Init ----------------*/
-    xTaskCreate(INS_task, "ins_task", Huge_Stack_Size, NULL, PriorityRealtime, &ins_task_handle);
+    xTaskCreate(ins_task, "ins_task", Huge_Stack_Size, NULL, PriorityRealtime, &ins_task_handle);
 
     xTaskCreate(gimbal_task, "gimbal_task", Normal_Stack_Size, NULL, PriorityHigh, &gimbal_task_handle);
 
@@ -73,5 +73,7 @@ void Task_start(void) {
     xTaskCreate(calibrate_task, "calibrate_task", Normal_Stack_Size, NULL, PriorityHigh, &cali_task_handle);
 
     xTaskCreate(detect_task, "detect_task", Normal_Stack_Size, NULL, PriorityHigh, &detect_task_handle);
+
+    xTaskCreate(interact_task, "interact_task", Normal_Stack_Size, NULL, PriorityNormal, &interact_task_handle);
 }
 

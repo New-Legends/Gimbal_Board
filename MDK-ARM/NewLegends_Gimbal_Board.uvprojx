@@ -10,7 +10,8 @@
       <TargetName>NewLegends_Gimbal_Board</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060422::V5.06 update 4 (build 422)::ARMCC</pCCUsed>
+      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32F407IGHx</Device>
@@ -183,6 +184,8 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -323,6 +326,7 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>5</v6Lang>
             <v6LangP>3</v6LangP>
@@ -348,7 +352,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>4</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -616,6 +620,7 @@
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
                     <uC99>2</uC99>
+                    <uGnu>2</uGnu>
                     <useXO>2</useXO>
                     <v6Lang>0</v6Lang>
                     <v6LangP>0</v6LangP>
@@ -805,11 +810,6 @@
               <FilePath>..\user_code\application\detect_task.cpp</FilePath>
             </File>
             <File>
-              <FileName>system_config.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\user_code\application\system_config.cpp</FilePath>
-            </File>
-            <File>
               <FileName>ins_task.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\user_code\application\ins_task.cpp</FilePath>
@@ -820,14 +820,14 @@
               <FilePath>..\user_code\application\shoot_task.cpp</FilePath>
             </File>
             <File>
-              <FileName>led_flow_task.cpp</FileName>
+              <FileName>start_task.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\user_code\application\led_flow_task.cpp</FilePath>
+              <FilePath>..\user_code\application\start_task.cpp</FilePath>
             </File>
             <File>
-              <FileName>oled_task.cpp</FileName>
+              <FileName>interact_task.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\user_code\application\oled_task.cpp</FilePath>
+              <FilePath>..\user_code\application\interact_task.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -855,9 +855,9 @@
               <FilePath>..\user_code\module\Shoot.cpp</FilePath>
             </File>
             <File>
-              <FileName>Interaction.cpp</FileName>
+              <FileName>Interact.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\user_code\module\Interaction.cpp</FilePath>
+              <FilePath>..\user_code\module\Interact.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1080,5 +1080,14 @@
     </components>
     <files/>
   </RTE>
+
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>NewLegends_Gimbal_Board</LayName>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 
 </Project>

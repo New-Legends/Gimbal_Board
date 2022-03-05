@@ -12,7 +12,6 @@
 #include "Remote_control.h"
 #include "Can_receive.h"
 #include "vision.h"
-#include "Interaction.h"
 
 Remote_control remote_control;
 
@@ -20,19 +19,16 @@ Can_receive can_receive;
 
 Communicate communicate;
 
-// LED led1;
 
 void Communicate::init()
 {
     remote_control.init();
     can_receive.init();
-    // led1.init();
     vision_init();
 }
 
 void Communicate::run()
 {
-    // led1.RGB_flow();
     vision_send_data(1);
 
     //向底盘发送遥控器和云台数据
@@ -206,7 +202,6 @@ extern "C"
                 can_receive.get_shoot_motor_measure(2, rx_data);
                 detect_hook(CAN_TRIGGER_MOTOR_ID);
                 break;
-
             case CAN_COVER_MOTOR_ID:
                 can_receive.get_shoot_motor_measure(3, rx_data);
                 detect_hook(CAN_COVER_MOTOR_ID);

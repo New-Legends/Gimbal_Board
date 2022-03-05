@@ -25,7 +25,7 @@
 #include "cmsis_os.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "System_Config.h"
+#include "start_task.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/

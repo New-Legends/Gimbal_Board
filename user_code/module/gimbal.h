@@ -97,8 +97,6 @@ extern "C"
 //遥控器输入死区，因为遥控器存在差异，摇杆在中间，其值不一定为零
 #define RC_DEADBAND 10
 //云台 遥控器速度
-// #define YAW_RC_SEN -0.000005f
-// #define PITCH_RC_SEN 0.000006f
 #define YAW_RC_SEN -0.00005f
 #define PITCH_RC_SEN 0.000015f
 

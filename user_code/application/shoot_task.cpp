@@ -41,9 +41,6 @@
 
 #include "shoot_task.h"
 
-
-uint8_t shoot_flag = 0;
-
 void shoot_task(void *pvParameters)
 {
     vTaskDelay(SHOOT_TASK_INIT_TIME);
@@ -51,7 +48,6 @@ void shoot_task(void *pvParameters)
     shoot.init();
     while (1)
     {
-        shoot_flag = HAL_GPIO_ReadPin(KEY_GPIO_Port, KEY_Pin);
         //设置发射机构状态机
         shoot.set_mode();
         //发射机构数据反馈

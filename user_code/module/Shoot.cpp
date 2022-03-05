@@ -297,20 +297,29 @@ void Shoot::feedback_update()
     fric_motor[LEFT_FRIC].speed = -fric_motor[LEFT_FRIC].motor_measure->speed_rpm * FRIC_RPM_TO_SPEED;
     fric_motor[RIGHT_FRIC].speed = fric_motor[RIGHT_FRIC].motor_measure->speed_rpm * FRIC_RPM_TO_SPEED;
 
-    static fp32 speed_fliter_1 = 0.0f;
-    static fp32 speed_fliter_2 = 0.0f;
-    static fp32 speed_fliter_3 = 0.0f;
+    // 拨弹轮电机速度滤波一下
+    static fp32 trigger_speed_fliter_1 = 0.0f;
+    static fp32 trigger_speed_fliter_2 = 0.0f;
+    static fp32 trigger_speed_fliter_3 = 0.0f;
+
+    static const fp32 trigger_fliter_num[3] = {1.725709860247969f, -0.75594777109163436f, 0.030237910843665373f};
+    //二阶低通滤波
+    trigger_speed_fliter_1 = trigger_speed_fliter_2;
+    trigger_speed_fliter_2 = trigger_speed_fliter_3;
+    trigger_speed_fliter_3 = trigger_speed_fliter_2 * trigger_fliter_num[0] + trigger_speed_fliter_1 * trigger_fliter_num[1] + (trigger_motor.motor_measure->speed_rpm * MOTOR_RPM_TO_SPEED) * trigger_fliter_num[2];
+    trigger_motor.speed = trigger_speed_fliter_3;
 
     // 拨弹轮电机速度滤波一下
-	static const fp32 fliter_num[3] = {1.725709860247969f, -0.75594777109163436f, 0.030237910843665373f};
-    //二阶低通滤波
-    speed_fliter_1 = speed_fliter_2;
-    speed_fliter_2 = speed_fliter_3;
-    speed_fliter_3 = speed_fliter_2 * fliter_num[0] + speed_fliter_1 * fliter_num[1] + (trigger_motor.motor_measure->speed_rpm * MOTOR_RPM_TO_SPEED) * fliter_num[2];
-    trigger_motor.speed = speed_fliter_3;
+    static fp32 cover_speed_fliter_1 = 0.0f;
+    static fp32 cover_speed_fliter_2 = 0.0f;
+    static fp32 cover_speed_fliter_3 = 0.0f;
 
-    speed_fliter_3 = speed_fliter_2 * fliter_num[0] + speed_fliter_1 * fliter_num[1] + (cover_motor.motor_measure->speed_rpm * MOTOR_RPM_TO_SPEED) * fliter_num[2];
-    cover_motor.speed = speed_fliter_3;
+    static const fp32 cover_fliter_num[3] = {1.725709860247969f, -0.75594777109163436f, 0.030237910843665373f};
+    //二阶低通滤波
+    cover_speed_fliter_1 = cover_speed_fliter_2;
+    cover_speed_fliter_2 = cover_speed_fliter_3;
+    cover_speed_fliter_3 = cover_speed_fliter_2 * cover_fliter_num[0] + cover_speed_fliter_1 * cover_fliter_num[1] + (cover_motor.motor_measure->speed_rpm * MOTOR_RPM_TO_SPEED) * cover_fliter_num[2];
+    cover_motor.speed = cover_speed_fliter_3;
 
     //电机圈数重置， 因为输出轴旋转一圈， 电机轴旋转 36圈，将电机轴数据处理成输出轴数据，用于控制输出轴角度
     if (trigger_motor.motor_measure->ecd - trigger_motor.motor_measure->last_ecd > HALF_ECD_RANGE)
