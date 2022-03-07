@@ -16,10 +16,10 @@
 
 /*-----------------------发射机构------------------------------*/
 //摩擦轮电机无电流输出
-#define SHOOT_FRIC_MOTOR_NO_CURRENT 0
+#define SHOOT_FRIC_MOTOR_HAVE_CURRENT 1
 
 //拨弹电机无电流输出
-#define SHOOT_TRIGGER_MOTOR_NO_CURRENT 0
+#define SHOOT_TRIGGER_MOTOR_HAVE_CURRENT 1
 
 //手动设置射频
 #define SHOOT_SET_TRIGGER_SPEED_BY_HAND 1

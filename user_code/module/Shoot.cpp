@@ -681,13 +681,17 @@ void Shoot::output()
     cover_motor.current_give = cover_motor.current_set;
 
 //电流输出控制,通过调整宏定义控制
-#if SHOOT_FRIC_MOTOR_NO_CURRENT
+#if SHOOT_FRIC_MOTOR_HAVE_CURRENT
+    ;
+#else
     fric_motor[LEFT_FRIC].current_give = 0;
     fric_motor[RIGHT_FRIC].current_give = 0;
 
 #endif
 
 #if SHOOT_TRIGGER_MOTOR_NO_CURRENT
+    ;
+#else
     trigger_motor.current_give = 0;
 #endif
 
