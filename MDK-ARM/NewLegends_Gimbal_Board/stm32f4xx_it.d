@@ -17,14 +17,13 @@ newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm3
 newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
 newlegends_gimbal_board\stm32f4xx_it.o: D:\ARM\ARMCC\Bin\..\include\stddef.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h
+newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h
-newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h
-newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_adc.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h
@@ -46,6 +45,7 @@ newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm3
 newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_usb.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Inc/stm32f4xx_it.h
+newlegends_gimbal_board\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Inc/FreeRTOSConfig.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
@@ -55,3 +55,7 @@ newlegends_gimbal_board\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Sour
 newlegends_gimbal_board\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 newlegends_gimbal_board\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+newlegends_gimbal_board\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
+newlegends_gimbal_board\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+newlegends_gimbal_board\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+newlegends_gimbal_board\stm32f4xx_it.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h

@@ -16,14 +16,13 @@ newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/
 newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
 newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: D:\ARM\ARMCC\Bin\..\include\stddef.h
 newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h
+newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h
 newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h
 newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h
-newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h
 newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h
 newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h
 newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h
 newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h
-newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_adc.h
 newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h
 newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h
 newlegends_gimbal_board\stm32f4xx_hal_rtc_ex.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h

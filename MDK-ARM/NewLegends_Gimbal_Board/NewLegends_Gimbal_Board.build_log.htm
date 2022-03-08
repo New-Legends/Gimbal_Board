@@ -27,30 +27,153 @@ Project File Date:  03/08/2022
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\ARM\ARMCC\Bin'
 Build target 'NewLegends_Gimbal_Board'
+compiling gimbal_task.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\application\gimbal_task.cpp": No such file or directory
+..\user_code\application\gimbal_task.cpp: 0 warnings, 1 error
+compiling calibrate_task.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\application\calibrate_task.cpp": No such file or directory
+..\user_code\application\calibrate_task.cpp: 0 warnings, 1 error
+compiling ins_task.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\application\ins_task.cpp": No such file or directory
+..\user_code\application\ins_task.cpp: 0 warnings, 1 error
+compiling communicate_task.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\application\communicate_task.cpp": No such file or directory
+..\user_code\application\communicate_task.cpp: 0 warnings, 1 error
+compiling detect_task.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\application\detect_task.cpp": No such file or directory
+..\user_code\application\detect_task.cpp: 0 warnings, 1 error
+compiling main.c...
+../Src/main.c(39): error:  #5: cannot open source input file "bsp_can.h": No such file or directory
+  #include "bsp_can.h"
+../Src/main.c: 0 warnings, 1 error
+compiling freertos.c...
+../Src/freertos.c(30): error:  #5: cannot open source input file "calibrate_task.h": No such file or directory
+  #include "calibrate_task.h"
+../Src/freertos.c: 0 warnings, 1 error
+compiling start_task.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\application\start_task.cpp": No such file or directory
+..\user_code\application\start_task.cpp: 0 warnings, 1 error
+compiling shoot_task.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\application\shoot_task.cpp": No such file or directory
+..\user_code\application\shoot_task.cpp: 0 warnings, 1 error
+compiling interact_task.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\application\interact_task.cpp": No such file or directory
+..\user_code\application\interact_task.cpp: 0 warnings, 1 error
+compiling Communicate.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\module\Communicate.cpp": No such file or directory
+..\user_code\module\Communicate.cpp: 0 warnings, 1 error
+compiling INS.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\module\INS.cpp": No such file or directory
+..\user_code\module\INS.cpp: 0 warnings, 1 error
+compiling Gimbal.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\module\Gimbal.cpp": No such file or directory
+..\user_code\module\Gimbal.cpp: 0 warnings, 1 error
 compiling Shoot.cpp...
-../user_code/device/Motor.h(166): warning:  #1-D: last line of file ends without a newline
-  #endif
-../user_code/componet/support/user_lib.h(11): warning:  #47-D: incompatible redefinition of macro "PI"  (declared at line 21 of "../user_code/componet/include/struct_typedef.h")
-  #define PI 3.14159265358979f
-..\user_code\module\Config.h(52): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\user_code\module\Shoot.cpp(595): warning:  #2548-D: multicharacter character literal (potential portability problem)
-          if (KEY_SHOOT_TRIGGER_SPEED_UP && grigger_speed_grade < 5){
-..\user_code\module\Shoot.cpp(595): warning:  #69-D: integer conversion resulted in truncation
-          if (KEY_SHOOT_TRIGGER_SPEED_UP && grigger_speed_grade < 5){
-..\user_code\module\Shoot.cpp(597): warning:  #2548-D: multicharacter character literal (potential portability problem)
-      } else if (KEY_SHOOT_TRIGGER_SPEED_DOWN && grigger_speed_grade>0) {
-..\user_code\module\Shoot.cpp(597): warning:  #69-D: integer conversion resulted in truncation
-      } else if (KEY_SHOOT_TRIGGER_SPEED_DOWN && grigger_speed_grade>0) {
-..\user_code\module\Shoot.cpp(579): warning:  #550-D: variable "id1_17mm_cooling_rate"  was set but never used
-      uint16_t id1_17mm_cooling_rate;
-..\user_code\module\Shoot.cpp(826): warning:  #1-D: last line of file ends without a newline
-  }
-..\user_code\module\Shoot.cpp: 9 warnings, 0 errors
-linking...
-Program Size: Code=62956 RO-data=2948 RW-data=716 ZI-data=51780  
-FromELF: creating hex file...
-"NewLegends_Gimbal_Board\NewLegends_Gimbal_Board.axf" - 0 Error(s), 9 Warning(s).
+"no source": Error:  #5: cannot open source input file "..\user_code\module\Shoot.cpp": No such file or directory
+..\user_code\module\Shoot.cpp: 0 warnings, 1 error
+compiling Interact.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\module\Interact.cpp": No such file or directory
+..\user_code\module\Interact.cpp: 0 warnings, 1 error
+compiling First_order_filter.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\algorithm\First_order_filter.cpp": No such file or directory
+..\user_code\algorithm\First_order_filter.cpp: 0 warnings, 1 error
+compiling Pid.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\algorithm\Pid.cpp": No such file or directory
+..\user_code\algorithm\Pid.cpp: 0 warnings, 1 error
+compiling Motor.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\device\Motor.cpp": No such file or directory
+..\user_code\device\Motor.cpp: 0 warnings, 1 error
+compiling Oled.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\device\Oled.cpp": No such file or directory
+..\user_code\device\Oled.cpp: 0 warnings, 1 error
+compiling Led.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\device\Led.cpp": No such file or directory
+..\user_code\device\Led.cpp: 0 warnings, 1 error
+compiling Can_receive.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\protocol\Can_receive.cpp": No such file or directory
+..\user_code\protocol\Can_receive.cpp: 0 warnings, 1 error
+compiling vision.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\protocol\vision.cpp": No such file or directory
+..\user_code\protocol\vision.cpp: 0 warnings, 1 error
+compiling Remote_control.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\protocol\Remote_control.cpp": No such file or directory
+..\user_code\protocol\Remote_control.cpp: 0 warnings, 1 error
+compiling CRC8_CRC16.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\componet\support\CRC8_CRC16.c": No such file or directory
+..\user_code\componet\support\CRC8_CRC16.c: 0 warnings, 1 error
+compiling fifo.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\componet\support\fifo.c": No such file or directory
+..\user_code\componet\support\fifo.c: 0 warnings, 1 error
+compiling ist8310driver.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\componet\support\ist8310driver.c": No such file or directory
+..\user_code\componet\support\ist8310driver.c: 0 warnings, 1 error
+compiling ist8310driver_middleware.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\componet\support\ist8310driver_middleware.c": No such file or directory
+..\user_code\componet\support\ist8310driver_middleware.c: 0 warnings, 1 error
+compiling mem_mang4.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\componet\support\mem_mang4.c": No such file or directory
+..\user_code\componet\support\mem_mang4.c: 0 warnings, 1 error
+compiling AHRS_middleware.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\componet\support\AHRS_middleware.c": No such file or directory
+..\user_code\componet\support\AHRS_middleware.c: 0 warnings, 1 error
+compiling BMI088driver.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\componet\support\BMI088driver.c": No such file or directory
+..\user_code\componet\support\BMI088driver.c: 0 warnings, 1 error
+compiling BMI088Middleware.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\componet\support\BMI088Middleware.c": No such file or directory
+..\user_code\componet\support\BMI088Middleware.c: 0 warnings, 1 error
+compiling user_lib.cpp...
+"no source": Error:  #5: cannot open source input file "..\user_code\componet\support\user_lib.cpp": No such file or directory
+..\user_code\componet\support\user_lib.cpp: 0 warnings, 1 error
+compiling bsp_adc.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_adc.c": No such file or directory
+..\user_code\bsp\bsp_adc.c: 0 warnings, 1 error
+compiling bsp_buzzer.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_buzzer.c": No such file or directory
+..\user_code\bsp\bsp_buzzer.c: 0 warnings, 1 error
+compiling bsp_can.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_can.c": No such file or directory
+..\user_code\bsp\bsp_can.c: 0 warnings, 1 error
+compiling bsp_crc32.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_crc32.c": No such file or directory
+..\user_code\bsp\bsp_crc32.c: 0 warnings, 1 error
+compiling bsp_delay.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_delay.c": No such file or directory
+..\user_code\bsp\bsp_delay.c: 0 warnings, 1 error
+compiling bsp_flash.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_flash.c": No such file or directory
+..\user_code\bsp\bsp_flash.c: 0 warnings, 1 error
+compiling bsp_fric.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_fric.c": No such file or directory
+..\user_code\bsp\bsp_fric.c: 0 warnings, 1 error
+compiling bsp_i2c.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_i2c.c": No such file or directory
+..\user_code\bsp\bsp_i2c.c: 0 warnings, 1 error
+compiling bsp_imu_pwm.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_imu_pwm.c": No such file or directory
+..\user_code\bsp\bsp_imu_pwm.c: 0 warnings, 1 error
+compiling bsp_laser.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_laser.c": No such file or directory
+..\user_code\bsp\bsp_laser.c: 0 warnings, 1 error
+compiling bsp_led.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_led.c": No such file or directory
+..\user_code\bsp\bsp_led.c: 0 warnings, 1 error
+compiling bsp_rc.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_rc.c": No such file or directory
+..\user_code\bsp\bsp_rc.c: 0 warnings, 1 error
+compiling bsp_servo_pwm.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_servo_pwm.c": No such file or directory
+..\user_code\bsp\bsp_servo_pwm.c: 0 warnings, 1 error
+compiling bsp_spi.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_spi.c": No such file or directory
+..\user_code\bsp\bsp_spi.c: 0 warnings, 1 error
+compiling bsp_rng.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_rng.c": No such file or directory
+..\user_code\bsp\bsp_rng.c: 0 warnings, 1 error
+compiling bsp_usart.c...
+"no source": Error:  #5: cannot open source input file "..\user_code\bsp\bsp_usart.c": No such file or directory
+..\user_code\bsp\bsp_usart.c: 0 warnings, 1 error
+"NewLegends_Gimbal_Board\NewLegends_Gimbal_Board.axf" - 48 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -74,7 +197,8 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.5.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:02
+Target not created.
+Build Time Elapsed:  00:00:04
 </pre>
 </body>
 </html>
