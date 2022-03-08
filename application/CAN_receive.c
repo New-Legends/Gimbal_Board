@@ -152,7 +152,7 @@ void CAN_cmd_gimbal(int16_t yaw, int16_t pitch, int16_t rev1, int16_t rev2)
   * @param[in]      chassis: (0x204) 3508电机控制电路，范围 [-16384,16384]
   * @retval         none
   */
-void CAN_cmd_chassis_shoot(int16_t trigger, int16_t left_fric, int16_t right_fric, int16_t chassis)
+void CAN_cmd_shoot(int16_t trigger, int16_t left_fric, int16_t right_fric)
 {
     uint32_t send_mail_box;
     chassis_shoot_tx_message.StdId = CAN_CHASSIS_SHOOT_ALL_ID;
@@ -165,8 +165,8 @@ void CAN_cmd_chassis_shoot(int16_t trigger, int16_t left_fric, int16_t right_fri
     chassis_shoot_can_send_data[3] = left_fric;
     chassis_shoot_can_send_data[4] = (right_fric >> 8);
     chassis_shoot_can_send_data[5] = right_fric;
-    chassis_shoot_can_send_data[6] = (chassis >> 8);
-    chassis_shoot_can_send_data[7] = chassis;
+    chassis_shoot_can_send_data[6] = 0;
+    chassis_shoot_can_send_data[7] = 0;
     HAL_CAN_AddTxMessage(&CHASSIS_SHOOT_CAN, &chassis_shoot_tx_message, chassis_shoot_can_send_data, &send_mail_box);
 
 }

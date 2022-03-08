@@ -80,7 +80,7 @@ extern void CAN_cmd_gimbal(int16_t yaw, int16_t pitch, int16_t rev1, int16_t rev
   * @param[in]      chassis: (0x204) 3508电机控制电路，范围 [-16384,16384]
   * @retval         none
   */
-void CAN_cmd_chassis_shoot(int16_t trigger, int16_t left_fric, int16_t right_fric, int16_t chassis);
+void CAN_cmd_shoot(int16_t trigger, int16_t left_fric, int16_t right_fric);
 
 
 /**
