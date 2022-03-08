@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -122,6 +122,11 @@ uint8_t * USBD_FS_ProductStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length
 uint8_t * USBD_FS_SerialStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length);
 uint8_t * USBD_FS_ConfigStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length);
 uint8_t * USBD_FS_InterfaceStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length);
+
+#ifdef USBD_SUPPORT_USER_STRING_DESC
+uint8_t * USBD_FS_USRStringDesc(USBD_SpeedTypeDef speed, uint8_t idx, uint16_t *length);
+#endif /* USBD_SUPPORT_USER_STRING_DESC */
+
 #if (USBD_LPM_ENABLED == 1)
 uint8_t * USBD_FS_USR_BOSDescriptor(USBD_SpeedTypeDef speed, uint16_t *length);
 #endif /* (USBD_LPM_ENABLED == 1) */
@@ -218,7 +223,7 @@ __ALIGN_BEGIN uint8_t USBD_FS_BOSDesc[USB_SIZ_BOS_DESC] __ALIGN_END =
   #pragma data_alignment=4
 #endif /* defined ( __ICCARM__ ) */
 
-/** USB lang identifier descriptor. */
+/** USB lang indentifier descriptor. */
 __ALIGN_BEGIN uint8_t USBD_LangIDDesc[USB_LEN_LANGID_STR_DESC] __ALIGN_END =
 {
      USB_LEN_LANGID_STR_DESC,
@@ -322,9 +327,7 @@ uint8_t * USBD_FS_SerialStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length)
   /* Update the serial number string descriptor with the data from the unique
    * ID */
   Get_SerialNum();
-  /* USER CODE BEGIN USBD_FS_SerialStrDescriptor */
 
-  /* USER CODE END USBD_FS_SerialStrDescriptor */
   return (uint8_t *) USBD_StringSerial;
 }
 

@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -70,6 +70,8 @@
 /*---------- -----------*/
 #define USBD_MAX_STR_DESC_SIZ     512U
 /*---------- -----------*/
+#define USBD_SUPPORT_USER_STRING     0U
+/*---------- -----------*/
 #define USBD_DEBUG_LEVEL     0U
 /*---------- -----------*/
 #define USBD_LPM_ENABLED     0U
@@ -89,13 +91,14 @@
   * @brief Aliases.
   * @{
   */
-/* Memory management macros make sure to use static memory allocation */
-/** Alias for memory allocation. */
 
-#define USBD_malloc         (void *)USBD_static_malloc
+/* Memory management macros */
+
+/** Alias for memory allocation. */
+#define USBD_malloc         malloc
 
 /** Alias for memory release. */
-#define USBD_free           USBD_static_free
+#define USBD_free           free
 
 /** Alias for memory set. */
 #define USBD_memset         memset
@@ -151,8 +154,6 @@
   */
 
 /* Exported functions -------------------------------------------------------*/
-void *USBD_static_malloc(uint32_t size);
-void USBD_static_free(void *p);
 
 /**
   * @}

@@ -1,12 +1,12 @@
 /**
   ******************************************************************************
-  * @file    adc.c
-  * @brief   This file provides code for the configuration
-  *          of the ADC instances.
+  * File Name          : ADC.c
+  * Description        : This file provides code for the configuration
+  *                      of the ADC instances.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -30,16 +30,8 @@ ADC_HandleTypeDef hadc3;
 /* ADC1 init function */
 void MX_ADC1_Init(void)
 {
-
-  /* USER CODE BEGIN ADC1_Init 0 */
-
-  /* USER CODE END ADC1_Init 0 */
-
   ADC_ChannelConfTypeDef sConfig = {0};
 
-  /* USER CODE BEGIN ADC1_Init 1 */
-
-  /* USER CODE END ADC1_Init 1 */
   /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
   */
   hadc1.Instance = ADC1;
@@ -67,24 +59,13 @@ void MX_ADC1_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN ADC1_Init 2 */
-
-  /* USER CODE END ADC1_Init 2 */
 
 }
 /* ADC3 init function */
 void MX_ADC3_Init(void)
 {
-
-  /* USER CODE BEGIN ADC3_Init 0 */
-
-  /* USER CODE END ADC3_Init 0 */
-
   ADC_ChannelConfTypeDef sConfig = {0};
 
-  /* USER CODE BEGIN ADC3_Init 1 */
-
-  /* USER CODE END ADC3_Init 1 */
   /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
   */
   hadc3.Instance = ADC3;
@@ -112,9 +93,6 @@ void MX_ADC3_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN ADC3_Init 2 */
-
-  /* USER CODE END ADC3_Init 2 */
 
 }
 

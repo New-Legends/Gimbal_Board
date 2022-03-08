@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -48,9 +48,6 @@
   * @brief Defines.
   * @{
   */
-/* Define size for the receive and transmit buffer over CDC */
-#define APP_RX_DATA_SIZE  2048
-#define APP_TX_DATA_SIZE  2048
 /* USER CODE BEGIN EXPORTED_DEFINES */
 
 /* USER CODE END EXPORTED_DEFINES */

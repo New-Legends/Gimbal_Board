@@ -1,12 +1,12 @@
 /**
   ******************************************************************************
-  * @file    spi.h
-  * @brief   This file contains all the function prototypes for
-  *          the spi.c file
+  * File Name          : SPI.h
+  * Description        : This file provides code for the configuration
+  *                      of the SPI instances.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -17,11 +17,10 @@
   ******************************************************************************
   */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __SPI_H__
-#define __SPI_H__
-
+#ifndef __spi_H
+#define __spi_H
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -48,7 +47,14 @@ void MX_SPI2_Init(void);
 #ifdef __cplusplus
 }
 #endif
+#endif /*__ spi_H */
 
-#endif /* __SPI_H__ */
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

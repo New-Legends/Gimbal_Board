@@ -1,12 +1,12 @@
 /**
   ******************************************************************************
-  * @file    dma.h
-  * @brief   This file contains all the function prototypes for
-  *          the dma.c file
+  * File Name          : dma.h
+  * Description        : This file contains all the function prototypes for
+  *                      the dma.c file
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -17,11 +17,11 @@
   ******************************************************************************
   */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __DMA_H__
-#define __DMA_H__
+#ifndef __dma_H
+#define __dma_H
 
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -47,6 +47,10 @@ void MX_DMA_Init(void);
 }
 #endif
 
-#endif /* __DMA_H__ */
+#endif /* __dma_H */
+
+/**
+  * @}
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

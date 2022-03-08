@@ -1,0 +1,12 @@
+newlegends_gimbal_board\pid.o: ..\user_code\algorithm\Pid.cpp
+newlegends_gimbal_board\pid.o: ..\user_code\algorithm\Pid.h
+newlegends_gimbal_board\pid.o: ../user_code/componet/include/struct_typedef.h
+newlegends_gimbal_board\pid.o: ../user_code/componet/support/user_lib.h
+newlegends_gimbal_board\pid.o: ../user_code/componet/include/arm_math.h
+newlegends_gimbal_board\pid.o: ../Drivers/CMSIS/Include/core_cm4.h
+newlegends_gimbal_board\pid.o: D:\ARM\ARMCC\Bin\..\include\stdint.h
+newlegends_gimbal_board\pid.o: ../Drivers/CMSIS/Include/cmsis_version.h
+newlegends_gimbal_board\pid.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
+newlegends_gimbal_board\pid.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
+newlegends_gimbal_board\pid.o: D:\ARM\ARMCC\Bin\..\include\string.h
+newlegends_gimbal_board\pid.o: D:\ARM\ARMCC\Bin\..\include\math.h

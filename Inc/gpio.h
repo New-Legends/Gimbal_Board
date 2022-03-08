@@ -1,12 +1,12 @@
 /**
   ******************************************************************************
-  * @file    gpio.h
-  * @brief   This file contains all the function prototypes for
-  *          the gpio.c file
+  * File Name          : gpio.h
+  * Description        : This file contains all the functions prototypes for
+  *                      the gpio
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -16,12 +16,12 @@
   *
   ******************************************************************************
   */
-/* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __GPIO_H__
-#define __GPIO_H__
 
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __gpio_H
+#define __gpio_H
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -44,6 +44,14 @@ void MX_GPIO_Init(void);
 #ifdef __cplusplus
 }
 #endif
-#endif /*__ GPIO_H__ */
+#endif /*__ pinoutConfig_H */
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

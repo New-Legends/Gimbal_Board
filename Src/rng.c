@@ -1,12 +1,12 @@
 /**
   ******************************************************************************
-  * @file    rng.c
-  * @brief   This file provides code for the configuration
-  *          of the RNG instances.
+  * File Name          : RNG.c
+  * Description        : This file provides code for the configuration
+  *                      of the RNG instances.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -30,21 +30,11 @@ RNG_HandleTypeDef hrng;
 void MX_RNG_Init(void)
 {
 
-  /* USER CODE BEGIN RNG_Init 0 */
-
-  /* USER CODE END RNG_Init 0 */
-
-  /* USER CODE BEGIN RNG_Init 1 */
-
-  /* USER CODE END RNG_Init 1 */
   hrng.Instance = RNG;
   if (HAL_RNG_Init(&hrng) != HAL_OK)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN RNG_Init 2 */
-
-  /* USER CODE END RNG_Init 2 */
 
 }
 

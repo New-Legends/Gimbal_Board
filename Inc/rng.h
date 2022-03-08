@@ -1,12 +1,12 @@
 /**
   ******************************************************************************
-  * @file    rng.h
-  * @brief   This file contains all the function prototypes for
-  *          the rng.c file
+  * File Name          : RNG.h
+  * Description        : This file provides code for the configuration
+  *                      of the RNG instances.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -17,11 +17,10 @@
   ******************************************************************************
   */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __RNG_H__
-#define __RNG_H__
-
+#ifndef __rng_H
+#define __rng_H
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -46,7 +45,14 @@ void MX_RNG_Init(void);
 #ifdef __cplusplus
 }
 #endif
+#endif /*__ rng_H */
 
-#endif /* __RNG_H__ */
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
