@@ -675,8 +675,8 @@ void Shoot::cooling_ctrl()
 
 void Shoot::output()
 {
-    fric_motor[LEFT_FRIC].current_give = -(int16_t)(fric_motor[LEFT_FRIC].current_set);
-    fric_motor[RIGHT_FRIC].current_give = (int16_t)(fric_motor[RIGHT_FRIC].current_set);
+    fric_motor[LEFT_FRIC].current_give = 0;//-(int16_t)(fric_motor[LEFT_FRIC].current_set);
+    fric_motor[RIGHT_FRIC].current_give =0;// (int16_t)(fric_motor[RIGHT_FRIC].current_set);
     trigger_motor.current_give = trigger_motor.current_set;
     cover_motor.current_give = cover_motor.current_set;
 

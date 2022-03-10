@@ -250,6 +250,11 @@
           <WinNumber>1</WinNumber>
           <ItemText>cover_mode</ItemText>
         </Ww>
+        <Ww>
+          <count>19</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>remote_control</ItemText>
+        </Ww>
       </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
