@@ -1,4 +1,4 @@
---cpu=Cortex-M4.fp.sp
+--cpu=Cortex-M4.fp
 "newlegends_gimbal_board\startup_stm32f407xx.o"
 "newlegends_gimbal_board\main.o"
 "newlegends_gimbal_board\gpio.o"

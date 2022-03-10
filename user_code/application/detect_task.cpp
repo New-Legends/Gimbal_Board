@@ -278,9 +278,9 @@ static void detect_init(uint32_t time)
         error_list[i].work_time = time;
     }
 
-    //error_list[OLED_TOE].data_is_error_fun = NULL;
-    //error_list[OLED_TOE].solve_lost_fun = OLED_com_reset;
-    //error_list[OLED_TOE].solve_data_error_fun = NULL;
+    error_list[OLED_TOE].data_is_error_fun = NULL;
+//    error_list[OLED_TOE].solve_lost_fun = OLED_com_reset;
+    error_list[OLED_TOE].solve_data_error_fun = NULL;
 
 //    error_list[DBUSTOE].dataIsErrorFun = RC_data_is_error;
 //    error_list[DBUSTOE].solveLostFun = slove_RC_lost;
