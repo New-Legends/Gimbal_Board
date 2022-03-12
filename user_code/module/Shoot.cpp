@@ -597,7 +597,7 @@ void Shoot::cooling_ctrl()
     } else if (KEY_SHOOT_TRIGGER_SPEED_DOWN && grigger_speed_grade>0) {
         grigger_speed_grade--;
     }
-#endif
+#endifc
 
     //离线监测暂时没有添加
     // if (toe_is_error(REFEREE_TOE))

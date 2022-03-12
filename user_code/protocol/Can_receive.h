@@ -10,7 +10,7 @@ extern CAN_HandleTypeDef hcan2;
 
 #define SHOOT_CAN hcan1
 #define GIMBAL_CAN hcan1
-#define BOARD_COM_CAN hcan1
+#define BOARD_COM_CAN hcan2
 
 //云台电机编号
 enum gimbal_motor_id_e
@@ -36,7 +36,6 @@ typedef enum
     CAN_LEFT_FRIC_MOTOR_ID = 0x201,
     CAN_RIGHT_FRIC_MOTOR_ID = 0x202,
     CAN_TRIGGER_MOTOR_ID = 0x203,
-    CAN_COVER_MOTOR_ID = 0X204,
     CAN_SHOOT_ALL_ID = 0x200,
 
     //云台电机接收ID CAN1
@@ -91,6 +90,7 @@ typedef struct
     uint16_t bullet_speed;        //17mm测速实时射速
 
     uint8_t chassis_behaviour;
+    uint8_t 
 
 } gimbal_receive_t;
 

@@ -118,8 +118,11 @@ extern "C"
 #define YAW 0
 #define PITCH 1
 
+#define RC 0
+#define AUTO 1
+
 //电机是否接反
-#define YAW_TURN 1
+#define YAW_TURN 0
 #define PITCH_TURN 0
 
 //电机码盘值最大以及中值
@@ -273,6 +276,10 @@ public:
     const fp32 *gimbal_INT_angle_point; //获取陀螺仪角度值
     const fp32 *gimbal_INT_gyro_point;  //获取陀螺仪角速度值
     uint8_t step;
+        //巡逻会用到的数据
+    bool_t  gimbal_control_way;        //云台控制方式
+    uint8_t yaw_patrol_dir;     //yaw轴巡逻旋转方向
+    uint8_t pitch_patrol_dir;   //pitch轴巡逻旋转方向
 
     void init();                        //云台初始化
     void set_mode();                    //设置云台控制模式

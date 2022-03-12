@@ -333,7 +333,7 @@ void Gimbal::behavour_set()
     //开关控制 云台状态
     if (switch_is_up(gimbal_RC->rc.s[GIMBAL_MODE_CHANNEL]))
     {
-        gimbal_behaviour_mode = GIMBAL_ABSOLUTE_ANGLE;
+        gimbal_behaviour_mode = GIMBAL_RELATIVE_ANGLE;
     }
     else if (switch_is_mid(gimbal_RC->rc.s[GIMBAL_MODE_CHANNEL]))
     {
@@ -667,17 +667,17 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
     {
         return;
     }
-
-    //当在自瞄模式下且识别到目标,云台控制权交给mini pc ,这里为了方便调自瞄,先这么写
-    // if (auto_switch == TRUE && vision_if_find_target() == TRUE)
-    if (vision_if_find_target() == TRUE)
+    //云台陀螺仪相对角度控制模式下，切换自动控制和遥控器控制
+    if (switch_is_up(gimbal_RC->rc.s[GIMBAL_MODE_CHANNEL]))
     {
-        vision_error_angle(yaw, pitch); //获取yaw 和 pitch的偏移量
-        vision_send_data(CmdID);        //发送指令给小电脑
+        gimbal_control_way = AUTO;
     }
-    else
+    else if (switch_is_mid(gimbal_RC->rc.s[GIMBAL_MODE_CHANNEL]))
     {
+        gimbal_control_way = RC;
+    }
 
+    if(gimbal_control_way == RC){
         static int16_t yaw_channel = 0, pitch_channel = 0;
 
         rc_deadband_limit(gimbal_RC->rc.ch[YAW_CHANNEL], yaw_channel, RC_DEADBAND);
@@ -685,7 +685,24 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
 
         *yaw = yaw_channel * YAW_RC_SEN - gimbal_RC->mouse.x * YAW_MOUSE_SEN;
         *pitch = pitch_channel * PITCH_RC_SEN + gimbal_RC->mouse.y * PITCH_MOUSE_SEN;
+    
     }
+    else if(gimbal_control_way == AUTO){
+        //当在自瞄模式下且识别到目标,云台控制权交给mini pc ,这里为了方便调自瞄,先这么写
+        // if (auto_switch == TRUE && vision_if_find_target() == TRUE)
+        if (vision_if_find_target() == TRUE)
+        {
+            vision_error_angle(yaw, pitch); //获取yaw 和 pitch的偏移量
+            vision_send_data(CmdID);        //发送指令给小电脑
+        }
+        else{
+            ref
+        }
+    }
+
+    
+
+        
     temp_yaw = *yaw;
 }
 
