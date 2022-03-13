@@ -45,7 +45,7 @@ extern "C"
 */
 
 fp32 fric_refree_para = 0.1;
-fp32 grigger_speed_to_radio = 0.2;
+fp32 grigger_speed_to_radio = 0.6;
 
 //通过读取裁判数据,直接修改射速和射频等级
 //射速等级  摩擦电机
@@ -530,26 +530,11 @@ void Shoot::set_control()
     else if (shoot_mode == SHOOT_CONTINUE_BULLET)
     {
         //设置拨弹轮的拨动速度,并开启堵转反转处理
-        trigger_motor.speed_set = shoot_grigger_grade[1] * SHOOT_TRIGGER_DIRECTION;
+        trigger_motor.speed_set = shoot_grigger_grade[2] * SHOOT_TRIGGER_DIRECTION;
     }
     else if (shoot_mode == SHOOT_DONE)
     {
         trigger_motor.speed_set = 0.0f;
-    }
-
-    
-
-    
-    if (cover_mode == COVER_OPEN_DONE || cover_mode == COVER_CLOSE_DONE)
-    {
-        //设置拨弹轮的速度
-        cover_motor.speed_set = 0.0f;
-    }
-    else
-    {
-        cover_motor.speed_pid.data.max_out = COVER_BULLET_PID_MAX_OUT;
-        cover_motor.speed_pid.data.max_iout = COVER_BULLET_PID_MAX_IOUT;
-        cover_control();
     }
 
 
@@ -811,69 +796,3 @@ void Shoot::shoot_bullet_control()
     }
 }
 
-/**
-  * @brief          弹仓控制，控制弹仓电机运动
-  * @param[in]      void
-  * @retval         void
-  */
-void Shoot::cover_control()
-{
-    if(cover_move_flag == 0)
-    {
-        if (cover_mode == COVER_OPEN)
-        {
-            cover_motor.angle_set = rad_format(cover_motor.angle + COVER_OPEN_ANGLE);
-        }
-        else if (cover_mode == COVER_CLOSE)
-        {
-            cover_motor.angle_set = rad_format(cover_motor.angle - COVER_OPEN_ANGLE);
-        }
-        cover_move_flag = 1;
-    }
-    if(cover_mode == COVER_OPEN)
-    {    //到达角度判断
-        if (rad_format(cover_motor.angle_set - cover_motor.angle) > 0.05f)
-        {
-            //没到达一直设置旋转速度
-            cover_motor.speed_set = COVER_MOTOR_SPEED;
-        }
-        else
-        {
-            cover_mode = COVER_OPEN_DONE;
-            cover_move_flag = 0;
-        }
-    }
-    else if(cover_mode == COVER_CLOSE)
-    {
-			if (rad_format(cover_motor.angle_set - cover_motor.angle) < -0.05f)
-        {
-            //没到达一直设置旋转速度
-            cover_motor.speed_set = -COVER_MOTOR_SPEED;
-        }
-        else
-        {
-            cover_mode = COVER_CLOSE_DONE;
-            cover_move_flag = 0;
-        }
-    }
-
-}
-
-
-/**
-  * @brief          弹仓打开时,云台要停止运动
-  * @param[in]      none
-  * @retval         1: no move 0:normal
-  */
-
-bool_t Shoot::shoot_cmd_to_gimbal_stop()
-{
-    if (cover_mode == COVER_OPEN)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}

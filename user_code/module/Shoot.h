@@ -216,8 +216,6 @@ public:
   void trigger_motor_turn_back(); //拨盘电机回转
   void shoot_bullet_control();
 
-  void cover_control();
-
   bool_t shoot_cmd_to_gimbal_stop();
 };
 
