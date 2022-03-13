@@ -15,7 +15,6 @@
 
 Remote_control remote_control;
 
-Can_receive can_receive;
 
 Communicate communicate;
 

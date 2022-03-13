@@ -97,6 +97,9 @@ extern "C"
 //云台 遥控器速度
 #define YAW_RC_SEN -0.00005f
 #define PITCH_RC_SEN 0.000015f
+//转头云台速度
+#define TURN_SPEED_YAW    0.01f 
+#define TURN_SPEED_PITCH    0.01f 
 
 //云台 鼠标速度
 // #define YAW_MOUSE_SEN 0.00015f
@@ -120,6 +123,17 @@ extern "C"
 
 #define RC 0
 #define AUTO 1
+
+//旋转方向
+#define CCW 0  //逆时针
+#define CW 1   //顺时针
+
+//云台巡逻时的限幅
+#define MIN_PATROL_YAW -PI
+#define MAX_PATROL_YAW PI
+
+#define MIN_PATROL_PITCH -0.45f
+#define MAX_PATROL_PITCH 0.2f
 
 //电机是否接反
 #define YAW_TURN 0

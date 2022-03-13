@@ -11,6 +11,10 @@
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
 
+Can_receive can_receive;
+
+int field_event_outpost;
+
 void Can_receive::init()
 {
     can_filter_init();
@@ -145,6 +149,7 @@ void Can_receive::receive_17mm_speed_and_mode_board_com(uint8_t data[8])
     gimbal_receive.id1_17mm_speed_limit = (uint16_t)(data[0] << 8 | data[1]);
     gimbal_receive.bullet_speed = (uint16_t)(data[2] << 8 | data[3]);
     gimbal_receive.chassis_behaviour = data[4];
+    gimbal_receive.base_HP = (uint16_t)(data[5] << 8 | data[6]);
 }
 
 void Can_receive::send_rc_board_com(int16_t ch_0, int16_t ch_2, int16_t ch_3, uint16_t v)
@@ -197,4 +202,14 @@ void Can_receive::send_gimbal_board_com(uint8_t s0, uint8_t gimbal_behaviour, fp
     can_send_data[7] = 0;
 
     HAL_CAN_AddTxMessage(&BOARD_COM_CAN, &can_tx_message, can_send_data, &send_mail_box);
+}
+
+void Can_receive::output_state(void){
+    if(gimbal_receive.base_HP>0){
+        field_event_outpost=1;
+    }
+    else 
+    {
+        field_event_outpost=0;
+    }
 }

@@ -32,7 +32,8 @@
 
 //射击发射开关通道数据
 #define SHOOT_RC_MODE_CHANNEL 1
-
+//射击模式使用的开关通道
+#define shoot_MODE_CHANNEL 0
 //开启摩擦轮的斜坡
 #define SHOOT_FRIC_ADD_VALUE 0.1f
 
@@ -200,6 +201,8 @@ public:
   //微动开关
   bool_t key;
   uint8_t key_time;
+
+  bool_t shoot_control_way; //射击控制方式
 
   void init();            //云台初始化
   void set_mode();        //设置发射机构控制模式

@@ -2,11 +2,12 @@
 #include "Communicate.h"
 #include "INS.h"
 #include "detect_task.h"
-
+#include "Can_receive.h"
 #include "math.h"
 #include "First_order_filter.h"
 #include "Motor.h"
 #include "vision.h"
+
 
 // motor enconde value format, range[0-8191]
 //电机编码值规整 0—8191
@@ -696,7 +697,70 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
             vision_send_data(CmdID);        //发送指令给小电脑
         }
         else{
-            ref
+            can_receive.output_state();
+            if(field_event_outpost == 1){//前哨站存活
+                if(pitch_patrol_dir == CCW)  //yaw轴逆时针旋转
+                {
+                    *pitch += TURN_SPEED_PITCH;
+                    if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.01f)
+                    {
+                        pitch_patrol_dir =CW;
+
+                    }
+                }
+                else if(pitch_patrol_dir == CW)  //yaw轴顺时针旋转
+                {
+                    *pitch -= TURN_SPEED_PITCH;
+                    if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.01f)
+                    {
+                        pitch_patrol_dir = CCW;
+
+                    }
+                }
+            }
+            if(field_event_outpost == 0){
+                //yaw轴巡逻
+                if(yaw_patrol_dir == CCW)  //yaw轴逆时针旋转
+                {
+                    *yaw += TURN_SPEED_YAW;
+                    if(MAX_PATROL_YAW - gimbal_yaw_motor.relative_angle < 0.1f)
+                    {
+                        yaw_patrol_dir = CW;
+
+                    }
+                    
+                }
+                
+                else if(yaw_patrol_dir == CW)  //yaw轴顺时针旋转
+                {
+                    *yaw -= TURN_SPEED_YAW;
+                    if(gimbal_yaw_motor.relative_angle - MIN_PATROL_YAW < 0.2f)
+                    {
+                        yaw_patrol_dir = CCW;
+
+                    }
+                }
+                //pitch轴巡逻
+                if(pitch_patrol_dir == CCW)  //yaw轴逆时针旋转
+                {
+                    *pitch += TURN_SPEED_PITCH;
+                    if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.01f)
+                    {
+                        pitch_patrol_dir =CW;
+
+                    }
+                }
+                else if(pitch_patrol_dir == CW)  //yaw轴顺时针旋转
+                {
+                    *pitch -= TURN_SPEED_PITCH;
+                    if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.01f)
+                    {
+                        pitch_patrol_dir = CCW;
+
+                    }
+                }
+
+            }
         }
     }
 

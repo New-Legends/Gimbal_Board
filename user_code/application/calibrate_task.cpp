@@ -98,7 +98,7 @@
 #include "calibrate_task.h"
 #include "string.h"
 #include "cmsis_os.h"
-
+#include "Can_receive.h"
 
 #ifdef __cplusplus //告诉编译器，这部分代码按C语言的格式进行编译，而不是C++的
 extern "C"
