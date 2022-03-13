@@ -88,6 +88,8 @@ extern "C"
 //turn speed
 //掉头云台速度
 #define TURN_SPEED 0.04f
+//电机旋转速度
+#define motor_rotation_speed 0.01f
 
 #define KEY_GIMBAL_TURN_180 if_key_singal_pessed(gimbal_RC, last_gimbal_RC, KEY_PRESSED_GIMBAL_TURN_180)
 

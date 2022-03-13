@@ -57,6 +57,8 @@
 //摩擦轮电机rmp 变化成 旋转速度的比例
 #define FRIC_RPM_TO_SPEED 0.000415809748903494517209f
 
+
+
 //摩擦轮电机PID
 #define FRIC_SPEED_PID_KP 4000.0f //1800
 #define FRIC_SPEED_PID_KI 0.4f    //0.5
