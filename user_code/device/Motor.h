@@ -86,6 +86,8 @@ public:
     fp32 relative_angle_set; //rad
     fp32 absolute_angle;     //rad
     fp32 absolute_angle_set; //rad
+    fp32 new_angle;          //增量
+    fp32 new_set;            //0为目标
     fp32 speed;
     fp32 speed_set;
     fp32 current_set;
