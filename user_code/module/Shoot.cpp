@@ -730,7 +730,7 @@ void Shoot::output()
 #endif
 
     //发送电流
-    can_receive.can_cmd_shoot_motor_motor(fric_motor[LEFT_FRIC].current_give, fric_motor[RIGHT_FRIC].current_give, trigger_motor.current_give,cover_motor.current_give);
+    can_receive.can_cmd_shoot_motor_motor(fric_motor[LEFT_FRIC].current_give, fric_motor[RIGHT_FRIC].current_give, trigger_motor.current_give);
 }
 
     /**

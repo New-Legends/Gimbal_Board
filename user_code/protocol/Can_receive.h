@@ -125,15 +125,15 @@ public:
 
     /*-------------------发射机构电机数据接收--------------------*/
     void get_shoot_motor_measure(uint8_t num, uint8_t data[8]);
-    void can_cmd_shoot_motor_motor(int16_t left_fric, int16_t right_fric, int16_t tigger, int16_t cover); //动力电机数据
+    void can_cmd_shoot_motor_motor(int16_t left_fric, int16_t right_fric, int16_t tigger); //动力电机数据
     void can_cmd_shoot_motor_reset_ID();
     const motor_measure_t *get_shoot_motor_measure_point(uint8_t i);
 
     /*-------------------板间通信函数--------------------*/
     void receive_cooling_and_id_board_com(uint8_t data[8]);
     void receive_17mm_speed_and_mode_board_com(uint8_t data[8]);
-    void send_rc_board_com(int16_t ch_0, int16_t ch_2, int16_t ch_3, uint16_t v);            //发送遥控器数据
-    void send_gimbal_board_com(uint8_t s0, uint8_t gimbal_behaviour, fp32 gimbal_yaw_angle); //发送云台模式及状态
+    void send_rc_board_com(int16_t ch_0, int16_t ch_2, int8_t s0, uint16_t v);            //发送遥控器数据
+    void send_gimbal_board_com(fp32 gimbal_yaw_angle,fp32 gimbal_yaw_current_give); //发送云台模式及状态
 
     /*-------------------裁判系统数据判定-----------------*/
 
