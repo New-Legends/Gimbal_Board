@@ -515,7 +515,6 @@ void Gimbal::gimbal_init_control(fp32 *yaw, fp32 *pitch)
     {
         return;
     }
-
     //使用自己的写法 摒弃了初始化时使用陀螺仪数据
     //初始化状态控制量计算
     if (fabs(INIT_PITCH_SET - gimbal_pitch_motor.relative_angle) > GIMBAL_INIT_ANGLE_ERROR)
