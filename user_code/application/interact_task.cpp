@@ -46,13 +46,13 @@ void interact_task(void *pvParameters)
 {
     vTaskDelay(INTERACT_TASK_INIT_TIME);
 
-
+    
     led.init();
-
+    //OLED.init();
     while (1)
     {
         led.RGB_flow();
-
+        //OLED.run();
         vTaskDelay(INTERACT_CONTROL_TIME_MS);
     }
 }

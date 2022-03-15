@@ -43,7 +43,7 @@ void Oled::init()
     uint8_t i;
     error_list_local = get_error_list_point();
 
-    osDelay(1000);
+    vTaskDelay(1000);
 
     oled_init();
     oled_LOGO();
@@ -54,7 +54,7 @@ void Oled::init()
         {
             detect_hook(OLED_TOE);
         }
-        osDelay(10);
+        vTaskDelay(10);
     }
 }
 
@@ -82,7 +82,7 @@ void Oled::run()
         {
             refresh_tick = 0;
             oled_operate_gram(PEN_CLEAR);
-            oled_show_graphic(0, 1, &battery_box);
+            //oled_show_graphic(0, 1, &battery_box);
             
             //TODO 电池电量测量还未写
             // if (get_battery_percentage() < 10)
@@ -203,74 +203,34 @@ void Oled::oled_write_byte(uint8_t dat, uint8_t cmd)
 void Oled::oled_init(void)
 {
     I2C2_tx_DMA_init();
-
-#if defined(oled_ONE_COLOR)
-    oled_write_byte(0xAE, oled_CMD); //display off
-    oled_write_byte(0x40, oled_CMD); //--set start line address
-    oled_write_byte(0x81, oled_CMD); //--set contrast control register
-    oled_write_byte(0xFF, oled_CMD); //brightness 0x00~0xff
-    oled_write_byte(0xa4, oled_CMD); //0xa4,Output follows RAM content;0xa5,Output ignores RAM content
-    oled_write_byte(0xa6, oled_CMD); //--set normal display
-    oled_write_byte(0x20, oled_CMD); //Set Memory Addressing Mode
-    oled_write_byte(0x00, oled_CMD); //00,Horizontal Addressing Mode;01,Vertical Addressing Mode;10,Page Addressing Mode (RESET);11,Invalid
-    oled_write_byte(0x21, oled_CMD);
-    oled_write_byte(0x00, oled_CMD);
-    oled_write_byte(0x7F, oled_CMD);
-    oled_write_byte(0x22, oled_CMD);
-    oled_write_byte(0x00, oled_CMD);
-    oled_write_byte(0x07, oled_CMD);
-    oled_write_byte(0x3F, oled_CMD); //
-    oled_write_byte(0xc8, oled_CMD); //Set COM Output Scan Direction
-    oled_write_byte(0xa1, oled_CMD); //--set segment re-map 0 to 127
-    oled_write_byte(0xa8, oled_CMD); //--set multiplex ratio(1 to 64)
-    oled_write_byte(0x00, oled_CMD); //
-    oled_write_byte(0xd3, oled_CMD); //-set display offset
-    oled_write_byte(0x00, oled_CMD); //-not offset
-    oled_write_byte(0xd5, oled_CMD); //--set display clock divide ratio/oscillator frequency
-    oled_write_byte(0xF0, oled_CMD); //--set divide ratio
-    oled_write_byte(0xd9, oled_CMD); //--set pre-charge period
-    oled_write_byte(0x22, oled_CMD); //
-    oled_write_byte(0xda, oled_CMD); //--set com pins hardware configuration
-    oled_write_byte(0x12, oled_CMD);
-    oled_write_byte(0xdb, oled_CMD); //--set vcomh
-    oled_write_byte(0x20, oled_CMD); //0x20,0.77xVcc
-    oled_write_byte(0x8d, oled_CMD); //--set DC-DC enable
-    oled_write_byte(0x14, oled_CMD); //
-    oled_write_byte(0xaf, oled_CMD); //--turn on oled panel
-#elif defined(oled_TWO_COLOR)
-
-    oled_write_byte(0xAE, oled_CMD);
-    oled_write_byte(0x20, oled_CMD);
-    oled_write_byte(0x00, oled_CMD);
-    oled_write_byte(0x21, oled_CMD);
-    oled_write_byte(0x00, oled_CMD);
-    oled_write_byte(0x7F, oled_CMD);
-    oled_write_byte(0x22, oled_CMD);
-    oled_write_byte(0x00, oled_CMD);
-    oled_write_byte(0x07, oled_CMD);
-    oled_write_byte(0x3F, oled_CMD);
-    oled_write_byte(0x81, oled_CMD);
-    oled_write_byte(0xFF, oled_CMD);
-    oled_write_byte(0xA1, oled_CMD);
-    oled_write_byte(0xA6, oled_CMD);
-    oled_write_byte(0xA8, oled_CMD);
-    oled_write_byte(0x3F, oled_CMD);
-    oled_write_byte(0xC8, oled_CMD);
-    oled_write_byte(0xD3, oled_CMD);
-    oled_write_byte(0x00, oled_CMD);
-    oled_write_byte(0xD5, oled_CMD);
-    oled_write_byte(0x80, oled_CMD);
-    oled_write_byte(0xD9, oled_CMD);
-    oled_write_byte(0x1F, oled_CMD);
-    oled_write_byte(0xDA, oled_CMD);
-    oled_write_byte(0x12, oled_CMD);
-    oled_write_byte(0xDB, oled_CMD);
-    oled_write_byte(0x30, oled_CMD);
-    oled_write_byte(0x8d, oled_CMD);
-    oled_write_byte(0x14, oled_CMD);
-    oled_write_byte(0xAF, oled_CMD);
-
-#endif
+    oled_write_byte(0xAE, OLED_CMD);    //display off
+    oled_write_byte(0x20, OLED_CMD);    //Set Memory Addressing Mode	
+    oled_write_byte(0x10, OLED_CMD);    //00,Horizontal Addressing Mode;01,Vertical Addressing Mode;10,Page Addressing Mode (RESET);11,Invalid
+    oled_write_byte(0xb0, OLED_CMD);    //Set Page Start Address for Page Addressing Mode,0-7
+    oled_write_byte(0xc8, OLED_CMD);    //Set COM Output Scan Direction
+    oled_write_byte(0x00, OLED_CMD);    //---set low column address
+    oled_write_byte(0x10, OLED_CMD);    //---set high column address
+    oled_write_byte(0x40, OLED_CMD);    //--set start line address
+    oled_write_byte(0x81, OLED_CMD);    //--set contrast control register
+    oled_write_byte(0xff, OLED_CMD);    //brightness 0x00~0xff
+    oled_write_byte(0xa1, OLED_CMD);    //--set segment re-map 0 to 127
+    oled_write_byte(0xa6, OLED_CMD);    //--set normal display
+    oled_write_byte(0xa8, OLED_CMD);    //--set multiplex ratio(1 to 64)
+    oled_write_byte(0x3F, OLED_CMD);    //
+    oled_write_byte(0xa4, OLED_CMD);    //0xa4,Output follows RAM content;0xa5,Output ignores RAM content
+    oled_write_byte(0xd3, OLED_CMD);    //-set display offset
+    oled_write_byte(0x00, OLED_CMD);    //-not offset
+    oled_write_byte(0xd5, OLED_CMD);    //--set display clock divide ratio/oscillator frequency
+    oled_write_byte(0xf0, OLED_CMD);    //--set divide ratio
+    oled_write_byte(0xd9, OLED_CMD);    //--set pre-charge period
+    oled_write_byte(0x22, OLED_CMD);    //
+    oled_write_byte(0xda, OLED_CMD);    //--set com pins hardware configuration
+    oled_write_byte(0x12, OLED_CMD);
+    oled_write_byte(0xdb, OLED_CMD);    //--set vcomh
+    oled_write_byte(0x20, OLED_CMD);    //0x20,0.77xVcc
+    oled_write_byte(0x8d, OLED_CMD);    //--set DC-DC enable
+    oled_write_byte(0x14, OLED_CMD);    //
+    oled_write_byte(0xaf, OLED_CMD);    //--turn on oled panel
 }
 
 bool_t Oled::oled_check_ack(void)

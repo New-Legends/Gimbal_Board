@@ -228,6 +228,10 @@ extern "C"
                 detect_hook(BOARD_COM);
                 break;
 
+            case CAN_REFREE_STATUS_ID:
+                can_receive.receive_refree_status_board_com(rx_data);
+                detect_hook(BOARD_COM);
+                break;
             default:
             {
                 break;

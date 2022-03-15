@@ -147,6 +147,11 @@ void Can_receive::receive_17mm_speed_and_mode_board_com(uint8_t data[8])
     gimbal_receive.chassis_behaviour = data[4];
 }
 
+void Can_receive::receive_refree_status_board_com(uint8_t data[8])
+{
+    gimbal_receive.status = data[0];
+}
+
 void Can_receive::send_rc_board_com(int16_t ch_0, int16_t ch_2, int16_t ch_3, uint16_t v)
 {
     //数据填充
