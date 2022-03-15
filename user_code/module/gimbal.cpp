@@ -207,7 +207,7 @@ void Gimbal::feedback_update()
 #endif
 
     //在云台归中时,读取的速度为编码器反馈的
-    if (gimbal_behaviour_mode == GIMBAL_INIT)
+    if (gimbal_behaviour_mode == GIMBAL_INIT || gimbal_behaviour_mode == GIMBAL_RELATIVE_ANGLE)
         gimbal_pitch_motor.speed = GM6020_MOTOR_RPM_TO_VECTOR * gimbal_pitch_motor.motor_measure->speed_rpm;
     else
         gimbal_pitch_motor.speed = gimbal_INT_gyro_point[INS_GYRO_Y_ADDRESS_OFFSET];
@@ -765,11 +765,16 @@ void Gimbal::output()
 #endif
 
 //电流控制
-#if GIMBAL_YAW_MOTOR_NO_CURRENT
+#if GIMBAL_YAW_MOTOR_HAVE_CURRENT
+    ;
+#else
     gimbal_yaw_motor.current_give = 0;
+
 #endif
 
-#if GIMBAL_PITCH_MOTOR_NO_CURRENT
+#if GIMBAL_PITCH_MOTOR_HAVE_CURRENT
+    ;
+#else
     gimbal_pitch_motor.current_give = 0;
 #endif
 

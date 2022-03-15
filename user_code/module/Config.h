@@ -5,20 +5,20 @@
 
 
 /*------------------------云台---------------------------*/
-//云台电机无电流输出
-#define GIMBAL_YAW_MOTOR_NO_CURRENT 0
-#define GIMBAL_PITCH_MOTOR_NO_CURRENT 0
+//云台电机有电流输出
+#define GIMBAL_YAW_MOTOR_HAVE_CURRENT 1
+#define GIMBAL_PITCH_MOTOR_HAVE_CURRENT 1
 
 //云台电机debug模式
 #define GIMBAL_DEBUG_MODE 1
 
+//云台视觉是否打开
 #define GIMBAL_VISION_OPEN 0
 
 /*-----------------------发射机构------------------------------*/
-//摩擦轮电机无电流输出
+//摩擦轮电机有电流输出
 #define SHOOT_FRIC_MOTOR_HAVE_CURRENT 1
-
-//拨弹电机无电流输出
+//拨弹电机有电流输出
 #define SHOOT_TRIGGER_MOTOR_HAVE_CURRENT 1
 
 //手动设置射频
