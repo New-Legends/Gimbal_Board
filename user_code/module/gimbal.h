@@ -100,8 +100,8 @@ extern "C"
 #define YAW_RC_SEN -0.00005f
 #define PITCH_RC_SEN 0.000015f
 //转头云台速度
-#define TURN_SPEED_YAW    0.01f 
-#define TURN_SPEED_PITCH    0.01f 
+#define TURN_SPEED_YAW    0.03f 
+#define TURN_SPEED_PITCH    0.03f 
 
 //云台 鼠标速度
 // #define YAW_MOUSE_SEN 0.00015f

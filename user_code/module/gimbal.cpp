@@ -132,6 +132,7 @@ void Gimbal::init()
     gimbal_pitch_motor.speed_set = gimbal_pitch_motor.speed_set;
 
     gimbal_debug_data.init_flag = 0;
+    field_event_outpost = 0;
 }
 
 /**
@@ -195,7 +196,7 @@ void Gimbal::feedback_update()
     else
         gimbal_yaw_motor.speed = cos(gimbal_pitch_motor.relative_angle) * (gimbal_INT_gyro_point[INS_GYRO_Z_ADDRESS_OFFSET]) - sin(gimbal_pitch_motor.relative_angle) * (gimbal_INT_gyro_point[INS_GYRO_X_ADDRESS_OFFSET]);
 
-    /*------------yaw电机数据更新---------------------------------------  */
+    /*------------pitch电机数据更新---------------------------------------  */
     // pitch电机
     gimbal_pitch_motor.absolute_angle = -gimbal_INT_angle_point[INS_PITCH_ADDRESS_OFFSET];
 
@@ -700,63 +701,64 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
             if(field_event_outpost == 1){//前哨站存活
                 if(pitch_patrol_dir == CCW)  //yaw轴逆时针旋转
                 {
-                    *pitch += TURN_SPEED_PITCH;
+                    
                     if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.01f)
                     {
                         pitch_patrol_dir =CW;
-
                     }
+                    *pitch = TURN_SPEED_PITCH;
                 }
                 else if(pitch_patrol_dir == CW)  //yaw轴顺时针旋转
                 {
-                    *pitch -= TURN_SPEED_PITCH;
+                    
                     if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.01f)
                     {
                         pitch_patrol_dir = CCW;
-
                     }
+                    *pitch = -TURN_SPEED_PITCH;
                 }
             }
             if(field_event_outpost == 0){
                 //yaw轴巡逻
             if(yaw_patrol_dir == CCW)  //yaw轴逆时针旋转
             {
-                *yaw += TURN_SPEED_YAW;
-                if(MAX_PATROL_YAW - gimbal_yaw_motor.relative_angle < 0.1f)
+                
+                if(MAX_PATROL_YAW - gimbal_yaw_motor.relative_angle < 0.3f)
                 {
                     yaw_patrol_dir = CW;
 
                 }
-                
+                *yaw = TURN_SPEED_YAW;
             }
             
             else if(yaw_patrol_dir == CW)  //yaw轴顺时针旋转
             {
-                *yaw -= TURN_SPEED_YAW;
-                if(gimbal_yaw_motor.relative_angle - MIN_PATROL_YAW < 0.2f)
+                
+                if(gimbal_yaw_motor.relative_angle - MIN_PATROL_YAW < 0.3f)
                 {
                     yaw_patrol_dir = CCW;
-
                 }
+                *yaw = -TURN_SPEED_YAW;
             }
             //pitch轴巡逻
-            if(pitch_patrol_dir == CCW)  //yaw轴逆时针旋转
+            if(pitch_patrol_dir == CCW)  //pitch轴逆时针旋转
             {
-                *pitch += TURN_SPEED_PITCH;
+                
                 if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.01f)
                 {
                     pitch_patrol_dir =CW;
-
                 }
+                *pitch = TURN_SPEED_PITCH;
             }
-            else if(pitch_patrol_dir == CW)  //yaw轴顺时针旋转
+            else if(pitch_patrol_dir == CW)  //pitch轴顺时针旋转
             {
-                *pitch -= TURN_SPEED_PITCH;
+                
                 if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.01f)
                 {
                     pitch_patrol_dir = CCW;
 
                 }
+                *pitch = -TURN_SPEED_PITCH;
             }
 
             }
@@ -966,7 +968,7 @@ void Gimbal::relative_angle_limit(Gimbal_motor *gimbal_motor, fp32 add)
     {
         gimbal_motor->new_angle = gimbal_motor->relative_angle - gimbal_motor->max_relative_angle;
     }
-    else if (gimbal_motor->relative_angle_set + add < gimbal_motor->min_relative_angle)
+    else if (gimbal_motor->relative_angle + add < gimbal_motor->min_relative_angle)
     {
         gimbal_motor->new_angle = gimbal_motor->relative_angle - gimbal_motor->min_relative_angle;
     }

@@ -10,7 +10,7 @@ extern CAN_HandleTypeDef hcan2;
 
 #define SHOOT_CAN hcan1
 #define GIMBAL_CAN hcan1
-#define BOARD_COM_CAN hcan2
+#define BOARD_COM_CAN hcan1
 
 extern int field_event_outpost;
 
@@ -133,7 +133,7 @@ public:
     void receive_cooling_and_id_board_com(uint8_t data[8]);
     void receive_17mm_speed_and_mode_board_com(uint8_t data[8]);
     void send_rc_board_com(int16_t ch_0, int16_t ch_2, int8_t s0, uint16_t v);            //发送遥控器数据
-    void send_gimbal_board_com(fp32 gimbal_yaw_angle,fp32 gimbal_yaw_current_give); //发送云台模式及状态
+    void send_gimbal_board_com(uint8_t s0, uint8_t gimbal_behaviour, fp32 gimbal_yaw_angle); //发送云台模式及状态
 
     /*-------------------裁判系统数据判定-----------------*/
 

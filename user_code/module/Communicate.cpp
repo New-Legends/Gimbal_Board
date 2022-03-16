@@ -42,13 +42,11 @@ void Communicate::run()
     temp_ch3 = remote_control.rc_ctrl.rc.ch[3];
     temp_v = remote_control.rc_ctrl.key.v;
     temp_s0 = remote_control.rc_ctrl.rc.s[0];
-    temp_gimbal_yaw_current_give = gimbal.gimbal_yaw_motor.current_give;
 
     temp_gimbal_behaviour_mode = gimbal.gimbal_behaviour_mode;
-    temp_gimbal_yaw_angle = gimbal.gimbal_yaw_motor.relative_angle;
 
     can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_s0, temp_v);
-    can_receive.send_gimbal_board_com(temp_gimbal_yaw_angle,temp_gimbal_yaw_current_give);
+    can_receive.send_gimbal_board_com(temp_s0,temp_gimbal_behaviour_mode,temp_gimbal_yaw_angle);
 }
 
 #ifdef __cplusplus //告诉编译器，这部分代码按C语言的格式进行编译，而不是C++的
