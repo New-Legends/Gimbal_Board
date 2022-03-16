@@ -45,7 +45,7 @@ void Communicate::run()
 
     temp_gimbal_behaviour_mode = gimbal.gimbal_behaviour_mode;
 
-    can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_s0, temp_v);
+    can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_ch3, temp_v);
     can_receive.send_gimbal_board_com(temp_s0,temp_gimbal_behaviour_mode,temp_gimbal_yaw_angle);
 }
 
