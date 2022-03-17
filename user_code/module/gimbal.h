@@ -34,7 +34,7 @@ extern "C"
 /*----------------------pid系数------------------------*/
 //yaw speed close-loop PID params, max out and max iout
 //yaw 速度环 PID参数以及 PID最大输出，积分输出
-#define YAW_SPEED_PID_KP 8000.0f 
+#define YAW_SPEED_PID_KP 2000.0f 
 #define YAW_SPEED_PID_KI 0.0f    
 #define YAW_SPEED_PID_KD 0.0f
 #define YAW_SPEED_PID_MAX_IOUT 20000.0f
@@ -42,7 +42,7 @@ extern "C"
 
 //pitch speed close-loop PID params, max out and max iout
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
-#define PITCH_SPEED_PID_KP 8000.0f //2900
+#define PITCH_SPEED_PID_KP 2000.0f //2900
 #define PITCH_SPEED_PID_KI 0.1f
 #define PITCH_SPEED_PID_KD 0.0f
 #define PITCH_SPEED_PID_MAX_IOUT 25000.0f
@@ -171,8 +171,8 @@ extern "C"
 #define GIMBAL_INIT_TIME 6000
 #define GIMBAL_CALI_REDUNDANT_ANGLE 0.1f
 // //云台初始化回中值的速度以及控制到的角度
-#define GIMBAL_INIT_PITCH_SPEED 0.02f
-#define GIMBAL_INIT_YAW_SPEED 0.02f
+#define GIMBAL_INIT_PITCH_SPEED 0.002f
+#define GIMBAL_INIT_YAW_SPEED 0.002f
 
 #define INIT_YAW_SET 0.0f
 #define INIT_PITCH_SET 0.0f

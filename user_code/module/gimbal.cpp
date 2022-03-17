@@ -516,18 +516,10 @@ void Gimbal::gimbal_init_control(fp32 *yaw, fp32 *pitch)
     {
         return;
     }
-    //使用自己的写法 摒弃了初始化时使用陀螺仪数据
-    //初始化状态控制量计算
-    if (fabs(INIT_PITCH_SET - gimbal_pitch_motor.relative_angle) > GIMBAL_INIT_ANGLE_ERROR)
-    {
-        *pitch = (INIT_PITCH_SET - gimbal_pitch_motor.relative_angle) * GIMBAL_INIT_PITCH_SPEED;
-        *yaw = 0.0f;
-    }
-    else
-    {
+
         *pitch = (INIT_PITCH_SET - gimbal_pitch_motor.relative_angle) * GIMBAL_INIT_PITCH_SPEED;
         *yaw = (INIT_YAW_SET - gimbal_yaw_motor.relative_angle) * GIMBAL_INIT_YAW_SPEED;
-    }
+    
 }
 
 
@@ -685,7 +677,7 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
         rc_deadband_limit(gimbal_RC->rc.ch[PITCH_CHANNEL], pitch_channel, RC_DEADBAND);
 
         *yaw = yaw_channel * YAW_RC_SEN - gimbal_RC->mouse.x * YAW_MOUSE_SEN;
-        *pitch = pitch_channel * PITCH_RC_SEN + gimbal_RC->mouse.y * PITCH_MOUSE_SEN;
+        *pitch = -pitch_channel * PITCH_RC_SEN + gimbal_RC->mouse.y * PITCH_MOUSE_SEN;
     
     }
     else if(gimbal_control_way == AUTO){
