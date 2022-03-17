@@ -43,7 +43,7 @@ extern "C"
 //pitch speed close-loop PID params, max out and max iout
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
 #define PITCH_SPEED_PID_KP 2000.0f //2900
-#define PITCH_SPEED_PID_KI 0.1f
+#define PITCH_SPEED_PID_KI 0.0f
 #define PITCH_SPEED_PID_KD 0.0f
 #define PITCH_SPEED_PID_MAX_IOUT 25000.0f
 #define PITCH_SPEED_PID_MAX_OUT 30000.0f
@@ -58,9 +58,9 @@ extern "C"
 
 //pitch gyro angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define PITCH_GYRO_ABSOLUTE_PID_KP 8.8f 
+#define PITCH_GYRO_ABSOLUTE_PID_KP 3.0f 
 #define PITCH_GYRO_ABSOLUTE_PID_KI 0.0f
-#define PITCH_GYRO_ABSOLUTE_PID_KD 0.05f  //0.1
+#define PITCH_GYRO_ABSOLUTE_PID_KD 3.0f  //0.1
 #define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 2.0f
 #define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 6.0f
 
@@ -98,7 +98,7 @@ extern "C"
 #define RC_DEADBAND 10
 //云台 遥控器速度
 #define YAW_RC_SEN -0.00005f
-#define PITCH_RC_SEN 0.000015f
+#define PITCH_RC_SEN 0.000005f
 //转头云台速度
 #define TURN_SPEED_YAW    0.03f 
 #define TURN_SPEED_PITCH    0.03f 
@@ -159,8 +159,8 @@ extern "C"
 #define MAX_RELATIVE_YAW PI
 #define MIN_RELATIVE_YAW -PI
 
-#define MAX_RELATIVE_PITCH 0.2f
-#define MIN_RELATIVE_PITCH -0.45f
+#define MAX_RELATIVE_PITCH 0.25f
+#define MIN_RELATIVE_PITCH -0.35f
 
 
 

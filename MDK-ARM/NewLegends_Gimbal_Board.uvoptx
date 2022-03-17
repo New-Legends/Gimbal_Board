@@ -1153,7 +1153,7 @@
       <GroupNumber>7</GroupNumber>
       <FileNumber>67</FileNumber>
       <FileType>8</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\user_code\application\gimbal_task.cpp</PathWithFileName>
