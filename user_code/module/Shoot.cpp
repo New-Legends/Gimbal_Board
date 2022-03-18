@@ -541,12 +541,12 @@ void Shoot::cooling_ctrl()
 #endif
 
     //离线监测暂时没有添加
-    // if (toe_is_error(REFEREE_TOE))
-    // {
-    //     grigger_speed_grade = 1;
-    //     fric_speed_grade = 1;
-    // }
-    // else
+    if (toe_is_error(REFEREE_TOE))
+    {
+        grigger_speed_grade = 2;
+        fric_speed_grade = 2;
+    }
+    else
     {
         //更新裁判数据
         id1_17mm_cooling_limit = can_receive.gimbal_receive.id1_17mm_cooling_limit;
@@ -643,6 +643,13 @@ void Shoot::solve()
         //连发模式 控制17mm发射机构射速和热量控制
         //if(shoot_mode == SHOOT_CONTINUE_BULLET)
             cooling_ctrl();
+
+
+        //弹道测试
+        // trigger_motor.speed_set = shoot_grigger_grade[2] * SHOOT_TRIGGER_DIRECTION;
+        // fric_motor[LEFT_FRIC].speed_set = shoot_fric_grade[fric_speed_grade];
+        // fric_motor[RIGHT_FRIC].speed_set = shoot_fric_grade[fric_speed_grade];
+
 
         if (shoot_mode == SHOOT_READY_BULLET || shoot_mode == SHOOT_CONTINUE_BULLET)
             trigger_motor_turn_back(); //将设置的拨盘旋转角度,转化为速度,且防止卡弹

@@ -39,16 +39,7 @@ void Remote_control::unpack(uint8_t num)
         return;
     }
 
-    // if (last_rc_delay == 1000)
-    // {
-    //     //保留上一次遥控器值
-    //     last_rc_delay == 0;
     last_rc_ctrl = rc_ctrl;
-    // } else
-    // {
-    //     last_rc_delay++;
-    // }
-
 
     rc_ctrl.rc.ch[0] = (sbus_rx_buf[num][0] | (sbus_rx_buf[num][1] << 8)) & 0x07ff;        //!< Channel 0
     rc_ctrl.rc.ch[1] = ((sbus_rx_buf[num][1] >> 3) | (sbus_rx_buf[num][2] << 5)) & 0x07ff; //!< Channel 1

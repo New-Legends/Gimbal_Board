@@ -58,11 +58,11 @@ extern "C"
 
 //pitch gyro angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define PITCH_GYRO_ABSOLUTE_PID_KP 8.8f 
-#define PITCH_GYRO_ABSOLUTE_PID_KI 0.0f
-#define PITCH_GYRO_ABSOLUTE_PID_KD 0.05f  //0.1
-#define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 2.0f
-#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 6.0f
+#define PITCH_GYRO_ABSOLUTE_PID_KP 8.0f 
+#define PITCH_GYRO_ABSOLUTE_PID_KI 0.01f
+#define PITCH_GYRO_ABSOLUTE_PID_KD 1.0f  //0.1
+#define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 1.0f
+#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 8.0f
 
 //yaw encode angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
@@ -95,15 +95,12 @@ extern "C"
 //遥控器输入死区，因为遥控器存在差异，摇杆在中间，其值不一定为零
 #define RC_DEADBAND 10
 //云台 遥控器速度
-#define YAW_RC_SEN -0.00005f
+#define YAW_RC_SEN -0.00005f // 右手系 z轴逆时针为正 但是遥控器通道向右为正 故加负号
 #define PITCH_RC_SEN 0.000015f
 
-//云台 鼠标速度
-// #define YAW_MOUSE_SEN 0.00015f
-// #define PITCH_MOUSE_SEN -0.00006f
-#define YAW_MOUSE_SEN 0.00025f
+//云台 鼠标速度 
+#define YAW_MOUSE_SEN -0.00025f
 #define PITCH_MOUSE_SEN -0.00016f
-
 
 #define YAW_ENCODE_SEN 0.01f
 #define PITCH_ENCODE_SEN 0.01f
@@ -134,13 +131,13 @@ extern "C"
 #define MAX_ABSOULATE_YAW 6.0f
 #define MIN_ABSOULATE_YAW -6.0f
 
-#define MAX_ABSOULATE_PITCH 0.1f
-#define MIN_ABSOULATE_PITCH -0.3f
+#define MAX_ABSOULATE_PITCH 0.3f
+#define MIN_ABSOULATE_PITCH -0.4f
 
-#define MAX_RELATIVE_YAW PI
-#define MIN_RELATIVE_YAW -PI
+#define MAX_RELATIVE_YAW 6.0f
+#define MIN_RELATIVE_YAW -6.0f
 
-#define MAX_RELATIVE_PITCH 0.2f
+#define MAX_RELATIVE_PITCH 0.3f
 #define MIN_RELATIVE_PITCH -0.45f
 
 

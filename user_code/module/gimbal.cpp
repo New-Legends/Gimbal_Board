@@ -344,21 +344,21 @@ void Gimbal::behavour_set()
         gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
     }
 
-    if (toe_is_error(GIMBAL_YAW_MOTOR_TOE) || toe_is_error(GIMBAL_PITCH_MOTOR_TOE))
-    {
-        gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
-        buzzer_on(95, 10000);
-    }
-    else
-    {
-        buzzer_off();
-    }
+    // if (toe_is_error(GIMBAL_YAW_MOTOR_TOE) || toe_is_error(GIMBAL_PITCH_MOTOR_TOE))
+    // {
+    //     gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
+    //     buzzer_on(95, 10000);
+    // }
+    // else
+    // {
+    //     buzzer_off();
+    // }
 
-    //遥控器电线保护
-    if (toe_is_error(DBUS_TOE))
-    {
-        gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
-    }
+    // //遥控器电线保护
+    // if (toe_is_error(DBUS_TOE))
+    // {
+    //     gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
+    // }
 
     // enter init mode
     //判断进入init状态机
@@ -571,7 +571,7 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
         rc_deadband_limit(gimbal_RC->rc.ch[YAW_CHANNEL], yaw_channel, RC_DEADBAND);
         rc_deadband_limit(gimbal_RC->rc.ch[PITCH_CHANNEL], pitch_channel, RC_DEADBAND);
 
-        *yaw = yaw_channel * YAW_RC_SEN - gimbal_RC->mouse.x * YAW_MOUSE_SEN;
+        *yaw = yaw_channel * YAW_RC_SEN + gimbal_RC->mouse.x * YAW_MOUSE_SEN;
         *pitch = pitch_channel * PITCH_RC_SEN + gimbal_RC->mouse.y * PITCH_MOUSE_SEN;
 
         {
@@ -614,7 +614,7 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
     rc_deadband_limit(gimbal_RC->rc.ch[YAW_CHANNEL], yaw_channel, RC_DEADBAND);
     rc_deadband_limit(gimbal_RC->rc.ch[PITCH_CHANNEL], pitch_channel, RC_DEADBAND);
 
-    *yaw = yaw_channel * YAW_RC_SEN - gimbal_RC->mouse.x * YAW_MOUSE_SEN;
+    *yaw = yaw_channel * YAW_RC_SEN + gimbal_RC->mouse.x * YAW_MOUSE_SEN;
     *pitch = pitch_channel * PITCH_RC_SEN + gimbal_RC->mouse.y * PITCH_MOUSE_SEN;
 
     {
@@ -683,7 +683,7 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
         rc_deadband_limit(gimbal_RC->rc.ch[YAW_CHANNEL], yaw_channel, RC_DEADBAND);
         rc_deadband_limit(gimbal_RC->rc.ch[PITCH_CHANNEL], pitch_channel, RC_DEADBAND);
 
-        *yaw = yaw_channel * YAW_RC_SEN - gimbal_RC->mouse.x * YAW_MOUSE_SEN;
+        *yaw = yaw_channel * YAW_RC_SEN + gimbal_RC->mouse.x * YAW_MOUSE_SEN;
         *pitch = pitch_channel * PITCH_RC_SEN + gimbal_RC->mouse.y * PITCH_MOUSE_SEN;
     }
     temp_yaw = *yaw;

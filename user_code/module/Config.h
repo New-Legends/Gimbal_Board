@@ -10,7 +10,7 @@
 #define GIMBAL_PITCH_MOTOR_HAVE_CURRENT 1
 
 //云台电机debug模式
-#define GIMBAL_DEBUG_MODE 1
+#define GIMBAL_DEBUG_MODE 0
 
 //云台视觉是否打开
 #define GIMBAL_VISION_OPEN 0
