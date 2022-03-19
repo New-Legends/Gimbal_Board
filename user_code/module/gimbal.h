@@ -42,11 +42,11 @@ extern "C"
 
 //pitch speed close-loop PID params, max out and max iout
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
-#define PITCH_SPEED_PID_KP 2000.0f //2900
+#define PITCH_SPEED_PID_KP 2500.0f //2900
 #define PITCH_SPEED_PID_KI 0.0f
-#define PITCH_SPEED_PID_KD 0.0f
+#define PITCH_SPEED_PID_KD 8.0f
 #define PITCH_SPEED_PID_MAX_IOUT 25000.0f
-#define PITCH_SPEED_PID_MAX_OUT 30000.0f
+#define PITCH_SPEED_PID_MAX_OUT 25000.0f
 
 //yaw gyro angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
@@ -58,7 +58,7 @@ extern "C"
 
 //pitch gyro angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define PITCH_GYRO_ABSOLUTE_PID_KP 3.0f 
+#define PITCH_GYRO_ABSOLUTE_PID_KP 6.0f 
 #define PITCH_GYRO_ABSOLUTE_PID_KI 0.0f
 #define PITCH_GYRO_ABSOLUTE_PID_KD 3.0f  //0.1
 #define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 2.0f
@@ -68,16 +68,16 @@ extern "C"
 //yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
 #define YAW_ENCODE_RELATIVE_PID_KP 10.0f 
 #define YAW_ENCODE_RELATIVE_PID_KI 0.0f
-#define YAW_ENCODE_RELATIVE_PID_KD 0.0f
+#define YAW_ENCODE_RELATIVE_PID_KD 5.0f
 #define YAW_ENCODE_RELATIVE_PID_MAX_IOUT 2.0f
 #define YAW_ENCODE_RELATIVE_PID_MAX_OUT 6.0f
 
 //pitch encode angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define PITCH_ENCODE_RELATIVE_PID_KP 6.0f 
-#define PITCH_ENCODE_RELATIVE_PID_KI 0.0f
-#define PITCH_ENCODE_RELATIVE_PID_KD 0.0f
-#define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 2.0f
+#define PITCH_ENCODE_RELATIVE_PID_KP 8.0f 
+#define PITCH_ENCODE_RELATIVE_PID_KI 0.01f
+#define PITCH_ENCODE_RELATIVE_PID_KD 3.0f
+#define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 1.0f
 #define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 6.0f
 
 /*---------------------按键--------------------*/
@@ -98,10 +98,10 @@ extern "C"
 #define RC_DEADBAND 10
 //云台 遥控器速度
 #define YAW_RC_SEN -0.00005f
-#define PITCH_RC_SEN 0.000005f
+#define PITCH_RC_SEN 0.00003f
 //转头云台速度
 #define TURN_SPEED_YAW    0.03f 
-#define TURN_SPEED_PITCH    0.03f 
+#define TURN_SPEED_PITCH    0.02f 
 
 //云台 鼠标速度
 // #define YAW_MOUSE_SEN 0.00015f
@@ -134,8 +134,8 @@ extern "C"
 #define MIN_PATROL_YAW -PI
 #define MAX_PATROL_YAW PI
 
-#define MIN_PATROL_PITCH -0.45f
-#define MAX_PATROL_PITCH 0.2f
+#define MIN_PATROL_PITCH -0.12f
+#define MAX_PATROL_PITCH 0.15f
 
 //电机是否接反
 #define YAW_TURN 0
@@ -143,11 +143,11 @@ extern "C"
 
 //电机码盘值最大以及中值
 #define HALF_ECD_RANGE 4096
-#define ECD_RANGE 8191
+#define ECD_RANGE 8192
 
 //限幅 需要自己手动校准
-#define YAW_OFFSET 0   //编码器
-#define PITCH_OFFSET 7600 //编码器
+#define YAW_OFFSET 4376   //编码器
+#define PITCH_OFFSET 5600 //编码器
 
 //限幅
 #define MAX_ABSOULATE_YAW 6.0f
@@ -159,8 +159,8 @@ extern "C"
 #define MAX_RELATIVE_YAW PI
 #define MIN_RELATIVE_YAW -PI
 
-#define MAX_RELATIVE_PITCH 0.25f
-#define MIN_RELATIVE_PITCH -0.35f
+#define MAX_RELATIVE_PITCH 0.15f
+#define MIN_RELATIVE_PITCH -0.15f
 
 
 

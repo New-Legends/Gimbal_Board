@@ -11,7 +11,6 @@
 
 //云台电机debug模式
 #define GIMBAL_DEBUG_MODE 1
-
 #define GIMBAL_VISION_OPEN 0
 
 /*-----------------------发射机构------------------------------*/

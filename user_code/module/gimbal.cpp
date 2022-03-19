@@ -736,7 +736,7 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
             if(pitch_patrol_dir == CCW)  //pitch轴逆时针旋转
             {
                 
-                if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.01f)
+                if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.05f)
                 {
                     pitch_patrol_dir =CW;
                 }
@@ -745,7 +745,7 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
             else if(pitch_patrol_dir == CW)  //pitch轴顺时针旋转
             {
                 
-                if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.01f)
+                if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.03f)
                 {
                     pitch_patrol_dir = CCW;
 
