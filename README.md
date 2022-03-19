@@ -93,7 +93,7 @@ Developing
 从左向右数:
 裁判串口线: C板UART1  G TX RX
 裁判学生串口接口 左侧串口 RX TX G
-视觉串口线: C板UART2  RX TXV G V
+视觉串口线: C板UART2  RX TX G V
 
 CAN1: L H
 CAN2: V G H L

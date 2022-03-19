@@ -2,6 +2,7 @@
 
 #include "main.h"
 
+
 #include "bsp_fric.h"
 #include "user_lib.h"
 
@@ -12,8 +13,10 @@ extern "C"
 }
 #endif
 
-#include "Communicate.h"
 #include "detect_task.h"
+
+#include "Gimbal.h"
+#include "Communicate.h"
 
 #define shoot_fric1_on(pwm) fric1_on((pwm)) //摩擦轮1pwm宏定义
 #define shoot_fric2_on(pwm) fric2_on((pwm)) //摩擦轮2pwm宏定义
@@ -59,8 +62,6 @@ uint8_t grigger_speed_grade;
 uint8_t fric_speed_grade;
 
 Shoot shoot;
-
-
 
 uint8_t press_ctrl = 0;
 uint8_t signal_press_z = 0;
@@ -191,7 +192,6 @@ void Shoot::set_mode()
     }
 
 
-    //TODO 这里为了赶进度,对于abs函数使用了一种非常粗糙的方法完成,因为使用库函数abs编译器无法匹配正确的重载;后续需要修改
     //摩擦轮速度达到一定值,才可开启拨盘  为了便于测试,这里至少需要一个摩擦轮电机达到拨盘启动要求就可以开启拨盘
     if (shoot_mode == SHOOT_READY_FRIC && (abs_int16(fric_motor[LEFT_FRIC].motor_measure->speed_rpm) > abs_fp32(fric_motor[LEFT_FRIC].require_speed) || abs_int16(fric_motor[RIGHT_FRIC].motor_measure->speed_rpm) > abs_fp32(fric_motor[RIGHT_FRIC].require_speed)))
     {
@@ -254,7 +254,6 @@ void Shoot::set_mode()
     //     }
     // }
 
-    //TODO此处还未更新
     // //如果云台状态是 无力状态，就关闭射击
     // if (gimbal_cmd_to_shoot_stop())
     // {
@@ -510,7 +509,6 @@ void Shoot::set_control()
  */
 void Shoot::cooling_ctrl()
 {
-    // TODO 暂时未完善
     // 17mm枪口热量上限, 17mm枪口实时热量
     uint16_t id1_17mm_cooling_limit;
     uint16_t id1_17mm_cooling_heat;
@@ -687,6 +685,14 @@ void Shoot::output()
     trigger_motor.current_give = trigger_motor.current_set;
     cover_motor.current_give = cover_motor.current_set;
 
+    // if (shoot_mode == SHOOT_STOP)
+    // {
+    //     fric_motor[LEFT_FRIC].current_give = 0;
+    //     fric_motor[RIGHT_FRIC].current_give = 0;
+    //     trigger_motor.current_give = 0;
+    //     cover_motor.current_give = 0;
+    // }
+
 //电流输出控制,通过调整宏定义控制
 #if SHOOT_FRIC_MOTOR_HAVE_CURRENT
     ;
@@ -816,16 +822,14 @@ void Shoot::cover_control()
 
 }
 
-
 /**
   * @brief          弹仓打开时,云台要停止运动
   * @param[in]      none
   * @retval         1: no move 0:normal
   */
-
-bool_t Shoot::shoot_cmd_to_gimbal_stop()
+bool_t shoot_cmd_to_gimbal_stop()
 {
-    if (cover_mode == COVER_OPEN)
+    if (shoot.cover_mode == COVER_OPEN)
     {
         return 1;
     }

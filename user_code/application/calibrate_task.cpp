@@ -420,7 +420,6 @@ static void RC_cmd_to_calibrate(void)
         rc_action_flag = 0;
         rc_cmd_time = 0;
         //TODO 对于云台,这个是摩擦轮校准,对于底盘这个是底盘校准
-        //send CAN reset ID cmd to M3508
         //发送CAN重设ID命令到3508
         can_receive.can_cmd_shoot_motor_reset_ID();
         can_receive.can_cmd_shoot_motor_reset_ID();

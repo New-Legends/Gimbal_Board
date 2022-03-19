@@ -188,8 +188,7 @@ void INS::INS_Info_Get()
         BMI088_accel_read_over(accel_dma_rx_buf + BMI088_ACCEL_RX_BUF_DATA_OFFSET, bmi088_real_data.accel, &bmi088_real_data.time);
     }
 
-    //TODO:这个任务是监测加速度计的温度，暂时没写
-
+    //这个任务是监测加速度计的温度
     if (accel_temp_update_flag & (1 << IMU_UPDATE_SHFITS))
     {
         accel_temp_update_flag &= ~(1 << IMU_UPDATE_SHFITS);

@@ -54,7 +54,6 @@ void Communicate::run()
 extern "C"
 {
 
-    // TODO 设备检查未更新
     //遥控器串口
     void USART3_IRQHandler(void)
     {

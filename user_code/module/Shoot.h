@@ -213,10 +213,12 @@ public:
   void trigger_motor_turn_back(); //拨盘电机回转
   void shoot_bullet_control();
 
+  //弹仓控制相关函数
   void cover_control();
-
-  bool_t shoot_cmd_to_gimbal_stop();
 };
+
+bool_t shoot_cmd_to_gimbal_stop();
+
 
 extern Shoot shoot;
 

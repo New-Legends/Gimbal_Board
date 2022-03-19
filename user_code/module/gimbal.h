@@ -85,13 +85,13 @@ extern "C"
 #define YAW_CHANNEL 0
 #define PITCH_CHANNEL 1
 #define GIMBAL_MODE_CHANNEL 0
-//turn speed
-//掉头云台速度
-#define TURN_SPEED 0.04f
 
 #define KEY_GIMBAL_TURN_180 if_key_singal_pessed(gimbal_RC, last_gimbal_RC, KEY_PRESSED_GIMBAL_TURN_180)
 
-//rocker value deadband
+
+//掉头云台速度
+#define TURN_SPEED 0.04f
+
 //遥控器输入死区，因为遥控器存在差异，摇杆在中间，其值不一定为零
 #define RC_DEADBAND 10
 //云台 遥控器速度
@@ -107,11 +107,11 @@ extern "C"
 
 #define GIMBAL_CONTROL_TIME 1
 
-//test mode, 0 close, 1 open
 //云台测试模式 宏定义 0 为不使用测试模式
 #define GIMBAL_TEST_MODE 0
 
 /*---------------------云台限幅与安装参数--------------------*/
+//电机顺序
 #define YAW 0
 #define PITCH 1
 
@@ -124,8 +124,8 @@ extern "C"
 #define ECD_RANGE 8191
 
 //限幅 需要自己手动校准
-#define YAW_OFFSET 252   //编码器
-#define PITCH_OFFSET 4804 //编码器
+#define YAW_OFFSET 614   //编码器
+#define PITCH_OFFSET 5472 //编码器
 
 //限幅
 #define MAX_ABSOULATE_YAW 6.0f
@@ -137,7 +137,7 @@ extern "C"
 #define MAX_RELATIVE_YAW 6.0f
 #define MIN_RELATIVE_YAW -6.0f
 
-#define MAX_RELATIVE_PITCH 0.3f
+#define MAX_RELATIVE_PITCH 0.42f
 #define MIN_RELATIVE_PITCH -0.45f
 
 
@@ -212,7 +212,6 @@ typedef struct
     //kp, ki kd为可调参数
     //ref set 为绘制的曲线,分别是测量值,设定值
     //使用stm stdio进行调试 直接输入下列的变量 注意修改debug模式的宏定义
-
     fp32 yaw_speed_kp;
     fp32 yaw_speed_ki;
     fp32 yaw_speed_kd;
@@ -266,7 +265,7 @@ public:
     Gimbal_motor gimbal_yaw_motor; //云台yaw电机数据
     Gimbal_motor gimbal_pitch_motor; //云台pitch电机数据
 
-    //IMU Gimbal_imu;                                                 //陀螺仪接口
+    //陀螺仪接口
     const fp32 *gimbal_INT_angle_point; //获取陀螺仪角度值
     const fp32 *gimbal_INT_gyro_point;  //获取陀螺仪角速度值
     uint8_t step;
@@ -284,7 +283,7 @@ public:
     void motor_raw_angle_control(Gimbal_motor *gimbal_motor);        //云台直接电流计算
     void motor_absolute_angle_control(Gimbal_motor *gimbal_motor);   //云台陀螺仪模式电流计算
     void motor_relative_angle_control(Gimbal_motor *gimbal_motor);   //云台编码器模式电流计算
-                                                                   /***************************(C)  MOTOR control *******************************/
+    /***************************(C)  MOTOR control *******************************/
 
     /***************************(C) GIMBAL control *******************************/
     void behavour_set(); //设置云台行为状态机
@@ -300,13 +299,10 @@ public:
     static fp32 motor_ecd_to_angle_change(uint16_t ecd, uint16_t offset_ecd);
 
     /***************************(C) GIMBAL CALI *******************************/
-
     gimbal_step_cali_t gimbal_cali;
     void set_cali_gimbal_hook(const uint16_t yaw_offset, const uint16_t pitch_offset, const fp32 max_yaw, const fp32 min_yaw, const fp32 max_pitch, const fp32 min_pitch);
     
     void set_hand_operator_gimbal_hook(const uint16_t yaw_offset, const uint16_t pitch_offset, const fp32 max_yaw, const fp32 min_yaw, const fp32 max_pitch, const fp32 min_pitch);
-
-    
     
     //云台校准设置
     bool_t cmd_cali_gimbal_hook(uint16_t *yaw_offset, uint16_t *pitch_offset, fp32 *max_yaw, fp32 *min_yaw, fp32 *max_pitch, fp32 *min_pitch);
@@ -315,12 +311,12 @@ public:
     //云台校准计算
     /***************************(C) GIMBAL CALI *******************************/
 
-    bool_t gimbal_cmd_to_shoot_stop(void);
 };
 
 
 void gimbal_debug();
 
+bool_t gimbal_cmd_to_shoot_stop(void);
 
 extern Gimbal gimbal;
 

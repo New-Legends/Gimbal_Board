@@ -1,4 +1,5 @@
 #include "Gimbal.h"
+#include "Shoot.h"
 #include "Communicate.h"
 #include "INS.h"
 #include "detect_task.h"
@@ -8,7 +9,6 @@
 #include "Motor.h"
 #include "vision.h"
 
-// motor enconde value format, range[0-8191]
 //电机编码值规整 0—8191
 #define ecd_format(ecd)         \
     {                           \
@@ -37,7 +37,7 @@
     }
 
 //自瞄相关数据
-bool_t auto_switch = 1; //自瞄开关
+bool_t auto_switch = 0; //自瞄开关
 
 //云台模块 对象
 Gimbal gimbal;
@@ -45,7 +45,6 @@ Gimbal gimbal;
 //云台debug结构体
 gimbal_debug_data_t gimbal_debug_data;
 
-uint8_t temp_turn_180 = 0;
 /**
  * @brief          初始化云台
  * @Author         summerpray
@@ -174,7 +173,6 @@ void Gimbal::feedback_update()
     }
     gimbal_pitch_motor.last_gimbal_motor_mode = gimbal_pitch_motor.gimbal_motor_mode;
 
-    // TODO 此处由于读取指针出现问题,改为使用数组方式读取,后续可以改进
     //云台数据更新
     // yaw电机
     /*------------yaw电机数据更新---------------------------------------  */
@@ -237,7 +235,6 @@ void Gimbal::behaviour_mode_set()
     //云台行为状态机设置
     behavour_set();
 
-    // accoring to gimbal_behaviour, set motor control mode
     //根据云台行为状态机设置电机状态机
     if (gimbal_behaviour_mode == GIMBAL_ZERO_FORCE)
     {
@@ -374,6 +371,12 @@ void Gimbal::behavour_set()
     {
         gimbal_imu_open_flag = 1;
     }
+
+    // //当弹仓开启时,云台静止
+    // if (shoot_cmd_to_gimbal_stop())
+    // {
+    //     gimbal_behaviour_mode = GIMBAL_MOTIONLESS;
+    // }
 }
 
 /**
@@ -410,8 +413,6 @@ void Gimbal::set_control()
 
     behaviour_control_set(&add_yaw_angle, &add_pitch_angle);
 
-    // TODO:这么一想好像yaw用陀螺仪的时候pitch用编码器还是得分开写
-
     // yaw电机模式控制
     if (gimbal_yaw_motor.gimbal_motor_mode == GIMBAL_MOTOR_RAW)
     {
@@ -446,7 +447,6 @@ void Gimbal::set_control()
         relative_angle_limit(&gimbal_pitch_motor, add_pitch_angle);
     }
 
-    // TODO:但其实吧 写一块好像也行
 }
 
 /**
@@ -544,7 +544,7 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
     }
 
 
-#if SHOOT_LASER_OPEN
+#if GIMBAL_VISION_OPEN
 
     // TODO 暂时未写
     //  //单击右键 打开自瞄 再次单击 关闭自瞄
@@ -764,12 +764,17 @@ void Gimbal::output()
     gimbal_pitch_motor.current_give = (int16_t)(gimbal_pitch_motor.current_set);
 #endif
 
+    if (gimbal_behaviour_mode == GIMBAL_ZERO_FORCE)
+    {
+        gimbal_yaw_motor.current_give = 0;
+        gimbal_pitch_motor.current_give = 0;
+    }
+
 //电流控制
 #if GIMBAL_YAW_MOTOR_HAVE_CURRENT
     ;
 #else
     gimbal_yaw_motor.current_give = 0;
-
 #endif
 
 #if GIMBAL_PITCH_MOTOR_HAVE_CURRENT
@@ -1111,9 +1116,9 @@ bool_t Gimbal::cmd_cali_gimbal_hook(uint16_t *yaw_offset, uint16_t *pitch_offset
  * @retval         1: no move 0:normal
  */
 
-bool_t Gimbal::gimbal_cmd_to_shoot_stop(void)
+bool_t gimbal_cmd_to_shoot_stop(void)
 {
-    if (gimbal_behaviour_mode == GIMBAL_INIT || gimbal_behaviour_mode == GIMBAL_CALI || gimbal_behaviour_mode == GIMBAL_ZERO_FORCE)
+    if (gimbal.gimbal_behaviour_mode == GIMBAL_INIT || gimbal.gimbal_behaviour_mode == GIMBAL_CALI || gimbal.gimbal_behaviour_mode == GIMBAL_ZERO_FORCE)
     {
         return 1;
     }
