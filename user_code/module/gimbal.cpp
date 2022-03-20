@@ -69,7 +69,15 @@ void Gimbal::init()
     /*----------------------yaw电机数据------------------------------*/
     gimbal_yaw_motor.init(can_receive.get_gimbal_motor_measure_point(YAW));
 
-    //初始化pid
+    // //旧 初始化pid
+    // fp32 yaw_speed_pid_parm[5] = {YAW_SPEED_PID_KP, YAW_SPEED_PID_KI, YAW_SPEED_PID_KD, YAW_SPEED_PID_MAX_IOUT, YAW_SPEED_PID_MAX_OUT};
+    // gimbal_yaw_motor.speed_pid.init(PID_SPEED, yaw_speed_pid_parm, &gimbal_yaw_motor.speed, &gimbal_yaw_motor.speed_set, NULL);
+    // fp32 yaw_absoulute_angle_pid_parm[5] = {YAW_GYRO_ABSOLUTE_PID_KP, YAW_GYRO_ABSOLUTE_PID_KI, YAW_GYRO_ABSOLUTE_PID_KD, YAW_GYRO_ABSOLUTE_PID_MAX_IOUT, YAW_GYRO_ABSOLUTE_PID_MAX_OUT};
+    // gimbal_yaw_motor.absolute_angle_pid.init(PID_ANGLE, yaw_absoulute_angle_pid_parm, &gimbal_yaw_motor.absolute_angle, &gimbal_yaw_motor.absolute_angle_set, 0);
+    // fp32 yaw_relative_angle_pid_parm[5] = {YAW_ENCODE_RELATIVE_PID_KP, YAW_ENCODE_RELATIVE_PID_KI, YAW_ENCODE_RELATIVE_PID_KD, YAW_ENCODE_RELATIVE_PID_MAX_IOUT, YAW_ENCODE_RELATIVE_PID_MAX_OUT};
+    // gimbal_yaw_motor.relative_angle_pid.init(PID_ANGLE, yaw_relative_angle_pid_parm, &gimbal_yaw_motor.relative_angle, &gimbal_yaw_motor.relative_angle_set, 0);
+
+    //新 初始化pid
     fp32 yaw_speed_pid_parm[5] = {YAW_SPEED_PID_KP, YAW_SPEED_PID_KI, YAW_SPEED_PID_KD, YAW_SPEED_PID_MAX_IOUT, YAW_SPEED_PID_MAX_OUT};
     gimbal_yaw_motor.speed_pid.init(PID_SPEED, yaw_speed_pid_parm, &gimbal_yaw_motor.speed, &gimbal_yaw_motor.speed_set, NULL);
     fp32 yaw_absoulute_angle_pid_parm[5] = {YAW_GYRO_ABSOLUTE_PID_KP, YAW_GYRO_ABSOLUTE_PID_KI, YAW_GYRO_ABSOLUTE_PID_KD, YAW_GYRO_ABSOLUTE_PID_MAX_IOUT, YAW_GYRO_ABSOLUTE_PID_MAX_OUT};
@@ -94,14 +102,22 @@ void Gimbal::init()
     /*----------------------pitch电机数据------------------------------*/
     gimbal_pitch_motor.init(can_receive.get_gimbal_motor_measure_point(PITCH));
 
-    // //初始化pid
+    // //旧 初始化pid
+    // fp32 pitch_speed_pid_parm[5] = {PITCH_SPEED_PID_KP, PITCH_SPEED_PID_KI, PITCH_SPEED_PID_KD, PITCH_SPEED_PID_MAX_IOUT, PITCH_SPEED_PID_MAX_OUT};
+    // gimbal_pitch_motor.speed_pid.init(PID_SPEED, pitch_speed_pid_parm, &gimbal_pitch_motor.speed, &gimbal_pitch_motor.speed_set, NULL);
+    // fp32 pitch_absoulute_angle_pid_parm[5] = {PITCH_GYRO_ABSOLUTE_PID_KP, PITCH_GYRO_ABSOLUTE_PID_KI, PITCH_GYRO_ABSOLUTE_PID_KD, PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT, PITCH_GYRO_ABSOLUTE_PID_MAX_OUT};
+    // gimbal_pitch_motor.absolute_angle_pid.init(PID_ANGLE, pitch_absoulute_angle_pid_parm, &gimbal_pitch_motor.absolute_angle, &gimbal_pitch_motor.absolute_angle_set, 0);
+    // fp32 pitch_relative_angle_pid_parm[5] = {PITCH_ENCODE_RELATIVE_PID_KP, PITCH_ENCODE_RELATIVE_PID_KI, PITCH_ENCODE_RELATIVE_PID_KD, PITCH_ENCODE_RELATIVE_PID_MAX_IOUT, PITCH_ENCODE_RELATIVE_PID_MAX_OUT};
+    // gimbal_pitch_motor.relative_angle_pid.init(PID_ANGLE, pitch_relative_angle_pid_parm, &gimbal_pitch_motor.relative_angle, &gimbal_pitch_motor.relative_angle_set, 0);
+
+    //  新 初始化pid
     fp32 pitch_speed_pid_parm[5] = {PITCH_SPEED_PID_KP, PITCH_SPEED_PID_KI, PITCH_SPEED_PID_KD, PITCH_SPEED_PID_MAX_IOUT, PITCH_SPEED_PID_MAX_OUT};
     gimbal_pitch_motor.speed_pid.init(PID_SPEED, pitch_speed_pid_parm, &gimbal_pitch_motor.speed, &gimbal_pitch_motor.speed_set, NULL);
     fp32 pitch_absoulute_angle_pid_parm[5] = {PITCH_GYRO_ABSOLUTE_PID_KP, PITCH_GYRO_ABSOLUTE_PID_KI, PITCH_GYRO_ABSOLUTE_PID_KD, PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT, PITCH_GYRO_ABSOLUTE_PID_MAX_OUT};
     gimbal_pitch_motor.absolute_angle_pid.init(PID_ANGLE, pitch_absoulute_angle_pid_parm, &gimbal_pitch_motor.absolute_angle, &gimbal_pitch_motor.absolute_angle_set, 0);
     fp32 pitch_relative_angle_pid_parm[5] = {PITCH_ENCODE_RELATIVE_PID_KP, PITCH_ENCODE_RELATIVE_PID_KI, PITCH_ENCODE_RELATIVE_PID_KD, PITCH_ENCODE_RELATIVE_PID_MAX_IOUT, PITCH_ENCODE_RELATIVE_PID_MAX_OUT};
     gimbal_pitch_motor.relative_angle_pid.init(PID_ANGLE, pitch_relative_angle_pid_parm, &gimbal_pitch_motor.relative_angle, &gimbal_pitch_motor.relative_angle_set, 0);
-
+    
     gimbal_pitch_motor.speed_pid.pid_clear();
     gimbal_pitch_motor.absolute_angle_pid.pid_clear();
     gimbal_pitch_motor.relative_angle_pid.pid_clear();
@@ -516,10 +532,14 @@ void Gimbal::gimbal_init_control(fp32 *yaw, fp32 *pitch)
     {
         return;
     }
+    //旧 解算
+    *pitch = (INIT_PITCH_SET - gimbal_pitch_motor.relative_angle) * GIMBAL_INIT_PITCH_SPEED;
+    *yaw = (INIT_YAW_SET - gimbal_yaw_motor.relative_angle) * GIMBAL_INIT_YAW_SPEED;
 
-        *pitch = (INIT_PITCH_SET - gimbal_pitch_motor.relative_angle) * GIMBAL_INIT_PITCH_SPEED;
-        *yaw = (INIT_YAW_SET - gimbal_yaw_motor.relative_angle) * GIMBAL_INIT_YAW_SPEED;
-    
+    // //新 解算
+    // *pitch = (INIT_PITCH_SET - gimbal_pitch_motor.relative_angle) ;
+    // *yaw = (INIT_YAW_SET - gimbal_yaw_motor.relative_angle) ;
+
 }
 
 
@@ -694,7 +714,7 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
                 if(pitch_patrol_dir == CCW)  //yaw轴逆时针旋转
                 {
                     
-                    if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.01f)
+                    if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.05f)
                     {
                         pitch_patrol_dir =CW;
                     }
@@ -703,7 +723,7 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
                 else if(pitch_patrol_dir == CW)  //yaw轴顺时针旋转
                 {
                     
-                    if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.01f)
+                    if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.03f)
                     {
                         pitch_patrol_dir = CCW;
                     }
@@ -736,7 +756,7 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
             if(pitch_patrol_dir == CCW)  //pitch轴逆时针旋转
             {
                 
-                if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.05f)
+                if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.03f)
                 {
                     pitch_patrol_dir =CW;
                 }
@@ -745,7 +765,7 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
             else if(pitch_patrol_dir == CW)  //pitch轴顺时针旋转
             {
                 
-                if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.03f)
+                if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.05f)
                 {
                     pitch_patrol_dir = CCW;
 
@@ -952,11 +972,11 @@ void Gimbal::absolute_angle_limit(Gimbal_motor *gimbal_motor, fp32 add)
 
 void Gimbal::relative_angle_limit(Gimbal_motor *gimbal_motor, fp32 add)
 {
-    //  新解算
+    // //  新解算
 
     // gimbal_motor->new_set = 0;
-    // gimbal_motor->new_angle = -add;  //目标减当前为正，增加角度
-    //是否超过最大 最小值
+    // gimbal_motor->new_angle = -add ;  //目标减当前为正，增加角度
+    // //是否超过最大 最小值
     // if (gimbal_motor->relative_angle + add > gimbal_motor->max_relative_angle)
     // {
     //     gimbal_motor->new_angle = gimbal_motor->relative_angle - gimbal_motor->max_relative_angle;
@@ -965,6 +985,8 @@ void Gimbal::relative_angle_limit(Gimbal_motor *gimbal_motor, fp32 add)
     // {
     //     gimbal_motor->new_angle = gimbal_motor->relative_angle - gimbal_motor->min_relative_angle;
     // }
+
+    //旧解算
     gimbal_motor->relative_angle_set += add;
     //是否超过最大 最小值
     if (gimbal_motor->relative_angle_set > gimbal_motor->max_relative_angle)

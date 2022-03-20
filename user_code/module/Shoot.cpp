@@ -272,7 +272,7 @@ void Shoot::set_mode()
         last_s = shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL];
     }
     else if(shoot_control_way == AUTO){
-        //shoot_mode = SHOOT_READY_FRIC;
+        shoot_mode = SHOOT_READY_FRIC;
         //摩擦轮速度达到一定值,才可开启拨盘  为了便于测试,这里至少需要一个摩擦轮电机达到拨盘启动要求就可以开启拨盘
         if(shoot_mode == SHOOT_READY_FRIC &&(abs_int16(fric_motor[LEFT_FRIC].motor_measure->speed_rpm)>abs_int16(fric_motor[LEFT_FRIC].require_speed) || abs_int16(fric_motor[RIGHT_FRIC].motor_measure->speed_rpm)>abs_int16(fric_motor[RIGHT_FRIC].require_speed)))
         {
@@ -414,7 +414,7 @@ void Shoot::feedback_update()
     cover_motor.angle = (cover_motor.ecd_count * ECD_RANGE + cover_motor.motor_measure->ecd) * MOTOR_ECD_TO_ANGLE;
    
    
-    //TODO 此处没有安装微动开关,暂时把key设置为1
+    //TODO 此处没有安装微动开关,暂时把key设置为0
     //微动开关 
     key = 0;
     //鼠标按键
