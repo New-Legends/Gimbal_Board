@@ -139,7 +139,7 @@ extern "C"
 #define ECD_RANGE 8191
 
 //限幅 需要自己手动校准
-#define YAW_OFFSET 614   //编码器
+#define YAW_OFFSET 3899   //编码器
 #define PITCH_OFFSET 5472 //编码器
 
 //限幅
