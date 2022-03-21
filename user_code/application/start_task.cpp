@@ -72,7 +72,7 @@ void Task_start(void) {
 
     xTaskCreate(calibrate_task, "calibrate_task", Normal_Stack_Size, NULL, PriorityHigh, &cali_task_handle);
 
-    xTaskCreate(detect_task, "detect_task", Normal_Stack_Size, NULL, PriorityHigh, &detect_task_handle);
+    // xTaskCreate(detect_task, "detect_task", Normal_Stack_Size, NULL, PriorityHigh, &detect_task_handle);
 
     xTaskCreate(interact_task, "interact_task", Normal_Stack_Size, NULL, PriorityNormal, &interact_task_handle);
 }

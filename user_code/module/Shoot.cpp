@@ -63,11 +63,6 @@ uint8_t fric_speed_grade;
 
 Shoot shoot;
 
-uint8_t press_ctrl = 0;
-uint8_t signal_press_z = 0;
-uint8_t signal_press_x = 0;
-uint8_t signal_press_g = 0;
-
 
 /**
   * @brief          射击初始化，初始化PID，遥控器指针，电机指针
@@ -173,10 +168,12 @@ void Shoot::set_mode()
         shoot_mode = SHOOT_STOP;
     }
 
+    static uint16_t last_fric_key_value = 0;
 
     //处于中档， 可以使用键盘开启/关闭摩擦轮
-    if (switch_is_mid(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && KEY_SHOOT_FRIC)
-    {   if (shoot_mode == SHOOT_STOP)
+    if (switch_is_mid(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && if_key_singal_pessed(shoot_rc->key.v, last_fric_key_value, KEY_PRESSED_SHOOT_FRIC))
+    {
+        if (shoot_mode == SHOOT_STOP)
         {
             shoot_mode = SHOOT_READY_FRIC;
         }
@@ -185,6 +182,10 @@ void Shoot::set_mode()
             shoot_mode = SHOOT_STOP;
         }
     }
+
+    last_fric_key_value = shoot_rc->key.v;
+
+
     //为了便于测试,右按键为下时关闭摩擦轮
     if (switch_is_down(shoot_rc->rc.s[0]))
     {
@@ -235,7 +236,7 @@ void Shoot::set_mode()
     if (shoot_mode > SHOOT_READY_FRIC)
     {
         //鼠标长按一直进入射击状态 保持连发
-        if ((press_l_time == PRESS_LONG_TIME) || (press_r_time == PRESS_LONG_TIME) || (rc_s_time == RC_S_LONG_TIME))
+        if ((press_l_time == PRESS_LONG_TIME)  || (rc_s_time == RC_S_LONG_TIME))
         {
             shoot_mode = SHOOT_CONTINUE_BULLET;
         }
@@ -260,8 +261,9 @@ void Shoot::set_mode()
     //     shoot_mode = SHOOT_STOP;
     // }
 
+    static uint16_t last_cover_key_value = 0;
 
-    if(KEY_SHOOT_COVER && cover_mode == COVER_OPEN_DONE)//单击R并且开启完毕
+    if (if_key_singal_pessed(shoot_rc->key.v, last_cover_key_value, KEY_PRESSED_SHOOT_COVER) && cover_mode == COVER_OPEN_DONE) //单击R并且开启完毕
     {
         cover_mode = COVER_CLOSE;
     }
@@ -270,6 +272,8 @@ void Shoot::set_mode()
     {
         cover_mode = COVER_OPEN;
     }
+
+    last_cover_key_value = shoot_rc->key.v;
 
     last_s = shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL];
 }
@@ -371,7 +375,7 @@ void Shoot::feedback_update()
 
 
     last_press_R = press_R;
-    press_R = if_key_pessed(shoot_rc,'R');
+    press_R = if_key_pessed(shoot_rc->key.v,KEY_PRESSED_SHOOT_COVER);
 
 
     //长按计时
@@ -521,22 +525,18 @@ void Shoot::cooling_ctrl()
     //保留被强制降速前的射频
     static uint8_t last_grigger_speed_grade = 1;
 
-    press_ctrl = ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_CTRL) != 0);
-    signal_press_z = ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_Z) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_OFFSET_Z) != 0);
-    signal_press_x = ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_X) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_OFFSET_X) != 0);
-    signal_press_g = KEY_SHOOT_FRIC;
-
-    //手动调整射频
-#if SHOOT_SET_TRIGGER_SPEED_BY_HAND
-    if (KEY_SHOOT_TRIGGER_SPEED_UP && grigger_speed_grade < 5)
-    {
-        grigger_speed_grade++;
-    }
-    else if (KEY_SHOOT_TRIGGER_SPEED_DOWN && grigger_speed_grade > 0)
-    {
-        grigger_speed_grade--;
-    }
-#endif
+//TODO 暂时认为没有必要
+//     //手动调整射频
+// #if SHOOT_SET_TRIGGER_SPEED_BY_HAND
+//     if (KEY_SHOOT_TRIGGER_SPEED_UP && grigger_speed_grade < 5)
+//     {
+//         grigger_speed_grade++;
+//     }
+//     else if (KEY_SHOOT_TRIGGER_SPEED_DOWN && grigger_speed_grade > 0)
+//     {
+//         grigger_speed_grade--;
+//     }
+// #endif
 
     //离线监测暂时没有添加
     if (toe_is_error(REFEREE_TOE))
@@ -718,28 +718,28 @@ void Shoot::output()
 */
 void Shoot::trigger_motor_turn_back()
 {
-    if (block_time < BLOCK_TIME)
-    {
-        trigger_motor.speed_set = trigger_motor.speed_set;
-    }
-    else
-    {
-        trigger_motor.speed_set = -trigger_motor.speed_set;
-    }
+    // if (block_time < BLOCK_TIME)
+    // {
+    //     trigger_motor.speed_set = trigger_motor.speed_set;
+    // }
+    // else
+    // {
+    //     trigger_motor.speed_set = -trigger_motor.speed_set;
+    // }
 
-    if (fabs(trigger_motor.speed) < BLOCK_TRIGGER_SPEED && block_time < BLOCK_TIME)
-    {
-        block_time++;
-        reverse_time = 0;
-    }
-    else if (block_time == BLOCK_TIME && reverse_time < REVERSE_TIME)
-    {
-        reverse_time++;
-    }
-    else
-    {
-        block_time = 0;
-    }
+    // if (fabs(trigger_motor.speed) < BLOCK_TRIGGER_SPEED && block_time < BLOCK_TIME)
+    // {
+    //     block_time++;
+    //     reverse_time = 0;
+    // }
+    // else if (block_time == BLOCK_TIME && reverse_time < REVERSE_TIME)
+    // {
+    //     reverse_time++;
+    // }
+    // else
+    // {
+    //     block_time = 0;
+    // }
 }
 
 /**

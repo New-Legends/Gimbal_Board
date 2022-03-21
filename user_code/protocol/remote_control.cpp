@@ -25,7 +25,6 @@ RC_ctrl_t *Remote_control::get_last_remote_control_point()
 
 
 
-uint8_t last_rc_delay = 0;
 /**
   * @brief          遥控器协议解析
   * @param[in]      sbus_rx_buf[num]: 原生数据指针
@@ -39,7 +38,9 @@ void Remote_control::unpack(uint8_t num)
         return;
     }
 
+    //保留上一次遥控器值
     last_rc_ctrl = rc_ctrl;
+
 
     rc_ctrl.rc.ch[0] = (sbus_rx_buf[num][0] | (sbus_rx_buf[num][1] << 8)) & 0x07ff;        //!< Channel 0
     rc_ctrl.rc.ch[1] = ((sbus_rx_buf[num][1] >> 3) | (sbus_rx_buf[num][2] << 5)) & 0x07ff; //!< Channel 1
@@ -168,88 +169,77 @@ bool_t if_mouse_pessed(const RC_ctrl_t *_rc_ctrl, char mouse_num)
     return ans;
 }
 
-//是否单击鼠标
-bool_t if_mouse_singal_pessed(const RC_ctrl_t *_rc_ctrl, const RC_ctrl_t *_last_rc_ctrl, char mouse_num)
-{
-    bool_t ans = FALSE;
-    if (mouse_num == 'L')
-        ans = if_mouse_pessed(_rc_ctrl, 'L') && if_mouse_pessed(_last_rc_ctrl, 'L');
-    else if (mouse_num == 'R')
-        ans = if_mouse_pessed(_rc_ctrl, 'R') && if_mouse_pessed(_last_rc_ctrl, 'R');
-
-    return ans;
-}
 
 //是否按下对应按键
-bool_t if_key_pessed(const RC_ctrl_t *_rc_ctrl, char key_num)
+bool_t if_key_pessed(uint16_t key_value, char key_num)
 {
     bool_t ans = FALSE;
 
     switch (key_num)
     {
     case 'W':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_W) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_W;
+        break;
 
     case 'S':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_S) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_S;
+        break;
 
     case 'A':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_A) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_A;
+        break;
 
     case 'D':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_D) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_D;
+        break;
 
     case 'Q':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_Q) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_Q;
+        break;
 
     case 'E':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_E) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_E;
+        break;
 
     case 'G':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_G) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_G;
+        break;
 
     case 'X':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_X) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_X;
+        break;
 
     case 'Z':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_Z) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_Z;
+        break;
 
     case 'C':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_C) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_C;
+        break;
 
     case 'B':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_B) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_B;
+        break;
 
     case 'V':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_V) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_V;
+        break;
 
     case 'F':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_F) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_F;
+        break;
 
     case 'R':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_R) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_R;
+        break;
 
     case '$':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_CTRL) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_CTRL;
+        break;
 
     case '!':
-                ans =  ( (_rc_ctrl->key.v & KEY_PRESSED_OFFSET_SHIFT) != 0);
-                break;
+        ans = key_value & KEY_PRESSED_OFFSET_SHIFT;
+        break;
 
     default:
         break;
@@ -259,79 +249,7 @@ bool_t if_key_pessed(const RC_ctrl_t *_rc_ctrl, char key_num)
 }
 
 //是否单击对于按键
-bool_t if_key_singal_pessed(const RC_ctrl_t *_rc_ctrl, const RC_ctrl_t *_last_rc_ctrl, char key_num)
+bool_t if_key_singal_pessed(uint16_t key_value, uint16_t last_key_value, char key_num)
 {
-    bool_t ans = FALSE;
-
-    switch (key_num)
-    {
-    case 'W':
-        ans = if_key_pessed(_rc_ctrl, 'W') && !if_key_pessed(_last_rc_ctrl, 'W');
-        break;
-
-    case 'S':
-        ans = if_key_pessed(_rc_ctrl, 'S') && !if_key_pessed(_last_rc_ctrl, 'S');
-        break;
-
-    case 'A':
-        ans = if_key_pessed(_rc_ctrl, 'A') && !if_key_pessed(_last_rc_ctrl, 'A');
-        break;
-
-    case 'D':
-        ans = if_key_pessed(_rc_ctrl, 'D') && !if_key_pessed(_last_rc_ctrl, 'D');
-        break;
-
-    case 'Q':
-        ans = if_key_pessed(_rc_ctrl, 'Q') && !if_key_pessed(_last_rc_ctrl, 'Q');
-        break;
-
-    case 'E':
-        ans = if_key_pessed(_rc_ctrl, 'E') && !if_key_pessed(_last_rc_ctrl, 'E');
-        break;
-
-    case 'G':
-        ans = if_key_pessed(_rc_ctrl, 'G') && !if_key_pessed(_last_rc_ctrl, 'G');
-        break;
-
-    case 'X':
-        ans = if_key_pessed(_rc_ctrl, 'X') && !if_key_pessed(_last_rc_ctrl, 'X');
-        break;
-
-    case 'Z':
-        ans = if_key_pessed(_rc_ctrl, 'Z') && !if_key_pessed(_last_rc_ctrl, 'Z');
-        break;
-
-    case 'C':
-        ans = if_key_pessed(_rc_ctrl, 'C') && !if_key_pessed(_last_rc_ctrl, 'C');
-        break;
-
-    case 'B':
-        ans = if_key_pessed(_rc_ctrl, 'B') && !if_key_pessed(_last_rc_ctrl, 'B');
-        break;
-
-    case 'V':
-        ans = if_key_pessed(_rc_ctrl, 'V') && !if_key_pessed(_last_rc_ctrl, 'V');
-        break;
-
-    case 'F':
-        ans = if_key_pessed(_rc_ctrl, 'F') && !if_key_pessed(_last_rc_ctrl, 'F');
-        break;
-
-    case 'R':
-        ans = if_key_pessed(_rc_ctrl, 'R') && !if_key_pessed(_last_rc_ctrl, 'R');
-        break;
-
-    case '$':
-        ans = if_key_pessed(_rc_ctrl, '$') && !if_key_pessed(_last_rc_ctrl, '$');
-        break;
-
-    case '!':
-        ans = if_key_pessed(_rc_ctrl, '!') && !if_key_pessed(_last_rc_ctrl, '!');
-        break;
-
-    default:
-        break;
-    }
-
-    return ans;
+    return if_key_pessed(key_value, key_num) && !if_key_pessed(last_key_value, key_num);
 }

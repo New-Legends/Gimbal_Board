@@ -150,7 +150,7 @@ public:
     void INS_Info_Get(void);                                        //ÍÓÂÝÒÇÊý¾Ý´«Êä
 };
 
-extern INS imu;
+
 
 /**
   * @brief          calculate gyro zero drift
@@ -201,6 +201,6 @@ static void imu_temp_control(fp32 temp);
  */
 static void imu_cmd_spi_dma(void);
 
-
+extern INS imu;
 
 #endif

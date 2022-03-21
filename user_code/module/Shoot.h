@@ -59,9 +59,9 @@
 //摩擦轮电机PID
 #define FRIC_SPEED_PID_KP 4000.0f //1800
 #define FRIC_SPEED_PID_KI 0.4f    //0.5
-#define FRIC_SPEED_PID_KD 2.0f    //2.0
+#define FRIC_SPEED_PID_KD 4.0f    //2.0
 #define FRIC_PID_MAX_IOUT 200.0f
-#define FRIC_PID_MAX_OUT 2000.0f
+#define FRIC_PID_MAX_OUT 6000.0f
 
 #define FRIC_REQUIRE_SPEED_RMP 500.0f
 #define FRIC_MAX_SPEED_RMP 4000.0f
@@ -125,15 +125,11 @@
 
 
 /*-------------------按键-------------------*/
-//摩擦轮开关
-#define KEY_SHOOT_FRIC if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_FRIC)
 
-//弹仓电机开关
-#define KEY_SHOOT_COVER if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_COVER)
-
-//射频手动调整:
-#define KEY_SHOOT_TRIGGER_SPEED_UP if_key_pessed(shoot_rc, 'CTRL') && if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_TRIGGER_SPEED_UP)
-#define KEY_SHOOT_TRIGGER_SPEED_DOWN if_key_pessed(shoot_rc, 'CTRL') && if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_TRIGGER_SPEED_DOWN)
+//TODO 暂时认为没有添加的必要
+// //射频手动调整:
+// #define KEY_SHOOT_TRIGGER_SPEED_UP if_key_pessed(shoot_rc, 'CTRL') && if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_TRIGGER_SPEED_UP)
+// #define KEY_SHOOT_TRIGGER_SPEED_DOWN if_key_pessed(shoot_rc, 'CTRL') && if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_TRIGGER_SPEED_DOWN)
 
 
 typedef enum

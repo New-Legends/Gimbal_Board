@@ -494,8 +494,8 @@ ARM Macro Assembler    Page 8
 ]
   185 00000000                 IMPORT           SystemInit
   186 00000000                 IMPORT           __main
-  187 00000000         
-  188 00000000 4809            LDR              R0, =SystemInit
+  187 00000000         p
+  188 00000000 4809    P       LDR              R0, =SystemInit
   189 00000002 4780            BLX              R0
   190 00000004 4809            LDR              R0, =__main
   191 00000006 4700            BX               R0
@@ -1565,9 +1565,23 @@ Symbol: OTG_HS_WKUP_IRQHandler
       At line 168 in file startup_stm32f407xx.s
       At line 316 in file startup_stm32f407xx.s
 
+P 00000000
+
+Symbol: P
+   Definitions
+      At line 188 in file startup_stm32f407xx.s
+   Uses
+      None
+Comment: P unused
 PVD_IRQHandler 0000001A
 
 Symbol: PVD_IRQHandler
+
+
+
+ARM Macro Assembler    Page 10 Alphabetic symbol ordering
+Relocatable symbols
+
    Definitions
       At line 323 in file startup_stm32f407xx.s
    Uses
@@ -1575,12 +1589,6 @@ Symbol: PVD_IRQHandler
       At line 241 in file startup_stm32f407xx.s
 
 PendSV_Handler 00000016
-
-
-
-
-ARM Macro Assembler    Page 10 Alphabetic symbol ordering
-Relocatable symbols
 
 Symbol: PendSV_Handler
    Definitions
@@ -1634,6 +1642,12 @@ Symbol: SDIO_IRQHandler
       At line 141 in file startup_stm32f407xx.s
       At line 289 in file startup_stm32f407xx.s
 
+
+
+ARM Macro Assembler    Page 11 Alphabetic symbol ordering
+Relocatable symbols
+
+
 SPI1_IRQHandler 0000001A
 
 Symbol: SPI1_IRQHandler
@@ -1641,12 +1655,6 @@ Symbol: SPI1_IRQHandler
       At line 357 in file startup_stm32f407xx.s
    Uses
       At line 127 in file startup_stm32f407xx.s
-
-
-
-ARM Macro Assembler    Page 11 Alphabetic symbol ordering
-Relocatable symbols
-
       At line 275 in file startup_stm32f407xx.s
 
 SPI2_IRQHandler 0000001A
@@ -1698,6 +1706,12 @@ TIM1_BRK_TIM9_IRQHandler 0000001A
 
 Symbol: TIM1_BRK_TIM9_IRQHandler
    Definitions
+
+
+
+ARM Macro Assembler    Page 12 Alphabetic symbol ordering
+Relocatable symbols
+
       At line 346 in file startup_stm32f407xx.s
    Uses
       At line 116 in file startup_stm32f407xx.s
@@ -1706,12 +1720,6 @@ Symbol: TIM1_BRK_TIM9_IRQHandler
 TIM1_CC_IRQHandler 0000001A
 
 Symbol: TIM1_CC_IRQHandler
-
-
-
-ARM Macro Assembler    Page 12 Alphabetic symbol ordering
-Relocatable symbols
-
    Definitions
       At line 349 in file startup_stm32f407xx.s
    Uses
@@ -1763,6 +1771,12 @@ Symbol: TIM4_IRQHandler
       At line 122 in file startup_stm32f407xx.s
       At line 270 in file startup_stm32f407xx.s
 
+
+
+
+ARM Macro Assembler    Page 13 Alphabetic symbol ordering
+Relocatable symbols
+
 TIM5_IRQHandler 0000001A
 
 Symbol: TIM5_IRQHandler
@@ -1771,12 +1785,6 @@ Symbol: TIM5_IRQHandler
    Uses
       At line 142 in file startup_stm32f407xx.s
       At line 290 in file startup_stm32f407xx.s
-
-
-
-ARM Macro Assembler    Page 13 Alphabetic symbol ordering
-Relocatable symbols
-
 
 TIM6_DAC_IRQHandler 0000001A
 
@@ -1828,6 +1836,12 @@ TIM8_UP_TIM13_IRQHandler 0000001A
 Symbol: TIM8_UP_TIM13_IRQHandler
    Definitions
       At line 366 in file startup_stm32f407xx.s
+
+
+
+ARM Macro Assembler    Page 14 Alphabetic symbol ordering
+Relocatable symbols
+
    Uses
       At line 136 in file startup_stm32f407xx.s
       At line 284 in file startup_stm32f407xx.s
@@ -1836,12 +1850,6 @@ UART4_IRQHandler 0000001A
 
 Symbol: UART4_IRQHandler
    Definitions
-
-
-
-ARM Macro Assembler    Page 14 Alphabetic symbol ordering
-Relocatable symbols
-
       At line 374 in file startup_stm32f407xx.s
    Uses
       At line 144 in file startup_stm32f407xx.s
@@ -1894,18 +1902,18 @@ Symbol: USART6_IRQHandler
 
 UsageFault_Handler 00000010
 
+
+
+ARM Macro Assembler    Page 15 Alphabetic symbol ordering
+Relocatable symbols
+
+
 Symbol: UsageFault_Handler
    Definitions
       At line 216 in file startup_stm32f407xx.s
    Uses
       At line 80 in file startup_stm32f407xx.s
       At line 217 in file startup_stm32f407xx.s
-
-
-
-
-ARM Macro Assembler    Page 15 Alphabetic symbol ordering
-Relocatable symbols
 
 WWDG_IRQHandler 0000001A
 
@@ -1924,7 +1932,15 @@ Symbol: __user_initial_stackheap
    Uses
       At line 422 in file startup_stm32f407xx.s
 Comment: __user_initial_stackheap used once
-94 symbols
+p 00000000
+
+Symbol: p
+   Definitions
+      At line 187 in file startup_stm32f407xx.s
+   Uses
+      None
+Comment: p unused
+96 symbols
 
 
 
@@ -1989,4 +2005,4 @@ Symbol: __use_two_region_memory
       None
 Comment: __use_two_region_memory unused
 3 symbols
-448 symbols in table
+450 symbols in table

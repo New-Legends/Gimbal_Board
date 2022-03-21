@@ -13,7 +13,9 @@
 #define GIMBAL_DEBUG_MODE 0
 
 //云台视觉是否打开
-#define GIMBAL_VISION_OPEN 0
+#define GIMBAL_VISION_OPEN 1
+//云台视觉调试模式 默认为0
+#define GIMABL_VISION_DEBUG 0
 
 /*-----------------------发射机构------------------------------*/
 //摩擦轮电机有电流输出
@@ -31,25 +33,24 @@
 #define SHOOT_LASER_OPEN 0
 
 
-
-
 /*--------------------按键-------------------------------------*/
 // turn 180°
-//掉头180 按键 单击V
-#define KEY_PRESSED_GIMBAL_TURN_180 'B'
+//掉头180 按键 单击V E
+#define KEY_PRESSED_GIMBAL_TURN_180 'R' 
 
-//开启和关闭摩擦轮  单击
-#define KEY_PRESSED_SHOOT_FRIC 'G'
-//#define KEY_PRESSED_SHOOT_FRIC KEY_PRESSED_OFFSET_G
+//开启和关闭摩擦轮  单击G
+#define KEY_PRESSED_SHOOT_FRIC 'E'
 
 //弹仓开关 长按R打开弹仓 单击R关闭弹仓
-#define KEY_PRESSED_SHOOT_COVER 'R'
+#define KEY_PRESSED_SHOOT_COVER 'X'
 
-//提高射频  长按ctrl+Z
-#define KEY_PRESSED_SHOOT_TRIGGER_SPEED_UP  'Z'
 
-//降低射频  长按ctrl+X
-#define KEY_PRESSED_SHOOT_TRIGGER_SPEED_DOWN 'X'
+// TODO 暂时认为没有添加的必要
+//  //提高射频  长按ctrl+Z
+//  #define KEY_PRESSED_SHOOT_TRIGGER_SPEED_UP  'Z'
+
+// //降低射频  长按ctrl+X
+// #define KEY_PRESSED_SHOOT_TRIGGER_SPEED_DOWN 'X'
 
 
 #endif
