@@ -114,7 +114,7 @@ typedef __packed struct       //18 Byte
 	
 
 }VisionRecvData_t;
-extern VisionRecvData_t VisionRecvData; //接收数据结构体
+extern VisionRecvData_t VisionRecvData; 
 
 //STM32发送,直接将打包好的数据一个字节一个字节地发送出去
 typedef struct
