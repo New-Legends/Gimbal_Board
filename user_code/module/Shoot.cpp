@@ -298,7 +298,7 @@ void Shoot::set_mode()
                 shoot_time ++;
             }
             //识别到装甲板中心则连发
-            if (VisionRecvData.identify_target == TRUE&& vision_time >500)
+            if (VisionRecvData.identify_target == TRUE&& vision_time >=500)
             {
                 shoot_mode = SHOOT_CONTINUE_BULLET;
             }
