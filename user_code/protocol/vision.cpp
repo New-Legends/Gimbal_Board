@@ -21,7 +21,6 @@ VisionSendHeader_t VisionSendHeader; //帧头
 
 VisionActData_t VisionActData; //行动模式结构体
 
-VisionRecvData_t VisionRecvData; //接收数据结构体
 
 VisionSendData_t VisionSendData; //发送数据结构体
 

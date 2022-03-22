@@ -59,7 +59,6 @@ uint8_t grigger_speed_grade;
 uint8_t fric_speed_grade;
 
 Shoot shoot;
-VisionRecvData_t      VisionRecvData_shoot;        //接收数据结构体
 
 uint8_t press_ctrl = 0;
 uint8_t signal_press_z = 0;
@@ -290,17 +289,16 @@ void Shoot::set_mode()
         if(shoot_mode == SHOOT_READY)
         {
             //识别装甲板边缘则单发
-            if ( VisionRecvData_shoot.identify_target == TRUE&&VisionRecvData_shoot.centre_lock == FALSE && shoot_time == 0)
+            if ( VisionRecvData.identify_target == TRUE&&VisionRecvData.centre_lock == FALSE && shoot_time == 0)
             {
                 shoot_mode = SHOOT_BULLET;
                 shoot_time = 1;
             }
-            else if(VisionRecvData_shoot.identify_target == TRUE&&VisionRecvData_shoot.centre_lock == FALSE && shoot_time < 500){
+            else if(VisionRecvData.identify_target == TRUE&&VisionRecvData.centre_lock == FALSE && shoot_time < 500){
                 shoot_time ++;
-
             }
             //识别到装甲板中心则连发
-            if (VisionRecvData_shoot.identify_target == TRUE&& vision_time >500)
+            if (VisionRecvData.identify_target == TRUE&& vision_time >500)
             {
                 shoot_mode = SHOOT_CONTINUE_BULLET;
             }
@@ -458,7 +456,7 @@ void Shoot::feedback_update()
     }
 
     //视觉连发判断
-    if(shoot_mode != SHOOT_STOP && VisionRecvData_shoot.centre_lock){
+    if(shoot_mode != SHOOT_STOP && VisionRecvData.centre_lock){
         if(vision_time < 500){
             vision_time++;
         }
@@ -468,7 +466,7 @@ void Shoot::feedback_update()
     }
 
     //单发射速
-    if(shoot_mode != SHOOT_STOP && VisionRecvData_shoot.identify_target && shoot_time ==500){
+    if(shoot_mode != SHOOT_STOP && VisionRecvData.identify_target && shoot_time ==500){
         
         shoot_time = 0;
         
