@@ -189,6 +189,13 @@ public:
   uint16_t press_l_time;
   uint16_t press_r_time;
   uint16_t rc_s_time;
+
+  //视觉判断连发时间
+  uint16_t vision_time ;
+
+  //单发射速
+  uint16_t shoot_time ;
+  
   //弹仓电机按键状态
   bool_t press_R;
   bool_t last_press_R;

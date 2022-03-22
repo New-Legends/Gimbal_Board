@@ -66,17 +66,17 @@ extern "C"
 
 //yaw encode angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define YAW_ENCODE_RELATIVE_PID_KP 10.0f 
+#define YAW_ENCODE_RELATIVE_PID_KP 0.0f//10.0f 
 #define YAW_ENCODE_RELATIVE_PID_KI 0.0f
-#define YAW_ENCODE_RELATIVE_PID_KD 5.0f
+#define YAW_ENCODE_RELATIVE_PID_KD 0.0f//5.0f
 #define YAW_ENCODE_RELATIVE_PID_MAX_IOUT 2.0f
 #define YAW_ENCODE_RELATIVE_PID_MAX_OUT 6.0f
 
 //pitch encode angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define PITCH_ENCODE_RELATIVE_PID_KP 9.5f 
-#define PITCH_ENCODE_RELATIVE_PID_KI 0.04f
-#define PITCH_ENCODE_RELATIVE_PID_KD 10.0f
+#define PITCH_ENCODE_RELATIVE_PID_KP 0.0f//9.5f 
+#define PITCH_ENCODE_RELATIVE_PID_KI 0.0f//0.04f
+#define PITCH_ENCODE_RELATIVE_PID_KD 0.0f//10.0f
 #define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 1.0f
 #define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 7.0f
 
@@ -146,7 +146,7 @@ extern "C"
 #define ECD_RANGE 8192
 
 //限幅 需要自己手动校准
-#define YAW_OFFSET 162   //编码器
+#define YAW_OFFSET 7497   //编码器
 #define PITCH_OFFSET 5600 //编码器
 
 //限幅

@@ -246,10 +246,10 @@ void Shoot::set_mode()
             {
                 shoot_mode = SHOOT_CONTINUE_BULLET;
             }
-            else if (shoot_mode == SHOOT_CONTINUE_BULLET)
-            {
-                shoot_mode = SHOOT_READY_BULLET;
-            }
+            // else if (shoot_mode == SHOOT_CONTINUE_BULLET)
+            // {
+            //     shoot_mode = SHOOT_READY_BULLET;
+            // }
         }
 
         // //检测两个摩擦轮同时上线，为了便于调试，暂时注释
@@ -272,6 +272,10 @@ void Shoot::set_mode()
         last_s = shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL];
     }
     else if(shoot_control_way == AUTO){
+        if (switch_is_down(shoot_rc->rc.s[0])||switch_is_mid(shoot_rc->rc.s[0]))
+        {
+            shoot_mode = SHOOT_STOP;
+        }
         shoot_mode = SHOOT_READY_FRIC;
         //摩擦轮速度达到一定值,才可开启拨盘  为了便于测试,这里至少需要一个摩擦轮电机达到拨盘启动要求就可以开启拨盘
         if(shoot_mode == SHOOT_READY_FRIC &&(abs_int16(fric_motor[LEFT_FRIC].motor_measure->speed_rpm)>abs_int16(fric_motor[LEFT_FRIC].require_speed) || abs_int16(fric_motor[RIGHT_FRIC].motor_measure->speed_rpm)>abs_int16(fric_motor[RIGHT_FRIC].require_speed)))
@@ -279,49 +283,34 @@ void Shoot::set_mode()
             fric_status = TRUE;     
             shoot_mode = SHOOT_READY_BULLET;
         }
-        else if(shoot_mode == SHOOT_READY_BULLET && key == SWITCH_TRIGGER_ON)
+        if(shoot_mode == SHOOT_READY_BULLET )
         {
             shoot_mode = SHOOT_READY;
         }
-        else if(shoot_mode == SHOOT_READY && key == SWITCH_TRIGGER_OFF)
-        {
-            shoot_mode = SHOOT_READY_BULLET;
-        }
-        else if(shoot_mode == SHOOT_READY)
+        if(shoot_mode == SHOOT_READY)
         {
             //识别装甲板边缘则单发
-            if ( VisionRecvData_shoot.identify_target == TRUE&&VisionRecvData_shoot.centre_lock == FALSE )
+            if ( VisionRecvData_shoot.identify_target == TRUE&&VisionRecvData_shoot.centre_lock == FALSE && shoot_time == 0)
             {
                 shoot_mode = SHOOT_BULLET;
+                shoot_time = 1;
+            }
+            else if(VisionRecvData_shoot.identify_target == TRUE&&VisionRecvData_shoot.centre_lock == FALSE && shoot_time < 500){
+                shoot_time ++;
+
             }
         }
-        else if(shoot_mode == SHOOT_DONE)
-        {
-            if(key == SWITCH_TRIGGER_OFF)
-            {
-                key_time++;
-                if(key_time > SHOOT_DONE_KEY_OFF_TIME)
-                {
-                    key_time = 0;
-                    shoot_mode = SHOOT_READY_BULLET;
-                }
-            }
-            else
-            {
-                key_time = 0;
-                shoot_mode = SHOOT_BULLET;
-            }
-        }
+
         if(shoot_mode > SHOOT_READY_FRIC)
         {
             //识别到装甲板中心则连发
-            if (VisionRecvData_shoot.identify_target == TRUE&&VisionRecvData_shoot.centre_lock == TRUE)
+            if (VisionRecvData_shoot.identify_target == TRUE&& vision_time >500)
             {
                 shoot_mode = SHOOT_CONTINUE_BULLET;
             }
             else if(shoot_mode == SHOOT_CONTINUE_BULLET)
             {
-                shoot_mode =SHOOT_READY_BULLET;
+                shoot_mode = SHOOT_READY_BULLET;
             }
         }
     }
@@ -468,6 +457,22 @@ void Shoot::feedback_update()
         rc_s_time = 0;
     }
 
+    //视觉连发判断
+    if(shoot_mode != SHOOT_STOP && VisionRecvData_shoot.centre_lock){
+        if(vision_time < 500){
+            vision_time++;
+        }
+    }
+    else{
+        vision_time = 0;
+    }
+
+    //单发射速
+    if(shoot_mode != SHOOT_STOP && VisionRecvData_shoot.identify_target && shoot_time ==500){
+        
+        shoot_time = 0;
+        
+    }
     //便于调参:
 
     //射速等级  摩擦电机

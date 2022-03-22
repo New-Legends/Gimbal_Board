@@ -350,7 +350,6 @@ extern "C"
             {
                 gyro_update_flag &= ~(1 << IMU_SPI_SHFITS);
                 gyro_update_flag |= (1 << IMU_UPDATE_SHFITS);
-
                 HAL_GPIO_WritePin(CS1_GYRO_GPIO_Port, CS1_GYRO_Pin, GPIO_PIN_SET);
             }
 
