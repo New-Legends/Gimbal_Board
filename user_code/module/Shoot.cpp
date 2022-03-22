@@ -299,10 +299,6 @@ void Shoot::set_mode()
                 shoot_time ++;
 
             }
-        }
-
-        if(shoot_mode > SHOOT_READY_FRIC)
-        {
             //识别到装甲板中心则连发
             if (VisionRecvData_shoot.identify_target == TRUE&& vision_time >500)
             {
@@ -313,6 +309,10 @@ void Shoot::set_mode()
                 shoot_mode = SHOOT_READY_BULLET;
             }
         }
+
+
+            
+        
     }
     
 }
