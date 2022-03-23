@@ -275,7 +275,7 @@ void Shoot::set_mode()
         {
             shoot_mode = SHOOT_STOP;
         }
-        shoot_mode = SHOOT_READY_FRIC;
+        //shoot_mode = SHOOT_READY_FRIC;
         //摩擦轮速度达到一定值,才可开启拨盘  为了便于测试,这里至少需要一个摩擦轮电机达到拨盘启动要求就可以开启拨盘
         if(shoot_mode == SHOOT_READY_FRIC &&(abs_int16(fric_motor[LEFT_FRIC].motor_measure->speed_rpm)>abs_int16(fric_motor[LEFT_FRIC].require_speed) || abs_int16(fric_motor[RIGHT_FRIC].motor_measure->speed_rpm)>abs_int16(fric_motor[RIGHT_FRIC].require_speed)))
         {
@@ -298,7 +298,7 @@ void Shoot::set_mode()
                 shoot_time ++;
             }
             //识别到装甲板中心则连发
-            if (VisionRecvData.identify_target == TRUE&& vision_time >=500)
+            if (VisionRecvData.identify_target == TRUE)
             {
                 shoot_mode = SHOOT_CONTINUE_BULLET;
             }

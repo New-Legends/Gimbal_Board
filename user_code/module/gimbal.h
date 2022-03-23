@@ -44,7 +44,7 @@ extern "C"
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
 #define PITCH_SPEED_PID_KP 2500.0f //2900
 #define PITCH_SPEED_PID_KI 0.1f
-#define PITCH_SPEED_PID_KD 8.0f
+#define PITCH_SPEED_PID_KD 5.0f
 #define PITCH_SPEED_PID_MAX_IOUT 25000.0f
 #define PITCH_SPEED_PID_MAX_OUT 30000.0f
 
@@ -66,19 +66,19 @@ extern "C"
 
 //yaw encode angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define YAW_ENCODE_RELATIVE_PID_KP 0.0f//10.0f 
+#define YAW_ENCODE_RELATIVE_PID_KP 10.0f 
 #define YAW_ENCODE_RELATIVE_PID_KI 0.0f
-#define YAW_ENCODE_RELATIVE_PID_KD 0.0f//5.0f
+#define YAW_ENCODE_RELATIVE_PID_KD 5.0f
 #define YAW_ENCODE_RELATIVE_PID_MAX_IOUT 2.0f
 #define YAW_ENCODE_RELATIVE_PID_MAX_OUT 6.0f
 
 //pitch encode angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define PITCH_ENCODE_RELATIVE_PID_KP 0.0f//9.5f 
-#define PITCH_ENCODE_RELATIVE_PID_KI 0.0f//0.04f
-#define PITCH_ENCODE_RELATIVE_PID_KD 0.0f//10.0f
-#define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 1.0f
-#define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 7.0f
+#define PITCH_ENCODE_RELATIVE_PID_KP 7.0f 
+#define PITCH_ENCODE_RELATIVE_PID_KI 0.1f
+#define PITCH_ENCODE_RELATIVE_PID_KD 1.5f
+#define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 1.2f
+#define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 6.0f
 
 /*---------------------按键--------------------*/
 //yaw,pitch控制通道以及状态开关通道
@@ -101,7 +101,7 @@ extern "C"
 #define PITCH_RC_SEN 0.00003f
 //转头云台速度
 #define TURN_SPEED_YAW    0.03f 
-#define TURN_SPEED_PITCH    0.015f 
+#define TURN_SPEED_PITCH    0.01f 
 
 //云台 鼠标速度
 // #define YAW_MOUSE_SEN 0.00015f
