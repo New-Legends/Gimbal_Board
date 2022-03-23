@@ -132,12 +132,13 @@ void Gimbal::init()
     gimbal_debug_data.init_flag = 0;
 }
 
-/**
+/*
  * @brief          更新云台数据
  * @Author         summerpray
  */
 void Gimbal::feedback_update()
 {
+
     //记录上一次遥控器值
     last_gimbal_RC->key.v = gimbal_RC->key.v;
     gimbal_last_key_v = gimbal_RC->key.v;

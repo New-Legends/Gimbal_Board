@@ -84,15 +84,9 @@ int main(void)
   /* MCU Configuration---p-----------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-   HAL_Init();
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
-
-  //测试 陀螺仪掉线警报
-  
-  
-
-  
 
   /* USER CODE END Init */
 

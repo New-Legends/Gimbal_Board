@@ -47,7 +47,7 @@ extern "C"
 */
 
 fp32 fric_refree_para = 0.1;
-// fp32 grigger_speed_to_radio = 0.2;
+
 fp32 grigger_speed_to_radio = 0.4;
 
 //通过读取裁判数据,直接修改射速和射频等级
@@ -192,6 +192,7 @@ void Shoot::set_mode()
         shoot_mode = SHOOT_STOP;
     }
 
+    
 
     //摩擦轮速度达到一定值,才可开启拨盘  为了便于测试,这里至少需要一个摩擦轮电机达到拨盘启动要求就可以开启拨盘
     if (shoot_mode == SHOOT_READY_FRIC && (abs_int16(fric_motor[LEFT_FRIC].motor_measure->speed_rpm) > abs_fp32(fric_motor[LEFT_FRIC].require_speed) || abs_int16(fric_motor[RIGHT_FRIC].motor_measure->speed_rpm) > abs_fp32(fric_motor[RIGHT_FRIC].require_speed)))
@@ -210,7 +211,7 @@ void Shoot::set_mode()
     else if (shoot_mode == SHOOT_READY)
     {
         //下拨一次或者鼠标按下一次，进入射击状态
-        if ((switch_is_down(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && !switch_is_down(last_s)) || if_mouse_pessed(shoot_rc, 'L'))
+        if ((switch_is_down(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && !switch_is_down(last_s)) || (press_l && last_press_l == 0))
         {
             shoot_mode = SHOOT_BULLET;
         }
@@ -268,7 +269,7 @@ void Shoot::set_mode()
         cover_mode = COVER_CLOSE;
     }
 
-    if(press_R_time == PRESS_R_LONG_TIME && cover_mode == COVER_CLOSE_DONE)//长按R并且关闭完毕
+    if(press_cover_time == PRESS_COVER_LONG_TIME && cover_mode == COVER_CLOSE_DONE)//长按R并且关闭完毕
     {
         cover_mode = COVER_OPEN;
     }
@@ -374,8 +375,8 @@ void Shoot::feedback_update()
     press_r = shoot_rc->mouse.press_r;
 
 
-    last_press_R = press_R;
-    press_R = if_key_pessed(shoot_rc->key.v,KEY_PRESSED_SHOOT_COVER);
+    last_press_cover = press_cover;
+    press_cover = if_key_pessed(shoot_rc->key.v,KEY_PRESSED_SHOOT_COVER);
 
 
     //长按计时
@@ -392,16 +393,16 @@ void Shoot::feedback_update()
     }
 
     //长按计时
-    if (press_R)
+    if (press_cover)
     {
-        if (press_R_time < PRESS_R_LONG_TIME)
+        if (press_cover_time < PRESS_COVER_LONG_TIME)
         {
-            press_R_time++;
+            press_cover_time++;
         }
     }
     else
     {
-        press_R_time = 0;
+        press_cover_time = 0;
     }
 
     //射击开关下档时间计时
@@ -685,13 +686,13 @@ void Shoot::output()
     trigger_motor.current_give = trigger_motor.current_set;
     cover_motor.current_give = cover_motor.current_set;
 
-    // if (shoot_mode == SHOOT_STOP)
-    // {
-    //     fric_motor[LEFT_FRIC].current_give = 0;
-    //     fric_motor[RIGHT_FRIC].current_give = 0;
-    //     trigger_motor.current_give = 0;
-    //     cover_motor.current_give = 0;
-    // }
+    if (shoot_mode == SHOOT_STOP)
+    {
+        fric_motor[LEFT_FRIC].current_give = 0;
+        fric_motor[RIGHT_FRIC].current_give = 0;
+        trigger_motor.current_give = 0;
+        cover_motor.current_give = 0;
+    }
 
 //电流输出控制,通过调整宏定义控制
 #if SHOOT_FRIC_MOTOR_HAVE_CURRENT

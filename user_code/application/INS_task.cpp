@@ -54,19 +54,19 @@ void ins_task(void *pvParameters)
 {
   vTaskDelay(IMU_TASK_INIT_TIME);
 
-  buzzer_on(1, 30000);
+  //buzzer_on(1, 30000);
 
-//  //待云台归中中开启陀螺仪
-//  while (1)
-//  {
-//    if (gimbal_imu_open_flag == 1)
-//      break;
+ //待云台归中中开启陀螺仪
+ while (1)
+ {
+   if (gimbal_imu_open_flag == 1)
+     break;
 
-//    vTaskDelay(IMU_CONTROL_TIME_MS);
-//  }
-	vTaskDelay(5000);
+   vTaskDelay(IMU_CONTROL_TIME_MS);
+ }
+	//vTaskDelay(2000);
 
-  buzzer_off();
+  //buzzer_off();
 
   imu.init();
 

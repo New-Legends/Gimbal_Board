@@ -40,8 +40,8 @@
 #define SHOOT_DONE_KEY_OFF_TIME 15
 //鼠标长按判断
 #define PRESS_LONG_TIME 400
-//弹仓R键长按判断
-#define PRESS_R_LONG_TIME 400
+//弹仓按键长按判断
+#define PRESS_COVER_LONG_TIME 400
 //摩擦轮开启按键延时
 #define KEY_FRIC_LONG_TIME 200
 
@@ -57,7 +57,7 @@
 #define FRIC_RPM_TO_SPEED 0.000415809748903494517209f
 
 //摩擦轮电机PID
-#define FRIC_SPEED_PID_KP 4000.0f //1800
+#define FRIC_SPEED_PID_KP 3000.0f //1800
 #define FRIC_SPEED_PID_KI 0.4f    //0.5
 #define FRIC_SPEED_PID_KD 4.0f    //2.0
 #define FRIC_PID_MAX_IOUT 200.0f
@@ -97,7 +97,7 @@
 #define TRIGGER_ANGLE_PID_KI 0.0f    
 #define TRIGGER_ANGLE_PID_KD 5.0f
 #define TRIGGER_BULLET_PID_MAX_IOUT 200.0f
-#define TRIGGER_BULLET_PID_MAX_OUT 10000.0f
+#define TRIGGER_BULLET_PID_MAX_OUT 6000.0f
 
 //弹仓开合电机PID
 #define COVER_ANGLE_PID_KP 1000.0f //800
@@ -116,21 +116,13 @@
 
 #define COVER_OPEN_ANGLE 2 * PI / TRIGGER_GRID_NUM
 
+//电机序号
 #define LEFT_FRIC 0
 #define RIGHT_FRIC 1
 #define TRIGGER 2
 #define COVER 3
 
 #define COVER_MOTOR_SPEED 1.0f
-
-
-/*-------------------按键-------------------*/
-
-//TODO 暂时认为没有添加的必要
-// //射频手动调整:
-// #define KEY_SHOOT_TRIGGER_SPEED_UP if_key_pessed(shoot_rc, 'CTRL') && if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_TRIGGER_SPEED_UP)
-// #define KEY_SHOOT_TRIGGER_SPEED_DOWN if_key_pessed(shoot_rc, 'CTRL') && if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_TRIGGER_SPEED_DOWN)
-
 
 typedef enum
 {
@@ -183,9 +175,9 @@ public:
   uint16_t press_r_time;
   uint16_t rc_s_time;
   //弹仓电机按键状态
-  bool_t press_R;
-  bool_t last_press_R;
-  uint16_t press_R_time;
+  bool_t press_cover;
+  bool_t last_press_cover;
+  uint16_t press_cover_time;
 
   uint16_t block_time;
   uint16_t reverse_time;

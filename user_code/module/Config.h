@@ -35,14 +35,14 @@
 
 /*--------------------按键-------------------------------------*/
 // turn 180°
-//掉头180 按键 单击V E
-#define KEY_PRESSED_GIMBAL_TURN_180 'R' 
+//掉头180 按键 单击V 
+#define KEY_PRESSED_GIMBAL_TURN_180 'Z' 
 
 //开启和关闭摩擦轮  单击G
-#define KEY_PRESSED_SHOOT_FRIC 'E'
+#define KEY_PRESSED_SHOOT_FRIC 'G'
 
 //弹仓开关 长按R打开弹仓 单击R关闭弹仓
-#define KEY_PRESSED_SHOOT_COVER 'X'
+#define KEY_PRESSED_SHOOT_COVER 'R'
 
 
 // TODO 暂时认为没有添加的必要
