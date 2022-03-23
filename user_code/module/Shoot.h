@@ -22,6 +22,7 @@
 #include "Communicate.h"
 #include "Motor.h"
 #include "user_lib.h"
+#include "First_order_filter.h"
 
 #include "Config.h"
 
@@ -35,6 +36,9 @@
 
 //开启摩擦轮的斜坡
 #define SHOOT_FRIC_ADD_VALUE 0.1f
+
+#define SHOOT_CONTROL_TIME 0.002f
+
 
 //射击完成后 子弹弹出去后，判断时间，以防误触发
 #define SHOOT_DONE_KEY_OFF_TIME 15
@@ -118,6 +122,10 @@
 
 #define COVER_OPEN_ANGLE 2 * PI / TRIGGER_GRID_NUM
 
+//一阶低通滤波参数
+#define SHOOT_ACCEL_FRIC_LEFT_NUM 0.2666666667f
+#define SHOOT_ACCEL_FRIC_RIGHT_NUM 0.2666666667f
+
 //电机序号
 #define LEFT_FRIC 0
 #define RIGHT_FRIC 1
@@ -162,6 +170,10 @@ public:
   Trigger_motor trigger_motor;
   //弹仓开合电机
   Cover_motor cover_motor;
+
+  
+  First_order_filter shoot_cmd_slow_fric_left; //使用一阶低通滤波减缓设定值
+  First_order_filter shoot_cmd_slow_fric_right; //使用一阶低通滤波减缓设定值
 
   //摩擦轮电机 限位开关 状态
   bool_t fric_status;

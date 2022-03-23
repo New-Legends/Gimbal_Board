@@ -47,7 +47,7 @@ extern "C"
 */
 fp32 fric_refree_para = 0.12;
 
-fp32 grigger_speed_to_radio = 0.4;
+fp32 grigger_speed_to_radio = 0.8;
 
 //通过读取裁判数据,直接修改射速和射频等级
 //射速等级  摩擦电机
@@ -136,6 +136,12 @@ void Shoot::init()
     cover_motor.speed = 0.0f;
     cover_motor.speed_set = 0.0f;
 
+    const static fp32 chassis_x_order_filter[1] = {SHOOT_ACCEL_FRIC_LEFT_NUM};
+    const static fp32 chassis_y_order_filter[1] = {SHOOT_ACCEL_FRIC_RIGHT_NUM};
+
+    shoot_cmd_slow_fric_left.init(SHOOT_CONTROL_TIME, chassis_x_order_filter);
+    shoot_cmd_slow_fric_right.init(SHOOT_CONTROL_TIME, chassis_y_order_filter);
+
     //更新数据
     feedback_update();
 
@@ -200,7 +206,6 @@ void Shoot::set_mode()
     }
 
     
-
     //摩擦轮速度达到一定值,才可开启拨盘  为了便于测试,这里至少需要一个摩擦轮电机达到拨盘启动要求就可以开启拨盘
     if (shoot_mode == SHOOT_READY_FRIC && (abs_int16(fric_motor[LEFT_FRIC].motor_measure->speed_rpm) > abs_fp32(fric_motor[LEFT_FRIC].require_speed) || abs_int16(fric_motor[RIGHT_FRIC].motor_measure->speed_rpm) > abs_fp32(fric_motor[RIGHT_FRIC].require_speed)))
     {
@@ -614,6 +619,13 @@ void Shoot::cooling_ctrl()
     //对摩擦轮电机输入控制值
     fric_motor[LEFT_FRIC].speed_set = shoot_fric_grade[fric_speed_grade];
     fric_motor[RIGHT_FRIC].speed_set = shoot_fric_grade[fric_speed_grade];
+
+    //一阶低通滤波作为摩擦轮输入
+    shoot_cmd_slow_fric_left.first_order_filter_cali(fric_motor[LEFT_FRIC].speed_set);
+    shoot_cmd_slow_fric_right.first_order_filter_cali(fric_motor[RIGHT_FRIC].speed_set);
+
+    fric_motor[LEFT_FRIC].speed_set = shoot_cmd_slow_fric_left.out;
+    fric_motor[RIGHT_FRIC].speed_set = shoot_cmd_slow_fric_right.out;
 }
 
 
@@ -643,9 +655,8 @@ void Shoot::solve()
         shoot_laser_off(); //激光关闭
 #endif
 
-        //连发模式 控制17mm发射机构射速和热量控制
-        //if(shoot_mode == SHOOT_CONTINUE_BULLET)
-            cooling_ctrl();
+        //控制17mm发射机构射速和热量控制
+        cooling_ctrl();
 
 
         if (shoot_mode == SHOOT_READY_BULLET || shoot_mode == SHOOT_CONTINUE_BULLET)

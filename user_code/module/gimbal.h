@@ -42,7 +42,7 @@ extern "C"
 
 //pitch speed close-loop PID params, max out and max iout
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
-#define PITCH_SPEED_PID_KP 5000.0f //2900
+#define PITCH_SPEED_PID_KP 8000.0f //2900
 #define PITCH_SPEED_PID_KI 0.1f
 #define PITCH_SPEED_PID_KD 0.0f
 #define PITCH_SPEED_PID_MAX_IOUT 250.0f
@@ -52,17 +52,17 @@ extern "C"
 //yaw 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
 #define YAW_GYRO_ABSOLUTE_PID_KP 30.0f 
 #define YAW_GYRO_ABSOLUTE_PID_KI 0.1f
-#define YAW_GYRO_ABSOLUTE_PID_KD 3.0f
+#define YAW_GYRO_ABSOLUTE_PID_KD 2.0f
 #define YAW_GYRO_ABSOLUTE_PID_MAX_IOUT 1.0f
-#define YAW_GYRO_ABSOLUTE_PID_MAX_OUT 60.0f
+#define YAW_GYRO_ABSOLUTE_PID_MAX_OUT 40.0f
 
 //pitch gyro angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define PITCH_GYRO_ABSOLUTE_PID_KP 30.0f 
-#define PITCH_GYRO_ABSOLUTE_PID_KI 0.2f
+#define PITCH_GYRO_ABSOLUTE_PID_KP 100.0f 
+#define PITCH_GYRO_ABSOLUTE_PID_KI 0.1f
 #define PITCH_GYRO_ABSOLUTE_PID_KD 3.0f  //0.1
-#define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 10.0f
-#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 200.0f
+#define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 1.0f
+#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 150.0f
 
 //yaw encode angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
@@ -143,14 +143,14 @@ extern "C"
 #define PITCH_OFFSET 5472 //编码器
 
 //限幅
-#define MAX_ABSOULATE_YAW 2*PI
-#define MIN_ABSOULATE_YAW -2*PI
+#define MAX_ABSOULATE_YAW PI
+#define MIN_ABSOULATE_YAW -PI
 
 #define MAX_ABSOULATE_PITCH 0.2f
 #define MIN_ABSOULATE_PITCH -0.3f
 
-#define MAX_RELATIVE_YAW 2*PI
-#define MIN_RELATIVE_YAW -2*PI
+#define MAX_RELATIVE_YAW PI
+#define MIN_RELATIVE_YAW -PI
 
 #define MAX_RELATIVE_PITCH 0.42f
 #define MIN_RELATIVE_PITCH -0.45f
