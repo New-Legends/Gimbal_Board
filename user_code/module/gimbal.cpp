@@ -285,6 +285,9 @@ void Gimbal::behaviour_mode_set()
     }
 }
 
+
+uint16_t init_time = 0;
+uint16_t init_stop_time = 0;
 /**
  * @brief          云台行为状态机设置
  * @Author         summerpray
@@ -310,8 +313,8 @@ void Gimbal::behavour_set()
     //初始化模式判断是否到达中值位置
     if (gimbal_behaviour_mode == GIMBAL_INIT)
     {
-        static uint16_t init_time = 0;
-        static uint16_t init_stop_time = 0;
+        // static uint16_t init_time = 0;
+        // static uint16_t init_stop_time = 0;
         init_time++;
 
         if ((fabs(gimbal_yaw_motor.relative_angle - INIT_YAW_SET) < GIMBAL_INIT_ANGLE_ERROR &&
@@ -331,7 +334,6 @@ void Gimbal::behavour_set()
         }
 
         //超过初始化最大时间，或者已经稳定到中值一段时间，退出初始化状态开关打下档，或者掉线
-        // TODO:掉线未写
         if (init_time < GIMBAL_INIT_TIME && init_stop_time < GIMBAL_INIT_STOP_TIME &&
             !switch_is_down(gimbal_RC->rc.s[GIMBAL_MODE_CHANNEL]))
         {

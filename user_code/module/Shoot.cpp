@@ -45,8 +45,7 @@ extern "C"
 42mm热量冷却 20 40 60 80 100 120
 一发42mm 100热量
 */
-
-fp32 fric_refree_para = 0.1;
+fp32 fric_refree_para = 0.12;
 
 fp32 grigger_speed_to_radio = 0.4;
 
@@ -101,7 +100,7 @@ void Shoot::init()
 
     trigger_motor.init(can_receive.get_shoot_motor_measure_point(TRIGGER));
     //初始化PID
-    fp32 trigger_speed_pid_parm[5] = {TRIGGER_ANGLE_PID_KP, TRIGGER_ANGLE_PID_KI, TRIGGER_ANGLE_PID_KD, TRIGGER_BULLET_PID_MAX_IOUT, TRIGGER_BULLET_PID_MAX_OUT};
+    fp32 trigger_speed_pid_parm[5] = {TRIGGER_ANGLE_PID_KP, TRIGGER_ANGLE_PID_KI, TRIGGER_ANGLE_PID_KD, TRIGGER_READY_PID_MAX_IOUT, TRIGGER_READY_PID_MAX_OUT};
     trigger_motor.speed_pid.init(PID_SPEED, trigger_speed_pid_parm, &trigger_motor.speed, &trigger_motor.speed_set, NULL);
     trigger_motor.angle_pid.pid_clear();
     // //TODO,此处限幅,暂时不设置
@@ -143,6 +142,10 @@ void Shoot::init()
     move_flag = 0;
     cover_move_flag = 0;
     key_time = 0;
+
+    //未防止卡单, 上电后自动开启摩擦轮,可以手动关闭
+    shoot_mode = SHOOT_READY_FRIC;
+    buzzer_on(5, 10000);
 }
 
 /**
@@ -150,9 +153,9 @@ void Shoot::init()
   * @param[in]      void
   * @retval         void
   */
-bool_t temp_a;
-bool_t temp_b;
-bool_t temp_c;
+uint8_t temp_a;
+uint8_t temp_b;
+uint8_t temp_c;
 
 void Shoot::set_mode()
 {
@@ -161,10 +164,12 @@ void Shoot::set_mode()
     //上拨判断， 一次开启，再次关闭
     if ((switch_is_up(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && !switch_is_up(last_s) && shoot_mode == SHOOT_STOP))
     {
+        buzzer_on(5, 10000);
         shoot_mode = SHOOT_READY_FRIC;
     }
     else if ((switch_is_up(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && !switch_is_up(last_s) && shoot_mode != SHOOT_STOP))
     {
+        buzzer_off();
         shoot_mode = SHOOT_STOP;
     }
 
@@ -175,10 +180,12 @@ void Shoot::set_mode()
     {
         if (shoot_mode == SHOOT_STOP)
         {
+            buzzer_on(5, 10000);
             shoot_mode = SHOOT_READY_FRIC;
         }
         else
         {
+            buzzer_off();
             shoot_mode = SHOOT_STOP;
         }
     }
@@ -215,6 +222,7 @@ void Shoot::set_mode()
         {
             shoot_mode = SHOOT_BULLET;
         }
+        
     }
     else if (shoot_mode == SHOOT_DONE)
     {
@@ -488,9 +496,6 @@ void Shoot::set_control()
         trigger_motor.speed_set = 0.0f;
     }
 
-    
-
-    
     if (cover_mode == COVER_OPEN_DONE || cover_mode == COVER_CLOSE_DONE)
     {
         //设置拨弹轮的速度
@@ -503,9 +508,8 @@ void Shoot::set_control()
         cover_control();
     }
 
-
-
 }
+
 
 /**
  * @brief          发射机构弹速和热量控制
@@ -521,7 +525,8 @@ void Shoot::cooling_ctrl()
 
     // 17mm枪口枪口射速上限,17mm实时射速
     uint16_t id1_17mm_speed_limit;
-    fp32 bullet_speed;
+    static fp32 bullet_speed;
+    static fp32 last_bullet_speed;
 
     //保留被强制降速前的射频
     static uint8_t last_grigger_speed_grade = 1;
@@ -539,15 +544,17 @@ void Shoot::cooling_ctrl()
 //     }
 // #endif
 
-    //离线监测暂时没有添加
-    if (toe_is_error(REFEREE_TOE))
-    {
-        grigger_speed_grade = 2;
-        fric_speed_grade = 2;
-    }
-    else
+    // //TODO 离线监测暂时没有添加
+    // if (toe_is_error(REFEREE_TOE))
+    // {
+    //     grigger_speed_grade = 2;
+    //     fric_speed_grade = 2;
+    // }
+    // else
     {
         //更新裁判数据
+        last_bullet_speed = bullet_speed;
+
         id1_17mm_cooling_limit = can_receive.gimbal_receive.id1_17mm_cooling_limit;
         id1_17mm_cooling_heat = can_receive.gimbal_receive.id1_17mm_cooling_heat;
         id1_17mm_cooling_rate = can_receive.gimbal_receive.id1_17mm_cooling_rate;
@@ -559,10 +566,10 @@ void Shoot::cooling_ctrl()
 #if SHOOT_SET_TRIGGER_SPEED_BY_HAND
 
 #else
-        //根据热量和射速上限修改等级
-        //热量
-        if (id1_17mm_cooling_limit <= 50)
-            grigger_speed_grade = 1;
+            //根据热量和射速上限修改等级
+            //热量
+            if (id1_17mm_cooling_limit <= 50)
+                grigger_speed_grade = 1;
         else if (id1_17mm_cooling_limit <= 100)
             grigger_speed_grade = 2;
         else if (id1_17mm_cooling_limit <= 200)
@@ -595,7 +602,7 @@ void Shoot::cooling_ctrl()
         }
 
         //超射速,强制降低摩擦轮转速
-        if (bullet_speed > id1_17mm_speed_limit)
+        if (bullet_speed > id1_17mm_speed_limit && last_bullet_speed != bullet_speed)
         {
             fric_speed_grade--;
         }
@@ -635,19 +642,10 @@ void Shoot::solve()
 #else
         shoot_laser_off(); //激光关闭
 #endif
-        //设置摩擦轮转速
-        // fric_motor[LEFT_FRIC].speed_set = shoot_fric_grade[1];
-        // fric_motor[RIGHT_FRIC].speed_set = shoot_fric_grade[1];
 
         //连发模式 控制17mm发射机构射速和热量控制
         //if(shoot_mode == SHOOT_CONTINUE_BULLET)
             cooling_ctrl();
-
-
-        //弹道测试
-        // trigger_motor.speed_set = shoot_grigger_grade[2] * SHOOT_TRIGGER_DIRECTION;
-        // fric_motor[LEFT_FRIC].speed_set = shoot_fric_grade[fric_speed_grade];
-        // fric_motor[RIGHT_FRIC].speed_set = shoot_fric_grade[fric_speed_grade];
 
 
         if (shoot_mode == SHOOT_READY_BULLET || shoot_mode == SHOOT_CONTINUE_BULLET)
@@ -685,14 +683,6 @@ void Shoot::output()
     fric_motor[RIGHT_FRIC].current_give = (int16_t)(fric_motor[RIGHT_FRIC].current_set);
     trigger_motor.current_give = trigger_motor.current_set;
     cover_motor.current_give = cover_motor.current_set;
-
-    if (shoot_mode == SHOOT_STOP)
-    {
-        fric_motor[LEFT_FRIC].current_give = 0;
-        fric_motor[RIGHT_FRIC].current_give = 0;
-        trigger_motor.current_give = 0;
-        cover_motor.current_give = 0;
-    }
 
 //电流输出控制,通过调整宏定义控制
 #if SHOOT_FRIC_MOTOR_HAVE_CURRENT
