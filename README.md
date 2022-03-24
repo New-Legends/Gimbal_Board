@@ -3,7 +3,7 @@
 
 Developing
 
-
+双板麦轮步兵
 
 [toc]
 
@@ -103,14 +103,18 @@ CAN2: V G H L
 2     1
 3     4   
 ///////
-云台电机：can1 yaw 9 pitch 10 
+云台电机：can1 yaw 5 pitch 6
 
-摩擦轮电机：can1 left 5 right 6
+摩擦轮电机：can1 left 1 right 2
 
-拨盘电机：can1 7
+拨盘电机：can1 3
 
-弹仓舵机: 左边数第2个PWM
+弹仓电机: can1 4
 限位舵机: 左边数第3个PWM  
+
+超级电容 0x211
+
+板间通信ID 301 -304
 
 
 射弹 触发条件为  BUTTEN_TRIG_PIN 为低电平 对应C板最左侧的PWM口

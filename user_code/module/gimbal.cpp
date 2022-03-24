@@ -37,7 +37,7 @@
     }
 
 //自瞄相关数据
-bool_t auto_switch = 1; //自瞄开关
+bool_t auto_switch = 0; //自瞄开关
 
 //云台模块 对象
 Gimbal gimbal;
@@ -344,15 +344,15 @@ void Gimbal::behavour_set()
         gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
     }
 
-    if (toe_is_error(GIMBAL_YAW_MOTOR_TOE) || toe_is_error(GIMBAL_PITCH_MOTOR_TOE))
-    {
-        gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
-        buzzer_on(95, 10000);
-    }
-    else
-    {
-        buzzer_off();
-    }
+//    if (toe_is_error(GIMBAL_YAW_MOTOR_TOE) || toe_is_error(GIMBAL_PITCH_MOTOR_TOE))
+//    {
+//        gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
+//        buzzer_on(95, 10000);
+//    }
+//    else
+//    {
+//        buzzer_off();
+//    }
 
     //遥控器电线保护
     if (toe_is_error(DBUS_TOE))
