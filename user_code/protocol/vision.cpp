@@ -159,8 +159,8 @@ int i; //循环发送次数
 
 void vision_error_angle(float *yaw_angle_error, float *pitch_angle_error)
 {
-  *yaw_angle_error = VisionRecvData.yaw_angle / PI / 180;
-  *pitch_angle_error = VisionRecvData.pitch_angle / PI / 180;
+  *yaw_angle_error = -VisionRecvData.yaw_angle / 30;
+  *pitch_angle_error = VisionRecvData.pitch_angle / 20;
 
   if (VisionRecvData.yaw_angle == 0)
   {

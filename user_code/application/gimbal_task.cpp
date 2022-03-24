@@ -55,6 +55,7 @@ void gimbal_task(void *pvParameters)
     vTaskDelay(GIMBAL_TASK_INIT_TIME);
     //云台初始化
     gimbal.init();
+
     //云台数据反馈
     gimbal.feedback_update();
     while (1)

@@ -53,6 +53,8 @@ using namespace std;
 //实例化对象
 INS imu;
 
+uint8_t reset_flag = 0;
+
 /**********************************************(C) 标志位 **************************************************/
 volatile uint8_t gyro_update_flag = 0;
 volatile uint8_t accel_update_flag = 0;
@@ -117,7 +119,7 @@ static uint8_t first_temperate;
   */
 void INS::init(void)
 {
-
+    reset_flag =1;
     memset(INS_gyro, 0.0f, sizeof(INS_gyro));
     memset(INS_accel, 0.0f, sizeof(INS_accel));
     memset(INS_mag, 0.0f, sizeof(INS_mag));

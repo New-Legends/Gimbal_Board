@@ -22,6 +22,7 @@
 #include "Communicate.h"
 #include "Motor.h"
 #include "user_lib.h"
+#include "First_order_filter.h"
 
 #include "Config.h"
 
@@ -36,12 +37,15 @@
 //开启摩擦轮的斜坡
 #define SHOOT_FRIC_ADD_VALUE 0.1f
 
+#define SHOOT_CONTROL_TIME 0.002f
+
+
 //射击完成后 子弹弹出去后，判断时间，以防误触发
 #define SHOOT_DONE_KEY_OFF_TIME 15
 //鼠标长按判断
 #define PRESS_LONG_TIME 400
-//弹仓R键长按判断
-#define PRESS_R_LONG_TIME 400
+//弹仓按键长按判断
+#define PRESS_COVER_LONG_TIME 400
 //摩擦轮开启按键延时
 #define KEY_FRIC_LONG_TIME 200
 
@@ -55,13 +59,6 @@
 
 //摩擦轮电机rmp 变化成 旋转速度的比例
 #define FRIC_RPM_TO_SPEED 0.000415809748903494517209f
-
-//摩擦轮电机PID
-#define FRIC_SPEED_PID_KP 4000.0f //1800
-#define FRIC_SPEED_PID_KI 0.4f    //0.5
-#define FRIC_SPEED_PID_KD 2.0f    //2.0
-#define FRIC_PID_MAX_IOUT 200.0f
-#define FRIC_PID_MAX_OUT 2000.0f
 
 #define FRIC_REQUIRE_SPEED_RMP 500.0f
 #define FRIC_MAX_SPEED_RMP 4000.0f
@@ -91,13 +88,24 @@
 
 #define PI_FOUR 0.78539816339744830961566084581988f
 #define PI_TEN 0.314f
+/*---------------------------pid----------------------*/
+//摩擦轮电机PID
+#define FRIC_SPEED_PID_KP 2000.0f // 1800
+#define FRIC_SPEED_PID_KI 0.4f    // 0.5
+#define FRIC_SPEED_PID_KD 0.0f    // 2.0
+#define FRIC_PID_MAX_IOUT 200.0f
+#define FRIC_PID_MAX_OUT 6000.0f
 
 //拨弹轮电机PID
-#define TRIGGER_ANGLE_PID_KP 2500.0f 
-#define TRIGGER_ANGLE_PID_KI 0.0f    
-#define TRIGGER_ANGLE_PID_KD 5.0f
-#define TRIGGER_BULLET_PID_MAX_IOUT 200.0f
+#define TRIGGER_ANGLE_PID_KP 2000.0f 
+#define TRIGGER_ANGLE_PID_KI 0.5f    
+#define TRIGGER_ANGLE_PID_KD 0.0f
+#define TRIGGER_BULLET_PID_MAX_IOUT 9000.0f
 #define TRIGGER_BULLET_PID_MAX_OUT 10000.0f
+
+#define TRIGGER_READY_PID_MAX_IOUT 7000.0f
+#define TRIGGER_READY_PID_MAX_OUT 10000.0f
+
 
 //弹仓开合电机PID
 #define COVER_ANGLE_PID_KP 1000.0f //800
@@ -106,8 +114,6 @@
 #define COVER_BULLET_PID_MAX_IOUT 200.0f
 #define COVER_BULLET_PID_MAX_OUT 10000.0f
 
-#define TRIGGER_READY_PID_MAX_IOUT 200.0f
-#define TRIGGER_READY_PID_MAX_OUT 10000.0f
 
 #define SHOOT_HEAT_REMAIN_VALUE 80
 //拨盘格数
@@ -116,25 +122,17 @@
 
 #define COVER_OPEN_ANGLE 2 * PI / TRIGGER_GRID_NUM
 
+//一阶低通滤波参数
+#define SHOOT_ACCEL_FRIC_LEFT_NUM 0.2666666667f
+#define SHOOT_ACCEL_FRIC_RIGHT_NUM 0.2666666667f
+
+//电机序号
 #define LEFT_FRIC 0
 #define RIGHT_FRIC 1
 #define TRIGGER 2
 #define COVER 3
 
 #define COVER_MOTOR_SPEED 1.0f
-
-
-/*-------------------按键-------------------*/
-//摩擦轮开关
-#define KEY_SHOOT_FRIC if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_FRIC)
-
-//弹仓电机开关
-#define KEY_SHOOT_COVER if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_COVER)
-
-//射频手动调整:
-#define KEY_SHOOT_TRIGGER_SPEED_UP if_key_pessed(shoot_rc, 'CTRL') && if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_TRIGGER_SPEED_UP)
-#define KEY_SHOOT_TRIGGER_SPEED_DOWN if_key_pessed(shoot_rc, 'CTRL') && if_key_singal_pessed(shoot_rc, last_shoot_rc, KEY_PRESSED_SHOOT_TRIGGER_SPEED_DOWN)
-
 
 typedef enum
 {
@@ -173,6 +171,10 @@ public:
   //弹仓开合电机
   Cover_motor cover_motor;
 
+  
+  First_order_filter shoot_cmd_slow_fric_left; //使用一阶低通滤波减缓设定值
+  First_order_filter shoot_cmd_slow_fric_right; //使用一阶低通滤波减缓设定值
+
   //摩擦轮电机 限位开关 状态
   bool_t fric_status;
   bool_t limit_switch_status;
@@ -187,9 +189,9 @@ public:
   uint16_t press_r_time;
   uint16_t rc_s_time;
   //弹仓电机按键状态
-  bool_t press_R;
-  bool_t last_press_R;
-  uint16_t press_R_time;
+  bool_t press_cover;
+  bool_t last_press_cover;
+  uint16_t press_cover_time;
 
   uint16_t block_time;
   uint16_t reverse_time;

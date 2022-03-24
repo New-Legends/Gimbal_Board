@@ -37,7 +37,7 @@ extern "C"
 #define YAW_SPEED_PID_KP 8000.0f 
 #define YAW_SPEED_PID_KI 0.0f    
 #define YAW_SPEED_PID_KD 0.0f
-#define YAW_SPEED_PID_MAX_IOUT 20000.0f
+#define YAW_SPEED_PID_MAX_IOUT 200.0f
 #define YAW_SPEED_PID_MAX_OUT 30000.0f
 
 //pitch speed close-loop PID params, max out and max iout
@@ -45,48 +45,63 @@ extern "C"
 #define PITCH_SPEED_PID_KP 8000.0f //2900
 #define PITCH_SPEED_PID_KI 0.1f
 #define PITCH_SPEED_PID_KD 0.0f
-#define PITCH_SPEED_PID_MAX_IOUT 25000.0f
+#define PITCH_SPEED_PID_MAX_IOUT 250.0f
 #define PITCH_SPEED_PID_MAX_OUT 30000.0f
 
 //yaw gyro angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define YAW_GYRO_ABSOLUTE_PID_KP 10.0f 
-#define YAW_GYRO_ABSOLUTE_PID_KI 0.0f
-#define YAW_GYRO_ABSOLUTE_PID_KD 3.0f
-#define YAW_GYRO_ABSOLUTE_PID_MAX_IOUT 2.0f
-#define YAW_GYRO_ABSOLUTE_PID_MAX_OUT 6.0f
+#define YAW_GYRO_ABSOLUTE_PID_KP 30.0f 
+#define YAW_GYRO_ABSOLUTE_PID_KI 0.1f
+#define YAW_GYRO_ABSOLUTE_PID_KD 2.0f
+#define YAW_GYRO_ABSOLUTE_PID_MAX_IOUT 1.0f
+#define YAW_GYRO_ABSOLUTE_PID_MAX_OUT 40.0f
 
 //pitch gyro angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define PITCH_GYRO_ABSOLUTE_PID_KP 8.0f 
-#define PITCH_GYRO_ABSOLUTE_PID_KI 0.01f
-#define PITCH_GYRO_ABSOLUTE_PID_KD 1.0f  //0.1
+#define PITCH_GYRO_ABSOLUTE_PID_KP 100.0f 
+#define PITCH_GYRO_ABSOLUTE_PID_KI 0.1f
+#define PITCH_GYRO_ABSOLUTE_PID_KD 3.0f  //0.1
 #define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 1.0f
-#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 8.0f
+#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 150.0f
 
 //yaw encode angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define YAW_ENCODE_RELATIVE_PID_KP 10.0f 
+#define YAW_ENCODE_RELATIVE_PID_KP 5.0f 
 #define YAW_ENCODE_RELATIVE_PID_KI 0.0f
 #define YAW_ENCODE_RELATIVE_PID_KD 0.0f
-#define YAW_ENCODE_RELATIVE_PID_MAX_IOUT 2.0f
-#define YAW_ENCODE_RELATIVE_PID_MAX_OUT 6.0f
+#define YAW_ENCODE_RELATIVE_PID_MAX_IOUT 5.0f
+#define YAW_ENCODE_RELATIVE_PID_MAX_OUT 20.0f
 
 //pitch encode angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
 #define PITCH_ENCODE_RELATIVE_PID_KP 6.0f 
 #define PITCH_ENCODE_RELATIVE_PID_KI 0.0f
 #define PITCH_ENCODE_RELATIVE_PID_KD 0.0f
-#define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 2.0f
-#define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 6.0f
+#define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 5.0f
+#define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 20.0f
+
+/*------------------------------自瞄PID------------------------*/
+// yaw gyro angle close-loop PID params, max out and max iout
+// yaw 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
+#define YAW_AUTO_PID_KP 70.0f
+#define YAW_AUTO_PID_KI 0.2f
+#define YAW_AUTO_PID_KD 4.0f
+#define YAW_AUTO_PID_MAX_IOUT 10.0f
+#define YAW_AUTO_PID_MAX_OUT 200.0f
+
+// pitch gyro angle close-loop PID params, max out and max iout
+// pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
+#define PITCH_AUTO_PID_KP 80.0f
+#define PITCH_AUTO_PID_KI 0.2f
+#define PITCH_AUTO_PID_KD 6.0f // 0.1
+#define PITCH_AUTO_PID_MAX_IOUT 10.0f
+#define PITCH_AUTO_PID_MAX_OUT 200.0f
 
 /*---------------------按键--------------------*/
 //yaw,pitch控制通道以及状态开关通道
 #define YAW_CHANNEL 0
 #define PITCH_CHANNEL 1
 #define GIMBAL_MODE_CHANNEL 0
-
-#define KEY_GIMBAL_TURN_180 if_key_singal_pessed(gimbal_RC, last_gimbal_RC, KEY_PRESSED_GIMBAL_TURN_180)
 
 
 //掉头云台速度
@@ -124,18 +139,18 @@ extern "C"
 #define ECD_RANGE 8191
 
 //限幅 需要自己手动校准
-#define YAW_OFFSET 614   //编码器
+#define YAW_OFFSET 3899   //编码器
 #define PITCH_OFFSET 5472 //编码器
 
 //限幅
-#define MAX_ABSOULATE_YAW 6.0f
-#define MIN_ABSOULATE_YAW -6.0f
+#define MAX_ABSOULATE_YAW PI
+#define MIN_ABSOULATE_YAW -PI
 
-#define MAX_ABSOULATE_PITCH 0.3f
-#define MIN_ABSOULATE_PITCH -0.4f
+#define MAX_ABSOULATE_PITCH 0.2f
+#define MIN_ABSOULATE_PITCH -0.3f
 
-#define MAX_RELATIVE_YAW 6.0f
-#define MIN_RELATIVE_YAW -6.0f
+#define MAX_RELATIVE_YAW PI
+#define MIN_RELATIVE_YAW -PI
 
 #define MAX_RELATIVE_PITCH 0.42f
 #define MIN_RELATIVE_PITCH -0.45f
@@ -144,13 +159,13 @@ extern "C"
 
 /*---------------------云台校准--------------------*/
 //云台初始化回中值，允许的误差,并且在误差范围内停止一段时间以及最大时间6s后解除初始化状态，
-#define GIMBAL_INIT_ANGLE_ERROR 0.1f
-#define GIMBAL_INIT_STOP_TIME 100
+#define GIMBAL_INIT_ANGLE_ERROR 0.05f
+#define GIMBAL_INIT_STOP_TIME 200 //100
 #define GIMBAL_INIT_TIME 6000
 #define GIMBAL_CALI_REDUNDANT_ANGLE 0.1f
 // //云台初始化回中值的速度以及控制到的角度
-#define GIMBAL_INIT_PITCH_SPEED 0.02f
-#define GIMBAL_INIT_YAW_SPEED 0.02f
+#define GIMBAL_INIT_PITCH_SPEED 0.002f //0.02
+#define GIMBAL_INIT_YAW_SPEED 0.002f  //0.02
 
 #define INIT_YAW_SET 0.0f
 #define INIT_PITCH_SET 0.0f
@@ -179,6 +194,8 @@ extern "C"
 
 //gm6020转化成底盘速度(m/s)的比例，
 #define GM6020_MOTOR_RPM_TO_VECTOR 0.000415809748903494517209f * 187 / 3591
+
+
 
 //云台行为模式
 typedef enum
@@ -256,6 +273,10 @@ class Gimbal
 public:
     const RC_ctrl_t *gimbal_RC; //云台使用的遥控器指针
     RC_ctrl_t *last_gimbal_RC; //云台使用的遥控器指针
+    //鼠标状态
+    bool_t press_r;
+    bool_t last_press_r;
+    uint16_t press_r_time;
 
     uint16_t gimbal_last_key_v; //遥控器上次按键
 
