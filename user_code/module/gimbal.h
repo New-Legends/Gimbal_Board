@@ -43,10 +43,10 @@ extern "C"
 //pitch speed close-loop PID params, max out and max iout
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
 #define PITCH_SPEED_PID_KP 8000.0f //2900
-#define PITCH_SPEED_PID_KI 0.1f
+#define PITCH_SPEED_PID_KI 0.0f
 #define PITCH_SPEED_PID_KD 0.0f
-#define PITCH_SPEED_PID_MAX_IOUT 250.0f
-#define PITCH_SPEED_PID_MAX_OUT 30000.0f
+#define PITCH_SPEED_PID_MAX_IOUT 25.0f
+#define PITCH_SPEED_PID_MAX_OUT 12000.0f
 
 //yaw gyro angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
@@ -74,11 +74,11 @@ extern "C"
 
 //pitch encode angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define PITCH_ENCODE_RELATIVE_PID_KP 6.0f 
-#define PITCH_ENCODE_RELATIVE_PID_KI 0.0f
-#define PITCH_ENCODE_RELATIVE_PID_KD 0.0f
-#define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 5.0f
-#define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 20.0f
+#define PITCH_ENCODE_RELATIVE_PID_KP 30.0f 
+#define PITCH_ENCODE_RELATIVE_PID_KI 0.01f
+#define PITCH_ENCODE_RELATIVE_PID_KD 0.2f
+#define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 1.0f
+#define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 160.0f
 
 /*------------------------------自瞄PID------------------------*/
 // yaw gyro angle close-loop PID params, max out and max iout

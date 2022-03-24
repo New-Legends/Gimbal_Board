@@ -610,7 +610,7 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
 
     
         vision_error_angle(yaw, pitch); //获取yaw 和 pitch的偏移量
-        vision_send_data(CmdID);        //发送指令给小电脑
+        //vision_send_data(CmdID);        //发送指令给小电脑
     }
     else
     {

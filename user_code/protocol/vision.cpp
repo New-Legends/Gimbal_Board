@@ -74,14 +74,14 @@ uint8_t Vision_Ping = 0;           //发送时间间隔
   */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-  // if (htim == &htim1)
-  // {
-  //HAL_GPIO_WritePin(CRAMA_TRI_GPIO_Port, CRAMA_TRI_Pin,GPIO_PIN_RESET);
-  //   if(send_cnt++ % 2)
-  //   {
-  //     vision_send_data(0x02);
-  //   }
-  // }
+  if (htim == &htim1)
+  {
+    HAL_GPIO_TogglePin(CRAMA_TRI_GPIO_Port, CRAMA_TRI_Pin);
+    if(send_cnt++ % 2 == 0)
+    {
+      vision_send_data(0x02);
+    }
+  }
 }
 
 void vision_read_data(uint8_t *ReadFormUart)

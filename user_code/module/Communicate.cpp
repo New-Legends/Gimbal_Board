@@ -29,7 +29,7 @@ void Communicate::init()
 
 void Communicate::run()
 {
-    vision_send_data(1);
+    //vision_send_data(1);
 
     //向底盘发送遥控器和云台数据
     int16_t temp_ch0, temp_ch2, temp_ch3;

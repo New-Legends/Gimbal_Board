@@ -149,9 +149,9 @@ void Shoot::init()
     cover_move_flag = 0;
     key_time = 0;
 
-    //未防止卡单, 上电后自动开启摩擦轮,可以手动关闭
-    shoot_mode = SHOOT_READY_FRIC;
-    buzzer_on(5, 10000);
+    //未防止卡弹, 上电后自动开启摩擦轮,可以手动关闭
+    // shoot_mode = SHOOT_READY_FRIC;
+    //buzzer_on(5, 10000);
 }
 
 /**
@@ -170,12 +170,12 @@ void Shoot::set_mode()
     //上拨判断， 一次开启，再次关闭
     if ((switch_is_up(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && !switch_is_up(last_s) && shoot_mode == SHOOT_STOP))
     {
-        buzzer_on(5, 10000);
+        //buzzer_on(5, 10000);
         shoot_mode = SHOOT_READY_FRIC;
     }
     else if ((switch_is_up(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && !switch_is_up(last_s) && shoot_mode != SHOOT_STOP))
     {
-        buzzer_off();
+        //buzzer_off();
         shoot_mode = SHOOT_STOP;
     }
 

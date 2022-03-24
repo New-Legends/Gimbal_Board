@@ -52,11 +52,11 @@ void System_Resource_Init(void)
     delay_init();
     cali_param_init();
 
-    buzzer_on(10, 10000);
+    // buzzer_on(10, 10000);
 
-    vTaskDelay(3000);
+    // vTaskDelay(3000);
 
-    buzzer_off();
+    // buzzer_off();
 
     /* Applications Init ----------------*/
 }
