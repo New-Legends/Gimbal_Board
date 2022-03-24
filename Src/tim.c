@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -615,7 +615,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
   /* USER CODE BEGIN TIM10_MspPostInit 1 */
     HAL_TIM_Base_Start(&htim10);
     HAL_TIM_PWM_Start(&htim10, TIM_CHANNEL_1);
-    /* USER CODE END TIM10_MspPostInit 1 */
+  /* USER CODE END TIM10_MspPostInit 1 */
   }
 
 }

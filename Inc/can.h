@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -20,6 +20,9 @@
 #ifndef __CAN_H__
 #define __CAN_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -42,7 +45,9 @@ void MX_CAN2_Init(void);
 
 /* USER CODE END Prototypes */
 
-
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __CAN_H__ */
 
