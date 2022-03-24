@@ -102,7 +102,7 @@ typedef __packed struct // 18 Byte
 } VisionRecvData_t;
 
 // STM32发送,直接将打包好的数据一个字节一个字节地发送出去
-typedef struct
+typedef __packed struct
 {
 	uint8_t BEGIN; //帧头起始位,暂定0xA5
 	uint8_t CmdID; //指令

@@ -139,13 +139,7 @@ int i; //循环发送次数
   VisionSendData.roll = imu.INS_angle[2];
   VisionSendData.END = 0xFF;
 
-  memcpy(vision_send_pack, &VisionSendData.BEGIN, 1);
-  memcpy(vision_send_pack+1, &VisionSendData.CmdID, 1);
-  memcpy(vision_send_pack+2, &VisionSendData.speed, 1);
-  memcpy(vision_send_pack+3, &VisionSendData.yaw, 4);
-  memcpy(vision_send_pack+7, &VisionSendData.pitch, 4);
-  memcpy(vision_send_pack+11, &VisionSendData.roll, 4);
-  memcpy(vision_send_pack+15, &VisionSendData.END, 1);
+  memcpy(vision_send_pack, &VisionSendData, VISION_SEND_LEN_PACKED);
 
   //将打包好的数据通过串口移位发送到上位机
   for (i = 0; i < VISION_SEND_LEN_PACKED; i++)
