@@ -57,7 +57,7 @@ void shoot_task(void *pvParameters)
         //设置PID计算
         shoot.solve();
         //输出电流
-        //shoot.output();
+        shoot.output();
         //系统延时
         vTaskDelay(SHOOT_CONTROL_TIME);
     }

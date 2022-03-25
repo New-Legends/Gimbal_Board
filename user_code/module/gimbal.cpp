@@ -691,13 +691,24 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
     }
 
     if(gimbal_control_way == RC){
-        static int16_t yaw_channel = 0, pitch_channel = 0;
+        //当在自瞄模式下且识别到目标,云台控制权交给mini pc ,这里为了方便调自瞄,先这么写
+        // if (auto_switch == TRUE && vision_if_find_target() == TRUE)
+        if (vision_if_find_target() == TRUE)
+        {
+            vision_error_angle(yaw, pitch); //获取yaw 和 pitch的偏移量
+            vision_send_data(CmdID);        //发送指令给小电脑
+        }
+        else
+        {
+            static int16_t yaw_channel = 0, pitch_channel = 0;
 
-        rc_deadband_limit(gimbal_RC->rc.ch[YAW_CHANNEL], yaw_channel, RC_DEADBAND);
-        rc_deadband_limit(gimbal_RC->rc.ch[PITCH_CHANNEL], pitch_channel, RC_DEADBAND);
+            rc_deadband_limit(gimbal_RC->rc.ch[YAW_CHANNEL], yaw_channel, RC_DEADBAND);
+            rc_deadband_limit(gimbal_RC->rc.ch[PITCH_CHANNEL], pitch_channel, RC_DEADBAND);
 
-        *yaw = yaw_channel * YAW_RC_SEN ;
-        *pitch = -pitch_channel * PITCH_RC_SEN ;
+            *yaw = yaw_channel * YAW_RC_SEN ;
+            *pitch = -pitch_channel * PITCH_RC_SEN ;
+        }
+        
     
     }
     else if(gimbal_control_way == AUTO){
@@ -820,7 +831,7 @@ void Gimbal::solve()
     }
     else if (gimbal_yaw_motor.gimbal_motor_mode == GIMBAL_MOTOR_ENCONDE)
     {
-        motor_relative_angle_control(&gimbal_yaw_motor);
+        motor_relative_angle_control_yaw(&gimbal_yaw_motor);
     }
 
     // pitch电机
@@ -834,7 +845,7 @@ void Gimbal::solve()
     }
     else if (gimbal_pitch_motor.gimbal_motor_mode == GIMBAL_MOTOR_ENCONDE)
     {
-        motor_relative_angle_control(&gimbal_pitch_motor);
+        motor_relative_angle_control_pitch(&gimbal_pitch_motor);
     }
 }
 
@@ -890,7 +901,7 @@ void Gimbal::motor_raw_angle_control(Gimbal_motor *gimbal_motor)
  * @param[out]     gimbal_motor:yaw电机或者pitch电机
  * @retval         none
  */
-void Gimbal::motor_relative_angle_control(Gimbal_motor *gimbal_motor)
+void Gimbal::motor_relative_angle_control_yaw(Gimbal_motor *gimbal_motor)
 {
     if (gimbal_motor == NULL)
     {
@@ -900,6 +911,23 @@ void Gimbal::motor_relative_angle_control(Gimbal_motor *gimbal_motor)
     //角度环，速度环串级pid调试
     gimbal_motor->speed_set = gimbal_motor->relative_angle_pid.pid_calc();
     gimbal_motor->current_set = gimbal_motor->speed_pid.pid_calc();
+}
+
+/**
+ * @brief          云台控制模式:GIMBAL_MOTOR_ENCONDE，使用编码相对角进行控制
+ * @param[out]     gimbal_motor:yaw电机或者pitch电机
+ * @retval         none
+ */
+void Gimbal::motor_relative_angle_control_pitch(Gimbal_motor *gimbal_motor)
+{
+    if (gimbal_motor == NULL)
+    {
+        return;
+    }
+
+    //角度环，速度环串级pid调试
+    gimbal_motor->speed_set = gimbal_motor->relative_angle_pid.pid_back_calc();
+    gimbal_motor->current_set = gimbal_motor->speed_pid.pid_back_calc();
 }
 
 /**

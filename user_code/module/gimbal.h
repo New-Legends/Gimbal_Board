@@ -43,8 +43,8 @@ extern "C"
 //pitch speed close-loop PID params, max out and max iout
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
 #define PITCH_SPEED_PID_KP 2500.0f //2900
-#define PITCH_SPEED_PID_KI 0.1f
-#define PITCH_SPEED_PID_KD 5.0f
+#define PITCH_SPEED_PID_KI 0.01f
+#define PITCH_SPEED_PID_KD 10.0f
 #define PITCH_SPEED_PID_MAX_IOUT 25000.0f
 #define PITCH_SPEED_PID_MAX_OUT 30000.0f
 
@@ -74,10 +74,10 @@ extern "C"
 
 //pitch encode angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define PITCH_ENCODE_RELATIVE_PID_KP 7.0f 
-#define PITCH_ENCODE_RELATIVE_PID_KI 0.1f
-#define PITCH_ENCODE_RELATIVE_PID_KD 1.5f
-#define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 1.2f
+#define PITCH_ENCODE_RELATIVE_PID_KP 30.0f 
+#define PITCH_ENCODE_RELATIVE_PID_KI 0.02f
+#define PITCH_ENCODE_RELATIVE_PID_KD 16.0f
+#define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 1.0f
 #define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 6.0f
 
 /*---------------------按键--------------------*/
@@ -309,7 +309,8 @@ public:
     void relative_angle_limit(Gimbal_motor *gimbal_motor, fp32 add); //编码器模式电机计算
     void motor_raw_angle_control(Gimbal_motor *gimbal_motor);        //云台直接电流计算
     void motor_absolute_angle_control(Gimbal_motor *gimbal_motor);   //云台陀螺仪模式电流计算
-    void motor_relative_angle_control(Gimbal_motor *gimbal_motor);   //云台编码器模式电流计算
+    void motor_relative_angle_control_yaw(Gimbal_motor *gimbal_motor);   //云台编码器模式电流计算
+    void motor_relative_angle_control_pitch(Gimbal_motor *gimbal_motor);   //云台编码器模式电流计算
                                                                    /***************************(C)  MOTOR control *******************************/
 
     /***************************(C) GIMBAL control *******************************/

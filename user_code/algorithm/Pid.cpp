@@ -55,7 +55,29 @@ void Pid::init(pid_mode_e mode_, const fp32 *pid_parm, fp32 *ref_, fp32 *set_, f
  fp32 Pid::pid_calc()
  {
      data.last_error = data.error;
-     data.error = *data.set - *data.ref;
+     data.error =*data.set - *data.ref ;
+     if (mode == PID_SPEED)
+         *data.error_delta = data.error - data.last_error;
+
+     if (mode == PID_ANGLE)
+         data.error = rad_format(data.error);
+
+     data.Pout = data.Kp * data.error;
+     data.Iout += data.Ki * data.error;
+     data.Dout = data.Kd * (*data.error_delta);
+
+     LimitMax(data.Iout, data.max_iout);
+
+     data.out = data.Pout + data.Iout + data.Dout;
+     LimitMax(data.out, data.max_out);
+
+     return data.out;
+}
+
+fp32 Pid::pid_back_calc()
+{
+    data.last_error = data.error;
+     data.error =0.65*(*data.set - *data.ref) ;
      if (mode == PID_SPEED)
          *data.error_delta = data.error - data.last_error;
 
