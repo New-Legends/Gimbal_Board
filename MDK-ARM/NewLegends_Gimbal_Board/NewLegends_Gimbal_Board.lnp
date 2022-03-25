@@ -1,4 +1,4 @@
---cpu=Cortex-M4.fp
+--cpu=Cortex-M4.fp.sp
 "newlegends_gimbal_board\startup_stm32f407xx.o"
 "newlegends_gimbal_board\main.o"
 "newlegends_gimbal_board\gpio.o"
@@ -113,6 +113,6 @@
 "newlegends_gimbal_board\bsp_spi.o"
 "newlegends_gimbal_board\bsp_usart.o"
 --strict --scatter "NewLegends_Gimbal_Board\NewLegends_Gimbal_Board.sct"
---summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list "NewLegends_Gimbal_Board.map" -o NewLegends_Gimbal_Board\NewLegends_Gimbal_Board.axf
