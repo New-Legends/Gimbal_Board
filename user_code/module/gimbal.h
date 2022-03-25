@@ -8,6 +8,7 @@
 #include "Motor.h"
 #include "struct_typedef.h"
 #include "First_order_filter.h"
+#include "Feed_forward.h"
 #include "Remote_control.h"
 #include "Can_receive.h"
 #include "user_lib.h"
@@ -96,6 +97,20 @@ extern "C"
 #define PITCH_AUTO_PID_KD 6.0f // 0.1
 #define PITCH_AUTO_PID_MAX_IOUT 10.0f
 #define PITCH_AUTO_PID_MAX_OUT 200.0f
+
+
+
+/*---------------------云台电机前向反馈参数----------------*/
+#define YAW_FEED_FORWARD_PARA_A -0.7f
+#define YAW_FEED_FORWARD_PARA_B 0.1f
+#define YAW_FEED_FORWARD_PARA_C 500.0f
+
+
+#define PITCH_FEED_FORWARD_PARA_A -0.7f
+#define PITCH_FEED_FORWARD_PARA_B 0.1f
+#define PITCH_FEED_FORWARD_PARA_C 500.0f
+
+
 
 /*---------------------按键--------------------*/
 //yaw,pitch控制通道以及状态开关通道
@@ -273,8 +288,8 @@ class Gimbal
 public:
     const RC_ctrl_t *gimbal_RC; //云台使用的遥控器指针
     RC_ctrl_t *last_gimbal_RC; //云台使用的遥控器指针
-    //鼠标状态
-    bool_t press_r;
+
+    bool_t press_r; //鼠标状态
     bool_t last_press_r;
     uint16_t press_r_time;
 
@@ -286,6 +301,9 @@ public:
     Gimbal_motor gimbal_yaw_motor; //云台yaw电机数据
     Gimbal_motor gimbal_pitch_motor; //云台pitch电机数据
 
+    Feed_forward gimbal_yaw_feed_forward; //云台yaw电机前向反馈
+    Feed_forward gimbal_pitch_feed_forward; //云台yaw电机前向反馈
+ 
     //陀螺仪接口
     const fp32 *gimbal_INT_angle_point; //获取陀螺仪角度值
     const fp32 *gimbal_INT_gyro_point;  //获取陀螺仪角速度值

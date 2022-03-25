@@ -6,8 +6,8 @@
 
 /*------------------------云台---------------------------*/
 //云台电机有电流输出
-#define GIMBAL_YAW_MOTOR_HAVE_CURRENT 1
-#define GIMBAL_PITCH_MOTOR_HAVE_CURRENT 1
+#define GIMBAL_YAW_MOTOR_HAVE_CURRENT 0
+#define GIMBAL_PITCH_MOTOR_HAVE_CURRENT 0
 
 //云台电机debug模式
 #define GIMBAL_DEBUG_MODE 0

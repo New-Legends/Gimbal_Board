@@ -111,6 +111,15 @@ void Gimbal::init()
     gimbal_pitch_motor.max_relative_angle = MAX_RELATIVE_PITCH;
     gimbal_pitch_motor.min_relative_angle = MIN_RELATIVE_PITCH;
 
+    //前向反馈初试化
+    uint8_t yaw_feed_forward_open_flag = 0;
+    fp32 yaw_feed_forward_para[3] = {YAW_FEED_FORWARD_PARA_A, YAW_FEED_FORWARD_PARA_B, YAW_FEED_FORWARD_PARA_C};
+    uint8_t pitch_feed_forward_open_flag = 0;
+    fp32 pitch_feed_forward_para[3] = {PITCH_FEED_FORWARD_PARA_A, PITCH_FEED_FORWARD_PARA_B, PITCH_FEED_FORWARD_PARA_C};
+
+    gimbal_yaw_feed_forward.init(yaw_feed_forward_open_flag, yaw_feed_forward_para);
+    gimbal_pitch_feed_forward.init(pitch_feed_forward_open_flag, pitch_feed_forward_para);
+
     //设置电机初试编码中值
     gimbal_pitch_motor.offset_ecd = PITCH_OFFSET;
 
@@ -784,6 +793,10 @@ void Gimbal::solve()
     {
         motor_relative_angle_control(&gimbal_pitch_motor);
     }
+
+    //对云台电机进行前馈控制
+    gimbal_yaw_motor.current_set += gimbal_yaw_feed_forward.calc(gimbal_yaw_motor.motor_measure->last_ecd);
+    gimbal_pitch_motor.current_set += gimbal_pitch_feed_forward.calc(gimbal_pitch_motor.motor_measure->last_ecd);
 }
 
 /**
@@ -854,6 +867,7 @@ void Gimbal::motor_relative_angle_control(Gimbal_motor *gimbal_motor)
     {
         return;
     }
+
 
     //角度环，速度环串级pid调试
     gimbal_motor->speed_set = gimbal_motor->relative_angle_pid.pid_calc();

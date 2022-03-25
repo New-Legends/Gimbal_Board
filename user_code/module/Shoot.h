@@ -120,7 +120,7 @@
 #define TRIGGER_GRID_NUM 8
 #define TRIGGER_ONCE 2 * PI / TRIGGER_GRID_NUM
 
-#define COVER_OPEN_ANGLE 2 * PI / TRIGGER_GRID_NUM
+#define COVER_OPEN_ANGLE 0.2*PI
 
 //一阶低通滤波参数
 #define SHOOT_ACCEL_FRIC_LEFT_NUM 0.2666666667f
@@ -189,8 +189,8 @@ public:
   uint16_t press_r_time;
   uint16_t rc_s_time;
   //弹仓电机按键状态
-  bool_t press_cover;
-  bool_t last_press_cover;
+  uint16_t press_cover;
+  uint16_t last_press_cover;
   uint16_t press_cover_time;
 
   uint16_t block_time;

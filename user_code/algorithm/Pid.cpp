@@ -55,7 +55,11 @@ void Pid::init(pid_mode_e mode_, const fp32 *pid_parm, fp32 *ref_, fp32 *set_, f
  fp32 Pid::pid_calc()
  {
      data.last_error = data.error;
-     data.error = *data.set - *data.ref;
+     //添加了前馈控制
+    //data.error = 0.65*(*data.set - *data.ref);
+
+    data.error = *data.set - *data.ref;
+
      if (mode == PID_SPEED)
          *data.error_delta = data.error - data.last_error;
 

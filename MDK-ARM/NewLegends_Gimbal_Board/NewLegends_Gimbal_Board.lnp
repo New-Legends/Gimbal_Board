@@ -79,6 +79,7 @@
 "newlegends_gimbal_board\interact.o"
 "newlegends_gimbal_board\first_order_filter.o"
 "newlegends_gimbal_board\pid.o"
+"newlegends_gimbal_board\feed_forward.o"
 "newlegends_gimbal_board\motor.o"
 "newlegends_gimbal_board\oled.o"
 "newlegends_gimbal_board\led.o"

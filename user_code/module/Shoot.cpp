@@ -273,7 +273,7 @@ void Shoot::set_mode()
     // if (gimbal_cmd_to_shoot_stop())
     // {
     //     shoot_mode = SHOOT_STOP;
-    // }
+    // } 
 
     static uint16_t last_cover_key_value = 0;
 
