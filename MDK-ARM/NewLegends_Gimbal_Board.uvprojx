@@ -874,6 +874,11 @@
               <FileType>8</FileType>
               <FilePath>..\user_code\algorithm\Pid.cpp</FilePath>
             </File>
+            <File>
+              <FileName>First_high_pass_filter.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\user_code\algorithm\First_high_pass_filter.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

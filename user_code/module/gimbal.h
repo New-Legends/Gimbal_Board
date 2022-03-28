@@ -7,7 +7,7 @@
 
 #include "Motor.h"
 #include "struct_typedef.h"
-#include "First_order_filter.h"
+#include "First_high_pass_filter.h"
 #include "Remote_control.h"
 #include "Can_receive.h"
 #include "user_lib.h"
@@ -128,6 +128,12 @@ extern "C"
 //云台测试模式 宏定义 0 为不使用测试模式
 #define GIMBAL_TEST_MODE 0
 
+//一阶高通滤波参数
+#define GIMBAL_ACCEL_YAW_NUM 0.1666666667f
+#define GIMBAL_ACCEL_PITCH_NUM 0.3333333333f
+
+#define GIMBAL_CONTROL_TIME 0.001f
+
 /*---------------------云台限幅与安装参数--------------------*/
 //电机顺序
 #define YAW 0
@@ -197,7 +203,6 @@ extern "C"
 
 //gm6020转化成底盘速度(m/s)的比例，
 #define GM6020_MOTOR_RPM_TO_VECTOR 0.000415809748903494517209f * 187 / 3591
-
 
 
 //云台行为模式
@@ -288,6 +293,9 @@ public:
 
     Gimbal_motor gimbal_yaw_motor; //云台yaw电机数据
     Gimbal_motor gimbal_pitch_motor; //云台pitch电机数据
+
+    First_high_pass_filter gimbal_yaw_high_pass_filter; //云台yaw电机一阶高通滤波
+    First_high_pass_filter gimbal_pitch_high_pass_filter; //云台pitch电机一阶高通滤波
 
     //陀螺仪接口
     const fp32 *gimbal_INT_angle_point; //获取陀螺仪角度值

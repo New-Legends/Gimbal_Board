@@ -17,6 +17,9 @@
 //云台视觉调试模式 默认为0
 #define GIMABL_VISION_DEBUG 0
 
+//云台一阶高通滤波是否开启
+#define GIMBAL_HIGH_PASS_FILTER 1
+
 /*-----------------------发射机构------------------------------*/
 //摩擦轮电机有电流输出
 #define SHOOT_FRIC_MOTOR_HAVE_CURRENT 1

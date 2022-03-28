@@ -114,6 +114,13 @@ void Gimbal::init()
     //设置电机初试编码中值
     gimbal_pitch_motor.offset_ecd = PITCH_OFFSET;
 
+    const static fp32 gimbal_yaw_high_pass_filter_para[1] = {GIMBAL_ACCEL_YAW_NUM};
+    const static fp32 gimbal_pitch_high_pass_filter_para[1] = {GIMBAL_ACCEL_PITCH_NUM};
+
+    //用一阶高通滤波代替斜波函数生成
+    gimbal_yaw_high_pass_filter.init(GIMBAL_CONTROL_TIME, gimbal_yaw_high_pass_filter_para);
+    gimbal_pitch_high_pass_filter.init(GIMBAL_CONTROL_TIME, gimbal_pitch_high_pass_filter_para);
+
     //陀螺仪数据指针获取
     gimbal_INT_angle_point = imu.get_INS_angle_point();
     gimbal_INT_gyro_point = imu.get_gyro_data_point();
@@ -466,6 +473,8 @@ void Gimbal::set_control()
         relative_angle_limit(&gimbal_pitch_motor, add_pitch_angle);
     }
 
+
+
 }
 
 /**
@@ -550,6 +559,8 @@ void Gimbal::gimbal_init_control(fp32 *yaw, fp32 *pitch)
 
 uint8_t gimbal_turn_flag = 0;
 fp32 gimbal_end_angle = 0.0f;
+
+
 /**
  * @brief          云台陀螺仪控制，电机是陀螺仪角度控制，
  * @param[out]     yaw: yaw轴角度控制，为角度的增量 单位 rad
@@ -603,7 +614,6 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
     #endif
 
 
-    
     //当在自瞄模式下且识别到目标,云台控制权交给mini pc
     if (auto_switch == TRUE && vision_if_find_target() == TRUE)
     {   
@@ -656,6 +666,16 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
             }
         }
     }
+
+#if GIMBAL_HIGH_PASS_FILTER
+    //一阶高通滤波代替斜波作为云台角度输入
+    gimbal_yaw_high_pass_filter.first_high_pass_filter_cali(*yaw);
+    gimbal_pitch_high_pass_filter.first_high_pass_filter_cali(*pitch);
+
+    *yaw = gimbal_yaw_high_pass_filter.out;
+    *pitch = gimbal_pitch_high_pass_filter.out;
+#endif
+
 #else
 
     static int16_t yaw_channel = 0, pitch_channel = 0;
@@ -700,12 +720,19 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
         }
     }
 
+#if GIMBAL_HIGH_PASS_FILTER
+    //一阶高通滤波代替斜波作为云台角度输入
+    gimbal_yaw_high_pass_filter.first_high_pass_filter_cali(*yaw);
+    gimbal_pitch_high_pass_filter.first_high_pass_filter_cali(*pitch);
+
+    *yaw = gimbal_yaw_high_pass_filter.out;
+    *pitch = gimbal_pitch_high_pass_filter.out;
+#endif
 #endif
 
     last_gimbal_RC->key.v = gimbal_RC->key.v;
 }
 
-fp32 temp_yaw = 0;
 /**
  * @brief          云台编码值控制，电机是相对角度控制，
  * @param[in]      yaw: yaw轴角度控制，为角度的增量 单位 rad
@@ -719,7 +746,6 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
         return;
     }
 
-
     static int16_t yaw_channel = 0, pitch_channel = 0;
 
     rc_deadband_limit(gimbal_RC->rc.ch[YAW_CHANNEL], yaw_channel, RC_DEADBAND);
@@ -727,8 +753,6 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
 
     *yaw = yaw_channel * YAW_RC_SEN + gimbal_RC->mouse.x * YAW_MOUSE_SEN;
     *pitch = pitch_channel * PITCH_RC_SEN + gimbal_RC->mouse.y * PITCH_MOUSE_SEN;
-    
-    temp_yaw = *yaw;
 }
 
 /**
@@ -854,6 +878,8 @@ void Gimbal::motor_relative_angle_control(Gimbal_motor *gimbal_motor)
     {
         return;
     }
+
+
 
     //角度环，速度环串级pid调试
     gimbal_motor->speed_set = gimbal_motor->relative_angle_pid.pid_calc();
