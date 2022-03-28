@@ -83,19 +83,22 @@ extern "C"
 /*------------------------------自瞄PID------------------------*/
 // yaw gyro angle close-loop PID params, max out and max iout
 // yaw 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define YAW_AUTO_PID_KP 70.0f
-#define YAW_AUTO_PID_KI 0.2f
-#define YAW_AUTO_PID_KD 4.0f
-#define YAW_AUTO_PID_MAX_IOUT 10.0f
-#define YAW_AUTO_PID_MAX_OUT 200.0f
+#define YAW_AUTO_PID_KP 30.0f 
+#define YAW_AUTO_PID_KI 0.1f
+#define YAW_AUTO_PID_KD 2.0f
+#define YAW_AUTO_PID_MAX_IOUT 1.0f
+#define YAW_AUTO_PID_MAX_OUT 40.0f
+
+
 
 // pitch gyro angle close-loop PID params, max out and max iout
 // pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define PITCH_AUTO_PID_KP 80.0f
-#define PITCH_AUTO_PID_KI 0.2f
-#define PITCH_AUTO_PID_KD 6.0f // 0.1
-#define PITCH_AUTO_PID_MAX_IOUT 10.0f
-#define PITCH_AUTO_PID_MAX_OUT 200.0f
+#define PITCH_AUTO_PID_KP 100.0f
+#define PITCH_AUTO_PID_KI 0.1f
+#define PITCH_AUTO_PID_KD 3.0f // 0.1
+#define PITCH_AUTO_PID_MAX_IOUT 1.0f
+#define PITCH_AUTO_PID_MAX_OUT 150.0f
+
 
 /*---------------------按键--------------------*/
 //yaw,pitch控制通道以及状态开关通道

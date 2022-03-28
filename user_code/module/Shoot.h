@@ -80,7 +80,7 @@
 #define SWITCH_TRIGGER_ON 0
 #define SWITCH_TRIGGER_OFF 1
 
-//卡单时间 以及反转时间
+//卡弹时间 以及反转时间
 #define BLOCK_TRIGGER_SPEED 1.0f
 #define BLOCK_TIME 700
 #define REVERSE_TIME 500
@@ -120,7 +120,7 @@
 #define TRIGGER_GRID_NUM 8
 #define TRIGGER_ONCE 2 * PI / TRIGGER_GRID_NUM
 
-#define COVER_OPEN_ANGLE 2 * PI / TRIGGER_GRID_NUM
+#define COVER_OPEN_ANGLE 0.2 * PI
 
 //一阶低通滤波参数
 #define SHOOT_ACCEL_FRIC_LEFT_NUM 0.2666666667f

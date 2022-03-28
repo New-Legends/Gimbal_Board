@@ -87,27 +87,27 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 void vision_read_data(uint8_t *ReadFormUart)
 {
 
-//  //判断帧头数据是否为0xA5
-//  if (ReadFormUart[0] == VISION_BEGIN)
-//  {
-//    //判断帧头数据是否为0xff
-//    if (ReadFormUart[17] == VISION_END)
-//    {
+ //判断帧头数据是否为0xA5
+ if (ReadFormUart[0] == VISION_BEGIN)
+ {
+   //判断帧头数据是否为0xff
+   if (ReadFormUart[17] == VISION_END)
+   {
 
-//      //接收数据拷贝
-//      memcpy(&VisionRecvData, ReadFormUart, VISION_READ_LEN_PACKED);
+     //接收数据拷贝
+     memcpy(&VisionRecvData, ReadFormUart, VISION_READ_LEN_PACKED);
 
-//      if (VisionRecvData.identify_target == TRUE)
-//        if_identify_target = TRUE; // 识别到装甲板
-//      else
-//        if_identify_target = FALSE; // 未识别到装甲板
+     if (VisionRecvData.identify_target == TRUE)
+       if_identify_target = TRUE; // 识别到装甲板
+     else
+       if_identify_target = FALSE; // 未识别到装甲板
 
-//      // //帧计算
-//      // Vision_Time_Test[NOW] = xTaskGetTickCount();
-//      // Vision_Ping = Vision_Time_Test[NOW] - Vision_Time_Test[LAST];//计算时间间隔
-//      // Vision_Time_Test[LAST] = Vision_Time_Test[NOW];
-//    }
-//  }
+     // //帧计算
+     // Vision_Time_Test[NOW] = xTaskGetTickCount();
+     // Vision_Ping = Vision_Time_Test[NOW] - Vision_Time_Test[LAST];//计算时间间隔
+     // Vision_Time_Test[LAST] = Vision_Time_Test[NOW];
+   }
+ }
 }
 
 /**
@@ -151,10 +151,13 @@ int i; //循环发送次数
   memset(vision_send_pack, 0, 50);
 }
 
+uint16_t yaw_para = 140;
+uint16_t pitch_para = 140;
+
 void vision_error_angle(float *yaw_angle_error, float *pitch_angle_error)
 {
-  *yaw_angle_error = -VisionRecvData.yaw_angle / 30;
-  *pitch_angle_error = VisionRecvData.pitch_angle / 20;
+  *yaw_angle_error = -VisionRecvData.yaw_angle / yaw_para;
+  *pitch_angle_error = VisionRecvData.pitch_angle / pitch_para;
 
   if (VisionRecvData.yaw_angle == 0)
   {
