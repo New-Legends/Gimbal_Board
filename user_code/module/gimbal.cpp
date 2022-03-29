@@ -403,6 +403,22 @@ void Gimbal::behavour_set()
     // {
     //     gimbal_behaviour_mode = GIMBAL_MOTIONLESS;
     // }
+
+#if GIMBAL_FRIC_OPEN_PITCH_UP
+    //云台抬头时间
+    static uint16_t gimbal_pitch_up_time = 0;
+    //当摩擦轮刚开启,云台抬头
+    if (shoot_open_fric_cmd_to_gimbal_up() == 1 && gimbal_pitch_up_time < 400)
+    {
+        gimbal.gimbal_pitch_motor.relative_angle_set = INIT_PITCH_SET + 0.3f;
+        gimbal_pitch_up_time++;
+    }
+    else if (shoot_open_fric_cmd_to_gimbal_up() == 0)
+    {
+        gimbal_pitch_up_time = 0;
+    }
+#endif
+
 }
 
 /**
@@ -903,6 +919,8 @@ void Gimbal::motor_absolute_angle_control(Gimbal_motor *gimbal_motor)
     gimbal_motor->current_set = gimbal_motor->speed_pid.pid_calc();
 }
 
+
+fp32 temp_absolute_angle_set = 0;
 /**
  * @brief          云台控制模式:GIMBAL_speed，使用陀螺仪计算的欧拉角进行控制
  * @param[out]     gimbal_motor:yaw电机或者pitch电机
@@ -936,6 +954,7 @@ void Gimbal::absolute_angle_limit(Gimbal_motor *gimbal_motor, fp32 add)
         }
     }
     angle_set = gimbal_motor->absolute_angle_set;
+    temp_absolute_angle_set = angle_set;
     gimbal_motor->absolute_angle_set = rad_format(angle_set + add);
     //是否超过最大 最小值
     if (gimbal_motor->absolute_angle_set > gimbal_motor->max_absolute_angle)

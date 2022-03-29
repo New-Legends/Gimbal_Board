@@ -235,6 +235,11 @@
           <WinNumber>1</WinNumber>
           <ItemText>temp_pitch</ItemText>
         </Ww>
+        <Ww>
+          <count>16</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>temp_absolute_angle_set</ItemText>
+        </Ww>
       </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>

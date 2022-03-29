@@ -301,7 +301,7 @@ public:
     const fp32 *gimbal_INT_angle_point; //获取陀螺仪角度值
     const fp32 *gimbal_INT_gyro_point;  //获取陀螺仪角速度值
     uint8_t step;
-
+    
     void init();                        //云台初始化
     void set_mode();                    //设置云台控制模式
     void feedback_update();             //云台数据反馈
