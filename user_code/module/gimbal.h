@@ -129,21 +129,21 @@ extern "C"
 #define ECD_RANGE 8191
 
 //限幅 需要自己手动校准
-#define YAW_OFFSET 3606   //编码器
-#define PITCH_OFFSET 4131 //编码器
+#define YAW_OFFSET 475   //编码器
+#define PITCH_OFFSET 7250 //编码器
 
 //限幅
 #define MAX_ABSOULATE_YAW 6.0f
 #define MIN_ABSOULATE_YAW -6.0f
 
-#define MAX_ABSOULATE_PITCH 0.1f
-#define MIN_ABSOULATE_PITCH -0.3f
+#define MAX_ABSOULATE_PITCH 0.48f
+#define MIN_ABSOULATE_PITCH -0.32f
 
 #define MAX_RELATIVE_YAW PI
 #define MIN_RELATIVE_YAW -PI
 
-#define MAX_RELATIVE_PITCH 0.2f
-#define MIN_RELATIVE_PITCH -0.45f
+#define MAX_RELATIVE_PITCH  0.58f
+#define MIN_RELATIVE_PITCH -0.19f
 
 
 
