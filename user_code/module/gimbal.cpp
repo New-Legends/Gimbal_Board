@@ -443,6 +443,7 @@ fp32 Gimbal::motor_ecd_to_angle_change(uint16_t ecd, uint16_t offset_ecd)
     return relative_ecd * MOTOR_ECD_TO_RAD;
 }
 
+
 /**
  * @brief          设置云台控制设定值，控制值是通过behaviour_control_set函数设置的
  * @retval         none
@@ -573,8 +574,6 @@ void Gimbal::gimbal_init_control(fp32 *yaw, fp32 *pitch)
     }
 }
 
-uint8_t gimbal_turn_flag = 0;
-fp32 gimbal_end_angle = 0.0f;
 
 
 /**
@@ -605,11 +604,6 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
         fp32 pitch_absoulute_angle_pid_parm[5] = {PITCH_AUTO_PID_KP, PITCH_AUTO_PID_KI, PITCH_AUTO_PID_KD, PITCH_AUTO_PID_MAX_IOUT, PITCH_AUTO_PID_MAX_OUT};
         gimbal_pitch_motor.absolute_angle_pid.init(PID_ANGLE, pitch_absoulute_angle_pid_parm, &gimbal_pitch_motor.absolute_angle, &gimbal_pitch_motor.absolute_angle_set, 0);
 
-        gimbal_yaw_motor.absolute_angle_pid.pid_clear();
-        gimbal_yaw_motor.absolute_angle_pid.pid_clear();
-        gimbal_yaw_motor.absolute_angle_pid.pid_clear();
-        gimbal_yaw_motor.absolute_angle_pid.pid_clear();
-
         auto_switch = TRUE;
     }
     else if (press_r_time != PRESS_LONG_TIME && auto_switch == TRUE)
@@ -621,10 +615,7 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
         fp32 pitch_absoulute_angle_pid_parm[5] = {PITCH_GYRO_ABSOLUTE_PID_KP, PITCH_GYRO_ABSOLUTE_PID_KI, PITCH_GYRO_ABSOLUTE_PID_KD, PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT, PITCH_GYRO_ABSOLUTE_PID_MAX_OUT};
         gimbal_pitch_motor.absolute_angle_pid.init(PID_ANGLE, pitch_absoulute_angle_pid_parm, &gimbal_pitch_motor.absolute_angle, &gimbal_pitch_motor.absolute_angle_set, 0);
 
-        gimbal_yaw_motor.absolute_angle_pid.pid_clear();
-        gimbal_yaw_motor.absolute_angle_pid.pid_clear();
-
-         auto_switch = FALSE;
+        auto_switch = FALSE;
     }
 
     #endif
@@ -633,9 +624,9 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
     //当在自瞄模式下且识别到目标,云台控制权交给mini pc
     if (auto_switch == TRUE && vision_if_find_target() == TRUE)
     {   
-
-    
         vision_error_angle(yaw, pitch); //获取yaw 和 pitch的偏移量
+
+
         //vision_send_data(CmdID);        //发送指令给小电脑
     }
     else
@@ -650,6 +641,8 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
 
         {
             static uint16_t last_turn_key_value = 0;
+            uint8_t gimbal_turn_flag = 0;
+            fp32 gimbal_end_angle = 0.0f;
 
             if (if_key_singal_pessed(gimbal_RC->key.v, last_turn_key_value, KEY_PRESSED_GIMBAL_TURN_180))
             {
@@ -681,6 +674,7 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
                 gimbal_turn_flag = 0;
             }
         }
+
     }
 
 #if GIMBAL_HIGH_PASS_FILTER

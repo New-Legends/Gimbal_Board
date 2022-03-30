@@ -106,15 +106,14 @@ extern "C"
 #define PITCH_CHANNEL 1
 #define GIMBAL_MODE_CHANNEL 0
 
-
 //掉头云台速度
 #define TURN_SPEED 0.04f
 
 //遥控器输入死区，因为遥控器存在差异，摇杆在中间，其值不一定为零
 #define RC_DEADBAND 10
 //云台 遥控器速度
-#define YAW_RC_SEN -0.00005f // 右手系 z轴逆时针为正 但是遥控器通道向右为正 故加负号
-#define PITCH_RC_SEN 0.000015f
+#define YAW_RC_SEN -0.000002f // 右手系 z轴逆时针为正 但是遥控器通道向右为正 故加负号
+#define PITCH_RC_SEN 0.000004f
 
 //云台 鼠标速度 
 #define YAW_MOUSE_SEN -0.00025f

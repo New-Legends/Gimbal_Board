@@ -193,52 +193,37 @@
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>fric_refree_para</ItemText>
+          <ItemText>add_yaw_angle</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>fric_speed_grade</ItemText>
+          <ItemText>add_pitch_angle</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>1</WinNumber>
-          <ItemText>cali_sensor</ItemText>
+          <ItemText>temp_yaw_rc</ItemText>
         </Ww>
         <Ww>
           <count>10</count>
           <WinNumber>1</WinNumber>
-          <ItemText>gyro_cali</ItemText>
+          <ItemText>temp_pitch_rc</ItemText>
         </Ww>
         <Ww>
           <count>11</count>
           <WinNumber>1</WinNumber>
-          <ItemText>gyro_offset</ItemText>
+          <ItemText>temp_yaw_auto</ItemText>
         </Ww>
         <Ww>
           <count>12</count>
           <WinNumber>1</WinNumber>
-          <ItemText>yaw_para,0x0A</ItemText>
+          <ItemText>temp_pitch_auto</ItemText>
         </Ww>
         <Ww>
           <count>13</count>
           <WinNumber>1</WinNumber>
-          <ItemText>pitch_para,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>14</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>temp_yaw</ItemText>
-        </Ww>
-        <Ww>
-          <count>15</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>temp_pitch</ItemText>
-        </Ww>
-        <Ww>
-          <count>16</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>temp_absolute_angle_set</ItemText>
+          <ItemText>pitch_compensation</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

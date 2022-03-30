@@ -21,7 +21,7 @@
 #define GIMBAL_HIGH_PASS_FILTER 1
 
 //开启摩擦轮 自动抬头
-#define GIMBAL_FRIC_OPEN_PITCH_UP 1
+#define GIMBAL_FRIC_OPEN_PITCH_UP 0
 
 /*-----------------------发射机构------------------------------*/
 //摩擦轮电机有电流输出
