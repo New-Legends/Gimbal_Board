@@ -172,23 +172,28 @@ void Shoot::set_mode()
         shoot_mode = SHOOT_STOP;
     }
 
+    temp_a = if_key_pessed(shoot_rc, 'G');
+    temp_b = if_key_pessed(last_shoot_rc, 'G');
+    temp_c = KEY_SHOOT_FRIC;
 
-    //处于中档， 可以使用键盘开启/关闭摩擦轮
-    if (switch_is_mid(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && KEY_SHOOT_FRIC)
-    {   if (shoot_mode == SHOOT_STOP)
-        {
-            shoot_mode = SHOOT_READY_FRIC;
-        }
-        else
-        {
-            shoot_mode = SHOOT_STOP;
-        }
+    //处于中档， 可以使用键盘开启摩擦轮
+    if (switch_is_mid(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && KEY_SHOOT_FRIC && shoot_mode == SHOOT_STOP)
+    {
+        shoot_mode = SHOOT_READY_FRIC;
     }
+    //处于中档， 可以使用键盘关闭摩擦轮
+    else if (switch_is_mid(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && KEY_SHOOT_FRIC && shoot_mode != SHOOT_STOP)
+    {
+        shoot_mode = SHOOT_STOP;
+    }
+
     //为了便于测试,右按键为下时关闭摩擦轮
     if (switch_is_down(shoot_rc->rc.s[0]))
     {
         shoot_mode = SHOOT_STOP;
     }
+
+
 
 
     //TODO 这里为了赶进度,对于abs函数使用了一种非常粗糙的方法完成,因为使用库函数abs编译器无法匹配正确的重载;后续需要修改
@@ -262,7 +267,7 @@ void Shoot::set_mode()
     // }
 
 
-    if(KEY_SHOOT_COVER && cover_mode == COVER_OPEN_DONE)//单击R并且开启完毕
+    if(if_key_singal_pessed(shoot_rc,last_shoot_rc,'R') && cover_mode == COVER_OPEN_DONE)//单击R并且开启完毕
     {
         cover_mode = COVER_CLOSE;
     }
@@ -286,7 +291,6 @@ void Shoot::set_mode()
   */
 void Shoot::feedback_update()
 {
-    last_shoot_rc->key.v = shoot_rc->key.v;
     shoot_last_key_v = shoot_rc->key.v;
     
     //更新摩擦轮电机速度
