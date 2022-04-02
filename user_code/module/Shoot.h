@@ -121,10 +121,13 @@
 #define TRIGGER_ONCE 2 * PI / TRIGGER_GRID_NUM
 
 #define COVER_OPEN_ANGLE 0.2 * PI
+#define COVER_MOTOR_SPEED 1.0f
 
 //一阶低通滤波参数
 #define SHOOT_ACCEL_FRIC_LEFT_NUM 0.2666666667f
 #define SHOOT_ACCEL_FRIC_RIGHT_NUM 0.2666666667f
+
+
 
 //电机序号
 #define LEFT_FRIC 0
@@ -132,7 +135,6 @@
 #define TRIGGER 2
 #define COVER 3
 
-#define COVER_MOTOR_SPEED 1.0f
 
 typedef enum
 {
@@ -189,14 +191,14 @@ public:
   uint16_t press_r_time;
   uint16_t rc_s_time;
   //弹仓电机按键状态
-  bool_t press_cover;
-  bool_t last_press_cover;
+  uint16_t press_cover;
+  uint16_t last_press_cover;
   uint16_t press_cover_time;
 
   uint16_t block_time;
   uint16_t reverse_time;
-  bool_t move_flag;
-  bool_t cover_move_flag;
+  uint16_t move_flag;
+  uint16_t cover_move_flag;
 
   //TODO 暂时未安装微动开关
   //微动开关
@@ -219,8 +221,10 @@ public:
   void cover_control();
 };
 
+//发射机构控制云台不动
 bool_t shoot_cmd_to_gimbal_stop();
-
+//发射机构控制云台抬头
+bool_t shoot_open_fric_cmd_to_gimbal_up();
 
 extern Shoot shoot;
 
