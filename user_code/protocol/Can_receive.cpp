@@ -3,8 +3,19 @@
 #include "cmsis_os.h"
 #include "main.h"
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+#include "bsp_delay.h"
+
+#ifdef __cplusplus
+}
+#endif
 #include "bsp_can.h"
 #include "can.h"
+
 
 #include "struct_typedef.h"
 
@@ -93,6 +104,7 @@ void Can_receive::can_cmd_shoot_motor_motor(int16_t left_fric, int16_t right_fri
     can_send_data[6] = cover >> 8;
     can_send_data[7] = cover;
 
+
     HAL_CAN_AddTxMessage(&SHOOT_CAN, &can_tx_message, can_send_data, &send_mail_box);
 }
 
@@ -116,6 +128,8 @@ void Can_receive::can_cmd_shoot_motor_reset_ID(void)
     can_send_data[5] = 0;
     can_send_data[6] = 0;
     can_send_data[7] = 0;
+
+
 
     HAL_CAN_AddTxMessage(&SHOOT_CAN, &can_tx_message, can_send_data, &send_mail_box);
 }
@@ -168,6 +182,7 @@ void Can_receive::send_rc_board_com(int16_t ch_0, int16_t ch_2, int16_t ch_3, ui
     can_send_data[5] = ch_3;
     can_send_data[6] = v >> 8;
     can_send_data[7] = v;
+
 
     HAL_CAN_AddTxMessage(&BOARD_COM_CAN, &can_tx_message, can_send_data, &send_mail_box);
 }

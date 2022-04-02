@@ -29,8 +29,6 @@ void Communicate::init()
 
 void Communicate::run()
 {
-    vision_send_data(1);
-
     //向底盘发送遥控器和云台数据
     int16_t temp_ch0, temp_ch2, temp_ch3;
     uint16_t temp_v;
@@ -43,8 +41,8 @@ void Communicate::run()
     temp_v = remote_control.rc_ctrl.key.v;
     temp_s0 = remote_control.rc_ctrl.rc.s[0];
 
-    temp_gimbal_behaviour_mode = gimbal.gimbal_behaviour_mode;
-    temp_gimbal_yaw_angle = gimbal.gimbal_yaw_motor.relative_angle;
+    temp_gimbal_behaviour_mode = gimbal.gimbal_mode;
+    temp_gimbal_yaw_angle = gimbal.gimbal_yaw_motor.encode_angle;
 
     can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_ch3, temp_v);
     can_receive.send_gimbal_board_com(temp_s0, temp_gimbal_behaviour_mode, temp_gimbal_yaw_angle);
@@ -54,7 +52,6 @@ void Communicate::run()
 extern "C"
 {
 
-    // TODO 设备检查未更新
     //遥控器串口
     void USART3_IRQHandler(void)
     {
@@ -97,7 +94,6 @@ extern "C"
                     remote_control.unpack(0);
                     //记录数据接收时间
                     detect_hook(DBUS_TOE);
-                    remote_control.sbus_to_usart1(0);
                 }
             }
             else
@@ -129,7 +125,6 @@ extern "C"
                     remote_control.unpack(1);
                     //记录数据接收时间
                     detect_hook(DBUS_TOE);
-                    remote_control.sbus_to_usart1(1);
                 }
             }
         }

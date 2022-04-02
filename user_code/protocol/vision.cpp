@@ -2,6 +2,10 @@
 #include "Remote_control.h"
 #include "struct_typedef.h"
 #include "string.h"
+#include "INS.h"
+#include "tim.h"
+#include "CRC8_CRC16.h"
+#include "gimbal.h"
 
 // #include "referee.h"
 
@@ -11,6 +15,8 @@ extern DMA_HandleTypeDef hdma_usart1_rx;
 uint8_t Vision_Buffer[2][VISION_BUFFER_LEN]; //视觉数据暂存
 
 extern RC_ctrl_t rc_ctrl;
+extern INS imu;
+extern Gimbal gimbal;
 
 //角度初始化补偿
 float Vision_Comps_Yaw = COMPENSATION_YAW;
@@ -38,6 +44,8 @@ float Vision_Comps_Yaw_Send = COMPENSATION_YAW;
 float Vision_Comps_Pitch_Send = COMPENSATION_PITCH;
 float SB_K_comps = 3.f;
 
+static uint64_t send_cnt = 0;
+
 void vision_init()
 {
   usart1_init(Vision_Buffer[0], Vision_Buffer[1], VISION_BUFFER_LEN);
@@ -58,30 +66,48 @@ void vision_init()
   */
 uint8_t Vision_Time_Test[2] = {0}; //当前数据和上一次数据
 uint8_t Vision_Ping = 0;           //发送时间间隔
+
+/**
+  * @brief          定时器周期给视觉发送陀螺仪数据
+  * @param[in]      htim:定时器指针
+  * @retval         none
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  if (htim == &htim1)
+  {
+    HAL_GPIO_TogglePin(CRAMA_TRI_GPIO_Port, CRAMA_TRI_Pin);
+    if(send_cnt++ % 2 == 0)
+    {
+      vision_send_data(0x02);
+    }
+  }
+}
+
 void vision_read_data(uint8_t *ReadFormUart)
 {
 
-  //判断帧头数据是否为0xA5
-  if (ReadFormUart[0] == VISION_BEGIN)
-  {
-    //判断帧头数据是否为0xff
-    if (ReadFormUart[17] == VISION_END)
-    {
+ //判断帧头数据是否为0xA5
+ if (ReadFormUart[0] == VISION_BEGIN)
+ {
+   //判断帧头数据是否为0xff
+   if (ReadFormUart[17] == VISION_END)
+   {
 
-      //接收数据拷贝
-      memcpy(&VisionRecvData, ReadFormUart, VISION_LEN_PACKED);
+     //接收数据拷贝
+     memcpy(&VisionRecvData, ReadFormUart, VISION_READ_LEN_PACKED);
 
-      if (VisionRecvData.identify_target == TRUE)
-        if_identify_target = TRUE; // 识别到装甲板
-      else
-        if_identify_target = FALSE; // 未识别到装甲板
+     if (VisionRecvData.identify_target == TRUE)
+       if_identify_target = TRUE; // 识别到装甲板
+     else
+       if_identify_target = FALSE; // 未识别到装甲板
 
-      // //帧计算
-      // Vision_Time_Test[NOW] = xTaskGetTickCount();
-      // Vision_Ping = Vision_Time_Test[NOW] - Vision_Time_Test[LAST];//计算时间间隔
-      // Vision_Time_Test[LAST] = Vision_Time_Test[NOW];
-    }
-  }
+     // //帧计算
+     // Vision_Time_Test[NOW] = xTaskGetTickCount();
+     // Vision_Ping = Vision_Time_Test[NOW] - Vision_Time_Test[LAST];//计算时间间隔
+     // Vision_Time_Test[LAST] = Vision_Time_Test[NOW];
+   }
+ }
 }
 
 /**
@@ -95,11 +121,11 @@ void vision_read_data(uint8_t *ReadFormUart)
   *				CmdID   0x03   小符
   *				CmdID   0x04   大符
   */
-uint8_t vision_send_pack[50] = {0}; //大于18就行
+uint8_t vision_send_pack[50] = {0};
 uint8_t CmdID = 0;
 void vision_send_data(uint8_t CmdID)
 {
-  int i; //循环发送次数
+int i; //循环发送次数
   uint16_t id1_17mm_speed_limit;
   uint16_t bullet_speed;
   //get_shooter_id1_17mm_speed_limit_and_bullet_speed(&id1_17mm_speed_limit, &bullet_speed);
@@ -108,21 +134,31 @@ void vision_send_data(uint8_t CmdID)
 
   VisionSendData.CmdID = CmdID;
   VisionSendData.speed = 3;
+  VisionSendData.yaw = imu.INS_angle[0];
+  VisionSendData.pitch = imu.INS_angle[1];
+  VisionSendData.roll = imu.INS_angle[2];
+  VisionSendData.END = 0xFF;
 
-  VisionSendData.END = VISION_END;
+  memcpy(vision_send_pack, &VisionSendData, VISION_SEND_LEN_PACKED);
 
-  memcpy(vision_send_pack, &VisionSendData, 4);
-
-  //将打包好的数据通过串口移位发送到西奥迪男
-  HAL_UART_Transmit(&huart1, vision_send_pack, 4, 0xFFF);
+  //将打包好的数据通过串口移位发送到上位机
+  for (i = 0; i < VISION_SEND_LEN_PACKED; i++)
+	{
+		HAL_UART_Transmit(&huart1, &vision_send_pack[i], sizeof(vision_send_pack[0]), 0xFFF);
+	}
+  //HAL_UART_Transmit(&huart1, vision_send_pack, VISION_SEND_LEN_PACKED, 0xFFF);
 
   memset(vision_send_pack, 0, 50);
 }
 
+//调解自瞄的跟随速度
+uint16_t yaw_para = 100;
+uint16_t pitch_para = 100;
+
 void vision_error_angle(float *yaw_angle_error, float *pitch_angle_error)
 {
-  *yaw_angle_error = VisionRecvData.yaw_angle / PI / 180;
-  *pitch_angle_error = VisionRecvData.pitch_angle / PI / 180;
+  *yaw_angle_error = -VisionRecvData.yaw_angle / yaw_para;
+  *pitch_angle_error = VisionRecvData.pitch_angle / pitch_para;
 
   if (VisionRecvData.yaw_angle == 0)
   {

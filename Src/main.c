@@ -35,6 +35,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "bsp_buzzer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -86,11 +87,11 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-      
+
   /* USER CODE END Init */
 
   /* Configure the system clock */
-  SystemClock_Config();
+  SystemClock_Config(); 
 
   /* USER CODE BEGIN SysInit */
 

@@ -2,8 +2,6 @@
 
 #include "Communicate.h"
 
-uint8_t communicate_flag = 0;
-
 /**
 * @brief          communucate_task
 * @param[in]      pvParameters: NULL
@@ -17,10 +15,8 @@ void communicate_task(void *pvParameters)
 
   while (1)
   {
-
     communicate.run();
 
-    communicate_flag = HAL_GPIO_ReadPin(KEY_GPIO_Port, KEY_Pin);
-    vTaskDelay(COM_CONTROL_TIME_MS);
+    vTaskDelay(COMMUNICATE_CONTROL_TIME_MS);
   }
 }

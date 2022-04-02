@@ -40,12 +40,7 @@ public:
 extern LED led;
 
 extern Oled OLED;
-// /**
-//   * @brief          led rgb task
-//   * @param[in]      pvParameters: NULL
-//   * @retval         none
-//   */
-// extern void led_RGB_flow(void);
+
 
 
 #endif

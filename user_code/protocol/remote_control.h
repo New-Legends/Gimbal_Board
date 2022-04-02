@@ -87,13 +87,11 @@ typedef __packed struct
 
 /*-----相比于官方的版本,将宏定义布尔值转化为可传参的函数,方便不同任务内的遥控器调用按键--*/
 //是否按下鼠标
-bool_t if_mouse_pessed(const RC_ctrl_t *_rc_ctrl, char mouse_num);
-//是否单击鼠标
-bool_t if_mouse_singal_pessed(const RC_ctrl_t *_rc_ctrl, const RC_ctrl_t *_last_rc_ctrl, char mouse_num);
+uint16_t if_mouse_pessed(const RC_ctrl_t *_rc_ctrl, char mouse_num);
 //是否按下对应按键
-bool_t if_key_pessed(const RC_ctrl_t *_rc_ctrl, char key_num);
+uint16_t if_key_pessed(uint16_t key_value, char key_num);
 //是否单击对于按键
-bool_t if_key_singal_pessed(const RC_ctrl_t *_rc_ctrl, const RC_ctrl_t *_last_rc_ctrl, char key_num);
+uint16_t if_key_singal_pessed(uint16_t key_value, uint16_t last_key_value, char key_num);
 /* ----------------------- Internal Data ----------------------------------- */
 
 //遥控器控制
@@ -108,10 +106,9 @@ public:
         void init();
 
         const RC_ctrl_t *get_remote_control_point();
-        const RC_ctrl_t *get_last_remote_control_point();
+        RC_ctrl_t *get_last_remote_control_point();
 
         void unpack(uint8_t num);
-        void sbus_to_usart1(uint8_t num);
 
         uint8_t RC_data_is_error();
         void slove_RC_lost();

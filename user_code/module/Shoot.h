@@ -22,6 +22,7 @@
 #include "Communicate.h"
 #include "Motor.h"
 #include "user_lib.h"
+#include "First_order_filter.h"
 
 #include "Config.h"
 
@@ -36,12 +37,15 @@
 //开启摩擦轮的斜坡
 #define SHOOT_FRIC_ADD_VALUE 0.1f
 
+#define SHOOT_CONTROL_TIME 0.002f
+
+
 //射击完成后 子弹弹出去后，判断时间，以防误触发
 #define SHOOT_DONE_KEY_OFF_TIME 15
 //鼠标长按判断
 #define PRESS_LONG_TIME 400
-//弹仓R键长按判断
-#define PRESS_R_LONG_TIME 400
+//弹仓按键长按判断
+#define PRESS_COVER_LONG_TIME 400
 //摩擦轮开启按键延时
 #define KEY_FRIC_LONG_TIME 200
 
@@ -55,13 +59,6 @@
 
 //摩擦轮电机rmp 变化成 旋转速度的比例
 #define FRIC_RPM_TO_SPEED 0.000415809748903494517209f
-
-//摩擦轮电机PID
-#define FRIC_SPEED_PID_KP 4000.0f //1800
-#define FRIC_SPEED_PID_KI 0.4f    //0.5
-#define FRIC_SPEED_PID_KD 2.0f    //2.0
-#define FRIC_PID_MAX_IOUT 200.0f
-#define FRIC_PID_MAX_OUT 2000.0f
 
 #define FRIC_REQUIRE_SPEED_RMP 500.0f
 #define FRIC_MAX_SPEED_RMP 4000.0f
@@ -83,7 +80,7 @@
 #define SWITCH_TRIGGER_ON 0
 #define SWITCH_TRIGGER_OFF 1
 
-//卡单时间 以及反转时间
+//卡弹时间 以及反转时间
 #define BLOCK_TRIGGER_SPEED 1.0f
 #define BLOCK_TIME 700
 #define REVERSE_TIME 500
@@ -91,13 +88,24 @@
 
 #define PI_FOUR 0.78539816339744830961566084581988f
 #define PI_TEN 0.314f
+/*---------------------------pid----------------------*/
+//摩擦轮电机PID
+#define FRIC_SPEED_PID_KP 2000.0f // 1800
+#define FRIC_SPEED_PID_KI 0.4f    // 0.5
+#define FRIC_SPEED_PID_KD 0.0f    // 2.0
+#define FRIC_PID_MAX_IOUT 200.0f
+#define FRIC_PID_MAX_OUT 6000.0f
 
 //拨弹轮电机PID
-#define TRIGGER_ANGLE_PID_KP 1000.0f //800
-#define TRIGGER_ANGLE_PID_KI 2.0f    //0.5
-#define TRIGGER_ANGLE_PID_KD 5.0f
-#define TRIGGER_BULLET_PID_MAX_IOUT 200.0f
-#define TRIGGER_BULLET_PID_MAX_OUT 10000.0f
+#define TRIGGER_ANGLE_PID_KP 2000.0f 
+#define TRIGGER_ANGLE_PID_KI 0.5f    
+#define TRIGGER_ANGLE_PID_KD 0.0f
+#define TRIGGER_BULLET_PID_MAX_IOUT 1000.0f
+#define TRIGGER_BULLET_PID_MAX_OUT 4000.0f
+
+#define TRIGGER_READY_PID_MAX_IOUT 2000.0f
+#define TRIGGER_READY_PID_MAX_OUT 4000.0f
+
 
 //弹仓开合电机PID
 #define COVER_ANGLE_PID_KP 1000.0f //800
@@ -106,31 +114,27 @@
 #define COVER_BULLET_PID_MAX_IOUT 200.0f
 #define COVER_BULLET_PID_MAX_OUT 10000.0f
 
-#define TRIGGER_READY_PID_MAX_IOUT 200.0f
-#define TRIGGER_READY_PID_MAX_OUT 10000.0f
 
 #define SHOOT_HEAT_REMAIN_VALUE 80
 //拨盘格数
 #define TRIGGER_GRID_NUM 8
 #define TRIGGER_ONCE 2 * PI / TRIGGER_GRID_NUM
 
-#define COVER_OPEN_ANGLE 2 * PI / TRIGGER_GRID_NUM
+#define COVER_OPEN_ANGLE 0.2 * PI
+#define COVER_MOTOR_SPEED 1.0f
 
+//一阶低通滤波参数
+#define SHOOT_ACCEL_FRIC_LEFT_NUM 0.2666666667f
+#define SHOOT_ACCEL_FRIC_RIGHT_NUM 0.2666666667f
+
+
+
+//电机序号
 #define LEFT_FRIC 0
 #define RIGHT_FRIC 1
 #define TRIGGER 2
 #define COVER 3
 
-#define COVER_MOTOR_SPEED 1.0f
-
-// TODO 还需改进
-//摩擦轮按键控制
-//#define KEY_SHOOT_FRIC if_key_singal_pessed(shoot.shoot_rc, shoot.last_shoot_rc, 'G')
-//暂时使用这种方法
-#define KEY_SHOOT_FRIC ((shoot.shoot_rc->key.v & KEY_PRESSED_SHOOT_FRIC) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_SHOOT_FRIC) != 0)
-//射频手动调整:
-#define KEY_SHOOT_TRIGGER_SPEED_UP ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_CTRL) != 0) && ((shoot.shoot_rc->key.v & KEY_PRESSED_SHOOT_TRIGGER_SPEED_UP) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_SHOOT_TRIGGER_SPEED_UP) != 0)
-#define KEY_SHOOT_TRIGGER_SPEED_DOWN ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_CTRL) != 0) && ((shoot.shoot_rc->key.v & KEY_PRESSED_SHOOT_TRIGGER_SPEED_DOWN) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_SHOOT_TRIGGER_SPEED_DOWN) != 0)
 
 typedef enum
 {
@@ -155,7 +159,7 @@ class Shoot
 {
 public:
   const RC_ctrl_t *shoot_rc;
-  const RC_ctrl_t *last_shoot_rc;
+  RC_ctrl_t *last_shoot_rc;
 
   uint16_t shoot_last_key_v;
 
@@ -168,6 +172,10 @@ public:
   Trigger_motor trigger_motor;
   //弹仓开合电机
   Cover_motor cover_motor;
+
+  
+  First_order_filter shoot_cmd_slow_fric_left; //使用一阶低通滤波减缓设定值
+  First_order_filter shoot_cmd_slow_fric_right; //使用一阶低通滤波减缓设定值
 
   //摩擦轮电机 限位开关 状态
   bool_t fric_status;
@@ -183,14 +191,14 @@ public:
   uint16_t press_r_time;
   uint16_t rc_s_time;
   //弹仓电机按键状态
-  bool_t press_R;
-  bool_t last_press_R;
-  uint16_t press_R_time;
+  uint16_t press_cover;
+  uint16_t last_press_cover;
+  uint16_t press_cover_time;
 
   uint16_t block_time;
   uint16_t reverse_time;
-  bool_t move_flag;
-  bool_t cover_move_flag;
+  uint16_t move_flag;
+  uint16_t cover_move_flag;
 
   //TODO 暂时未安装微动开关
   //微动开关
@@ -209,10 +217,14 @@ public:
   void trigger_motor_turn_back(); //拨盘电机回转
   void shoot_bullet_control();
 
+  //弹仓控制相关函数
   void cover_control();
-
-  bool_t shoot_cmd_to_gimbal_stop();
 };
+
+//发射机构控制云台不动
+bool_t shoot_cmd_to_gimbal_stop();
+//发射机构控制云台抬头
+bool_t shoot_open_fric_cmd_to_gimbal_up();
 
 extern Shoot shoot;
 
