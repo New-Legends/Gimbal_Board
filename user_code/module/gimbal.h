@@ -120,7 +120,7 @@ extern "C"
 
 //电机正反装所对应的
 #define YAW_TURN 1
-#define PITCH_TURN 1
+#define PITCH_TURN 0
 
 //电机码盘值半圈的编码值
 #define HALF_ECD_RANGE 4096
@@ -128,15 +128,15 @@ extern "C"
 #define ECD_RANGE 8191
 
 //云台中值(中值所对应的编码器编码值)
-#define ECD_YAW_MID 3563
-#define ECD_PITCH_MID 1787
+#define ECD_YAW_MID 4580
+#define ECD_PITCH_MID 7385
 
 //限幅
 #define MAX_GYRO_YAW PI
 #define MIN_GYRO_YAW -PI
 
-#define MAX_ENCODE_YAW PI
-#define MIN_ENCODE_YAW -PI
+#define MAX_ENCODE_YAW 2*PI
+#define MIN_ENCODE_YAW -2*PI
 
 #define MAX_ENCODE_PITCH 0.42f
 #define MIN_ENCODE_PITCH -0.45f
