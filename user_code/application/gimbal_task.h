@@ -54,11 +54,11 @@
 //任务开始空闲一段时间
 #define GIMBAL_TASK_INIT_TIME 201
 
-#define GIMBAL_CONTROL_TIME_MS 2
+#define GIMBAL_CONTROL_TIME_MS 1
 
 
 extern void gimbal_task(void *pvParameters);
 
-extern bool_t gimbal_imu_open_flag ;
+extern uint8_t gimbal_imu_open_flag ;
 
 #endif 

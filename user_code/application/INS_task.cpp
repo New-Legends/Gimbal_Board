@@ -59,7 +59,7 @@ void ins_task(void *pvParameters)
  //待云台归中中开启陀螺仪
  while (1)
  {
-   if (gimbal_imu_open_flag)
+   if (gimbal_imu_open_flag == 1)
      break;
 
    vTaskDelay(IMU_CONTROL_TIME_MS);

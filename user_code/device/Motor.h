@@ -4,60 +4,94 @@
 #include "Pid.h"
 #include "Can_receive.h"
 
-//传感器类型
-#define ENCODE 0
-#define GYRO 1
+//m3508电机
+class M3508_motor
+{
+public:
+    const motor_measure_t *motor_measure;
+    //速度环pid和角度环pid, 用户可以选择性开启
+    Pid speed_pid;
+    Pid angle_pid;
 
-// gimbal电机
+    fp32 accel;
+    fp32 speed;
+    fp32 speed_set;
+    fp32 angle;
+    fp32 angle_set;
+
+    fp32 current_set;
+    int16_t current_give;
+
+    void init(const motor_measure_t *motor_measure_);
+} ;
+
+//G6020电机
+class G6020_motor
+{
+public:
+    const motor_measure_t *motor_measure;
+    //速度环pid和角度环pid, 用户可以选择性开启
+    Pid speed_pid;
+    Pid angle_pid;
+
+    uint16_t offset_ecd;  //用户定义的初始中值
+
+    fp32 max_angle; //rad   角度限幅
+    fp32 mid_angle; //rad
+    fp32 min_angle; //rad
+
+    fp32 angle;
+    fp32 angle_set;
+    fp32 speed;
+    fp32 speed_set;
+    fp32 current_set;
+    int16_t current_give;
+
+    void init(const motor_measure_t *motor_measure_);
+};
+
+//云台状态机
+typedef enum
+{
+    GIMBAL_MOTOR_RAW = 0, //电机原始值控制
+    GIMBAL_MOTOR_GYRO,    //电机陀螺仪角度控制
+    GIMBAL_MOTOR_ENCONDE, //电机编码值角度控制
+} gimbal_motor_mode_e;
+
+//gimbal电机
 class Gimbal_motor
 {
 public:
-    //电机数据
     const motor_measure_t *motor_measure;
+    //初始化电机控制模式
+    gimbal_motor_mode_e gimbal_motor_mode;
+    gimbal_motor_mode_e last_gimbal_motor_mode;
 
-    //速度环PID
+    //速度环pid和角度环pid, 用户可以选择性开启
     Pid speed_pid;
-    //陀螺仪角度环PID
-    Pid gyro_angle_pid;
-    //编码器角度环PID
-    Pid encode_angle_pid;
+    Pid absolute_angle_pid;
+    Pid relative_angle_pid;
 
-    //用户定义的初始中值
-    uint16_t offset_ecd;
+    uint16_t offset_ecd; //用户定义的初始中值
 
-    //编码器角度限幅和中值
-    fp32 max_encode_angle; // rad
-    fp32 min_encode_angle; // rad
-    fp32 mid_encode_angle; // rad
+    fp32 max_relative_angle; //rad   角度限幅
+    fp32 mid_relative_angle; //rad
+    fp32 min_relative_angle; //rad
 
-    //陀螺仪角度限幅和中值
-    fp32 max_gyro_angle; // rad
-    fp32 min_gyro_angle; // rad
-    fp32 mid_gyro_angle; // rad
+    fp32 max_absolute_angle; //rad
+    fp32 min_absolute_angle; //rad
+    fp32 mid_absolute_angle; //rad
 
-    //编码器计算出来的角度及设定值
-    fp32 encode_angle;     // rad
-    fp32 encode_angle_set; // rad
-    //陀螺仪计算出来的角度及设定值
-    fp32 gyro_angle;     // rad
-    fp32 gyro_angle_set; // rad
-    //云台电机速度和速度设置
+    fp32 relative_angle;     //rad
+    fp32 relative_angle_set; //rad
+    fp32 absolute_angle;     //rad
+    fp32 absolute_angle_set; //rad
     fp32 speed;
     fp32 speed_set;
-    //云台PID计算得到的电流值
     fp32 current_set;
-    //最终Can发送的电流值
     int16_t current_give;
 
-    void init_data_point(const motor_measure_t *motor_measure_); //初始化云台数据指针
-    void init_pid_param(int gimbal);                             //初始化PID参数
-    void init_gimbal_offset(int gimbal);                         //初始化中值和限幅
-    void angle_limit(fp32 add, int angle_mode);                  //角度控制总函数
-    void gyro_angle_limit(fp32 add);                             //陀螺仪角度控制
-    void encode_angle_limit(fp32 add);                           //编码器角度控制
-
-    void motor_gyro_angle_control();   //云台陀螺仪角度电流计算
-    void motor_encode_angle_control(); //云台编码器角度电流计算
+    void init(const motor_measure_t *motor_measure_);
 };
 
 //摩擦轮电机
@@ -101,7 +135,7 @@ public:
     fp32 current_set;
     int16_t current_give;
 
-    int8_t ecd_count; ///编码值计数
+    int8_t ecd_count;    ///编码值计数
 
     void init(const motor_measure_t *motor_measure_);
 };
@@ -124,7 +158,7 @@ public:
     fp32 current_set;
     int16_t current_give;
 
-    int8_t ecd_count; ///编码值计数
+    int8_t ecd_count;    ///编码值计数
 
     void init(const motor_measure_t *motor_measure_);
 };
