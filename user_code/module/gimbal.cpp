@@ -345,6 +345,7 @@ void Gimbal::switch_control()
     {
         gimbal_mode = GIMBAL_ZERO_FORCE;
     }
+<<<<<<< HEAD
 }
 /**
  * @brief          摩擦轮上电抬头控制
@@ -364,6 +365,14 @@ void Gimbal::pitch_up_control()
     {
         gimbal_pitch_up_time = 0;
     }
+=======
+
+    // //当弹仓开启时,云台静止
+    // if (shoot_cmd_to_gimbal_stop())
+    // {
+    //     gimbal_behaviour_mode = GIMBAL_MOTIONLESS;
+    // }
+>>>>>>> parent of 88c54fc (3.29备份)
 }
 /**
  * @brief          计算ecd与offset_ecd之间的相对角度
@@ -689,6 +698,127 @@ void Gimbal::output()
 
     can_receive.can_cmd_gimbal_motor(gimbal_yaw_motor.current_give, gimbal_pitch_motor.current_give, 0, 0);
 }
+<<<<<<< HEAD
+=======
+
+/**
+ * @brief          云台控制模式:GIMBAL_MOTOR_RAW，电流值直接发送到CAN总线.
+ * @param[out]     gimbal_motor:yaw电机或者pitch电机
+ * @retval         none
+ */
+
+void Gimbal::motor_raw_angle_control(Gimbal_motor *gimbal_motor)
+{
+    if (gimbal_motor == NULL)
+    {
+        return;
+    }
+    gimbal_motor->current_set = gimbal_motor->current_set;
+}
+
+/**
+ * @brief          云台控制模式:GIMBAL_MOTOR_ENCONDE，使用编码相对角进行控制
+ * @param[out]     gimbal_motor:yaw电机或者pitch电机
+ * @retval         none
+ */
+void Gimbal::motor_relative_angle_control(Gimbal_motor *gimbal_motor)
+{
+    if (gimbal_motor == NULL)
+    {
+        return;
+    }
+
+
+
+    //角度环，速度环串级pid调试
+    gimbal_motor->speed_set = gimbal_motor->relative_angle_pid.pid_calc();
+    gimbal_motor->current_set = gimbal_motor->speed_pid.pid_calc();
+}
+
+/**
+ * @brief          云台控制模式:GIMBAL_speed，使用陀螺仪计算的欧拉角进行控制
+ * @param[out]     gimbal_motor:yaw电机或者pitch电机
+ * @retval         none
+ */
+void Gimbal::motor_absolute_angle_control(Gimbal_motor *gimbal_motor)
+{
+    if (gimbal_motor == NULL)
+    {
+        return;
+    }
+
+    //角度环，速度环串级pid调试
+    gimbal_motor->speed_set = gimbal_motor->absolute_angle_pid.pid_calc();
+    gimbal_motor->current_set = gimbal_motor->speed_pid.pid_calc();
+}
+
+/**
+ * @brief          云台控制模式:GIMBAL_speed，使用陀螺仪计算的欧拉角进行控制
+ * @param[out]     gimbal_motor:yaw电机或者pitch电机
+ * @retval         none
+ */
+
+void Gimbal::absolute_angle_limit(Gimbal_motor *gimbal_motor, fp32 add)
+{
+    static fp32 bias_angle;
+    static fp32 angle_set;
+    // now angle error
+    //当前控制误差角度
+    bias_angle = rad_format(gimbal_motor->absolute_angle_set - gimbal_motor->absolute_angle);
+    // relative angle + angle error + add_angle > max_relative angle
+    //云台相对角度+ 误差角度 + 新增角度 如果大于 最大机械角度
+    if (gimbal_motor->relative_angle + bias_angle + add > gimbal_motor->max_relative_angle)
+    {
+        //如果是往最大机械角度控制方向
+        if (add > 0.0f)
+        {
+            // calculate max add_angle
+            //计算出一个最大的添加角度，
+            add = gimbal_motor->max_relative_angle - gimbal_motor->relative_angle - bias_angle;
+        }
+    }
+    else if (gimbal_motor->relative_angle + bias_angle + add < gimbal_motor->min_relative_angle)
+    {
+        if (add < 0.0f)
+        {
+            add = gimbal_motor->min_relative_angle - gimbal_motor->relative_angle - bias_angle;
+        }
+    }
+    angle_set = gimbal_motor->absolute_angle_set;
+    gimbal_motor->absolute_angle_set = rad_format(angle_set + add);
+    //是否超过最大 最小值
+    if (gimbal_motor->absolute_angle_set > gimbal_motor->max_absolute_angle)
+    {
+        gimbal_motor->absolute_angle_set = gimbal_motor->max_absolute_angle;
+    }
+    else if (gimbal_motor->absolute_angle_set < gimbal_motor->min_absolute_angle)
+    {
+        gimbal_motor->absolute_angle_set = gimbal_motor->min_absolute_angle;
+    }
+}
+
+/**
+ * @brief          云台控制模式:GIMBAL_MOTOR_ENCONDE，使用编码相对角进行控制
+ * @param[out]     gimbal_motor:yaw电机或者pitch电机
+ * @retval         none
+ */
+
+void Gimbal::relative_angle_limit(Gimbal_motor *gimbal_motor, fp32 add)
+{
+
+    gimbal_motor->relative_angle_set += add;
+    //是否超过最大 最小值
+    if (gimbal_motor->relative_angle_set > gimbal_motor->max_relative_angle)
+    {
+        gimbal_motor->relative_angle_set = gimbal_motor->max_relative_angle;
+    }
+    else if (gimbal_motor->relative_angle_set < gimbal_motor->min_relative_angle)
+    {
+        gimbal_motor->relative_angle_set = gimbal_motor->min_relative_angle;
+    }
+}
+
+>>>>>>> parent of 88c54fc (3.29备份)
 /*****************************(C) CALI GIMBAL *******************************/
 /**
  * @brief          云台校准计算，将校准记录的中值,最大 最小值

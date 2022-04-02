@@ -701,6 +701,7 @@ void Shoot::output()
 #else
     fric_motor[LEFT_FRIC].current_give = 0;
     fric_motor[RIGHT_FRIC].current_give = 0;
+
 #endif
 
 #if SHOOT_TRIGGER_MOTOR_HAVE_CURRENT
@@ -831,24 +832,6 @@ void Shoot::cover_control()
 bool_t shoot_cmd_to_gimbal_stop()
 {
     if (shoot.cover_mode == COVER_OPEN)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-
-/**
- * @brief          摩擦轮刚打开时,云台抬头
- * @param[in]      none
- * @retval         1: no move 0:normal
- */
-bool_t shoot_open_fric_cmd_to_gimbal_up()
-{
-    if (shoot.shoot_mode > SHOOT_READY_FRIC)
     {
         return 1;
     }

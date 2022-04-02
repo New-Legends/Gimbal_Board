@@ -232,6 +232,7 @@ public:
     const fp32 *gimbal_INT_gyro_point;  //获取陀螺仪角速度值
     uint8_t step;
 
+<<<<<<< HEAD
     bool_t gimbal_stop_flag; //云台自锁Flag
 
     //云台自锁按键状态
@@ -255,6 +256,22 @@ public:
     void turn_around_control(fp32 *yaw); //掉头控制
     void solve();                        //云台控制PID计算
     void output();                       //输出电流
+=======
+    void init();                        //云台初始化
+    void set_mode();                    //设置云台控制模式
+    void feedback_update();             //云台数据反馈
+    void set_control();                 //设置云台控制量
+    void solve();                       //云台控制PID计算
+    void output();                      //输出电流
+
+    /***************************(C)  MOTOR control *******************************/
+    void absolute_angle_limit(Gimbal_motor *gimbal_motor, fp32 add); //陀螺仪模式电机计算
+    void relative_angle_limit(Gimbal_motor *gimbal_motor, fp32 add); //编码器模式电机计算
+    void motor_raw_angle_control(Gimbal_motor *gimbal_motor);        //云台直接电流计算
+    void motor_absolute_angle_control(Gimbal_motor *gimbal_motor);   //云台陀螺仪模式电流计算
+    void motor_relative_angle_control(Gimbal_motor *gimbal_motor);   //云台编码器模式电流计算
+    /***************************(C)  MOTOR control *******************************/
+>>>>>>> parent of 88c54fc (3.29备份)
 
     /***************************(C) GIMBAL control *******************************/
     void gimbal_to_mid_control(fp32 *yaw, fp32 *pitch);     //初始化模式

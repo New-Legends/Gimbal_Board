@@ -15,9 +15,6 @@
 //云台一阶高通滤波是否开启
 #define GIMBAL_HIGH_PASS_FILTER 1
 
-//开启摩擦轮 自动抬头
-#define GIMBAL_FRIC_OPEN_PITCH_UP 1
-
 /*-----------------------发射机构------------------------------*/
 //摩擦轮电机有电流输出
 #define SHOOT_FRIC_MOTOR_HAVE_CURRENT 1
@@ -47,5 +44,18 @@
 //弹仓开关 长按R打开弹仓 单击R关闭弹仓
 #define KEY_PRESSED_SHOOT_COVER 'R'
 
+<<<<<<< HEAD
 #endif
 
+=======
+
+// TODO 暂时认为没有添加的必要
+//  //提高射频  长按ctrl+Z
+//  #define KEY_PRESSED_SHOOT_TRIGGER_SPEED_UP  'Z'
+
+// //降低射频  长按ctrl+X
+// #define KEY_PRESSED_SHOOT_TRIGGER_SPEED_DOWN 'X'
+
+
+#endif
+>>>>>>> parent of 88c54fc (3.29备份)
