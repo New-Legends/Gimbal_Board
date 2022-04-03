@@ -9,11 +9,6 @@
 #define GIMBAL_YAW_MOTOR_HAVE_CURRENT 1
 #define GIMBAL_PITCH_MOTOR_HAVE_CURRENT 1
 
-//云台电机debug模式
-#define GIMBAL_DEBUG_MODE 0
-
-//云台视觉是否打开
-#define GIMBAL_VISION_OPEN 1
 //云台视觉调试模式 默认为0
 #define GIMABL_VISION_DEBUG 0
 

@@ -42,7 +42,7 @@ extern "C"
 
 //pitch speed close-loop PID params, max out and max iout
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
-#define PITCH_SPEED_PID_KP 8000.0f //2900
+#define PITCH_SPEED_PID_KP 8000.0f 
 #define PITCH_SPEED_PID_KI 0.0f
 #define PITCH_SPEED_PID_KD 0.0f
 #define PITCH_SPEED_PID_MAX_IOUT 25.0f
@@ -343,9 +343,6 @@ public:
     /***************************(C) GIMBAL CALI *******************************/
 
 };
-
-
-void gimbal_debug();
 
 bool_t gimbal_cmd_to_shoot_stop(void);
 

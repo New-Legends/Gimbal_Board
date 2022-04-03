@@ -7,7 +7,7 @@
 #include "CRC8_CRC16.h"
 #include "gimbal.h"
 
-// #include "referee.h"
+#include "Can_receive.h"
 
 extern UART_HandleTypeDef huart1;
 extern DMA_HandleTypeDef hdma_usart1_rx;
@@ -126,14 +126,13 @@ uint8_t CmdID = 0;
 void vision_send_data(uint8_t CmdID)
 {
 int i; //循环发送次数
-  uint16_t id1_17mm_speed_limit;
-  uint16_t bullet_speed;
-  //get_shooter_id1_17mm_speed_limit_and_bullet_speed(&id1_17mm_speed_limit, &bullet_speed);
+  uint8_t bullet_speed;
+  bullet_speed = uint8_t(can_receive.gimbal_receive.bullet_speed);
 
   VisionSendData.BEGIN = VISION_BEGIN;
 
   VisionSendData.CmdID = CmdID;
-  VisionSendData.speed = 3;
+  VisionSendData.speed = bullet_speed;
   VisionSendData.yaw = imu.INS_angle[0];
   VisionSendData.pitch = imu.INS_angle[1];
   VisionSendData.roll = imu.INS_angle[2];
@@ -146,7 +145,6 @@ int i; //循环发送次数
 	{
 		HAL_UART_Transmit(&huart1, &vision_send_pack[i], sizeof(vision_send_pack[0]), 0xFFF);
 	}
-  //HAL_UART_Transmit(&huart1, vision_send_pack, VISION_SEND_LEN_PACKED, 0xFFF);
 
   memset(vision_send_pack, 0, 50);
 }
