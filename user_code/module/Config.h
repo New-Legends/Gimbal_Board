@@ -9,6 +9,11 @@
 #define GIMBAL_YAW_MOTOR_HAVE_CURRENT 1
 #define GIMBAL_PITCH_MOTOR_HAVE_CURRENT 1
 
+//云台电机debug模式
+#define GIMBAL_DEBUG_MODE 0
+
+//云台视觉是否打开
+#define GIMBAL_VISION_OPEN 1
 //云台视觉调试模式 默认为0
 #define GIMABL_VISION_DEBUG 0
 
@@ -38,8 +43,6 @@
 // turn 180°
 //掉头180 按键 单击V 
 #define KEY_PRESSED_GIMBAL_TURN_180 'Z' 
-//云台自锁开关 长按C打开 单击C关闭
-#define KEY_PRESSED_STOP_GIMBAL 'C'
 
 //开启和关闭摩擦轮  单击G
 #define KEY_PRESSED_SHOOT_FRIC 'G'
@@ -48,4 +51,3 @@
 #define KEY_PRESSED_SHOOT_COVER 'R'
 
 #endif
-
