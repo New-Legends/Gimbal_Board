@@ -829,6 +829,11 @@
               <FileType>8</FileType>
               <FilePath>..\user_code\application\interact_task.cpp</FilePath>
             </File>
+            <File>
+              <FileName>software_reset_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user_code\application\software_reset_task.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

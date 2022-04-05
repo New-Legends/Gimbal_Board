@@ -44,6 +44,8 @@
 #define SHOOT_DONE_KEY_OFF_TIME 15
 //鼠标长按判断
 #define PRESS_LONG_TIME 400
+//自瞄鼠标长按判断
+#define AUTO_PRESS_LONG_TIME 200
 //弹仓按键长按判断
 #define PRESS_COVER_LONG_TIME 400
 //摩擦轮开启按键延时

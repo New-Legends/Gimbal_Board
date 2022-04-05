@@ -56,8 +56,6 @@ void gimbal_task(void *pvParameters)
     //云台初始化
     gimbal.init();
 
-    //云台数据反馈
-    gimbal.feedback_update();
     while (1)
     {
       //设置云台状态机

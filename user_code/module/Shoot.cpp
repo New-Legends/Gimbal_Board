@@ -47,7 +47,7 @@ extern "C"
 */
 fp32 fric_refree_para = 0.12;
 
-fp32 grigger_speed_to_radio = 0.8;
+fp32 grigger_speed_to_radio = 1.5;
 
 //通过读取裁判数据,直接修改射速和射频等级
 //射速等级  摩擦电机
@@ -516,6 +516,7 @@ void Shoot::set_control()
 }
 
 
+int16_t temp_colling_detal = 0;
 /**
  * @brief          发射机构弹速和热量控制
  * @param[in]      void
@@ -549,11 +550,15 @@ void Shoot::cooling_ctrl()
 //     }
 // #endif
 
+#if SHOOT_VIOLENT_OPEN
+    //狂暴模式
+    ;
+#else
     // //TODO 离线监测暂时没有添加
     // if (toe_is_error(REFEREE_TOE))
     // {
-    //     grigger_speed_grade = 2;
-    //     fric_speed_grade = 2;
+    //     grigger_speed_grade = 1;
+    //     fric_speed_grade = 1;
     // }
     // else
     {
@@ -567,25 +572,6 @@ void Shoot::cooling_ctrl()
         id1_17mm_speed_limit = can_receive.gimbal_receive.id1_17mm_speed_limit;
         bullet_speed = can_receive.gimbal_receive.bullet_speed;
 
-        //手动调整射频
-#if SHOOT_SET_TRIGGER_SPEED_BY_HAND
-
-#else
-            //根据热量和射速上限修改等级
-            //热量
-            if (id1_17mm_cooling_limit <= 50)
-                grigger_speed_grade = 1;
-        else if (id1_17mm_cooling_limit <= 100)
-            grigger_speed_grade = 2;
-        else if (id1_17mm_cooling_limit <= 200)
-            grigger_speed_grade = 3;
-        else if (id1_17mm_cooling_limit <= 280)
-            grigger_speed_grade = 4;
-        else if (id1_17mm_cooling_limit <= 400)
-            grigger_speed_grade = 5;
-
-#endif
-
         //射速
         if (id1_17mm_speed_limit <= 15)
             fric_speed_grade = 1;
@@ -594,11 +580,16 @@ void Shoot::cooling_ctrl()
         else if (id1_17mm_speed_limit <= 30)
             fric_speed_grade = 3;
 
+        temp_colling_detal = id1_17mm_cooling_limit - id1_17mm_cooling_heat;
+
         //根据当前热量和射速修改等级,确保不会因超限扣血,
         //热量 当剩余热量低于30,强制制动
-        if (id1_17mm_cooling_limit - id1_17mm_cooling_heat <= 30 && grigger_speed_grade != 0)
+        if (id1_17mm_cooling_limit - id1_17mm_cooling_heat <= 30)
         {
-            last_grigger_speed_grade = grigger_speed_grade;
+            if (grigger_speed_grade != 0)
+            {
+                last_grigger_speed_grade = grigger_speed_grade;
+            }
             grigger_speed_grade = 0;
         }
         else
@@ -613,6 +604,8 @@ void Shoot::cooling_ctrl()
         }
     }
 
+#endif
+    
     //连发模式下，对拨盘电机输入控制值
     if (shoot_mode == SHOOT_CONTINUE_BULLET)
         trigger_motor.speed_set = shoot_grigger_grade[grigger_speed_grade] * SHOOT_TRIGGER_DIRECTION;
@@ -637,10 +630,16 @@ void Shoot::cooling_ctrl()
   */
 void Shoot::solve()
 {
+#if SHOOT_LASER_OPEN
+    shoot_laser_on(); //激光开启
+#else
+    shoot_laser_off(); //激光关闭
+#endif
+
     //TODO 此处应该对速度设置值进行操作,而不是电流值,后续进行修改,有可能摩擦轮停止旋转速度慢和这个有关
     if (shoot_mode == SHOOT_STOP)
     {
-        shoot_laser_off();
+        //shoot_laser_off();
         fric_status = FALSE;
 
         trigger_motor.speed_set = 0;
@@ -649,11 +648,6 @@ void Shoot::solve()
     }
     else
     {   
-#if SHOOT_LASER_OPEN
-        shoot_laser_on(); //激光开启
-#else
-        shoot_laser_off(); //激光关闭
-#endif
 
         //控制17mm发射机构射速和热量控制
         cooling_ctrl();

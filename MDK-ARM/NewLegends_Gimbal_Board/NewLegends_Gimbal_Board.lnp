@@ -72,6 +72,7 @@
 "newlegends_gimbal_board\shoot_task.o"
 "newlegends_gimbal_board\start_task.o"
 "newlegends_gimbal_board\interact_task.o"
+"newlegends_gimbal_board\software_reset_task.o"
 "newlegends_gimbal_board\communicate.o"
 "newlegends_gimbal_board\ins.o"
 "newlegends_gimbal_board\gimbal.o"

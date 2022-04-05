@@ -21,6 +21,7 @@ extern "C" {
 #include "calibrate_task.h"
 #include "detect_task.h"
 #include "interact_task.h"
+//#include "software_reset_task.h"
 
 #define Tiny_Stack_Size       64
 #define Small_Stack_Size      128
@@ -45,18 +46,13 @@ TaskHandle_t oled_task_handle;
 TaskHandle_t led_flow_task_handle;
 TaskHandle_t detect_task_handle;
 TaskHandle_t interact_task_handle;
+//TaskHandle_t software_reset_task_handle;
 
 void System_Resource_Init(void)
 {
     /* Syetem Service init --------------*/
     delay_init();
     cali_param_init();
-
-    // buzzer_on(10, 10000);
-
-    // vTaskDelay(3000);
-
-    // buzzer_off();
 
     /* Applications Init ----------------*/
 }
@@ -82,4 +78,6 @@ void Task_start(void) {
     xTaskCreate(detect_task, "detect_task", Normal_Stack_Size, NULL, PriorityHigh, &detect_task_handle);
 
     xTaskCreate(interact_task, "interact_task", Normal_Stack_Size, NULL, PriorityNormal, &interact_task_handle);
+
+    //xTaskCreate(software_reset_task, "software_reset_task", Normal_Stack_Size, NULL, PriorityNormal, &software_reset_task_handle);
 }

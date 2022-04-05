@@ -13,7 +13,7 @@
 #define GIMABL_VISION_DEBUG 0
 
 //云台一阶高通滤波是否开启
-#define GIMBAL_HIGH_PASS_FILTER 1
+#define GIMBAL_HIGH_PASS_FILTER 0
 
 //开启摩擦轮 自动抬头
 #define GIMBAL_FRIC_OPEN_PITCH_UP 0
@@ -31,9 +31,10 @@
 #define SHOOT_VISION_OPEN 0
 
 //激光是否开启
-#define SHOOT_LASER_OPEN 0
+#define SHOOT_LASER_OPEN 1
 
-
+//强制脱离裁判控制 简称开启狂暴
+#define SHOOT_VIOLENT_OPEN 0
 /*--------------------按键-------------------------------------*/
 // turn 180°
 //掉头180 按键 单击V 

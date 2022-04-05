@@ -156,7 +156,7 @@ void Gimbal::feedback_update()
     //长按计时
     if (press_r)
     {
-        if (press_r_time < PRESS_LONG_TIME)
+        if (press_r_time < AUTO_PRESS_LONG_TIME)
         {
             press_r_time++;
         }
@@ -287,8 +287,6 @@ void Gimbal::behaviour_mode_set()
 }
 
 
-uint16_t init_time = 0;
-uint16_t init_stop_time = 0;
 /**
  * @brief          云台行为状态机设置
  * @Author         summerpray
@@ -314,8 +312,8 @@ void Gimbal::behavour_set()
     //初始化模式判断是否到达中值位置
     if (gimbal_behaviour_mode == GIMBAL_INIT)
     {
-        // static uint16_t init_time = 0;
-        // static uint16_t init_stop_time = 0;
+        static uint16_t init_time = 0;
+        static uint16_t init_stop_time = 0;
         init_time++;
 
         if ((fabs(gimbal_yaw_motor.relative_angle - INIT_YAW_SET) < GIMBAL_INIT_ANGLE_ERROR &&
@@ -588,7 +586,7 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
         auto_switch = 1;
     #else 
     //长按右键 打开自瞄 松开关闭自瞄
-    if (press_r_time == PRESS_LONG_TIME && auto_switch == FALSE)
+    if (press_r_time == AUTO_PRESS_LONG_TIME && auto_switch == FALSE)
     {
         //更新pid系数
         fp32 yaw_absoulute_angle_pid_parm[5] = {YAW_AUTO_PID_KP, YAW_AUTO_PID_KI, YAW_AUTO_PID_KD, YAW_AUTO_PID_MAX_IOUT, YAW_AUTO_PID_MAX_OUT};
@@ -599,7 +597,7 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
 
         auto_switch = TRUE;
     }
-    else if (press_r_time != PRESS_LONG_TIME && auto_switch == TRUE)
+    else if (press_r_time != AUTO_PRESS_LONG_TIME && auto_switch == TRUE)
     {
         //恢复原来的PID系数
         fp32 yaw_absoulute_angle_pid_parm[5] = {YAW_GYRO_ABSOLUTE_PID_KP, YAW_GYRO_ABSOLUTE_PID_KI, YAW_GYRO_ABSOLUTE_PID_KD, YAW_GYRO_ABSOLUTE_PID_MAX_IOUT, YAW_GYRO_ABSOLUTE_PID_MAX_OUT};
@@ -676,8 +674,6 @@ void Gimbal::gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch)
     *yaw = gimbal_yaw_high_pass_filter.out;
     *pitch = gimbal_pitch_high_pass_filter.out;
 #endif
-
-
 
     last_gimbal_RC->key.v = gimbal_RC->key.v;
 }
@@ -827,8 +823,6 @@ void Gimbal::motor_relative_angle_control(Gimbal_motor *gimbal_motor)
     {
         return;
     }
-
-
 
     //角度环，速度环串级pid调试
     gimbal_motor->speed_set = gimbal_motor->relative_angle_pid.pid_calc();

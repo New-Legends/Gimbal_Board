@@ -25,6 +25,8 @@
         "ostream": "cpp",
         "sstream": "cpp",
         "streambuf": "cpp",
-        "tim.h": "c"
+        "tim.h": "c",
+        "software_reset_task.h": "c",
+        "communicate_task.h": "c"
     }
 }
