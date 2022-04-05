@@ -45,9 +45,9 @@ extern "C"
 42mm热量冷却 20 40 60 80 100 120
 一发42mm 100热量
 */
-fp32 fric_refree_para = 0.12;
+fp32 fric_refree_para = 0.12;//摩擦轮系数
 
-fp32 grigger_speed_to_radio = 0.8;
+fp32 grigger_speed_to_radio = 1;//拨盘系数
 
 //通过读取裁判数据,直接修改射速和射频等级
 //射速等级  摩擦电机
