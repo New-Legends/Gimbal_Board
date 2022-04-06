@@ -64,7 +64,7 @@ void gimbal_task(void *pvParameters)
       //云台数据反馈
       gimbal.feedback_update();
       //设置云台控制量
-      gimbal.set_control();
+     gimbal.set_control();
       //设置PID计算
       gimbal.solve();
       //输出电流

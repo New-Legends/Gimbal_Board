@@ -648,7 +648,7 @@ void Shoot::solve()
         fric_motor[RIGHT_FRIC].speed_set = 0;
     }
     else
-    {   
+   {   
 #if SHOOT_LASER_OPEN
         shoot_laser_on(); //激光开启
 #else
@@ -667,7 +667,7 @@ void Shoot::solve()
         {
             trigger_motor.current_set = 0;
         }
-    }
+   }
 
     if (fric_motor[LEFT_FRIC].speed_set > fric_motor[LEFT_FRIC].max_speed)
         fric_motor[LEFT_FRIC].speed_set = fric_motor[LEFT_FRIC].max_speed;
@@ -719,28 +719,28 @@ void Shoot::output()
 */
 void Shoot::trigger_motor_turn_back()
 {
-    // if (block_time < BLOCK_TIME)
-    // {
-    //     trigger_motor.speed_set = trigger_motor.speed_set;
-    // }
-    // else
-    // {
-    //     trigger_motor.speed_set = -trigger_motor.speed_set;
-    // }
+  if (block_time < BLOCK_TIME)
+     {
+         trigger_motor.speed_set = trigger_motor.speed_set;
+     }
+  else
+     {
+        trigger_motor.speed_set = -trigger_motor.speed_set;
+     }
 
-    // if (fabs(trigger_motor.speed) < BLOCK_TRIGGER_SPEED && block_time < BLOCK_TIME)
-    // {
-    //     block_time++;
-    //     reverse_time = 0;
-    // }
-    // else if (block_time == BLOCK_TIME && reverse_time < REVERSE_TIME)
-    // {
-    //     reverse_time++;
-    // }
-    // else
-    // {
-    //     block_time = 0;
-    // }
+  if (fabs(trigger_motor.speed) < BLOCK_TRIGGER_SPEED && block_time < BLOCK_TIME)
+     {
+        block_time++;
+        reverse_time = 0;
+     }
+  else if (block_time == BLOCK_TIME && reverse_time < REVERSE_TIME)
+     {
+        reverse_time++;
+     }
+  else
+     {
+        block_time = 0;
+     }
 }
 
 /**
