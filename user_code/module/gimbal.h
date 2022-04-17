@@ -33,23 +33,23 @@ extern "C"
 // yaw 速度环 PID参数以及 PID最大输出，积分输出
 #define YAW_SPEED_PID_KP 8000.0f
 #define YAW_SPEED_PID_KI 0.0f
-#define YAW_SPEED_PID_KD 20.0f
-#define YAW_SPEED_PID_MAX_IOUT 25.0f
-#define YAW_SPEED_PID_MAX_OUT 20000.0f
+#define YAW_SPEED_PID_KD 0.0f
+#define YAW_SPEED_PID_MAX_IOUT 200.0f
+#define YAW_SPEED_PID_MAX_OUT 30000.0f
 
 // pitch 速度环 PID参数以及 PID最大输出，积分输出
-#define PITCH_SPEED_PID_KP 8000.0f 
+#define PITCH_SPEED_PID_KP 8000.0f // 2900
 #define PITCH_SPEED_PID_KI 0.0f
 #define PITCH_SPEED_PID_KD 0.0f
-#define PITCH_SPEED_PID_MAX_IOUT 10.0f
-#define PITCH_SPEED_PID_MAX_OUT 15000.0f
+#define PITCH_SPEED_PID_MAX_IOUT 25.0f
+#define PITCH_SPEED_PID_MAX_OUT 12000.0f
 
 // yaw 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define YAW_GYRO_PID_KP 30.0f
+#define YAW_GYRO_PID_KP 100.0f
 #define YAW_GYRO_PID_KI 0.1f
-#define YAW_GYRO_PID_KD 30.0f
-#define YAW_GYRO_PID_MAX_IOUT 0.2f
-#define YAW_GYRO_PID_MAX_OUT 120.0f
+#define YAW_GYRO_PID_KD 3.0f
+#define YAW_GYRO_PID_MAX_IOUT 1.0f
+#define YAW_GYRO_PID_MAX_OUT 150.0f
 
 // yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
 #define YAW_ENCODE_PID_KP 5.0f
@@ -61,9 +61,9 @@ extern "C"
 // pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
 #define PITCH_ENCODE_PID_KP 30.0f
 #define PITCH_ENCODE_PID_KI 0.01f
-#define PITCH_ENCODE_PID_KD 3.0f
+#define PITCH_ENCODE_PID_KD 0.2f
 #define PITCH_ENCODE_PID_MAX_IOUT 1.0f
-#define PITCH_ENCODE_PID_MAX_OUT 100.0f
+#define PITCH_ENCODE_PID_MAX_OUT 160.0f
 
 /*------------------------------自瞄PID------------------------*/
 // yaw轴自瞄PID 由陀螺仪角度控制
@@ -96,8 +96,8 @@ extern "C"
 #define PITCH_RC_SEN 0.000015f
 
 //云台 鼠标速度
-#define YAW_MOUSE_SEN   -0.0005f
-#define PITCH_MOUSE_SEN -0.0003f
+#define YAW_MOUSE_SEN -0.00025f
+#define PITCH_MOUSE_SEN -0.00016f
 
 #define YAW_ENCODE_SEN 0.01f
 #define PITCH_ENCODE_SEN 0.01f
@@ -138,7 +138,7 @@ extern "C"
 #define MAX_ENCODE_YAW 2*PI
 #define MIN_ENCODE_YAW -2*PI
 
-#define MAX_ENCODE_PITCH 0.49f
+#define MAX_ENCODE_PITCH 0.52f
 #define MIN_ENCODE_PITCH -0.27f
 
 //云台初始化回中值，允许的误差,并且在误差范围内停止一段时间以及最大时间6s后解除初始化状态，
