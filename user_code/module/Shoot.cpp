@@ -626,19 +626,7 @@ void Shoot::cooling_ctrl()
     //保留被强制降速前的射频
     static uint8_t last_grigger_speed_grade = 1;
 
-    press_ctrl = ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_CTRL) != 0);
-    signal_press_z = ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_Z) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_OFFSET_Z) != 0);
-    signal_press_x = ((shoot.shoot_rc->key.v & KEY_PRESSED_OFFSET_X) != 0) && !((shoot.shoot_last_key_v & KEY_PRESSED_OFFSET_X) != 0);
-    signal_press_g = KEY_SHOOT_FRIC;
 
-    //手动调整射频
-#if SHOOT_SET_TRIGGER_SPEED_BY_HAND
-        if (KEY_SHOOT_TRIGGER_SPEED_UP && grigger_speed_grade < 5){
-        grigger_speed_grade++;
-    } else if (KEY_SHOOT_TRIGGER_SPEED_DOWN && grigger_speed_grade>0) {
-        grigger_speed_grade--;
-    }
-#endif
 
     //离线监测暂时没有添加
     // if (toe_is_error(REFEREE_TOE))
