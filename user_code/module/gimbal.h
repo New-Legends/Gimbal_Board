@@ -33,6 +33,7 @@ extern "C"
 // yaw 速度环 PID参数以及 PID最大输出，积分输出
 #define YAW_SPEED_PID_KP 8000.0f
 #define YAW_SPEED_PID_KI 0.0f
+<<<<<<< Updated upstream
 #define YAW_SPEED_PID_KD 0.0f
 #define YAW_SPEED_PID_MAX_IOUT 200.0f
 #define YAW_SPEED_PID_MAX_OUT 30000.0f
@@ -69,13 +70,55 @@ extern "C"
 // yaw轴自瞄PID 由陀螺仪角度控制
 #define YAW_AUTO_PID_KP 30.0f
 #define YAW_AUTO_PID_KI 0.1f
+=======
+#define YAW_SPEED_PID_KD 20.0f
+#define YAW_SPEED_PID_MAX_IOUT 25.0f
+#define YAW_SPEED_PID_MAX_OUT 20000.0f
+
+// pitch 速度环 PID参数以及 PID最大输出，积分输出
+#define PITCH_SPEED_PID_KP 8000.0f 
+#define PITCH_SPEED_PID_KI 0.0f
+#define PITCH_SPEED_PID_KD 0.0f
+#define PITCH_SPEED_PID_MAX_IOUT 10.0f
+#define PITCH_SPEED_PID_MAX_OUT 15000.0f
+
+// yaw 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
+#define YAW_GYRO_PID_KP 30.0f
+#define YAW_GYRO_PID_KI 0.1f
+#define YAW_GYRO_PID_KD 12.0f
+#define YAW_GYRO_PID_MAX_IOUT 0.2f
+#define YAW_GYRO_PID_MAX_OUT 120.0f
+
+// yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
+#define YAW_ENCODE_PID_KP 5.0f
+#define YAW_ENCODE_PID_KI 0.0f
+#define YAW_ENCODE_PID_KD 0.0f
+#define YAW_ENCODE_PID_MAX_IOUT 5.0f
+#define YAW_ENCODE_PID_MAX_OUT 20.0f
+
+// pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
+#define PITCH_ENCODE_PID_KP 30.0f
+#define PITCH_ENCODE_PID_KI 0.01f
+#define PITCH_ENCODE_PID_KD 3.0f
+#define PITCH_ENCODE_PID_MAX_IOUT 1.0f
+#define PITCH_ENCODE_PID_MAX_OUT 100.0f
+
+/*------------------------------自瞄PID------------------------*/
+// yaw轴自瞄PID 由陀螺仪角度控制
+#define YAW_AUTO_PID_KP 30.0f
+#define YAW_AUTO_PID_KI 0.0f
+>>>>>>> Stashed changes
 #define YAW_AUTO_PID_KD 2.0f
 #define YAW_AUTO_PID_MAX_IOUT 1.0f
 #define YAW_AUTO_PID_MAX_OUT 40.0f
 
+<<<<<<< Updated upstream
 // yaw轴自瞄PID 由编码器角度控制
+=======
+// pitch轴自瞄PID 由编码器角度控制
+>>>>>>> Stashed changes
 #define PITCH_AUTO_PID_KP 100.0f
-#define PITCH_AUTO_PID_KI 0.1f
+#define PITCH_AUTO_PID_KI 0.0f
 #define PITCH_AUTO_PID_KD 3.0f // 0.1
 #define PITCH_AUTO_PID_MAX_IOUT 1.0f
 #define PITCH_AUTO_PID_MAX_OUT 150.0f
@@ -96,8 +139,13 @@ extern "C"
 #define PITCH_RC_SEN 0.000015f
 
 //云台 鼠标速度
+<<<<<<< Updated upstream
 #define YAW_MOUSE_SEN -0.00025f
 #define PITCH_MOUSE_SEN -0.00016f
+=======
+#define YAW_MOUSE_SEN   -0.0005f
+#define PITCH_MOUSE_SEN -0.0003f
+>>>>>>> Stashed changes
 
 #define YAW_ENCODE_SEN 0.01f
 #define PITCH_ENCODE_SEN 0.01f
@@ -128,12 +176,18 @@ extern "C"
 #define ECD_RANGE 8191
 
 //云台中值(中值所对应的编码器编码值)
+<<<<<<< Updated upstream
 #define ECD_YAW_MID 579
 #define ECD_PITCH_MID 7350
+=======
+#define ECD_YAW_MID 2031
+#define ECD_PITCH_MID 1951
+>>>>>>> Stashed changes
 
 //限幅
 #define MAX_GYRO_YAW PI
 #define MIN_GYRO_YAW -PI
+<<<<<<< Updated upstream
 
 #define MAX_ENCODE_YAW 2*PI
 #define MIN_ENCODE_YAW -2*PI
@@ -141,14 +195,28 @@ extern "C"
 #define MAX_ENCODE_PITCH 0.52f
 #define MIN_ENCODE_PITCH -0.27f
 
+=======
+
+#define MAX_ENCODE_YAW 2*PI
+#define MIN_ENCODE_YAW -2*PI
+
+#define MAX_ENCODE_PITCH 0.49f
+#define MIN_ENCODE_PITCH -0.32f
+
+>>>>>>> Stashed changes
 //云台初始化回中值，允许的误差,并且在误差范围内停止一段时间以及最大时间6s后解除初始化状态，
 #define GIMBAL_TO_MID_ERROR 0.05f
 #define GIMBAL_TO_MID_STOP_TIME 200 // 100
 #define GIMBAL_TO_MID_TIME 6000
 #define GIMBAL_CALI_REDUNDANT_ANGLE 0.1f
 // //云台初始化回中值的速度以及控制到的角度
+<<<<<<< Updated upstream
 #define GIMBAL_TO_MID_PITCH_SPEED 0.002f // 0.02
 #define GIMBAL_TO_MID_YAW_SPEED 0.002f   // 0.02
+=======
+#define GIMBAL_TO_MID_PITCH_SPEED 0.01f 
+#define GIMBAL_TO_MID_YAW_SPEED 0.002f   
+>>>>>>> Stashed changes
 
 #define YAW_TO_MID_SET 0.0f
 #define PITCH_TO_MID_SET 0.0f
