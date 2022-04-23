@@ -28,7 +28,7 @@
 #define SHOOT_SET_TRIGGER_SPEED_BY_HAND 1
 
 //云台视觉是否打开
-#define SHOOT_VISION_OPEN 0
+#define SHOOT_VISION_OPEN 1
 
 //激光是否开启
 #define SHOOT_LASER_OPEN 0

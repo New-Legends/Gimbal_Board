@@ -144,7 +144,7 @@ int i; //循环发送次数
   //将打包好的数据通过串口移位发送到上位机
   for (i = 0; i < VISION_SEND_LEN_PACKED; i++)
 	{
-		HAL_UART_Transmit(&huart1, &vision_send_pack[i], sizeof(vision_send_pack[0]), 0xFFF);
+//		HAL_UART_Transmit(&huart1, &vision_send_pack[i], sizeof(vision_send_pack[0]), 0xFFF);
 	}
   //HAL_UART_Transmit(&huart1, vision_send_pack, VISION_SEND_LEN_PACKED, 0xFFF);
 
@@ -152,8 +152,8 @@ int i; //循环发送次数
 }
 
 //调解自瞄的跟随速度
-uint16_t yaw_para = 100;
-uint16_t pitch_para = 100;
+uint16_t yaw_para = 150;
+uint16_t pitch_para = 50;
 
 void vision_error_angle(float *yaw_angle_error, float *pitch_angle_error)
 {
