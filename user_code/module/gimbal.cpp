@@ -463,21 +463,19 @@ void Gimbal::gimbal_chassis_control(fp32 *yaw, fp32 *pitch)
     }
 
     //长按右键 打开自瞄 松开关闭自瞄
-//    if (press_r_time == PRESS_LONG_TIME && auto_switch == FALSE)
-//    {
-//        //更新自瞄PID
-//        update_auto_pid();
-//        auto_switch = TRUE;
-//    }
-//    else if (press_r_time != PRESS_LONG_TIME && auto_switch == TRUE)
-//    {
-//        //恢复之前的PID
-//        recover_normal_pid();
-//			  auto_switch = FALSE;
-//    }
-		//测试用
-     update_auto_pid();
-		 auto_switch = FALSE;
+    if (press_r_time == PRESS_LONG_TIME && auto_switch == FALSE)
+    {
+        //更新自瞄PID
+        update_auto_pid();
+        auto_switch = TRUE;
+    }
+    else if (press_r_time != PRESS_LONG_TIME && auto_switch == TRUE)
+    {
+        //恢复之前的PID
+        recover_normal_pid();
+        auto_switch = FALSE;
+    }
+
     //当在自瞄模式下且识别到目标,云台控制权交给mini pc
     if (auto_switch == TRUE && vision_if_find_target() == TRUE)
     {
@@ -525,8 +523,10 @@ void Gimbal::update_auto_pid()
     gimbal_yaw_motor.gyro_angle_pid.init(PID_ANGLE, yaw_gyro_angle_pid_parm, &gimbal_yaw_motor.gyro_angle, &gimbal_yaw_motor.gyro_angle_set, 0);
 
     fp32 pitch_encode_angle_pid_parm[5] = {PITCH_AUTO_PID_KP, PITCH_AUTO_PID_KI, PITCH_AUTO_PID_KD, PITCH_AUTO_PID_MAX_IOUT, PITCH_AUTO_PID_MAX_OUT};
-    gimbal_pitch_motor.encode_angle_pid.init(PID_ANGLE, pitch_encode_angle_pid_parm, &gimbal_pitch_motor.encode_angle, &gimbal_pitch_motor.encode_angle_set, 0);
+    gimbal_pitch_motor.encode_angle_pid.init(PID_ANGLE, pitch_encode_angle_pid_parm, &gimbal_pitch_motor.gyro_angle, &gimbal_pitch_motor.gyro_angle_set, 0);
 
+    gimbal_yaw_motor.gyro_angle_pid.pid_clear();
+    gimbal_pitch_motor.encode_angle_pid.pid_clear();
 }
 /**
  * @brief          更新自瞄模式PID
@@ -539,9 +539,10 @@ void Gimbal::recover_normal_pid()
     gimbal_yaw_motor.gyro_angle_pid.init(PID_ANGLE, yaw_gyro_angle_pid_parm, &gimbal_yaw_motor.gyro_angle, &gimbal_yaw_motor.gyro_angle_set, 0);
 
     fp32 pitch_encode_angle_pid_parm[5] = {PITCH_ENCODE_PID_KP, PITCH_ENCODE_PID_KI, PITCH_ENCODE_PID_KD, PITCH_ENCODE_PID_MAX_IOUT, PITCH_ENCODE_PID_MAX_OUT};
-    gimbal_pitch_motor.encode_angle_pid.init(PID_ANGLE, pitch_encode_angle_pid_parm, &gimbal_pitch_motor.encode_angle, &gimbal_pitch_motor.encode_angle_set, 0);
+    gimbal_pitch_motor.encode_angle_pid.init(PID_ANGLE, pitch_encode_angle_pid_parm, &gimbal_pitch_motor.gyro_angle, &gimbal_pitch_motor.gyro_angle_set, 0);
 
-
+    gimbal_yaw_motor.gyro_angle_pid.pid_clear();
+    gimbal_pitch_motor.encode_angle_pid.pid_clear();
 }
 /**
  * @brief          掉头控制
