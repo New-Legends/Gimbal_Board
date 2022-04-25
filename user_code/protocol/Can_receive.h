@@ -8,7 +8,7 @@
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
 
-#define SHOOT_CAN hcan1
+#define SHOOT_CAN hcan2
 #define GIMBAL_CAN hcan1
 #define BOARD_COM_CAN hcan1
 

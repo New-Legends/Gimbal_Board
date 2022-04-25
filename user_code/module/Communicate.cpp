@@ -184,25 +184,7 @@ extern "C"
             HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
             switch (rx_header.StdId)
             {
-            //发射机构电机
-            case CAN_LEFT_FRIC_MOTOR_ID:
-                can_receive.get_shoot_motor_measure(0, rx_data);
-                detect_hook(CAN_LEFT_FRIC_MOTOR_ID);
-                break;
-
-            case CAN_RIGHT_FRIC_MOTOR_ID:
-                can_receive.get_shoot_motor_measure(1, rx_data);
-                detect_hook(CAN_RIGHT_FRIC_MOTOR_ID);
-                break;
-
-            case CAN_TRIGGER_MOTOR_ID:
-                can_receive.get_shoot_motor_measure(2, rx_data);
-                detect_hook(CAN_TRIGGER_MOTOR_ID);
-                break;
-            case CAN_COVER_MOTOR_ID:
-                can_receive.get_shoot_motor_measure(3, rx_data);
-                detect_hook(CAN_COVER_MOTOR_ID);
-                break;
+            
 
             //云台机构电机
             case CAN_YAW_MOTOR_ID:
@@ -223,6 +205,37 @@ extern "C"
             case CAN_17MM_SPEED_BOARD_COM_ID:
                 can_receive.receive_17mm_speed_and_mode_board_com(rx_data);
                 detect_hook(BOARD_COM);
+                break;
+
+            default:
+            {
+                break;
+            }
+            }
+        }
+        else if (hcan == &SHOOT_CAN)
+        {
+            HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
+            switch (rx_header.StdId)
+            {
+                //发射机构电机
+            case CAN_LEFT_FRIC_MOTOR_ID:
+                can_receive.get_shoot_motor_measure(0, rx_data);
+                detect_hook(CAN_LEFT_FRIC_MOTOR_ID);
+                break;
+
+            case CAN_RIGHT_FRIC_MOTOR_ID:
+                can_receive.get_shoot_motor_measure(1, rx_data);
+                detect_hook(CAN_RIGHT_FRIC_MOTOR_ID);
+                break;
+
+            case CAN_TRIGGER_MOTOR_ID:
+                can_receive.get_shoot_motor_measure(2, rx_data);
+                detect_hook(CAN_TRIGGER_MOTOR_ID);
+                break;
+            case CAN_COVER_MOTOR_ID:
+                can_receive.get_shoot_motor_measure(3, rx_data);
+                detect_hook(CAN_COVER_MOTOR_ID);
                 break;
 
             default:

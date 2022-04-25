@@ -67,22 +67,23 @@ void vision_init()
 uint8_t Vision_Time_Test[2] = {0}; //当前数据和上一次数据
 uint8_t Vision_Ping = 0;           //发送时间间隔
 
-/**
-  * @brief          定时器周期给视觉发送陀螺仪数据
-  * @param[in]      htim:定时器指针
-  * @retval         none
-  */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-  if (htim == &htim1)
-  {
-    HAL_GPIO_TogglePin(CRAMA_TRI_GPIO_Port, CRAMA_TRI_Pin);
-    if(send_cnt++ % 2 == 0)
-    {
-      vision_send_data(0x02);
-    }
-  }
-}
+//TODO 有问题 先注释
+// /**
+//   * @brief          定时器周期给视觉发送陀螺仪数据
+//   * @param[in]      htim:定时器指针
+//   * @retval         none
+//   */
+// void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+// {
+//   if (htim == &htim1)
+//   {
+//     HAL_GPIO_TogglePin(CRAMA_TRI_GPIO_Port, CRAMA_TRI_Pin);
+//     if(send_cnt++ % 2 == 0)
+//     {
+//       vision_send_data(0x02);
+//     }
+//   }
+// }
 
 void vision_read_data(uint8_t *ReadFormUart)
 {
