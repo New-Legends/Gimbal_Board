@@ -152,13 +152,13 @@ int i; //循环发送次数
 }
 
 //调解自瞄的跟随速度
-uint16_t yaw_para = 150;
+uint16_t yaw_para = 50;
 uint16_t pitch_para = 50;
 
 void vision_error_angle(float *yaw_angle_error, float *pitch_angle_error)
 {
-  *yaw_angle_error = -VisionRecvData.yaw_angle / yaw_para;
-  *pitch_angle_error = VisionRecvData.pitch_angle / pitch_para;
+  *yaw_angle_error = VisionRecvData.yaw_angle / yaw_para;
+  *pitch_angle_error = -VisionRecvData.pitch_angle / pitch_para;
 
   if (VisionRecvData.yaw_angle == 0)
   {

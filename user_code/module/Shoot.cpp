@@ -39,19 +39,14 @@ extern "C"
 17mm热量上限 50 100 150 280 400
 17mm热量冷却 10 20 30 40 60 80
 一发17mm 10热量
-
-42mm射速上限 10 16 m/s
-42mm热量上限 100 200 300 350 500
-42mm热量冷却 20 40 60 80 100 120
-一发42mm 100热量
 */
 fp32 fric_refree_para = 0.12;//摩擦轮系数
 
 fp32 grigger_speed_to_radio = 0.8;//拨盘系数
 
 //通过读取裁判数据,直接修改射速和射频等级
-//射速等级  摩擦电机
-fp32 shoot_fric_grade[4] = {0, 15 * fric_refree_para, 16.5 * fric_refree_para, 25 * fric_refree_para};
+//射速等级  摩擦电机   15/18/30
+fp32 shoot_fric_grade[4] = {0, 14.6 * fric_refree_para, 16 * fric_refree_para, 23.5 * fric_refree_para};
 
 //射频等级 拨弹电机
 fp32 shoot_grigger_grade[6] = {0, 5.0f * grigger_speed_to_radio, 10.0f * grigger_speed_to_radio, 15.0f * grigger_speed_to_radio, 28.0f * grigger_speed_to_radio, 40.0f * grigger_speed_to_radio};

@@ -37,7 +37,7 @@
     }
 
 //自瞄相关数据
-bool_t auto_switch = 0; //自瞄开关
+bool_t auto_switch = 1; //自瞄开关
 
 //云台模块 对象
 Gimbal gimbal;
@@ -477,7 +477,7 @@ void Gimbal::gimbal_chassis_control(fp32 *yaw, fp32 *pitch)
 //    }
 		//测试用
      update_auto_pid();
-		 auto_switch = FALSE;
+		 auto_switch = true;
     //当在自瞄模式下且识别到目标,云台控制权交给mini pc
     if (auto_switch == TRUE && vision_if_find_target() == TRUE)
     {

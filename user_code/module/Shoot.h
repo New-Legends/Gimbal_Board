@@ -90,16 +90,16 @@
 #define PI_TEN 0.314f
 /*---------------------------pid----------------------*/
 //摩擦轮电机PID
-#define FRIC_SPEED_PID_KP  1800.0f
-#define FRIC_SPEED_PID_KI  0.5f
+#define FRIC_SPEED_PID_KP  2000.0f
+#define FRIC_SPEED_PID_KI  0.8f
 #define FRIC_SPEED_PID_KD  2.0f
 #define FRIC_PID_MAX_IOUT  200.0f
-#define FRIC_PID_MAX_OUT   8000.0f
+#define FRIC_PID_MAX_OUT   6000.0f
 
 //拨弹轮电机PID
-#define TRIGGER_ANGLE_PID_KP 800.0f 
+#define TRIGGER_ANGLE_PID_KP 2000.0f 
 #define TRIGGER_ANGLE_PID_KI 0.5f    
-#define TRIGGER_ANGLE_PID_KD 2.0f
+#define TRIGGER_ANGLE_PID_KD 0.0f
 
 #define TRIGGER_BULLET_PID_MAX_IOUT 10000.0f
 #define TRIGGER_BULLET_PID_MAX_OUT 4000.0f
