@@ -45,8 +45,8 @@ void Communicate::run()
 
     temp_gimbal_behaviour_mode = gimbal.gimbal_behaviour_mode;
 
-    can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_ch3, temp_v);
-    can_receive.send_gimbal_board_com(temp_s0,temp_gimbal_behaviour_mode,temp_gimbal_yaw_angle);
+    can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_v, temp_s0);
+
 }
 
 #ifdef __cplusplus //告诉编译器，这部分代码按C语言的格式进行编译，而不是C++的

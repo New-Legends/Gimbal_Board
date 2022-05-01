@@ -29,7 +29,6 @@ enum shoot_motor_id_e
     LEFT_FRIC_MOTOR = 0,
     RIGHT_FRIC_MOTOR,
     TRIGGER_MOTOR,
-    COVER_MOTOR,
 };
 
 typedef enum
@@ -47,9 +46,8 @@ typedef enum
 
     //板间通信ID
     CAN_RC_BOARM_COM_ID = 0x301,
-    CAN_GIMBAL_BOARD_COM_ID = 0x302,
-    CAN_COOLING_BOARM_COM_ID = 0x303,
-    CAN_17MM_SPEED_BOARD_COM_ID = 0x304,
+    CAN_COOLING_BOARM_COM_ID = 0x302,
+    CAN_17MM_SPEED_BOARD_COM_ID = 0x303,
 } can_msg_id_e;
 
 //rm motor data
