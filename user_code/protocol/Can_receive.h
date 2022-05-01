@@ -10,7 +10,7 @@ extern CAN_HandleTypeDef hcan2;
 
 #define SHOOT_CAN hcan1
 #define GIMBAL_CAN hcan1
-#define BOARD_COM_CAN hcan1
+#define BOARD_COM_CAN hcan2
 
 extern int field_event_outpost;
 
