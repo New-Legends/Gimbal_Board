@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -21,7 +21,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f4xx_it.h"
-#include "cmsis_os.h"
+#include "FreeRTOS.h"
+#include "task.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -33,7 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
- 
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -260,7 +261,16 @@ void EXTI9_5_IRQHandler(void)
 /**
   * @brief This function handles USART1 global interrupt.
   */
+// void USART1_IRQHandler(void)
+// {
+//   /* USER CODE BEGIN USART1_IRQn 0 */
 
+//   /* USER CODE END USART1_IRQn 0 */
+//   HAL_UART_IRQHandler(&huart1);
+//   /* USER CODE BEGIN USART1_IRQn 1 */
+
+//   /* USER CODE END USART1_IRQn 1 */
+// }
 
 /**
   * @brief This function handles DMA2 stream1 global interrupt.

@@ -16,6 +16,8 @@
         "shoot.h": "c",
         "remote_control.h": "c",
         "communicate.h": "c",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "xutility": "cpp",
+        "cstdlib": "cpp"
     }
 }

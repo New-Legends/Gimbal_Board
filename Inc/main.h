@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -29,46 +29,15 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
-#include "stm32f4xx_hal.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+void Task_init();
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-typedef int32_t  s32;
-typedef int16_t s16;
-typedef int8_t  s8;
 
-typedef const int32_t sc32;  /*!< Read Only */
-typedef const int16_t sc16;  /*!< Read Only */
-typedef const int8_t sc8;   /*!< Read Only */
-
-typedef __IO int32_t  vs32;
-typedef __IO int16_t  vs16;
-typedef __IO int8_t   vs8;
-
-typedef __I int32_t vsc32;  /*!< Read Only */
-typedef __I int16_t vsc16;  /*!< Read Only */
-typedef __I int8_t vsc8;   /*!< Read Only */
-
-typedef uint32_t  u32;
-typedef uint16_t u16;
-typedef uint8_t  u8;
-
-typedef const uint32_t uc32;  /*!< Read Only */
-typedef const uint16_t uc16;  /*!< Read Only */
-typedef const uint8_t uc8;   /*!< Read Only */
-
-typedef __IO uint32_t  vu32;
-typedef __IO uint16_t vuint16_t;
-typedef __IO uint8_t  vu8;
-
-typedef __I uint32_t vuc32;  /*!< Read Only */
-typedef __I uint16_t vuc16;  /*!< Read Only */
-typedef __I uint8_t vuc8;   /*!< Read Only */
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -122,10 +91,6 @@ void Error_Handler(void);
 #define INT1_GYRO_Pin GPIO_PIN_5
 #define INT1_GYRO_GPIO_Port GPIOC
 #define INT1_GYRO_EXTI_IRQn EXTI9_5_IRQn
-#define right_light_sensor_Pin GPIO_PIN_9
-#define right_light_sensor_GPIO_Port GPIOE
-#define left_light_sensor_Pin GPIO_PIN_11
-#define left_light_sensor_GPIO_Port GPIOE
 #define SPI2_CS_Pin GPIO_PIN_12
 #define SPI2_CS_GPIO_Port GPIOB
 #define CS1_GYRO_Pin GPIO_PIN_0
