@@ -31,7 +31,7 @@ void Communicate::run()
     vision_send_data(1);
 
     //向底盘发送遥控器和云台数据
-    int16_t temp_ch0, temp_ch2, temp_ch3;
+    int16_t temp_ch0, temp_ch2, temp_ch1;
     uint16_t temp_v;
     uint8_t temp_s0, temp_gimbal_behaviour_mode;
     fp32 temp_gimbal_yaw_angle;
@@ -39,13 +39,13 @@ void Communicate::run()
 
     temp_ch0 = remote_control.rc_ctrl.rc.ch[0];
     temp_ch2 = remote_control.rc_ctrl.rc.ch[2];
-    temp_ch3 = remote_control.rc_ctrl.rc.ch[3];
+    temp_ch1 = remote_control.rc_ctrl.rc.ch[1];
     temp_v = remote_control.rc_ctrl.key.v;
     temp_s0 = remote_control.rc_ctrl.rc.s[0];
 
     temp_gimbal_behaviour_mode = gimbal.gimbal_behaviour_mode;
 
-    can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_v, temp_s0);
+    can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_ch1, temp_s0);
 
 }
 

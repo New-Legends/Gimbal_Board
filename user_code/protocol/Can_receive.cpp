@@ -151,13 +151,13 @@ void Can_receive::receive_17mm_speed_and_mode_board_com(uint8_t data[8])
     gimbal_receive.base_HP = (uint16_t)(data[5] << 8 | data[6]);
 }
 
-void Can_receive::send_rc_board_com(int16_t ch_0, int16_t ch_2, int8_t v, uint16_t s0)
+void Can_receive::send_rc_board_com(int16_t ch_0, int16_t ch_2, int16_t ch_1, uint8_t s0)
 {
     //数据填充
     gimbal_send.ch_0 = ch_0;
     gimbal_send.ch_2 = ch_2;
-    gimbal_send.v = v;
     gimbal_send.s0 = s0;
+    gimbal_send.ch_1 = ch_1;
 
     uint32_t send_mail_box;
     can_tx_message.StdId = CAN_RC_BOARM_COM_ID;
@@ -168,8 +168,8 @@ void Can_receive::send_rc_board_com(int16_t ch_0, int16_t ch_2, int8_t v, uint16
     can_send_data[1] = ch_0;
     can_send_data[2] = ch_2 >> 8;
     can_send_data[3] = ch_2;
-    can_send_data[4] = v >> 8;
-    can_send_data[5] = v;
+    can_send_data[4] = ch_1 >> 8;
+    can_send_data[5] = ch_1;
     can_send_data[6] = s0;
     can_send_data[7] = 0;
 

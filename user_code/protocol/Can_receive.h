@@ -65,6 +65,7 @@ typedef struct
 {
     //遥控器数据
     int16_t ch_0;
+    int16_t ch_1;
     int16_t ch_2;
     int16_t ch_3;
     uint16_t v;
@@ -130,7 +131,7 @@ public:
     /*-------------------板间通信函数--------------------*/
     void receive_cooling_and_id_board_com(uint8_t data[8]);
     void receive_17mm_speed_and_mode_board_com(uint8_t data[8]);
-    void send_rc_board_com(int16_t ch_0, int16_t ch_2, int8_t ch_3, uint16_t v);            //发送遥控器数据
+    void send_rc_board_com(int16_t ch_0, int16_t ch_2, int16_t ch_1, uint8_t s0);            //发送遥控器数据
     void send_gimbal_board_com(uint8_t s0, uint8_t gimbal_behaviour, fp32 gimbal_yaw_angle); //发送云台模式及状态
 
     /*-------------------裁判系统数据判定-----------------*/
