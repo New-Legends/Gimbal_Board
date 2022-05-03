@@ -84,6 +84,6 @@ newlegends_gimbal_board\gimbal_task.o: ../user_code/componet/support/user_lib.h
 newlegends_gimbal_board\gimbal_task.o: ../user_code/componet/include/arm_math.h
 newlegends_gimbal_board\gimbal_task.o: ../Drivers/CMSIS/Include/core_cm4.h
 newlegends_gimbal_board\gimbal_task.o: D:\ARM\ARMCC\Bin\..\include\math.h
-newlegends_gimbal_board\gimbal_task.o: ../user_code/module/config.h
+newlegends_gimbal_board\gimbal_task.o: ../user_code/module/Config.h
 newlegends_gimbal_board\gimbal_task.o: ../user_code/bsp/bsp_buzzer.h
 newlegends_gimbal_board\gimbal_task.o: ../user_code/application/gimbal_task.h

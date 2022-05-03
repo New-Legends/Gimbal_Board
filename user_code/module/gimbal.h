@@ -14,7 +14,7 @@
 #include "INS.h"
 #include "Communicate.h"
 
-#include "config.h"
+#include "Config.h"
 
 #ifdef __cplusplus
 extern "C"

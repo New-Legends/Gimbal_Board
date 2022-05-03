@@ -90,7 +90,7 @@ newlegends_gimbal_board\calibrate_task.o: ../user_code/componet/support/user_lib
 newlegends_gimbal_board\calibrate_task.o: ../user_code/componet/include/arm_math.h
 newlegends_gimbal_board\calibrate_task.o: ../Drivers/CMSIS/Include/core_cm4.h
 newlegends_gimbal_board\calibrate_task.o: D:\ARM\ARMCC\Bin\..\include\math.h
-newlegends_gimbal_board\calibrate_task.o: ../user_code/module/config.h
+newlegends_gimbal_board\calibrate_task.o: ../user_code/module/Config.h
 newlegends_gimbal_board\calibrate_task.o: ../user_code/application/gimbal_task.h
 newlegends_gimbal_board\calibrate_task.o: ..\user_code\application\communicate_task.h
 newlegends_gimbal_board\calibrate_task.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h

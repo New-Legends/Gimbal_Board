@@ -82,7 +82,7 @@ newlegends_gimbal_board\gimbal.o: ../user_code/componet/support/AHRS_MiddleWare.
 newlegends_gimbal_board\gimbal.o: ..\user_code\module\Communicate.h
 newlegends_gimbal_board\gimbal.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 newlegends_gimbal_board\gimbal.o: ../user_code/application/detect_task.h
-newlegends_gimbal_board\gimbal.o: ..\user_code\module\config.h
+newlegends_gimbal_board\gimbal.o: ..\user_code\module\Config.h
 newlegends_gimbal_board\gimbal.o: ../user_code/bsp/bsp_buzzer.h
 newlegends_gimbal_board\gimbal.o: ../user_code/application/gimbal_task.h
 newlegends_gimbal_board\gimbal.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h

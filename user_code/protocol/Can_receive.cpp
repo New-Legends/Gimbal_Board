@@ -99,6 +99,29 @@ void Can_receive::can_cmd_shoot_motor_motor(int16_t left_fric, int16_t right_fri
     HAL_CAN_AddTxMessage(&SHOOT_CAN, &can_tx_message, can_send_data, &send_mail_box);
 }
 
+void Can_receive::send_rc_board_com_2(int16_t give)
+{
+    //数据填充
+    gimbal_send.gimbal_yaw_current_give = give;
+
+
+    uint32_t send_mail_box;
+    can_tx_message.StdId = CAN_RC_BOARM_COM_ID_2;
+    can_tx_message.IDE = CAN_ID_STD;
+    can_tx_message.RTR = CAN_RTR_DATA;
+    can_tx_message.DLC = 0x08;
+    can_send_data[0] = give >>8;
+    can_send_data[1] = give;
+    can_send_data[2] = 0;
+    can_send_data[3] = 0;
+    can_send_data[4] = 0;
+    can_send_data[5] = 0;
+    can_send_data[6] = 0;
+    can_send_data[7] = 0;
+
+    HAL_CAN_AddTxMessage(&BOARD_COM_CAN, &can_tx_message, can_send_data, &send_mail_box);
+}
+
 /**
   * @brief          发送ID为0x700的CAN包,它会设置3508电机进入快速设置ID
   * @param[in]      none
@@ -151,27 +174,19 @@ void Can_receive::receive_17mm_speed_and_mode_board_com(uint8_t data[8])
     gimbal_receive.base_HP = (uint16_t)(data[5] << 8 | data[6]);
 }
 
-void Can_receive::send_rc_board_com_2(int16_t give)
+void Can_receive::receive_rc_board_com(uint8_t data[8])
 {
-    //数据填充
-    gimbal_send.gimbal_yaw_current_give = give;
+    gimbal_receive.ch_0 = (int16_t)(data[0] << 8 | data[1]);
+    gimbal_receive.ch_1 = (int16_t)(data[2] << 8 | data[3]);
+    gimbal_receive.s0 = (int8_t)(data[4]);
+}
 
-
-    uint32_t send_mail_box;
-    can_tx_message.StdId = CAN_RC_BOARM_COM_ID_2;
-    can_tx_message.IDE = CAN_ID_STD;
-    can_tx_message.RTR = CAN_RTR_DATA;
-    can_tx_message.DLC = 0x08;
-    can_send_data[0] = give >>8;
-    can_send_data[1] = give;
-    can_send_data[2] = 0;
-    can_send_data[3] = 0;
-    can_send_data[4] = 0;
-    can_send_data[5] = 0;
-    can_send_data[6] = 0;
-    can_send_data[7] = 0;
-
-    HAL_CAN_AddTxMessage(&BOARD_COM_CAN, &can_tx_message, can_send_data, &send_mail_box);
+void Can_receive::receive_yaw_motor(uint8_t data[8])
+{
+    gimbal_receive.ecd = (uint16_t)(data[0] <<8 | data[1]);
+    gimbal_receive.speed_rpm = (int16_t)(data[2] << 8 | data[3]);
+    gimbal_receive.give_current = (int16_t)(data[4] << 8 | data[5]);
+    gimbal_receive.temperate = data[6];
 }
 
 

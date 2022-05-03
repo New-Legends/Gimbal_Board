@@ -13,6 +13,9 @@
 #define GIMBAL_DEBUG_MODE 1
 #define GIMBAL_VISION_OPEN 0
 
+//下云台是否接了接收器,1为未接，通讯开启
+#define GIMBAL_REMOTE_OPEN 1
+
 /*-----------------------发射机构------------------------------*/
 //摩擦轮电机无电流输出
 #define SHOOT_FRIC_MOTOR_NO_CURRENT 0

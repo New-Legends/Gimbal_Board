@@ -37,7 +37,7 @@ void Communicate::run()
     uint8_t temp_s0, temp_gimbal_behaviour_mode;
     fp32 temp_gimbal_yaw_angle;
     fp32 temp_gimbal_yaw_current_give;
-    uint16_t temp_give;
+    int16_t temp_give;
 
     temp_ch0 = remote_control.rc_ctrl.rc.ch[0];
     temp_ch2 = remote_control.rc_ctrl.rc.ch[2];
@@ -49,6 +49,20 @@ void Communicate::run()
     temp_gimbal_behaviour_mode = gimbal.gimbal_behaviour_mode;
 
     can_receive.send_rc_board_com_2(temp_give);
+
+#if GIMBAL_REMOTE_OPEN
+    remote_control.rc_ctrl.rc.ch[0] = can_receive.gimbal_receive.ch_0;
+    remote_control.rc_ctrl.rc.ch[1] = can_receive.gimbal_receive.ch_1;
+    remote_control.rc_ctrl.rc.s[0] = can_receive.gimbal_receive.s0;
+    can_receive.gimbal_motor[0].last_ecd = can_receive.gimbal_motor[0].ecd;
+    can_receive.gimbal_motor[0].ecd = can_receive.gimbal_receive.ecd;
+    can_receive.gimbal_motor[0].speed_rpm = can_receive.gimbal_receive.speed_rpm;
+    can_receive.gimbal_motor[0].given_current = can_receive.gimbal_receive.give_current;
+    can_receive.gimbal_motor[0].temperate = can_receive.gimbal_receive.temperate;
+
+#else
+   ;
+#endif
 
 }
 
@@ -223,6 +237,16 @@ extern "C"
 
             case CAN_17MM_SPEED_BOARD_COM_ID:
                 can_receive.receive_17mm_speed_and_mode_board_com(rx_data);
+                detect_hook(BOARD_COM);
+                break;
+
+            case CAN_CHASSIS_UNDER:
+                can_receive.receive_rc_board_com(rx_data);
+                detect_hook(BOARD_COM);
+                break;
+
+            case CAN_CHASSIS_YAW:
+                can_receive.receive_yaw_motor(rx_data);
                 detect_hook(BOARD_COM);
                 break;
 

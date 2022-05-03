@@ -84,7 +84,7 @@ newlegends_gimbal_board\communicate.o: ../user_code/componet/support/bmi088drive
 newlegends_gimbal_board\communicate.o: ../user_code/componet/support/ist8310driver.h
 newlegends_gimbal_board\communicate.o: ../user_code/componet/support/ahrs.h
 newlegends_gimbal_board\communicate.o: ../user_code/componet/support/AHRS_MiddleWare.h
-newlegends_gimbal_board\communicate.o: ..\user_code\module\config.h
+newlegends_gimbal_board\communicate.o: ..\user_code\module\Config.h
 newlegends_gimbal_board\communicate.o: ../user_code/bsp/bsp_buzzer.h
 newlegends_gimbal_board\communicate.o: ../user_code/application/gimbal_task.h
 newlegends_gimbal_board\communicate.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h

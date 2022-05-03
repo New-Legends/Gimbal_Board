@@ -67,7 +67,11 @@ void Gimbal::init()
     last_gimbal_behaviour_mode = gimbal_behaviour_mode;
 
     /*----------------------yaw电机数据------------------------------*/
+#if GIMBAL_REMOTE_OPEN
+    ;
+#else
     gimbal_yaw_motor.init(can_receive.get_gimbal_motor_measure_point(YAW));
+#endif
 
     //旧 初始化pid
     fp32 yaw_speed_pid_parm[5] = {YAW_SPEED_PID_KP, YAW_SPEED_PID_KI, YAW_SPEED_PID_KD, YAW_SPEED_PID_MAX_IOUT, YAW_SPEED_PID_MAX_OUT};

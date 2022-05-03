@@ -48,7 +48,8 @@ typedef enum
     CAN_COOLING_BOARM_COM_ID = 0x302,
     CAN_17MM_SPEED_BOARD_COM_ID = 0x303,
     CAN_RC_BOARM_COM_ID_2 = 0x304,
-    CAN_CHASS_UNDER = 0x305,
+    CAN_CHASSIS_UNDER = 0x305,
+    CAN_CHASSIS_YAW = 0x306,
 } can_msg_id_e;
 
 //rm motor data
@@ -93,6 +94,18 @@ typedef struct
     uint8_t chassis_behaviour;
     uint16_t base_HP;
 
+    //遥控器数据
+    int16_t ch_0;
+    int16_t ch_1;
+    int8_t s0;
+
+    //YAW电机数据
+    uint16_t ecd;
+    int16_t speed_rpm;
+    int16_t give_current;
+    uint8_t temperate;
+    
+
 } gimbal_receive_t;
 
 
@@ -131,6 +144,8 @@ public:
     /*-------------------板间通信函数--------------------*/
     void receive_cooling_and_id_board_com(uint8_t data[8]);
     void receive_17mm_speed_and_mode_board_com(uint8_t data[8]);
+    void receive_rc_board_com(uint8_t data[8]);
+    void receive_yaw_motor(uint8_t data[8]);
     void send_rc_board_com_2(int16_t give);            //发送YAW输出电流
     void send_gimbal_board_com(uint8_t s0, uint8_t gimbal_behaviour, fp32 gimbal_yaw_angle); //发送云台模式及状态
 
