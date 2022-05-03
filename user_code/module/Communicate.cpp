@@ -203,58 +203,71 @@ extern "C"
             HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
             switch (rx_header.StdId)
             {
-            //发射机构电机
-            case CAN_LEFT_FRIC_MOTOR_ID:
-                can_receive.get_shoot_motor_measure(0, rx_data);
-                detect_hook(CAN_LEFT_FRIC_MOTOR_ID);
-                break;
+                //发射机构电机
+                case CAN_LEFT_FRIC_MOTOR_ID:
+                    can_receive.get_shoot_motor_measure(0, rx_data);
+                    detect_hook(CAN_LEFT_FRIC_MOTOR_ID);
+                    break;
 
-            case CAN_RIGHT_FRIC_MOTOR_ID:
-                can_receive.get_shoot_motor_measure(1, rx_data);
-                detect_hook(CAN_RIGHT_FRIC_MOTOR_ID);
-                break;
+                case CAN_RIGHT_FRIC_MOTOR_ID:
+                    can_receive.get_shoot_motor_measure(1, rx_data);
+                    detect_hook(CAN_RIGHT_FRIC_MOTOR_ID);
+                    break;
 
-            case CAN_TRIGGER_MOTOR_ID:
-                can_receive.get_shoot_motor_measure(2, rx_data);
-                detect_hook(CAN_TRIGGER_MOTOR_ID);
-                break;
+                case CAN_TRIGGER_MOTOR_ID:
+                    can_receive.get_shoot_motor_measure(2, rx_data);
+                    detect_hook(CAN_TRIGGER_MOTOR_ID);
+                    break;
 
-            //云台机构电机
-            case CAN_YAW_MOTOR_ID:
-                can_receive.get_gimbal_motor_measure(0, rx_data);
-                detect_hook(GIMBAL_YAW_MOTOR_TOE);
-                break;
+                //云台机构电机
+                case CAN_YAW_MOTOR_ID:
+                    can_receive.get_gimbal_motor_measure(0, rx_data);
+                    detect_hook(GIMBAL_YAW_MOTOR_TOE);
+                    break;
 
-            case CAN_PITCH_MOTOR_ID:
-                can_receive.get_gimbal_motor_measure(1, rx_data);
-                detect_hook(GIMBAL_PITCH_MOTOR_TOE);
-                break;
+                case CAN_PITCH_MOTOR_ID:
+                    can_receive.get_gimbal_motor_measure(1, rx_data);
+                    detect_hook(GIMBAL_PITCH_MOTOR_TOE);
+                    break;
 
-            case CAN_COOLING_BOARM_COM_ID:
-                can_receive.receive_cooling_and_id_board_com(rx_data);
-                detect_hook(BOARD_COM);
-                break;
-
-            case CAN_17MM_SPEED_BOARD_COM_ID:
-                can_receive.receive_17mm_speed_and_mode_board_com(rx_data);
-                detect_hook(BOARD_COM);
-                break;
-
-            case CAN_CHASSIS_UNDER:
-                can_receive.receive_rc_board_com(rx_data);
-                detect_hook(BOARD_COM);
-                break;
-
-            case CAN_CHASSIS_YAW:
-                can_receive.receive_yaw_motor(rx_data);
-                detect_hook(BOARD_COM);
-                break;
-
-            default:
+                default:
+                {
+                    break;
+                }
+            }
+        }
+        else if(hcan = BOARD_COM_CAN)//通讯
+        {
+            HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
+            switch (rx_header.StdId)
             {
-                break;
+                case CAN_COOLING_BOARM_COM_ID:
+                    can_receive.receive_cooling_and_id_board_com(rx_data);
+                    detect_hook(BOARD_COM);
+                    break;
+
+                case CAN_17MM_SPEED_BOARD_COM_ID:
+                    can_receive.receive_17mm_speed_and_mode_board_com(rx_data);
+                    detect_hook(BOARD_COM);
+                    break;
+
+                case CAN_CHASSIS_UNDER:
+                    can_receive.receive_rc_board_com(rx_data);
+                    detect_hook(BOARD_COM);
+                    break;
+
+                case CAN_CHASSIS_YAW:
+                    can_receive.receive_yaw_motor(rx_data);
+                    detect_hook(BOARD_COM);
+                    break;
+
+                default:
+                {
+                    break;
+                }
             }
-            }
+            
+
         }
     }
 }
