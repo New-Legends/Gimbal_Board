@@ -27,6 +27,7 @@ Project File Date:  03/16/2022
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\ARM\ARMCC\Bin'
 Build target 'NewLegends_Gimbal_Board'
+compiling communicate_task.cpp...
 compiling shoot_task.cpp...
 ../user_code/device/Motor.h(168): warning:  #1-D: last line of file ends without a newline
   #endif
@@ -35,7 +36,6 @@ compiling shoot_task.cpp...
 ../user_code/module/Config.h(51): warning:  #1-D: last line of file ends without a newline
   #endif
 ..\user_code\application\shoot_task.cpp: 3 warnings, 0 errors
-compiling communicate_task.cpp...
 compiling gimbal_task.cpp...
 ../user_code/device/Motor.h(168): warning:  #1-D: last line of file ends without a newline
   #endif
@@ -84,6 +84,20 @@ compiling Communicate.cpp...
 ..\user_code\module\Communicate.cpp(202): warning:  #69-D: integer conversion resulted in truncation
                   detect_hook(CAN_TRIGGER_MOTOR_ID);
 ..\user_code\module\Communicate.cpp: 13 warnings, 0 errors
+compiling start_task.cpp...
+../user_code/device/Motor.h(168): warning:  #1-D: last line of file ends without a newline
+  #endif
+../user_code/componet/support/user_lib.h(11): warning:  #47-D: incompatible redefinition of macro "PI"  (declared at line 21 of "../user_code/componet/include/struct_typedef.h")
+  #define PI 3.14159265358979f
+../user_code/module/config.h(51): warning:  #1-D: last line of file ends without a newline
+  #endif
+../user_code/module/gimbal.h(183): warning:  #47-D: incompatible redefinition of macro "GIMBAL_CALI_STEP_TIME"  (declared at line 182)
+  #define GIMBAL_CALI_STEP_TIME 0.1f
+../user_code/module/Shoot.h(55): warning:  #47-D: incompatible redefinition of macro "ECD_RANGE"  (declared at line 146 of "../user_code/module/gimbal.h")
+  #define ECD_RANGE 8191
+../user_code/device/Oled.h(122): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\user_code\application\start_task.cpp: 6 warnings, 0 errors
 compiling calibrate_task.cpp...
 ../user_code/device/Motor.h(168): warning:  #1-D: last line of file ends without a newline
   #endif
@@ -100,20 +114,6 @@ compiling calibrate_task.cpp...
 ..\user_code\application\calibrate_task.cpp(253): warning:  #144-D: a value of type "bool_t (*)(uint32_t *, bool_t)" cannot be used to initialize an entity of type "void *"
   void *cali_hook_fun[CALI_LIST_LENGHT] = {cali_head_hook, cali_gimbal_hook, cali_gyro_hook, NULL, NULL};
 ..\user_code\application\calibrate_task.cpp: 7 warnings, 0 errors
-compiling start_task.cpp...
-../user_code/device/Motor.h(168): warning:  #1-D: last line of file ends without a newline
-  #endif
-../user_code/componet/support/user_lib.h(11): warning:  #47-D: incompatible redefinition of macro "PI"  (declared at line 21 of "../user_code/componet/include/struct_typedef.h")
-  #define PI 3.14159265358979f
-../user_code/module/config.h(51): warning:  #1-D: last line of file ends without a newline
-  #endif
-../user_code/module/gimbal.h(183): warning:  #47-D: incompatible redefinition of macro "GIMBAL_CALI_STEP_TIME"  (declared at line 182)
-  #define GIMBAL_CALI_STEP_TIME 0.1f
-../user_code/module/Shoot.h(55): warning:  #47-D: incompatible redefinition of macro "ECD_RANGE"  (declared at line 146 of "../user_code/module/gimbal.h")
-  #define ECD_RANGE 8191
-../user_code/device/Oled.h(122): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\user_code\application\start_task.cpp: 6 warnings, 0 errors
 compiling Motor.cpp...
 ..\user_code\device\Motor.h(168): warning:  #1-D: last line of file ends without a newline
   #endif
@@ -128,6 +128,7 @@ compiling INS.cpp...
 ..\user_code\module\INS.cpp(68): warning:  #177-D: variable "imu_temp_PID"  was declared but never referenced
   static const fp32 imu_temp_PID[3] = {TEMPERATURE_PID_KP, TEMPERATURE_PID_KI, TEMPERATURE_PID_KD};
 ..\user_code\module\INS.cpp: 4 warnings, 0 errors
+compiling Can_receive.cpp...
 compiling Shoot.cpp...
 ../user_code/device/Motor.h(168): warning:  #1-D: last line of file ends without a newline
   #endif
@@ -144,7 +145,6 @@ compiling Shoot.cpp...
 ..\user_code\module\Shoot.cpp(620): warning:  #550-D: variable "id1_17mm_cooling_rate"  was set but never used
       uint16_t id1_17mm_cooling_rate;
 ..\user_code\module\Shoot.cpp: 7 warnings, 0 errors
-compiling Can_receive.cpp...
 compiling Gimbal.cpp...
 ../user_code/device/Motor.h(168): warning:  #1-D: last line of file ends without a newline
   #endif
