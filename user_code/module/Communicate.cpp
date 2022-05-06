@@ -236,7 +236,7 @@ extern "C"
                 }
             }
         }
-        else if(hcan = BOARD_COM_CAN)//通讯
+        else if(hcan == &BOARD_COM_CAN)//通讯
         {
             HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
             switch (rx_header.StdId)
