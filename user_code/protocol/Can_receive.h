@@ -8,7 +8,7 @@
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
 
-#define SHOOT_CAN hcan1
+#define SHOOT_CAN hcan2
 #define GIMBAL_CAN hcan1
 #define BOARD_COM_CAN hcan1
 
@@ -40,9 +40,9 @@ typedef enum
     CAN_SHOOT_ALL_ID = 0x200,
 
     //云台电机接收ID CAN1
-    CAN_YAW_MOTOR_ID = 0x205,
-    CAN_PITCH_MOTOR_ID = 0x206,
-    CAN_GIMBAL_ALL_ID = 0x1FF,
+    CAN_YAW_MOTOR_ID = 0x209,  //电机ID减四
+    CAN_PITCH_MOTOR_ID = 0x20A,//电机ID减四
+    CAN_GIMBAL_ALL_ID = 0x2FF,
 
     //板间通信ID
     CAN_COOLING_BOARM_COM_ID = 0x302,

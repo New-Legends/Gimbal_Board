@@ -54,11 +54,11 @@ void Communicate::run()
     remote_control.rc_ctrl.rc.ch[0] = can_receive.gimbal_receive.ch_0;
     remote_control.rc_ctrl.rc.ch[1] = can_receive.gimbal_receive.ch_1;
     remote_control.rc_ctrl.rc.s[0] = can_receive.gimbal_receive.s0;
-    can_receive.gimbal_motor[0].last_ecd = can_receive.gimbal_motor[0].ecd;
-    can_receive.gimbal_motor[0].ecd = can_receive.gimbal_receive.ecd;
-    can_receive.gimbal_motor[0].speed_rpm = can_receive.gimbal_receive.speed_rpm;
-    can_receive.gimbal_motor[0].given_current = can_receive.gimbal_receive.give_current;
-    can_receive.gimbal_motor[0].temperate = can_receive.gimbal_receive.temperate;
+    // can_receive.gimbal_motor[0].last_ecd = can_receive.gimbal_motor[0].ecd;
+    // can_receive.gimbal_motor[0].ecd = can_receive.gimbal_receive.ecd;
+    // can_receive.gimbal_motor[0].speed_rpm = can_receive.gimbal_receive.speed_rpm;
+    // can_receive.gimbal_motor[0].given_current = can_receive.gimbal_receive.give_current;
+    // can_receive.gimbal_motor[0].temperate = can_receive.gimbal_receive.temperate;
 
 #else
    ;
@@ -218,18 +218,7 @@ extern "C"
                     can_receive.get_shoot_motor_measure(2, rx_data);
                     detect_hook(CAN_TRIGGER_MOTOR_ID);
                     break;
-
-                //云台机构电机
-                case CAN_YAW_MOTOR_ID:
-                    can_receive.get_gimbal_motor_measure(0, rx_data);
-                    detect_hook(GIMBAL_YAW_MOTOR_TOE);
-                    break;
-
-                case CAN_PITCH_MOTOR_ID:
-                    can_receive.get_gimbal_motor_measure(1, rx_data);
-                    detect_hook(GIMBAL_PITCH_MOTOR_TOE);
-                    break;
-
+                               
                 default:
                 {
                     break;
@@ -256,9 +245,20 @@ extern "C"
                     detect_hook(BOARD_COM);
                     break;
 
-                case CAN_CHASSIS_YAW:
-                    can_receive.receive_yaw_motor(rx_data);
-                    detect_hook(BOARD_COM);
+                // case CAN_CHASSIS_YAW:
+                //     can_receive.receive_yaw_motor(rx_data);
+                //     detect_hook(BOARD_COM);
+                //     break;
+
+                 //云台机构电机              
+                case CAN_PITCH_MOTOR_ID:
+                    can_receive.get_gimbal_motor_measure(1, rx_data);
+                    detect_hook(GIMBAL_PITCH_MOTOR_TOE);
+                    break;
+
+                case CAN_YAW_MOTOR_ID:
+                    can_receive.get_gimbal_motor_measure(0, rx_data);
+                    detect_hook(GIMBAL_YAW_MOTOR_TOE);
                     break;
 
                 default:
