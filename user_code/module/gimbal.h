@@ -29,36 +29,38 @@ extern "C"
 
 #include "gimbal_task.h"
 
-/*----------------------pid系数------------------------*/
-// yaw 速度环 PID参数以及 PID最大输出，积分输出
+/*------------------------速度环pid-----------------------------*/
+// yaw 速度环
 #define YAW_SPEED_PID_KP 8000.0f
 #define YAW_SPEED_PID_KI 0.0f
 #define YAW_SPEED_PID_KD 20.0f
 #define YAW_SPEED_PID_MAX_IOUT 25.0f
 #define YAW_SPEED_PID_MAX_OUT 20000.0f
 
-// pitch 速度环 PID参数以及 PID最大输出，积分输出
-#define PITCH_SPEED_PID_KP 8000.0f 
+// pitch 速度环
+#define PITCH_SPEED_PID_KP 8000.0f // 2900
 #define PITCH_SPEED_PID_KI 0.0f
 #define PITCH_SPEED_PID_KD 0.0f
 #define PITCH_SPEED_PID_MAX_IOUT 10.0f
 #define PITCH_SPEED_PID_MAX_OUT 15000.0f
 
-// yaw 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
+/*------------------------------陀螺仪PID------------------------*/
+// yaw轴陀螺仪PID 由陀螺仪角度控制
 #define YAW_GYRO_PID_KP 30.0f
 #define YAW_GYRO_PID_KI 0.1f
 #define YAW_GYRO_PID_KD 12.0f
 #define YAW_GYRO_PID_MAX_IOUT 0.2f
 #define YAW_GYRO_PID_MAX_OUT 120.0f
 
-// yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
+/*------------------------------编码器PID------------------------*/
+// yaw轴编码器PID 由编码器角度控制
 #define YAW_ENCODE_PID_KP 5.0f
 #define YAW_ENCODE_PID_KI 0.0f
 #define YAW_ENCODE_PID_KD 0.0f
 #define YAW_ENCODE_PID_MAX_IOUT 5.0f
 #define YAW_ENCODE_PID_MAX_OUT 20.0f
 
-// pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
+// pitch轴编码器PID 由编码器角度控制
 #define PITCH_ENCODE_PID_KP 30.0f
 #define PITCH_ENCODE_PID_KI 0.01f
 #define PITCH_ENCODE_PID_KD 3.0f
@@ -73,10 +75,10 @@ extern "C"
 #define YAW_AUTO_PID_MAX_IOUT 1.0f
 #define YAW_AUTO_PID_MAX_OUT 40.0f
 
-// pitch轴自瞄PID 由编码器角度控制
+// Pitch轴自瞄PID 由编码器角度控制
 #define PITCH_AUTO_PID_KP 100.0f
 #define PITCH_AUTO_PID_KI 0.0f
-#define PITCH_AUTO_PID_KD 3.0f // 0.1
+#define PITCH_AUTO_PID_KD 3.0f //0.1
 #define PITCH_AUTO_PID_MAX_IOUT 1.0f
 #define PITCH_AUTO_PID_MAX_OUT 150.0f
 
@@ -92,12 +94,12 @@ extern "C"
 //遥控器输入死区，因为遥控器存在差异，摇杆在中间，其值不一定为零
 #define RC_DEADBAND 10
 //云台 遥控器速度
-#define YAW_RC_SEN -0.00005f // 右手系 z轴逆时针为正 但是遥控器通道向右为正 故加负号
-#define PITCH_RC_SEN 0.000015f
+#define YAW_RC_SEN  -0.00002f // 右手系 z轴逆时针为正 但是遥控器通道向右为正 故加负号
+#define PITCH_RC_SEN 0.000010f
 
 //云台 鼠标速度
-#define YAW_MOUSE_SEN   -0.0005f
-#define PITCH_MOUSE_SEN -0.0003f
+#define YAW_MOUSE_SEN   -0.00005f
+#define PITCH_MOUSE_SEN -0.00003f
 
 #define YAW_ENCODE_SEN 0.01f
 #define PITCH_ENCODE_SEN 0.01f
@@ -143,12 +145,12 @@ extern "C"
 
 //云台初始化回中值，允许的误差,并且在误差范围内停止一段时间以及最大时间6s后解除初始化状态，
 #define GIMBAL_TO_MID_ERROR 0.05f
-#define GIMBAL_TO_MID_STOP_TIME 200 // 100
+#define GIMBAL_TO_MID_STOP_TIME 200 
 #define GIMBAL_TO_MID_TIME 6000
 #define GIMBAL_CALI_REDUNDANT_ANGLE 0.1f
 // //云台初始化回中值的速度以及控制到的角度
-#define GIMBAL_TO_MID_PITCH_SPEED 0.01f 
-#define GIMBAL_TO_MID_YAW_SPEED 0.002f   
+#define GIMBAL_TO_MID_PITCH_SPEED 0.002f 
+#define GIMBAL_TO_MID_YAW_SPEED 0.005f   
 
 #define YAW_TO_MID_SET 0.0f
 #define PITCH_TO_MID_SET 0.0f

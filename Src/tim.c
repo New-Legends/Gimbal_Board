@@ -501,7 +501,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
     HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /* USER CODE BEGIN TIM1_MspPostInit 1 */
-    HAL_TIM_Base_Start(&htim1);//暂时关闭定时器中断
+    //HAL_TIM_Base_Start_IT(&htim1);
   /* USER CODE END TIM1_MspPostInit 1 */
   }
   else if(timHandle->Instance==TIM3)

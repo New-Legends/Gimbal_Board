@@ -42,14 +42,15 @@
 
 //射击完成后 子弹弹出去后，判断时间，以防误触发
 #define SHOOT_DONE_KEY_OFF_TIME 15
-//鼠标长按判断
-#define PRESS_LONG_TIME 400
+//鼠标左键长按判断
+#define PRESS_L_LONG_TIME 400
+#define PRESS_R_LONG_TIME 50
 //弹仓按键长按判断
 #define PRESS_COVER_LONG_TIME 400
 //摩擦轮开启按键延时
 #define KEY_FRIC_LONG_TIME 200
 
-//遥控器射击开关打下档一段时间后 连续发射子弹 用于清弹
+//遥控器射击开关打下档一段时间后 连续发射子弹 用于清单
 #define RC_S_LONG_TIME 2000
 //摩擦轮高速 加速 时间
 #define UP_ADD_TIME 80
@@ -63,8 +64,8 @@
 #define FRIC_REQUIRE_SPEED_RMP 500.0f
 #define FRIC_MAX_SPEED_RMP 4000.0f
 
-#define FRIC_MAX_SPEED 4.0f
-#define FRIC_MAX_REQUUIRE_SPEED 2.0f
+#define FRIC_MAX_SPEED 80.0f
+#define FRIC_MAX_REQUIRE_SPEED 30.0f
 
 //拨盘电机rmp 变化成 旋转速度的比例
 #define MOTOR_RPM_TO_SPEED 0.00290888208665721596153948461415f
@@ -76,32 +77,31 @@
 #define CONTINUE_TRIGGER_SPEED 15.0f * SHOOT_TRIGGER_DIRECTION //15
 #define READY_TRIGGER_SPEED 5.0f * SHOOT_TRIGGER_DIRECTION     //5
 
-#define KEY_OFF_JUGUE_TIME   500
-#define SWITCH_TRIGGER_ON    0
-#define SWITCH_TRIGGER_OFF   1
+#define KEY_OFF_JUGUE_TIME 500
+#define SWITCH_TRIGGER_ON 0
+#define SWITCH_TRIGGER_OFF 1
 
 //卡弹时间 以及反转时间
-#define BLOCK_TRIGGER_SPEED   1.0f
-#define BLOCK_TIME            700
-#define REVERSE_TIME          500
-#define REVERSE_SPEED_LIMIT   13.0f
+#define BLOCK_TRIGGER_SPEED 1.0f
+#define BLOCK_TIME 700
+#define REVERSE_TIME 500
+#define REVERSE_SPEED_LIMIT 13.0f
 
 #define PI_FOUR 0.78539816339744830961566084581988f
 #define PI_TEN 0.314f
 /*---------------------------pid----------------------*/
 //摩擦轮电机PID
-#define FRIC_SPEED_PID_KP  2000.0f
-#define FRIC_SPEED_PID_KI  0.8f
-#define FRIC_SPEED_PID_KD  2.0f
-#define FRIC_PID_MAX_IOUT  200.0f
-#define FRIC_PID_MAX_OUT   6000.0f
+#define FRIC_SPEED_PID_KP 2000.0f // 1800
+#define FRIC_SPEED_PID_KI 0.8f    // 0.5
+#define FRIC_SPEED_PID_KD 2.0f    // 2.0
+#define FRIC_PID_MAX_IOUT 200.0f
+#define FRIC_PID_MAX_OUT  6000.0f
 
 //拨弹轮电机PID
 #define TRIGGER_ANGLE_PID_KP 2000.0f 
-#define TRIGGER_ANGLE_PID_KI 0.5f    
+#define TRIGGER_ANGLE_PID_KI 0.5f   
 #define TRIGGER_ANGLE_PID_KD 0.0f
-
-#define TRIGGER_BULLET_PID_MAX_IOUT 10000.0f
+#define TRIGGER_BULLET_PID_MAX_IOUT 1000.0f
 #define TRIGGER_BULLET_PID_MAX_OUT 4000.0f
 
 #define TRIGGER_READY_PID_MAX_IOUT 2000.0f
@@ -109,7 +109,7 @@
 
 
 //弹仓开合电机PID
-#define COVER_ANGLE_PID_KP 1500.0f //800
+#define COVER_ANGLE_PID_KP 2000.0f //800
 #define COVER_ANGLE_PID_KI 0.0f    //0.5
 #define COVER_ANGLE_PID_KD 5.0f
 #define COVER_BULLET_PID_MAX_IOUT 200.0f
@@ -121,10 +121,8 @@
 #define TRIGGER_GRID_NUM 8
 #define TRIGGER_ONCE 2 * PI / TRIGGER_GRID_NUM
 
-//弹仓
-#define COVER_OPEN_ANGLE 1.57
-#define COVER_MOTOR_SPEED 1.5f
-
+#define COVER_OPEN_ANGLE 0.2 * PI
+#define COVER_MOTOR_SPEED 1.0f
 
 //一阶低通滤波参数
 #define SHOOT_ACCEL_FRIC_LEFT_NUM 0.2666666667f
@@ -133,10 +131,10 @@
 
 
 //电机序号
-#define LEFT_FRIC  0
+#define LEFT_FRIC 0
 #define RIGHT_FRIC 1
-#define TRIGGER    2
-#define COVER      3
+#define TRIGGER 2
+#define COVER 3
 
 
 typedef enum

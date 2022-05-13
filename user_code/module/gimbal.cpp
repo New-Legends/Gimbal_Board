@@ -37,7 +37,7 @@
     }
 
 //自瞄相关数据
-bool_t auto_switch = 1; //自瞄开关
+bool_t auto_switch = 0; //自瞄开关
 
 //云台模块 对象
 Gimbal gimbal;
@@ -195,7 +195,7 @@ void Gimbal::key_state_update()
     //鼠标右键长按计时
     if (press_r)
     {
-        if (press_r_time < PRESS_LONG_TIME)
+        if (press_r_time < PRESS_R_LONG_TIME)
         {
             press_r_time++;
         }
@@ -227,6 +227,15 @@ void Gimbal::key_state_update()
     if (press_stop_time == PRESS_STOP_LONG_TIME && gimbal_stop_flag == false) //长按自锁按键并且关闭完毕
     {
         gimbal_stop_flag = true;
+    }
+
+    if (gimbal_RC->rc.ch[4] > 500)
+    {
+        gimbal_stop_flag = true;
+    }
+    else
+    {
+        gimbal_stop_flag = false;
     }
     //更新按键状态
     last_gimbal_RC->key.v = gimbal_RC->key.v;
@@ -463,21 +472,22 @@ void Gimbal::gimbal_chassis_control(fp32 *yaw, fp32 *pitch)
     }
 
     //长按右键 打开自瞄 松开关闭自瞄
-//    if (press_r_time == PRESS_LONG_TIME && auto_switch == FALSE)
-//    {
-//        //更新自瞄PID
-//        update_auto_pid();
-//        auto_switch = TRUE;
-//    }
-//    else if (press_r_time != PRESS_LONG_TIME && auto_switch == TRUE)
-//    {
-//        //恢复之前的PID
-//        recover_normal_pid();
-//			  auto_switch = FALSE;
-//    }
-		//测试用
-     update_auto_pid();
-		 auto_switch = true;
+    if (press_r_time == PRESS_R_LONG_TIME && auto_switch == FALSE)
+    {
+        //更新自瞄PID
+        update_auto_pid();
+        auto_switch = TRUE;
+    }
+    else if (press_r_time != PRESS_R_LONG_TIME && auto_switch == TRUE)
+    {
+        //恢复之前的PID
+        recover_normal_pid();
+        auto_switch = FALSE;
+    }
+#if GIMABL_VISION_DEBUG
+		    update_auto_pid();
+        auto_switch = TRUE;
+#endif
     //当在自瞄模式下且识别到目标,云台控制权交给mini pc
     if (auto_switch == TRUE && vision_if_find_target() == TRUE)
     {
@@ -526,10 +536,9 @@ void Gimbal::update_auto_pid()
 
     fp32 pitch_encode_angle_pid_parm[5] = {PITCH_AUTO_PID_KP, PITCH_AUTO_PID_KI, PITCH_AUTO_PID_KD, PITCH_AUTO_PID_MAX_IOUT, PITCH_AUTO_PID_MAX_OUT};
     gimbal_pitch_motor.encode_angle_pid.init(PID_ANGLE, pitch_encode_angle_pid_parm, &gimbal_pitch_motor.encode_angle, &gimbal_pitch_motor.encode_angle_set, 0);
-
 }
 /**
- * @brief          更新自瞄模式PID
+ * @brief          恢复之前的PID
  * @retval         none
  */
 void Gimbal::recover_normal_pid()
@@ -540,8 +549,6 @@ void Gimbal::recover_normal_pid()
 
     fp32 pitch_encode_angle_pid_parm[5] = {PITCH_ENCODE_PID_KP, PITCH_ENCODE_PID_KI, PITCH_ENCODE_PID_KD, PITCH_ENCODE_PID_MAX_IOUT, PITCH_ENCODE_PID_MAX_OUT};
     gimbal_pitch_motor.encode_angle_pid.init(PID_ANGLE, pitch_encode_angle_pid_parm, &gimbal_pitch_motor.encode_angle, &gimbal_pitch_motor.encode_angle_set, 0);
-
-
 }
 /**
  * @brief          掉头控制
@@ -686,7 +693,8 @@ void Gimbal::output()
     gimbal_pitch_motor.current_give = 0;
 #endif
 
-    can_receive.can_cmd_gimbal_motor(gimbal_yaw_motor.current_give, gimbal_pitch_motor.current_give, 0, 0);
+    can_receive.can_cmd_yaw_motor(gimbal_yaw_motor.current_give);
+    can_receive.can_cmd_pitch_motor(gimbal_pitch_motor.current_give);
 }
 /*****************************(C) CALI GIMBAL *******************************/
 /**
