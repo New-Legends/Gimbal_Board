@@ -61,6 +61,24 @@ void Can_receive::can_cmd_gimbal_motor(int16_t yaw, int16_t pitch, int16_t empty
     HAL_CAN_AddTxMessage(&GIMBAL_CAN, &can_tx_message, can_send_data, &send_mail_box);
 }
 
+void Can_receive::can_cmd_gimbal_motor_2(int16_t yaw, int16_t pitch, int16_t empty1, int16_t empty2)
+{
+    uint32_t send_mail_box;
+    can_tx_message.StdId = CAN_GIMBAL_ALL_ID;
+    can_tx_message.IDE = CAN_ID_STD;
+    can_tx_message.RTR = CAN_RTR_DATA;
+    can_tx_message.DLC = 0x08;
+    can_send_data[0] = yaw >> 8;
+    can_send_data[1] = yaw;
+    can_send_data[2] = pitch >> 8;
+    can_send_data[3] = pitch;
+    can_send_data[4] = empty1 >> 8;
+    can_send_data[5] = empty1;
+    can_send_data[6] = empty2 >> 8;
+    can_send_data[7] = empty2;
+
+    HAL_CAN_AddTxMessage(&hcan1, &can_tx_message, can_send_data, &send_mail_box);
+}
 /**
   * @brief          返回云台电机 6020电机数据指针
   * @param[in]      i: 电机编号,范围[0,1]

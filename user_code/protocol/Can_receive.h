@@ -8,8 +8,8 @@
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
 
-#define SHOOT_CAN hcan1
-#define GIMBAL_CAN hcan1
+#define SHOOT_CAN hcan2
+#define GIMBAL_CAN hcan2
 #define BOARD_COM_CAN hcan1
 
 //云台电机编号
@@ -120,7 +120,7 @@ public:
     void get_gimbal_motor_measure(uint8_t num, uint8_t data[8]);
     void can_cmd_gimbal_motor(int16_t yaw, int16_t pitch, int16_t empty1, int16_t empty2);
     const motor_measure_t *get_gimbal_motor_measure_point(uint8_t i);
-
+    void can_cmd_gimbal_motor_2(int16_t yaw, int16_t pitch, int16_t empty1, int16_t empty2);
     /*-------------------发射机构电机数据接收--------------------*/
     void get_shoot_motor_measure(uint8_t num, uint8_t data[8]);
     void can_cmd_shoot_motor_motor(int16_t left_fric, int16_t right_fric, int16_t tigger, int16_t cover); //动力电机数据
