@@ -37,7 +37,7 @@ uint8_t Attack_Color_Choose = ATTACK_NONE; //默认不识别
 uint8_t Vision_Armor = FALSE;
 
 //是否识别到装甲板
-uint8_t if_identify_target = FALSE;
+bool_t if_identify_target = FALSE;
 
 //角度补偿,发送给视觉
 float Vision_Comps_Yaw_Send = COMPENSATION_YAW;
@@ -126,9 +126,9 @@ uint8_t CmdID = 0;
 void vision_send_data(uint8_t CmdID)
 {
 int i; //循环发送次数
-  uint16_t id1_17mm_speed_limit;
+  uint16_t shoot_speed_limit;
   uint16_t bullet_speed;
-  //get_shooter_id1_17mm_speed_limit_and_bullet_speed(&id1_17mm_speed_limit, &bullet_speed);
+  //get_shooter_shoot_speed_limit_and_bullet_speed(&shoot_speed_limit, &bullet_speed);
 
   VisionSendData.BEGIN = VISION_BEGIN;
 
@@ -152,13 +152,13 @@ int i; //循环发送次数
 }
 
 //调解自瞄的跟随速度
-uint16_t yaw_para = 100;
-uint16_t pitch_para = 100;
+uint16_t yaw_para = 50;
+uint16_t pitch_para = 150;
 
 void vision_error_angle(float *yaw_angle_error, float *pitch_angle_error)
 {
-  *yaw_angle_error = -VisionRecvData.yaw_angle / yaw_para;
-  *pitch_angle_error = VisionRecvData.pitch_angle / pitch_para;
+  *yaw_angle_error = VisionRecvData.yaw_angle / yaw_para;
+  *pitch_angle_error = -VisionRecvData.pitch_angle / pitch_para;
 
   if (VisionRecvData.yaw_angle == 0)
   {

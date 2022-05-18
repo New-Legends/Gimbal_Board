@@ -12,6 +12,7 @@
 #include "Remote_control.h"
 #include "Can_receive.h"
 #include "vision.h"
+#include "shoot.h"
 
 Remote_control remote_control;
 
@@ -19,6 +20,9 @@ Can_receive can_receive;
 
 Communicate communicate;
 
+extern bool_t if_identify_target;
+extern bool_t auto_switch;
+extern Shoot shoot;
 
 void Communicate::init()
 {
@@ -35,6 +39,11 @@ void Communicate::run()
     uint8_t temp_s0, temp_gimbal_behaviour_mode;
     fp32 temp_gimbal_yaw_angle;
 
+    fp32 temp_gimbal_pitch_angle;
+    bool_t temp_auto = auto_switch;
+    bool_t temp_aim = if_identify_target;
+    bool_t temp_fric = shoot.fric_status;
+
     temp_ch0 = remote_control.rc_ctrl.rc.ch[0];
     temp_ch2 = remote_control.rc_ctrl.rc.ch[2];
     temp_ch3 = remote_control.rc_ctrl.rc.ch[3];
@@ -43,9 +52,21 @@ void Communicate::run()
 
     temp_gimbal_behaviour_mode = gimbal.gimbal_mode;
     temp_gimbal_yaw_angle = gimbal.gimbal_yaw_motor.encode_angle;
+    temp_gimbal_pitch_angle = gimbal.gimbal_pitch_motor.encode_angle;
 
-    can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_ch3, temp_v);
     can_receive.send_gimbal_board_com(temp_s0, temp_gimbal_behaviour_mode, temp_gimbal_yaw_angle);
+    if (game_start())
+    {
+        can_receive.send_UI_com(temp_auto, temp_aim, temp_fric, temp_gimbal_pitch_angle, temp_v);
+    }
+    else
+    {
+        can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_ch3, temp_v);
+    }
+}
+bool Communicate::game_start()
+{
+    return can_receive.gimbal_receive.game_progress != 0;
 }
 
 #ifdef __cplusplus //告诉编译器，这部分代码按C语言的格式进行编译，而不是C++的
@@ -69,23 +90,23 @@ extern "C"
             {
                 /* Current memory buffer used is Memory 0 */
 
-                //disable DMA
+                // disable DMA
                 //失效DMA
                 __HAL_DMA_DISABLE(&hdma_usart3_rx);
 
-                //get receive data length, length = set_data_length - remain_length
+                // get receive data length, length = set_data_length - remain_length
                 //获取接收数据长度,长度 = 设定长度 - 剩余长度
                 this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart3_rx.Instance->NDTR;
 
-                //reset set_data_lenght
+                // reset set_data_lenght
                 //重新设定数据长度
                 hdma_usart3_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
 
-                //set memory buffer 1
+                // set memory buffer 1
                 //设定缓冲区1
                 hdma_usart3_rx.Instance->CR |= DMA_SxCR_CT;
 
-                //enable DMA
+                // enable DMA
                 //使能DMA
                 __HAL_DMA_ENABLE(&hdma_usart3_rx);
 
@@ -99,23 +120,23 @@ extern "C"
             else
             {
                 /* Current memory buffer used is Memory 1 */
-                //disable DMA
+                // disable DMA
                 //失效DMA
                 __HAL_DMA_DISABLE(&hdma_usart3_rx);
 
-                //get receive data length, length = set_data_length - remain_length
+                // get receive data length, length = set_data_length - remain_length
                 //获取接收数据长度,长度 = 设定长度 - 剩余长度
                 this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart3_rx.Instance->NDTR;
 
-                //reset set_data_lenght
+                // reset set_data_lenght
                 //重新设定数据长度
                 hdma_usart3_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
 
-                //set memory buffer 0
+                // set memory buffer 0
                 //设定缓冲区0
                 DMA1_Stream1->CR &= ~(DMA_SxCR_CT);
 
-                //enable DMA
+                // enable DMA
                 //使能DMA
                 __HAL_DMA_ENABLE(&hdma_usart3_rx);
 
@@ -168,16 +189,43 @@ extern "C"
     }
 
     /**
-  * @brief          hal库CAN回调函数,接收电机数据
-  * @param[in]      hcan:CAN句柄指针
-  * @retval         none
-  */
+     * @brief          hal库CAN回调函数,接收电机数据
+     * @param[in]      hcan:CAN句柄指针
+     * @retval         none
+     */
     CAN_RxHeaderTypeDef rx_header;
     uint8_t rx_data[8];
     void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
     {
 
-        if (hcan == &GIMBAL_CAN) //接云台CAN 信息
+        if (hcan == &CAN_1) //接云台CAN 信息
+        {
+            HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
+            switch (rx_header.StdId)
+            {
+            //云台机构电机
+            case CAN_YAW_MOTOR_ID:
+                can_receive.get_gimbal_motor_measure(0, rx_data);
+                detect_hook(GIMBAL_YAW_MOTOR_TOE);
+                break;
+
+            case CAN_COOLING_BOARM_COM_ID:
+                can_receive.receive_cooling_and_id_board_com(rx_data);
+                detect_hook(BOARD_COM);
+                break;
+
+            case CAN_SHOOT_SPEED_BOARD_COM_ID:
+                can_receive.receive_shoot_speed_and_mode_board_com(rx_data);
+                detect_hook(BOARD_COM);
+                break;
+
+            default:
+            {
+                break;
+            }
+            }
+        }
+        else if (hcan == &CAN_2)
         {
             HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
             switch (rx_header.StdId)
@@ -193,6 +241,10 @@ extern "C"
                 detect_hook(CAN_RIGHT_FRIC_MOTOR_ID);
                 break;
 
+            case CAN_PITCH_MOTOR_ID:
+                can_receive.get_gimbal_motor_measure(1, rx_data);
+                detect_hook(GIMBAL_PITCH_MOTOR_TOE);
+					    	break;
             case CAN_TRIGGER_MOTOR_ID:
                 can_receive.get_shoot_motor_measure(2, rx_data);
                 detect_hook(CAN_TRIGGER_MOTOR_ID);
@@ -201,28 +253,6 @@ extern "C"
                 can_receive.get_shoot_motor_measure(3, rx_data);
                 detect_hook(CAN_COVER_MOTOR_ID);
                 break;
-
-            //云台机构电机
-            case CAN_YAW_MOTOR_ID:
-                can_receive.get_gimbal_motor_measure(0, rx_data);
-                detect_hook(GIMBAL_YAW_MOTOR_TOE);
-                break;
-
-            case CAN_PITCH_MOTOR_ID:
-                can_receive.get_gimbal_motor_measure(1, rx_data);
-                detect_hook(GIMBAL_PITCH_MOTOR_TOE);
-                break;
-
-            case CAN_COOLING_BOARM_COM_ID:
-                can_receive.receive_cooling_and_id_board_com(rx_data);
-                detect_hook(BOARD_COM);
-                break;
-
-            case CAN_17MM_SPEED_BOARD_COM_ID:
-                can_receive.receive_17mm_speed_and_mode_board_com(rx_data);
-                detect_hook(BOARD_COM);
-                break;
-
             default:
             {
                 break;

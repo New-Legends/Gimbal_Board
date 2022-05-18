@@ -2,7 +2,6 @@
 
 #include "main.h"
 
-
 #include "bsp_fric.h"
 #include "user_lib.h"
 
@@ -28,46 +27,46 @@ extern "C"
 #define BUTTEN_TRIG_PIN HAL_GPIO_ReadPin(BUTTON_TRIG_GPIO_Port, BUTTON_TRIG_Pin)
 
 #define POWER_LIMIT         80.0f
-#define WARNING_POWER       40.0f   
-#define WARNING_POWER_BUFF  50.0f   
+#define WARNING_POWER       40.0f
+#define WARNING_POWER_BUFF  50.0f
 
-#define NO_JUDGE_TOTAL_CURRENT_LIMIT    64000.0f    //16000 * 4, 
-#define BUFFER_TOTAL_CURRENT_LIMIT      16000.0f
-#define POWER_TOTAL_CURRENT_LIMIT       20000.0f
+#define NO_JUDGE_TOTAL_CURRENT_LIMIT 64000.0f // 16000 * 4,
+#define BUFFER_TOTAL_CURRENT_LIMIT   16000.0f
+#define POWER_TOTAL_CURRENT_LIMIT    20000.0f
 /*
-17mm射速上限 15 18 30 m/s
-17mm热量上限 50 100 150 280 400
-17mm热量冷却 10 20 30 40 60 80
-一发17mm 10热量
+shoot射速上限 15 18 30 m/s
+shoot热量上限 50 100 150 280 400
+shoot热量冷却 10 20 30 40 60 80
+一发shoot 10热量
 
-42mm射速上限 10 16 m/s
-42mm热量上限 100 200 300 350 500
-42mm热量冷却 20 40 60 80 100 120
-一发42mm 100热量
+shoot射速上限 10 16 m/s
+shoot热量上限 100 200 300 350 500
+shoot热量冷却 20 40 60 80 100 120
+一发shoot 100热量
 */
-fp32 fric_refree_para = 0.12;
+fp32 fric_refree_para = 0.12f;//摩擦轮系数
 
-fp32 grigger_speed_to_radio = 0.8;
+fp32 trigger_speed_to_radio = 0.8;//拨盘系数
 
 //通过读取裁判数据,直接修改射速和射频等级
 //射速等级  摩擦电机
-fp32 shoot_fric_grade[4] = {0, 15 * fric_refree_para, 18 * fric_refree_para, 30 * fric_refree_para};
+fp32 shoot_fric_grade[4] = {0, 14.8 * fric_refree_para, 16.3 * fric_refree_para, 24.5* fric_refree_para};
+
 
 //射频等级 拨弹电机
-fp32 shoot_grigger_grade[6] = {0, 5.0f * grigger_speed_to_radio, 10.0f * grigger_speed_to_radio, 15.0f * grigger_speed_to_radio, 28.0f * grigger_speed_to_radio, 40.0f * grigger_speed_to_radio};
+fp32 shoot_trigger_grade[6] = {0, 5.0f * trigger_speed_to_radio, 10.0f * trigger_speed_to_radio, 15.0f * trigger_speed_to_radio, 28.0f * trigger_speed_to_radio, 40.0f * trigger_speed_to_radio};
 
 //拨盘等级 摩擦轮等级
-uint8_t grigger_speed_grade;
+uint8_t trigger_speed_grade;
 uint8_t fric_speed_grade;
 
 Shoot shoot;
 
-
 /**
-  * @brief          射击初始化，初始化PID，遥控器指针，电机指针
-  * @param[in]      void
-  * @retval         返回空
-  */
+ * @brief          射击初始化，初始化PID，遥控器指针，电机指针
+ * @param[in]      void
+ * @retval         返回空
+ */
 void Shoot::init()
 {
     //遥控器指针
@@ -83,7 +82,7 @@ void Shoot::init()
     cover_mode = COVER_CLOSE_DONE;
 
     //摩擦轮电机
-    for(int i = 0; i < 2; ++i)
+    for (int i = 0; i < 2; ++i)
     {
         //获取电机数据
         fric_motor[i].init(can_receive.get_shoot_motor_measure_point(i));
@@ -95,7 +94,7 @@ void Shoot::init()
         //设置最大 最小值  左摩擦轮顺时针转 右摩擦轮逆时针转
         fric_motor[i].max_speed = FRIC_MAX_SPEED;
         fric_motor[i].min_speed = -FRIC_MAX_SPEED;
-        fric_motor[i].require_speed = -FRIC_MAX_REQUUIRE_SPEED;
+        fric_motor[i].require_speed = -FRIC_MAX_REQUIRE_SPEED;
     }
 
     trigger_motor.init(can_receive.get_shoot_motor_measure_point(TRIGGER));
@@ -109,14 +108,13 @@ void Shoot::init()
     // trigger_motor.min_speed = -FRIC_MAX_SPEED_RMP;
     // trigger_motor.require_speed = -FRIC_REQUIRE_SPEED_RMP;
 
-    
     //摩擦轮 限位舵机状态
     fric_status = FALSE;
     limit_switch_status = FALSE;
 
-    //TODO 此处先添加,后面可能会删去
+    // TODO 此处先添加,后面可能会删去
     trigger_motor.angle = trigger_motor.motor_measure->ecd * MOTOR_ECD_TO_ANGLE;
-	trigger_motor.ecd_count = 0;
+    trigger_motor.ecd_count = 0;
     trigger_motor.current_give = 0;
     trigger_motor.angle_set = trigger_motor.angle;
     trigger_motor.speed = 0.0f;
@@ -130,7 +128,7 @@ void Shoot::init()
     cover_motor.angle_pid.pid_clear();
 
     cover_motor.angle = cover_motor.motor_measure->ecd * MOTOR_ECD_TO_ANGLE;
-	cover_motor.ecd_count = 0;
+    cover_motor.ecd_count = 0;
     cover_motor.current_give = 0;
     cover_motor.angle_set = cover_motor.angle;
     cover_motor.speed = 0.0f;
@@ -151,14 +149,14 @@ void Shoot::init()
 
     //未防止卡弹, 上电后自动开启摩擦轮,可以手动关闭
     // shoot_mode = SHOOT_READY_FRIC;
-    //buzzer_on(5, 10000);
+    // buzzer_on(5, 10000);
 }
 
 /**
-  * @brief          射击状态机设置，遥控器上拨一次开启，再上拨关闭，下拨1次发射1颗，一直处在下，则持续发射，用于3min准备时间清理子弹
-  * @param[in]      void
-  * @retval         void
-  */
+ * @brief          射击状态机设置，遥控器上拨一次开启，再上拨关闭，下拨1次发射1颗，一直处在下，则持续发射，用于3min准备时间清理子弹
+ * @param[in]      void
+ * @retval         void
+ */
 uint8_t temp_a;
 uint8_t temp_b;
 uint8_t temp_c;
@@ -198,14 +196,12 @@ void Shoot::set_mode()
 
     last_fric_key_value = shoot_rc->key.v;
 
-
     //为了便于测试,右按键为下时关闭摩擦轮
     if (switch_is_down(shoot_rc->rc.s[0]))
     {
         shoot_mode = SHOOT_STOP;
     }
 
-    
     //摩擦轮速度达到一定值,才可开启拨盘  为了便于测试,这里至少需要一个摩擦轮电机达到拨盘启动要求就可以开启拨盘
     if (shoot_mode == SHOOT_READY_FRIC && (abs_int16(fric_motor[LEFT_FRIC].motor_measure->speed_rpm) > abs_fp32(fric_motor[LEFT_FRIC].require_speed) || abs_int16(fric_motor[RIGHT_FRIC].motor_measure->speed_rpm) > abs_fp32(fric_motor[RIGHT_FRIC].require_speed)))
     {
@@ -227,7 +223,6 @@ void Shoot::set_mode()
         {
             shoot_mode = SHOOT_BULLET;
         }
-        
     }
     else if (shoot_mode == SHOOT_DONE)
     {
@@ -250,7 +245,7 @@ void Shoot::set_mode()
     if (shoot_mode > SHOOT_READY_FRIC)
     {
         //鼠标长按一直进入射击状态 保持连发
-        if ((press_l_time == PRESS_LONG_TIME)  || (rc_s_time == RC_S_LONG_TIME))
+        if ((press_l_time == PRESS_L_LONG_TIME) || (rc_s_time == RC_S_LONG_TIME))
         {
             shoot_mode = SHOOT_CONTINUE_BULLET;
         }
@@ -282,7 +277,7 @@ void Shoot::set_mode()
         cover_mode = COVER_CLOSE;
     }
 
-    if(press_cover_time == PRESS_COVER_LONG_TIME && cover_mode == COVER_CLOSE_DONE)//长按R并且关闭完毕
+    if (press_cover_time == PRESS_COVER_LONG_TIME && cover_mode == COVER_CLOSE_DONE) //长按R并且关闭完毕
     {
         cover_mode = COVER_OPEN;
     }
@@ -292,20 +287,16 @@ void Shoot::set_mode()
     last_s = shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL];
 }
 
-
-
-
-
 /**
-  * @brief          射击数据更新
-  * @param[in]      void
-  * @retval         void
-  */
+ * @brief          射击数据更新
+ * @param[in]      void
+ * @retval         void
+ */
 void Shoot::feedback_update()
 {
     last_shoot_rc->key.v = shoot_rc->key.v;
     shoot_last_key_v = shoot_rc->key.v;
-    
+
     //更新摩擦轮电机速度
     fric_motor[LEFT_FRIC].speed = -fric_motor[LEFT_FRIC].motor_measure->speed_rpm * FRIC_RPM_TO_SPEED;
     fric_motor[RIGHT_FRIC].speed = fric_motor[RIGHT_FRIC].motor_measure->speed_rpm * FRIC_RPM_TO_SPEED;
@@ -354,7 +345,7 @@ void Shoot::feedback_update()
     }
     //计算拨盘电机输出轴角度
     trigger_motor.angle = (trigger_motor.ecd_count * ECD_RANGE + trigger_motor.motor_measure->ecd) * MOTOR_ECD_TO_ANGLE;
-    
+
     //电机圈数重置， 因为输出轴旋转一圈， 电机轴旋转 36圈，将电机轴数据处理成输出轴数据，用于控制输出轴角度
     if (cover_motor.motor_measure->ecd - cover_motor.motor_measure->last_ecd > HALF_ECD_RANGE)
     {
@@ -376,10 +367,9 @@ void Shoot::feedback_update()
 
     //计算输出轴角度
     cover_motor.angle = (cover_motor.ecd_count * ECD_RANGE + cover_motor.motor_measure->ecd) * MOTOR_ECD_TO_ANGLE;
-   
-   
-    //TODO 此处没有安装微动开关,暂时把key设置为1
-    //微动开关 
+
+    // TODO 此处没有安装微动开关,暂时把key设置为1
+    //微动开关
     key = 0;
     //鼠标按键
     last_press_l = press_l;
@@ -387,15 +377,13 @@ void Shoot::feedback_update()
     press_l = shoot_rc->mouse.press_l;
     press_r = shoot_rc->mouse.press_r;
 
-
     last_press_cover = press_cover;
-    press_cover = if_key_pessed(shoot_rc->key.v,KEY_PRESSED_SHOOT_COVER);
-
+    press_cover = if_key_pessed(shoot_rc->key.v, KEY_PRESSED_SHOOT_COVER);
 
     //长按计时
     if (press_l)
     {
-        if (press_l_time < PRESS_LONG_TIME)
+        if (press_l_time < PRESS_L_LONG_TIME)
         {
             press_l_time++;
         }
@@ -432,28 +420,13 @@ void Shoot::feedback_update()
         rc_s_time = 0;
     }
 
-    //便于调参:
-
-    //射速等级  摩擦电机
-    shoot_fric_grade[0] = 0;
-    shoot_fric_grade[1] = 15 * fric_refree_para;
-    shoot_fric_grade[2] = 18 * fric_refree_para;
-    shoot_fric_grade[3] = 30 * fric_refree_para;
-
-    //射频等级 拨弹电机
-    shoot_grigger_grade[0] = 0;
-    shoot_grigger_grade[1] = 5.0f * grigger_speed_to_radio;
-    shoot_grigger_grade[2] = 10.0f * grigger_speed_to_radio; 
-    shoot_grigger_grade[3] = 15.0f * grigger_speed_to_radio;
-    shoot_grigger_grade[4] = 28.0f * grigger_speed_to_radio;
-    shoot_grigger_grade[5] = 40.0f * grigger_speed_to_radio;
 }
 
 /**
-  * @brief          射击循环
-  * @param[in]      void
-  * @retval         返回can控制值
-  */
+ * @brief          射击循环
+ * @param[in]      void
+ * @retval         返回can控制值
+ */
 void Shoot::set_control()
 {
     if (shoot_mode == SHOOT_STOP)
@@ -471,7 +444,7 @@ void Shoot::set_control()
         if (key == SWITCH_TRIGGER_OFF)
         {
             //设置拨弹轮的拨动速度,并开启堵转反转处理
-            trigger_motor.speed_set = shoot_grigger_grade[1] * SHOOT_TRIGGER_DIRECTION;
+            trigger_motor.speed_set = shoot_trigger_grade[1] * SHOOT_TRIGGER_DIRECTION;
         }
         else
         {
@@ -494,7 +467,7 @@ void Shoot::set_control()
     else if (shoot_mode == SHOOT_CONTINUE_BULLET)
     {
         //设置拨弹轮的拨动速度,并开启堵转反转处理
-        trigger_motor.speed_set = shoot_grigger_grade[1] * SHOOT_TRIGGER_DIRECTION;
+        trigger_motor.speed_set = shoot_trigger_grade[1] * SHOOT_TRIGGER_DIRECTION;
     }
     else if (shoot_mode == SHOOT_DONE)
     {
@@ -512,9 +485,7 @@ void Shoot::set_control()
         cover_motor.speed_pid.data.max_iout = COVER_BULLET_PID_MAX_IOUT;
         cover_control();
     }
-
 }
-
 
 /**
  * @brief          发射机构弹速和热量控制
@@ -523,36 +494,36 @@ void Shoot::set_control()
  */
 void Shoot::cooling_ctrl()
 {
-    // 17mm枪口热量上限, 17mm枪口实时热量
-    uint16_t id1_17mm_cooling_limit;
-    uint16_t id1_17mm_cooling_heat;
-    uint16_t id1_17mm_cooling_rate;
+    // shoot枪口热量上限, shoot枪口实时热量
+    uint16_t shoot_cooling_limit;
+    uint16_t shoot_cooling_heat;
+    uint16_t shoot_cooling_rate;
 
-    // 17mm枪口枪口射速上限,17mm实时射速
-    uint16_t id1_17mm_speed_limit;
+    // shoot枪口枪口射速上限,shoot实时射速
+    uint16_t shoot_speed_limit;
     static fp32 bullet_speed;
     static fp32 last_bullet_speed;
 
     //保留被强制降速前的射频
-    static uint8_t last_grigger_speed_grade = 1;
+    static uint8_t last_trigger_speed_grade = 1;
 
-//TODO 暂时认为没有必要
-//     //手动调整射频
-// #if SHOOT_SET_TRIGGER_SPEED_BY_HAND
-//     if (KEY_SHOOT_TRIGGER_SPEED_UP && grigger_speed_grade < 5)
-//     {
-//         grigger_speed_grade++;
-//     }
-//     else if (KEY_SHOOT_TRIGGER_SPEED_DOWN && grigger_speed_grade > 0)
-//     {
-//         grigger_speed_grade--;
-//     }
-// #endif
+    // TODO 暂时认为没有必要
+    //      //手动调整射频
+    //  #if SHOOT_SET_TRIGGER_SPEED_BY_HAND
+    //      if (KEY_SHOOT_TRIGGER_SPEED_UP && trigger_speed_grade < 5)
+    //      {
+    //          trigger_speed_grade++;
+    //      }
+    //      else if (KEY_SHOOT_TRIGGER_SPEED_DOWN && trigger_speed_grade > 0)
+    //      {
+    //          trigger_speed_grade--;
+    //      }
+    //  #endif
 
     // //TODO 离线监测暂时没有添加
     // if (toe_is_error(REFEREE_TOE))
     // {
-    //     grigger_speed_grade = 2;
+    //     trigger_speed_grade = 2;
     //     fric_speed_grade = 2;
     // }
     // else
@@ -560,54 +531,54 @@ void Shoot::cooling_ctrl()
         //更新裁判数据
         last_bullet_speed = bullet_speed;
 
-        id1_17mm_cooling_limit = can_receive.gimbal_receive.id1_17mm_cooling_limit;
-        id1_17mm_cooling_heat = can_receive.gimbal_receive.id1_17mm_cooling_heat;
-        id1_17mm_cooling_rate = can_receive.gimbal_receive.id1_17mm_cooling_rate;
+        shoot_cooling_limit = can_receive.gimbal_receive.shoot_cooling_limit;
+        shoot_cooling_heat = can_receive.gimbal_receive.shoot_cooling_heat;
+        shoot_cooling_rate = can_receive.gimbal_receive.shoot_cooling_rate;
 
-        id1_17mm_speed_limit = can_receive.gimbal_receive.id1_17mm_speed_limit;
+        shoot_speed_limit = can_receive.gimbal_receive.shoot_speed_limit;
         bullet_speed = can_receive.gimbal_receive.bullet_speed;
 
         //手动调整射频
 #if SHOOT_SET_TRIGGER_SPEED_BY_HAND
 
 #else
-            //根据热量和射速上限修改等级
-            //热量
-            if (id1_17mm_cooling_limit <= 50)
-                grigger_speed_grade = 1;
-        else if (id1_17mm_cooling_limit <= 100)
-            grigger_speed_grade = 2;
-        else if (id1_17mm_cooling_limit <= 200)
-            grigger_speed_grade = 3;
-        else if (id1_17mm_cooling_limit <= 280)
-            grigger_speed_grade = 4;
-        else if (id1_17mm_cooling_limit <= 400)
-            grigger_speed_grade = 5;
+        //根据热量和射速上限修改等级
+        //热量
+        if (shoot_cooling_limit <= 50)
+            trigger_speed_grade = 1;
+        else if (shoot_cooling_limit <= 100)
+            trigger_speed_grade = 2;
+        else if (shoot_cooling_limit <= 200)
+            trigger_speed_grade = 3;
+        else if (shoot_cooling_limit <= 280)
+            trigger_speed_grade = 4;
+        else if (shoot_cooling_limit <= 400)
+            trigger_speed_grade = 5;
 
 #endif
 
         //射速
-        if (id1_17mm_speed_limit <= 15)
+        if (shoot_speed_limit <= 15)
             fric_speed_grade = 1;
-        else if (id1_17mm_speed_limit <= 18)
+        else if (shoot_speed_limit <= 18)
             fric_speed_grade = 2;
-        else if (id1_17mm_speed_limit <= 30)
+        else if (shoot_speed_limit <= 30)
             fric_speed_grade = 3;
 
         //根据当前热量和射速修改等级,确保不会因超限扣血,
         //热量 当剩余热量低于30,强制制动
-        if (id1_17mm_cooling_limit - id1_17mm_cooling_heat <= 30 && grigger_speed_grade != 0)
+        if (shoot_cooling_limit - shoot_cooling_heat <= 30 && trigger_speed_grade != 0)
         {
-            last_grigger_speed_grade = grigger_speed_grade;
-            grigger_speed_grade = 0;
+            last_trigger_speed_grade = trigger_speed_grade;
+            trigger_speed_grade = 0;
         }
         else
         {
-            grigger_speed_grade = last_grigger_speed_grade;
+            trigger_speed_grade = last_trigger_speed_grade;
         }
 
         //超射速,强制降低摩擦轮转速
-        if (bullet_speed > id1_17mm_speed_limit && last_bullet_speed != bullet_speed)
+        if (bullet_speed > shoot_speed_limit && last_bullet_speed != bullet_speed)
         {
             fric_speed_grade--;
         }
@@ -615,7 +586,7 @@ void Shoot::cooling_ctrl()
 
     //连发模式下，对拨盘电机输入控制值
     if (shoot_mode == SHOOT_CONTINUE_BULLET)
-        trigger_motor.speed_set = shoot_grigger_grade[grigger_speed_grade] * SHOOT_TRIGGER_DIRECTION;
+        trigger_motor.speed_set = shoot_trigger_grade[trigger_speed_grade] * SHOOT_TRIGGER_DIRECTION;
     //对摩擦轮电机输入控制值
     fric_motor[LEFT_FRIC].speed_set = shoot_fric_grade[fric_speed_grade];
     fric_motor[RIGHT_FRIC].speed_set = shoot_fric_grade[fric_speed_grade];
@@ -628,16 +599,14 @@ void Shoot::cooling_ctrl()
     fric_motor[RIGHT_FRIC].speed_set = shoot_cmd_slow_fric_right.out;
 }
 
-
-
 /**
-  * @brief          PID计算
-  * @param[in]      void
-  * @retval         
-  */
+ * @brief          PID计算
+ * @param[in]      void
+ * @retval
+ */
 void Shoot::solve()
 {
-    //TODO 此处应该对速度设置值进行操作,而不是电流值,后续进行修改,有可能摩擦轮停止旋转速度慢和这个有关
+    // TODO 此处应该对速度设置值进行操作,而不是电流值,后续进行修改,有可能摩擦轮停止旋转速度慢和这个有关
     if (shoot_mode == SHOOT_STOP)
     {
         shoot_laser_off();
@@ -648,16 +617,15 @@ void Shoot::solve()
         fric_motor[RIGHT_FRIC].speed_set = 0;
     }
     else
-    {   
+    {
 #if SHOOT_LASER_OPEN
         shoot_laser_on(); //激光开启
 #else
         shoot_laser_off(); //激光关闭
 #endif
 
-        //控制17mm发射机构射速和热量控制
+        //控制shoot发射机构射速和热量控制
         cooling_ctrl();
-
 
         if (shoot_mode == SHOOT_READY_BULLET || shoot_mode == SHOOT_CONTINUE_BULLET)
             trigger_motor_turn_back(); //将设置的拨盘旋转角度,转化为速度,且防止卡弹
@@ -671,7 +639,7 @@ void Shoot::solve()
 
     if (fric_motor[LEFT_FRIC].speed_set > fric_motor[LEFT_FRIC].max_speed)
         fric_motor[LEFT_FRIC].speed_set = fric_motor[LEFT_FRIC].max_speed;
-    else if(fric_motor[LEFT_FRIC].speed_set < fric_motor[LEFT_FRIC].min_speed)
+    else if (fric_motor[LEFT_FRIC].speed_set < fric_motor[LEFT_FRIC].min_speed)
         fric_motor[LEFT_FRIC].speed_set = fric_motor[LEFT_FRIC].min_speed;
 
     if (fric_motor[RIGHT_FRIC].speed_set > fric_motor[RIGHT_FRIC].max_speed)
@@ -686,7 +654,6 @@ void Shoot::solve()
 
     cover_motor.current_set = cover_motor.speed_pid.pid_calc();
 }
-
 
 void Shoot::output()
 {
@@ -709,45 +676,45 @@ void Shoot::output()
     trigger_motor.current_give = 0;
 #endif
     //发送电流
-    can_receive.can_cmd_shoot_motor_motor(fric_motor[LEFT_FRIC].current_give, fric_motor[RIGHT_FRIC].current_give, trigger_motor.current_give,cover_motor.current_give);
-}
-
-    /**
-* @brief          拨盘电机反转控制
-* @param[in]      void
-* @retval         返回can控制值
-*/
-void Shoot::trigger_motor_turn_back()
-{
-    // if (block_time < BLOCK_TIME)
-    // {
-    //     trigger_motor.speed_set = trigger_motor.speed_set;
-    // }
-    // else
-    // {
-    //     trigger_motor.speed_set = -trigger_motor.speed_set;
-    // }
-
-    // if (fabs(trigger_motor.speed) < BLOCK_TRIGGER_SPEED && block_time < BLOCK_TIME)
-    // {
-    //     block_time++;
-    //     reverse_time = 0;
-    // }
-    // else if (block_time == BLOCK_TIME && reverse_time < REVERSE_TIME)
-    // {
-    //     reverse_time++;
-    // }
-    // else
-    // {
-    //     block_time = 0;
-    // }
+    can_receive.can_cmd_shoot_motor(fric_motor[LEFT_FRIC].current_give, fric_motor[RIGHT_FRIC].current_give, trigger_motor.current_give, cover_motor.current_give);
 }
 
 /**
-  * @brief          射击控制，控制拨弹电机角度，完成一次发射
-  * @param[in]      void
-  * @retval         void
-  */
+ * @brief          拨盘电机反转控制
+ * @param[in]      void
+ * @retval         返回can控制值
+ */
+void Shoot::trigger_motor_turn_back()
+{
+     if (block_time < BLOCK_TIME)
+     {
+         trigger_motor.speed_set = trigger_motor.speed_set;
+     }
+     else
+     {
+         trigger_motor.speed_set = -trigger_motor.speed_set;
+     }
+
+     if (fabs(trigger_motor.speed) < BLOCK_TRIGGER_SPEED && block_time < BLOCK_TIME)
+     {
+        block_time++;
+         reverse_time = 0;
+     }
+     else if (block_time == BLOCK_TIME && reverse_time < REVERSE_TIME)
+     {
+         reverse_time++;
+     }
+     else
+     {
+         block_time = 0;
+     }
+}
+
+/**
+ * @brief          射击控制，控制拨弹电机角度，完成一次发射
+ * @param[in]      void
+ * @retval         void
+ */
 void Shoot::shoot_bullet_control()
 {
 
@@ -765,7 +732,7 @@ void Shoot::shoot_bullet_control()
     if (rad_format(trigger_motor.angle_set - trigger_motor.angle) > 0.05f)
     {
         //没到达一直设置旋转速度
-        trigger_motor.speed_set = shoot_grigger_grade[1] * SHOOT_TRIGGER_DIRECTION;
+        trigger_motor.speed_set = shoot_trigger_grade[trigger_speed_grade] * SHOOT_TRIGGER_DIRECTION;
         trigger_motor_turn_back();
     }
     else
@@ -774,60 +741,90 @@ void Shoot::shoot_bullet_control()
         shoot_mode = SHOOT_READY;
     }
 }
-
+int cover_time =0;
 /**
   * @brief          弹仓控制，控制弹仓电机运动
-  * @param[in]      void
+  * @param[in]      控制电机时间
   * @retval         void
   */
 void Shoot::cover_control()
 {
-    if(cover_move_flag == 0)
-    {
-        if (cover_mode == COVER_OPEN)
-        {
-            cover_motor.angle_set = rad_format(cover_motor.angle + COVER_OPEN_ANGLE);
-        }
-        else if (cover_mode == COVER_CLOSE)
-        {
-            cover_motor.angle_set = rad_format(cover_motor.angle - COVER_OPEN_ANGLE);
-        }
-        cover_move_flag = 1;
-    }
     if(cover_mode == COVER_OPEN)
-    {    //到达角度判断
-        if (rad_format(cover_motor.angle_set - cover_motor.angle) > 0.05f)
-        {
-            //没到达一直设置旋转速度
-            cover_motor.speed_set = COVER_MOTOR_SPEED;
-        }
-        else
-        {
-            cover_mode = COVER_OPEN_DONE;
-            cover_move_flag = 0;
-        }
-    }
-    else if(cover_mode == COVER_CLOSE)
-    {
-			if (rad_format(cover_motor.angle_set - cover_motor.angle) < -0.05f)
-        {
-            //没到达一直设置旋转速度
-            cover_motor.speed_set = -COVER_MOTOR_SPEED;
-        }
-        else
-        {
+    {    
+ 			cover_motor.speed_set = COVER_MOTOR_SPEED;
+			cover_time++;
+			if(cover_time ==1000)//电机运动打开时间
+			 {
+				cover_mode = COVER_OPEN_DONE;
+				cover_move_flag = 0;
+				cover_time =0;
+		 	 }
+		 } 
+		if(cover_mode == COVER_CLOSE)
+    {    
+			cover_motor.speed_set =-COVER_MOTOR_SPEED;
+			cover_time++;
+			if(cover_time ==1200)//电机运动关闭时间
+			 {
             cover_mode = COVER_CLOSE_DONE;
             cover_move_flag = 0;
-        }
-    }
-
+				    cover_time =0;
+			 }
+	}
+//		 if(cover_mode == COVER_CLOSE){
+//			 cover_motor.angle_set = rad_format(cover_motor.angle);
+//			 if (rad_format(cover_motor.angle_set - cover_motor.angle) > 0.05f)
+//			 {
+//				 cover_motor.speed_set =-COVER_MOTOR_SPEED;
+//			 }
+//			 if (rad_format(cover_motor.angle_set - cover_motor.angle) < 0.05f)
+//			 {
+//				 cover_motor.speed_set =COVER_MOTOR_SPEED;
+//			 }
+//		 }
+//    if(cover_move_flag == 0)
+//    {
+//        if (cover_mode == COVER_OPEN)
+//        {
+//            cover_motor.angle_set = rad_format(cover_motor.angle + COVER_OPEN_ANGLE);
+//        }
+//        else if (cover_mode == COVER_CLOSE)
+//        {
+//            cover_motor.angle_set = rad_format(cover_motor.angle - COVER_OPEN_ANGLE);
+//        }
+//        cover_move_flag = 1;
+//    }
+//		if(cover_mode == COVER_OPEN)
+//        if (rad_format(cover_motor.angle_set - cover_motor.angle) > 0.05f)
+//        {
+//            //没到达一直设置旋转速度
+//            cover_motor.speed_set = COVER_MOTOR_SPEED;
+//        }
+//        else
+//        {
+//            cover_mode = COVER_OPEN_DONE;
+//            cover_move_flag = 0;
+//        }
+//        if(cover_mode == COVER_CLOSE)
+//        {
+//		    	if (rad_format(cover_motor.angle_set - cover_motor.angle) < -0.05f)
+//            {
+//            //没到达一直设置旋转速度
+//            cover_motor.speed_set = -COVER_MOTOR_SPEED;
+//            }
+//           else
+//            {
+//            cover_mode = COVER_CLOSE_DONE;
+//            cover_move_flag = 0;
+//             }
+//        }
 }
 
 /**
-  * @brief          弹仓打开时,云台要停止运动
-  * @param[in]      none
-  * @retval         1: no move 0:normal
-  */
+ * @brief          弹仓打开时,云台要停止运动
+ * @param[in]      none
+ * @retval         1: no move 0:normal
+ */
 bool_t shoot_cmd_to_gimbal_stop()
 {
     if (shoot.cover_mode == COVER_OPEN)
@@ -839,7 +836,6 @@ bool_t shoot_cmd_to_gimbal_stop()
         return 0;
     }
 }
-
 
 /**
  * @brief          摩擦轮刚打开时,云台抬头
@@ -854,6 +850,6 @@ bool_t shoot_open_fric_cmd_to_gimbal_up()
     }
     else
     {
-        return 0;
+        return 1;
     }
 }

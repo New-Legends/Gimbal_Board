@@ -42,8 +42,9 @@
 
 //射击完成后 子弹弹出去后，判断时间，以防误触发
 #define SHOOT_DONE_KEY_OFF_TIME 15
-//鼠标长按判断
-#define PRESS_LONG_TIME 400
+//鼠标左键长按判断
+#define PRESS_L_LONG_TIME 400
+#define PRESS_R_LONG_TIME 50
 //弹仓按键长按判断
 #define PRESS_COVER_LONG_TIME 400
 //摩擦轮开启按键延时
@@ -63,8 +64,8 @@
 #define FRIC_REQUIRE_SPEED_RMP 500.0f
 #define FRIC_MAX_SPEED_RMP 4000.0f
 
-#define FRIC_MAX_SPEED 4.0f
-#define FRIC_MAX_REQUUIRE_SPEED 2.0f
+#define FRIC_MAX_SPEED 80.0f
+#define FRIC_MAX_REQUIRE_SPEED 30.0f
 
 //拨盘电机rmp 变化成 旋转速度的比例
 #define MOTOR_RPM_TO_SPEED 0.00290888208665721596153948461415f
@@ -90,15 +91,15 @@
 #define PI_TEN 0.314f
 /*---------------------------pid----------------------*/
 //摩擦轮电机PID
-#define FRIC_SPEED_PID_KP 2000.0f // 1800
-#define FRIC_SPEED_PID_KI 0.4f    // 0.5
-#define FRIC_SPEED_PID_KD 0.0f    // 2.0
+#define FRIC_SPEED_PID_KP 3000.0f // 1800
+#define FRIC_SPEED_PID_KI 0.8f    // 0.5
+#define FRIC_SPEED_PID_KD 3.0f    // 2.0
 #define FRIC_PID_MAX_IOUT 200.0f
-#define FRIC_PID_MAX_OUT 6000.0f
+#define FRIC_PID_MAX_OUT  6000.0f
 
 //拨弹轮电机PID
 #define TRIGGER_ANGLE_PID_KP 2000.0f 
-#define TRIGGER_ANGLE_PID_KI 0.5f    
+#define TRIGGER_ANGLE_PID_KI 0.5f   
 #define TRIGGER_ANGLE_PID_KD 0.0f
 #define TRIGGER_BULLET_PID_MAX_IOUT 1000.0f
 #define TRIGGER_BULLET_PID_MAX_OUT 4000.0f
@@ -108,9 +109,9 @@
 
 
 //弹仓开合电机PID
-#define COVER_ANGLE_PID_KP 1000.0f //800
+#define COVER_ANGLE_PID_KP 2000.0f //800
 #define COVER_ANGLE_PID_KI 0.0f    //0.5
-#define COVER_ANGLE_PID_KD 0.0f
+#define COVER_ANGLE_PID_KD 5.0f
 #define COVER_BULLET_PID_MAX_IOUT 200.0f
 #define COVER_BULLET_PID_MAX_OUT 10000.0f
 
@@ -121,7 +122,7 @@
 #define TRIGGER_ONCE 2 * PI / TRIGGER_GRID_NUM
 
 #define COVER_OPEN_ANGLE 0.2 * PI
-#define COVER_MOTOR_SPEED 1.0f
+#define COVER_MOTOR_SPEED 2.0f
 
 //一阶低通滤波参数
 #define SHOOT_ACCEL_FRIC_LEFT_NUM 0.2666666667f

@@ -3,20 +3,19 @@
 
 /*------------------------陀螺仪---------------------------*/
 
-
 /*------------------------云台---------------------------*/
 //云台电机有电流输出
 #define GIMBAL_YAW_MOTOR_HAVE_CURRENT 1
 #define GIMBAL_PITCH_MOTOR_HAVE_CURRENT 1
 
 //云台视觉调试模式 默认为0
-#define GIMABL_VISION_DEBUG 0
+#define GIMABL_VISION_DEBUG 1
 
 //云台一阶高通滤波是否开启
-#define GIMBAL_HIGH_PASS_FILTER 1
+#define GIMBAL_HIGH_PASS_FILTER 0
 
 //开启摩擦轮 自动抬头
-#define GIMBAL_FRIC_OPEN_PITCH_UP 1
+#define GIMBAL_FRIC_OPEN_PITCH_UP 0
 
 /*-----------------------发射机构------------------------------*/
 //摩擦轮电机有电流输出
