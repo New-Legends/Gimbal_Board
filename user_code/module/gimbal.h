@@ -38,15 +38,15 @@ extern "C"
 #define YAW_SPEED_PID_MAX_OUT 20000.0f
 
 // pitch 速度环
-#define PITCH_SPEED_PID_KP 8000.0f // 2900
+#define PITCH_SPEED_PID_KP 10000.0f // 2900
 #define PITCH_SPEED_PID_KI 0.0f
 #define PITCH_SPEED_PID_KD 0.0f
 #define PITCH_SPEED_PID_MAX_IOUT 10.0f
-#define PITCH_SPEED_PID_MAX_OUT 15000.0f
+#define PITCH_SPEED_PID_MAX_OUT 20000.0f
 
 /*------------------------------陀螺仪PID------------------------*/
 // yaw轴陀螺仪PID 由陀螺仪角度控制
-#define YAW_GYRO_PID_KP 30.0f
+#define YAW_GYRO_PID_KP 40.0f
 #define YAW_GYRO_PID_KI 0.1f
 #define YAW_GYRO_PID_KD 12.0f
 #define YAW_GYRO_PID_MAX_IOUT 0.2f
@@ -61,11 +61,11 @@ extern "C"
 #define YAW_ENCODE_PID_MAX_OUT 20.0f
 
 // pitch轴编码器PID 由编码器角度控制
-#define PITCH_ENCODE_PID_KP 30.0f
+#define PITCH_ENCODE_PID_KP 50.0f
 #define PITCH_ENCODE_PID_KI 0.01f
 #define PITCH_ENCODE_PID_KD 3.0f
 #define PITCH_ENCODE_PID_MAX_IOUT 1.0f
-#define PITCH_ENCODE_PID_MAX_OUT 100.0f
+#define PITCH_ENCODE_PID_MAX_OUT 200.0f
 
 /*------------------------------自瞄PID------------------------*/
 // yaw轴自瞄PID 由陀螺仪角度控制
@@ -130,7 +130,7 @@ extern "C"
 #define ECD_RANGE 8191
 
 //云台中值(中值所对应的编码器编码值)
-#define ECD_YAW_MID 2172
+#define ECD_YAW_MID 2347
 #define ECD_PITCH_MID 2482
 
 //限幅
