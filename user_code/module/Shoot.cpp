@@ -49,7 +49,7 @@ fp32 grigger_speed_to_radio = 0.6;
 
 //通过读取裁判数据,直接修改射速和射频等级
 //射速等级  摩擦电机
-fp32 shoot_fric_grade[4] = {0, 15 * fric_refree_para, 18 * fric_refree_para, 30 * fric_refree_para};
+fp32 shoot_fric_grade[4] = {0, 12 * fric_refree_para, 15 * fric_refree_para, 20 * fric_refree_para};
 
 //射频等级 拨弹电机
 fp32 shoot_grigger_grade[6] = {0, 5.0f * grigger_speed_to_radio, 10.0f * grigger_speed_to_radio, 15.0f * grigger_speed_to_radio, 28.0f * grigger_speed_to_radio, 40.0f * grigger_speed_to_radio};
@@ -475,9 +475,9 @@ void Shoot::feedback_update()
 
     //射速等级  摩擦电机
     shoot_fric_grade[0] = 0;
-    shoot_fric_grade[1] = 15 * fric_refree_para;
-    shoot_fric_grade[2] = 18 * fric_refree_para;
-    shoot_fric_grade[3] = 30 * fric_refree_para;
+    shoot_fric_grade[1] = 12 * fric_refree_para;
+    shoot_fric_grade[2] = 15 * fric_refree_para;
+    shoot_fric_grade[3] = 20 * fric_refree_para;
 
     //射频等级 拨弹电机
     shoot_grigger_grade[0] = 0;
@@ -705,7 +705,7 @@ void Shoot::cooling_ctrl()
 void Shoot::output()
 {
     fric_motor[LEFT_FRIC].current_give = -(int16_t)(fric_motor[LEFT_FRIC].current_set);
-    fric_motor[RIGHT_FRIC].current_give =(int16_t)(fric_motor[RIGHT_FRIC].current_set);
+    fric_motor[RIGHT_FRIC].current_give = (int16_t)(fric_motor[RIGHT_FRIC].current_set);
     trigger_motor.current_give = trigger_motor.current_set;
     cover_motor.current_give = cover_motor.current_set;
 

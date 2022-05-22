@@ -45,9 +45,9 @@ typedef enum
     CAN_GIMBAL_ALL_ID = 0x1FF,
 
     //板间通信ID
-    CAN_RC_BOARM_COM_ID = 0x301,
-    CAN_COOLING_BOARM_COM_ID = 0x302,
-    CAN_17MM_SPEED_BOARD_COM_ID = 0x303,
+    CAN_RC_BOARM_COM_ID = 0x101,
+    CAN_COOLING_BOARM_COM_1_ID = 0x102,
+    CAN_17MM_SPEED_BOARD_COM_1_ID = 0x103,
 } can_msg_id_e;
 
 //rm motor data
@@ -72,6 +72,7 @@ typedef struct
 
     //云台状态
     uint8_t s0;
+    uint8_t s1;
     uint8_t gimbal_behaviour;
     fp32 gimbal_yaw_angle;
 } gimbal_send_t;
@@ -131,7 +132,7 @@ public:
     /*-------------------板间通信函数--------------------*/
     void receive_cooling_and_id_board_com(uint8_t data[8]);
     void receive_17mm_speed_and_mode_board_com(uint8_t data[8]);
-    void send_rc_board_com(int16_t ch_0, int16_t ch_2, int16_t ch_1, uint8_t s0);            //发送遥控器数据
+    void send_rc_board_com(int16_t ch_0, int16_t ch_2, int16_t ch_1, uint8_t s0, uint8_t s1);            //发送遥控器数据
     void send_gimbal_board_com(uint8_t s0, uint8_t gimbal_behaviour, fp32 gimbal_yaw_angle); //发送云台模式及状态
 
     /*-------------------裁判系统数据判定-----------------*/

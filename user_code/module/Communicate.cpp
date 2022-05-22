@@ -33,7 +33,7 @@ void Communicate::run()
     //向底盘发送遥控器和云台数据
     int16_t temp_ch0, temp_ch2, temp_ch1;
     uint16_t temp_v;
-    uint8_t temp_s0, temp_gimbal_behaviour_mode;
+    uint8_t temp_s0, temp_gimbal_behaviour_mode,temp_s1;
     fp32 temp_gimbal_yaw_angle;
     fp32 temp_gimbal_yaw_current_give;
 
@@ -42,10 +42,11 @@ void Communicate::run()
     temp_ch1 = remote_control.rc_ctrl.rc.ch[1];
     temp_v = remote_control.rc_ctrl.key.v;
     temp_s0 = remote_control.rc_ctrl.rc.s[0];
+    temp_s1 = remote_control.rc_ctrl.rc.s[1];
 
     temp_gimbal_behaviour_mode = gimbal.gimbal_behaviour_mode;
 
-    can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_ch1, temp_s0);
+    can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_ch1, temp_s0, temp_s1);
 
 }
 
@@ -197,12 +198,12 @@ extern "C"
                 detect_hook(GIMBAL_PITCH_MOTOR_TOE);
                 break;
 
-            case CAN_COOLING_BOARM_COM_ID:
+            case CAN_COOLING_BOARM_COM_1_ID:
                 can_receive.receive_cooling_and_id_board_com(rx_data);
                 detect_hook(BOARD_COM);
                 break;
 
-            case CAN_17MM_SPEED_BOARD_COM_ID:
+            case CAN_17MM_SPEED_BOARD_COM_1_ID:
                 can_receive.receive_17mm_speed_and_mode_board_com(rx_data);
                 detect_hook(BOARD_COM);
                 break;
