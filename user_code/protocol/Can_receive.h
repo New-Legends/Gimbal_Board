@@ -36,21 +36,21 @@ enum shoot_motor_id_e
 
 typedef enum
 {
-    //发射机构电机接受ID 
+    //发射机构电机接受ID can2
     CAN_LEFT_FRIC_MOTOR_ID = 0x201,
     CAN_RIGHT_FRIC_MOTOR_ID = 0x202,
     CAN_TRIGGER_MOTOR_ID = 0x203,
     CAN_COVER_MOTOR_ID = 0X204,
     CAN_SHOOT_ALL_ID = 0x200,
 
-    //云台电机接收ID 
-    CAN_YAW_MOTOR_ID = 0x205,
-    CAN_PITCH_MOTOR_ID = 0x206,
+    //云台电机接收ID   
+    CAN_YAW_MOTOR_ID = 0x205,//can1
+    CAN_PITCH_MOTOR_ID = 0x206,//can2
     CAN_GIMBAL_ALL_ID = 0x1FF,
 
-    //板间通信ID
-    CAN_RC_BOARM_COM_ID = 0x301,
-    CAN_GIMBAL_BOARD_COM_ID = 0x302,
+    //板间通信ID   can1
+  CAN_RC_BOARM_COM_ID = 0x101,
+  CAN_GIMBAL_BOARD_COM_ID = 0x102,
     CAN_COOLING_BOARM_COM_ID = 0x303,
     CAN_SHOOT_SPEED_BOARD_COM_ID = 0x304,
     CAN_UI_COM_ID = 0x305,

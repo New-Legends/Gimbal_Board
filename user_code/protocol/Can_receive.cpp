@@ -1,8 +1,6 @@
 #include "Can_receive.h"
-
 #include "cmsis_os.h"
 #include "main.h"
-
 #ifdef __cplusplus
 extern "C"
 {

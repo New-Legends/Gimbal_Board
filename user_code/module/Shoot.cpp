@@ -160,7 +160,7 @@ void Shoot::init()
 uint8_t temp_a;
 uint8_t temp_b;
 uint8_t temp_c;
-
+static uint16_t last_cover_key_value = 0;
 void Shoot::set_mode()
 {
     static int8_t last_s = RC_SW_UP; //记录上一次遥控器按键值
@@ -168,12 +168,12 @@ void Shoot::set_mode()
     //上拨判断， 一次开启，再次关闭
     if ((switch_is_up(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && !switch_is_up(last_s) && shoot_mode == SHOOT_STOP))
     {
-        buzzer_on(5, 10000);
+//        buzzer_on(5, 10000);
         shoot_mode = SHOOT_READY_FRIC;
     }
     else if ((switch_is_up(shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && !switch_is_up(last_s) && shoot_mode != SHOOT_STOP))
     {
-        buzzer_off();
+//        buzzer_off();
         shoot_mode = SHOOT_STOP;
     }
 
@@ -265,12 +265,12 @@ void Shoot::set_mode()
     // }
 
     // //如果云台状态是 无力状态，就关闭射击
-    // if (gimbal_cmd_to_shoot_stop())
-    // {
-    //     shoot_mode = SHOOT_STOP;
-    // }
+     if (gimbal_cmd_to_shoot_stop())
+     {
+         shoot_mode = SHOOT_STOP;
+     }
 
-    static uint16_t last_cover_key_value = 0;
+
 
     if (if_key_singal_pessed(shoot_rc->key.v, last_cover_key_value, KEY_PRESSED_SHOOT_COVER) && cover_mode == COVER_OPEN_DONE) //单击R并且开启完毕
     {
@@ -538,11 +538,7 @@ void Shoot::cooling_ctrl()
         shoot_speed_limit = can_receive.gimbal_receive.shoot_speed_limit;
         bullet_speed = can_receive.gimbal_receive.bullet_speed;
 
-        //手动调整射频
-#if SHOOT_SET_TRIGGER_SPEED_BY_HAND
-
-#else
-        //根据热量和射速上限修改等级
+//根据热量和射速上限修改等级
         //热量
         if (shoot_cooling_limit <= 50)
             trigger_speed_grade = 1;
@@ -554,9 +550,7 @@ void Shoot::cooling_ctrl()
             trigger_speed_grade = 4;
         else if (shoot_cooling_limit <= 400)
             trigger_speed_grade = 5;
-
-#endif
-
+				
         //射速
         if (shoot_speed_limit <= 15)
             fric_speed_grade = 1;
@@ -742,6 +736,7 @@ void Shoot::shoot_bullet_control()
     }
 }
 int cover_time =0;
+
 /**
   * @brief          弹仓控制，控制弹仓电机运动
   * @param[in]      控制电机时间
@@ -771,53 +766,11 @@ void Shoot::cover_control()
 				    cover_time =0;
 			 }
 		 }
-//		 if(cover_mode == COVER_CLOSE){
-//			 cover_motor.angle_set = rad_format(cover_motor.angle);
-//			 if (rad_format(cover_motor.angle_set - cover_motor.angle) > 0.05f)
-//			 {
-//				 cover_motor.speed_set =-COVER_MOTOR_SPEED;
-//			 }
-//			 if (rad_format(cover_motor.angle_set - cover_motor.angle) < 0.05f)
-//			 {
-//				 cover_motor.speed_set =COVER_MOTOR_SPEED;
-//			 }
-//		 }
-//    if(cover_move_flag == 0)
-//    {
-//        if (cover_mode == COVER_OPEN)
-//        {
-//            cover_motor.angle_set = rad_format(cover_motor.angle + COVER_OPEN_ANGLE);
-//        }
-//        else if (cover_mode == COVER_CLOSE)
-//        {
-//            cover_motor.angle_set = rad_format(cover_motor.angle - COVER_OPEN_ANGLE);
-//        }
-//        cover_move_flag = 1;
-//    }
-//		if(cover_mode == COVER_OPEN)
-//        if (rad_format(cover_motor.angle_set - cover_motor.angle) > 0.05f)
-//        {
-//            //没到达一直设置旋转速度
-//            cover_motor.speed_set = COVER_MOTOR_SPEED;
-//        }
-//        else
-//        {
-//            cover_mode = COVER_OPEN_DONE;
-//            cover_move_flag = 0;
-//        }
-//        if(cover_mode == COVER_CLOSE)
-//        {
-//		    	if (rad_format(cover_motor.angle_set - cover_motor.angle) < -0.05f)
-//            {
-//            //没到达一直设置旋转速度
-//            cover_motor.speed_set = -COVER_MOTOR_SPEED;
-//            }
-//           else
-//            {
-//            cover_mode = COVER_CLOSE_DONE;
-//            cover_move_flag = 0;
-//             }
-//        }
+		if(cover_mode == COVER_CLOSE_DONE)
+		 {
+			cover_motor.speed_set =-0.1f; 
+		 }
+
 }
 
 /**

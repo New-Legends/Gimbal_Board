@@ -134,7 +134,7 @@ public:
 
 /*******************************************(C) 陀螺仪返回参数 ***********************************************/
     const fp32 *get_INS_quat_point(void);                                 //获取四元数
-    const fp32 *get_INS_angle_point(void);                                //获取欧拉角,0:yaw, 1:pitch, 2:roll 单位 rad
+    const fp32 *get_INS_angle_point(void);                                //获取欧拉角,0:yaw, 1:roll, 2:pitch单位 rad
     const fp32 *get_gyro_data_point(void);                                //获取角速度,0:x轴, 1:y轴, 2:roll轴 单位 rad/s
     const fp32 *get_accel_data_point(void);                               //获取加速度,0:x轴, 1:y轴, 2:roll轴 单位 m/s2
 /*******************************************(C) 陀螺仪返回参数 ***********************************************/
