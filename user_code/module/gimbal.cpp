@@ -229,10 +229,10 @@ void Gimbal::feedback_update()
 #endif
 
     //在云台归中时,读取的速度为编码器反馈的
-    if (gimbal_behaviour_mode == GIMBAL_INIT)
+//    if (gimbal_behaviour_mode == GIMBAL_INIT)
         gimbal_pitch_motor.speed = GM6020_MOTOR_RPM_TO_VECTOR * gimbal_pitch_motor.motor_measure->speed_rpm;
-    else
-        gimbal_pitch_motor.speed = gimbal_INT_gyro_point[INS_GYRO_Y_ADDRESS_OFFSET];
+//    else
+//        gimbal_pitch_motor.speed = gimbal_INT_gyro_point[INS_GYRO_Y_ADDRESS_OFFSET];
 
 
 
@@ -309,11 +309,11 @@ void Gimbal::behavour_set()
     }
 
     //如果外部使得校准步骤从0 变成 start，则进入校准模式
-    if (gimbal_cali.step == GIMBAL_CALI_START_STEP && !toe_is_error(DBUS_TOE))
-    {
-        gimbal_behaviour_mode = GIMBAL_CALI;
-        return;
-    }
+//    if (gimbal_cali.step == GIMBAL_CALI_START_STEP && !toe_is_error(DBUS_TOE))
+//    {
+//        gimbal_behaviour_mode = GIMBAL_CALI;
+//        return;
+//    }
 
     //初始化模式判断是否到达中值位置
     if (gimbal_behaviour_mode == GIMBAL_INIT)
@@ -377,10 +377,10 @@ void Gimbal::behavour_set()
     // }
 
     //遥控器电线保护
-    if (toe_is_error(DBUS_TOE))
-    {
-        gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
-    }
+    // if (toe_is_error(DBUS_TOE))
+    // {
+    //     gimbal_behaviour_mode = GIMBAL_ZERO_FORCE;
+    // }
 
     // enter init mode
     //判断进入init状态机
@@ -729,7 +729,7 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
                 if(pitch_patrol_dir == CCW)  //yaw轴逆时针旋转
                 {
                     
-                    if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.05f)
+                    if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.08f)
                     {
                         pitch_patrol_dir =CW;
                     }
@@ -738,7 +738,7 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
                 else if(pitch_patrol_dir == CW)  //yaw轴顺时针旋转
                 {
                     
-                    if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.03f)
+                    if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.08f)
                     {
                         pitch_patrol_dir = CCW;
                     }
@@ -899,7 +899,8 @@ void Gimbal::output()
 //     gimbal_pitch_motor.relative_angle_pid.init(PID_ANGLE, pitch_relative_angle_pid_parm, &gimbal_pitch_motor.relative_angle, &gimbal_pitch_motor.relative_angle_set, 0);
 // }
 
-    can_receive.can_cmd_gimbal_motor(gimbal_yaw_motor.current_give, gimbal_pitch_motor.current_give, 0, 0);
+    can_receive.can_cmd_gimbal_motor_yaw(gimbal_yaw_motor.current_give);
+    can_receive.can_cmd_gimbal_motor_pitch(gimbal_pitch_motor.current_give);
 }
 
 /**
@@ -928,10 +929,22 @@ void Gimbal::motor_relative_angle_control_yaw(Gimbal_motor *gimbal_motor)
     {
         return;
     }
+    if (vision_if_find_target() == TRUE)
+    {
+
+        //旧 初始化pid
+        fp32 yaw_speed_pid_parm[5] = {YAW_SPEED_VITION_PID_KP, YAW_SPEED_VITION_PID_KI, YAW_SPEED_VITION_PID_KD, YAW_SPEED_VITION_PID_MAX_IOUT, YAW_SPEED_VITION_PID_MAX_OUT};
+        gimbal_yaw_motor.speed_pid.init(PID_SPEED, yaw_speed_pid_parm, &gimbal_yaw_motor.speed, &gimbal_yaw_motor.speed_set, NULL);
+        fp32 yaw_relative_angle_pid_parm[5] = {YAW_VISION_RELATIVE_PID_KP, YAW_VISION_RELATIVE_PID_KI, YAW_VISION_RELATIVE_PID_KD, YAW_VISION_RELATIVE_PID_MAX_IOUT, YAW_VISION_RELATIVE_PID_MAX_OUT};
+        gimbal_yaw_motor.relative_angle_pid.init(PID_ANGLE, yaw_relative_angle_pid_parm, &gimbal_yaw_motor.relative_angle, &gimbal_yaw_motor.relative_angle_set, 0);
+        //角度环，速度环串级pid调试
+        gimbal_motor->speed_set = gimbal_motor->relative_angle_pid.pid_vition_calc();
+        gimbal_motor->current_set = gimbal_motor->speed_pid.pid_vition_calc();
+    }   
 
     //角度环，速度环串级pid调试
-    gimbal_motor->speed_set = gimbal_motor->relative_angle_pid.pid_calc();
-    gimbal_motor->current_set = gimbal_motor->speed_pid.pid_calc();
+    gimbal_motor->speed_set = gimbal_motor->relative_angle_pid.pid_back_calc();
+    gimbal_motor->current_set = gimbal_motor->speed_pid.pid_back_calc();
 }
 
 /**
@@ -945,10 +958,23 @@ void Gimbal::motor_relative_angle_control_pitch(Gimbal_motor *gimbal_motor)
     {
         return;
     }
-
-    //角度环，速度环串级pid调试
-    gimbal_motor->speed_set = gimbal_motor->relative_angle_pid.pid_back_calc();
-    gimbal_motor->current_set = gimbal_motor->speed_pid.pid_back_calc();
+    if (vision_if_find_target() == TRUE)
+    {
+        //初始化pid
+        fp32 pitch_speed_pid_parm[5] = {PITCH_SPEED_VITION_PID_KP, PITCH_SPEED_VITION_PID_KI, PITCH_SPEED_VITION_PID_KD, PITCH_SPEED_VITION_PID_MAX_IOUT, PITCH_SPEED_VITION_PID_MAX_OUT};
+        gimbal_pitch_motor.speed_pid.init(PID_SPEED, pitch_speed_pid_parm, &gimbal_pitch_motor.speed, &gimbal_pitch_motor.speed_set, NULL);
+        fp32 pitch_relative_angle_pid_parm[5] = {PITCH_VISION_RELATIVE_PID_KP, PITCH_VISION_RELATIVE_PID_KI, PITCH_VISION_RELATIVE_PID_KD, PITCH_VISION_RELATIVE_PID_MAX_IOUT, PITCH_VISION_RELATIVE_PID_MAX_OUT};
+        gimbal_pitch_motor.relative_angle_pid.init(PID_ANGLE, pitch_relative_angle_pid_parm, &gimbal_pitch_motor.relative_angle, &gimbal_pitch_motor.relative_angle_set, 0);
+        //角度环，速度环串级pid调试
+        gimbal_motor->speed_set = gimbal_motor->relative_angle_pid.pid_back_calc();
+        gimbal_motor->current_set = gimbal_motor->speed_pid.pid_back_calc();
+    }
+    else
+    {
+        //角度环，速度环串级pid调试
+        gimbal_motor->speed_set = gimbal_motor->relative_angle_pid.pid_back_calc();
+        gimbal_motor->current_set = gimbal_motor->speed_pid.pid_back_calc();
+    }
 }
 
 /**
@@ -1036,7 +1062,13 @@ void Gimbal::relative_angle_limit(Gimbal_motor *gimbal_motor, fp32 add)
     // }
 
     //旧解算
-    gimbal_motor->relative_angle_set += add;
+    if(vision_if_find_target() == TRUE){
+        gimbal_motor->relative_angle_set = gimbal_motor->relative_angle + add;
+    }
+    else{
+        gimbal_motor->relative_angle_set += add;
+    }
+    
     //是否超过最大 最小值
     if (gimbal_motor->relative_angle_set > gimbal_motor->max_relative_angle)
     {

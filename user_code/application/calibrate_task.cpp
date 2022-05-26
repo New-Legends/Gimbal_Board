@@ -721,32 +721,33 @@ static bool_t cali_gyro_hook(uint32_t *cali, bool_t cmd)
 static bool_t cali_gimbal_hook(uint32_t *cali, bool_t cmd)
 {
 
-    gimbal_cali_t *local_cali_t = (gimbal_cali_t *)cali;
-    if (cmd == CALI_FUNC_CMD_INIT)
-    {
-        gimbal.set_cali_gimbal_hook(local_cali_t->yaw_offset, local_cali_t->pitch_offset,
-                             local_cali_t->yaw_max_angle, local_cali_t->yaw_min_angle,
-                             local_cali_t->pitch_max_angle, local_cali_t->pitch_min_angle);
+    // gimbal_cali_t *local_cali_t = (gimbal_cali_t *)cali;
+    // if (cmd == CALI_FUNC_CMD_INIT)
+    // {
+    //     gimbal.set_cali_gimbal_hook(local_cali_t->yaw_offset, local_cali_t->pitch_offset,
+    //                          local_cali_t->yaw_max_angle, local_cali_t->yaw_min_angle,
+    //                          local_cali_t->pitch_max_angle, local_cali_t->pitch_min_angle);
         
-        return 0;
-    }
-    else if (cmd == CALI_FUNC_CMD_ON)
-    {
-        if (gimbal.cmd_cali_gimbal_hook(&local_cali_t->yaw_offset, &local_cali_t->pitch_offset,
-                                 &local_cali_t->yaw_max_angle, &local_cali_t->yaw_min_angle,
-                                 &local_cali_t->pitch_max_angle, &local_cali_t->pitch_min_angle))
-        {
-            cali_buzzer_off();
+    //     return 0;
+    // }
+    // else if (cmd == CALI_FUNC_CMD_ON)
+    // {
+    //     if (gimbal.cmd_cali_gimbal_hook(&local_cali_t->yaw_offset, &local_cali_t->pitch_offset,
+    //                              &local_cali_t->yaw_max_angle, &local_cali_t->yaw_min_angle,
+    //                              &local_cali_t->pitch_max_angle, &local_cali_t->pitch_min_angle))
+    //     {
+    //         cali_buzzer_off();
             
-            return 1;
-        }
-        else
-        {
-            gimbal_start_buzzer();
+    //         return 1;
+    //     }
+    //     else
+    //     {
+    //         gimbal_start_buzzer();
             
-            return 0;
-        }
-    }
+    //         return 0;
+    //     }
+    // }
     
-    return 0;
+    // return 0;
+    return 1;
 }

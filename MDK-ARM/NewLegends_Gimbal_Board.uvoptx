@@ -158,42 +158,32 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>gimbal,0x0A</ItemText>
+          <ItemText>yaw_channel,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>can_receive,0x0A</ItemText>
+          <ItemText>gimbal_receive</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>imu</ItemText>
+          <ItemText>gimbal,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>remote_control</ItemText>
+          <ItemText>VisionRecvData</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>shoot</ItemText>
+          <ItemText>can_receive,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>VisionRecvData,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>6</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>VisionSendData</ItemText>
-        </Ww>
-        <Ww>
-          <count>7</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>yaw_channel,0x0A</ItemText>
+          <ItemText>shoot</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

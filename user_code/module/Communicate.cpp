@@ -31,29 +31,12 @@ void Communicate::run()
 {
     vision_send_data(1);
 
-    //向底盘发送遥控器和云台数据
-    int16_t temp_ch0, temp_ch2, temp_ch3;
-    uint16_t temp_v;
-    uint8_t temp_s0, temp_gimbal_behaviour_mode;
-    fp32 temp_gimbal_yaw_angle;
-    fp32 temp_gimbal_yaw_current_give;
-    int16_t temp_give;
-
-    temp_ch0 = remote_control.rc_ctrl.rc.ch[0];
-    temp_ch2 = remote_control.rc_ctrl.rc.ch[2];
-    temp_ch3 = remote_control.rc_ctrl.rc.ch[3];
-    temp_v = remote_control.rc_ctrl.key.v;
-    temp_s0 = remote_control.rc_ctrl.rc.s[0];
-    temp_give = gimbal.gimbal_yaw_motor.current_give;
-
-    temp_gimbal_behaviour_mode = gimbal.gimbal_behaviour_mode;
-
-    can_receive.send_rc_board_com_2(temp_give);
-
 #if GIMBAL_REMOTE_OPEN
     remote_control.rc_ctrl.rc.ch[0] = can_receive.gimbal_receive.ch_0;
     remote_control.rc_ctrl.rc.ch[1] = can_receive.gimbal_receive.ch_1;
+    remote_control.rc_ctrl.rc.ch[2] = can_receive.gimbal_receive.ch_2;
     remote_control.rc_ctrl.rc.s[0] = can_receive.gimbal_receive.s0;
+    remote_control.rc_ctrl.rc.s[1] = can_receive.gimbal_receive.s1;
     // can_receive.gimbal_motor[0].last_ecd = can_receive.gimbal_motor[0].ecd;
     // can_receive.gimbal_motor[0].ecd = can_receive.gimbal_receive.ecd;
     // can_receive.gimbal_motor[0].speed_rpm = can_receive.gimbal_receive.speed_rpm;
@@ -198,7 +181,7 @@ extern "C"
     void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
     {
 
-        if (hcan == &GIMBAL_CAN) //接云台CAN 信息
+        if (hcan == &SHOOT_CAN) //接云台CAN 信息
         {
             HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
             switch (rx_header.StdId)
@@ -218,6 +201,11 @@ extern "C"
                     can_receive.get_shoot_motor_measure(2, rx_data);
                     detect_hook(CAN_TRIGGER_MOTOR_ID);
                     break;
+
+                case CAN_PITCH_MOTOR_ID:
+                    can_receive.get_gimbal_motor_measure(1, rx_data);
+                    //detect_hook(GIMBAL_PITCH_MOTOR_TOE);
+                    break;
                                
                 default:
                 {
@@ -230,36 +218,32 @@ extern "C"
             HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
             switch (rx_header.StdId)
             {
-                case CAN_COOLING_BOARM_COM_ID:
+                case CAN_COOLING_BOARM_COM_2_ID:
                     can_receive.receive_cooling_and_id_board_com(rx_data);
                     detect_hook(BOARD_COM);
                     break;
 
-                case CAN_17MM_SPEED_BOARD_COM_ID:
+                case CAN_17MM_SPEED_BOARD_COM_2_ID:
                     can_receive.receive_17mm_speed_and_mode_board_com(rx_data);
                     detect_hook(BOARD_COM);
                     break;
 
-                case CAN_CHASSIS_UNDER:
+                case CAN_RC_BOARM_COM_ID:
                     can_receive.receive_rc_board_com(rx_data);
-                    detect_hook(BOARD_COM);
+                    //detect_hook(BOARD_COM);
                     break;
-
-                // case CAN_CHASSIS_YAW:
-                //     can_receive.receive_yaw_motor(rx_data);
-                //     detect_hook(BOARD_COM);
-                //     break;
 
                  //云台机构电机              
-                case CAN_PITCH_MOTOR_ID:
-                    can_receive.get_gimbal_motor_measure(1, rx_data);
-                    detect_hook(GIMBAL_PITCH_MOTOR_TOE);
-                    break;
 
                 case CAN_YAW_MOTOR_ID:
                     can_receive.get_gimbal_motor_measure(0, rx_data);
-                    detect_hook(GIMBAL_YAW_MOTOR_TOE);
+                    //detect_hook(GIMBAL_YAW_MOTOR_TOE);
                     break;
+
+                // case CAN_PITCH_MOTOR_ID:
+                //     can_receive.get_gimbal_motor_measure(1, rx_data);
+                //     //detect_hook(GIMBAL_PITCH_MOTOR_TOE);
+                //     break;
 
                 default:
                 {

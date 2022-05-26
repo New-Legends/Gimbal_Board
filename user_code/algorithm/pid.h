@@ -48,6 +48,8 @@ public:
 
     fp32 pid_back_calc();
 
+    fp32 pid_vition_calc();
+
     void pid_clear();
 };
 

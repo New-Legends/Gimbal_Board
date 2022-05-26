@@ -49,7 +49,7 @@ fp32 grigger_speed_to_radio = 0.6;
 
 //通过读取裁判数据,直接修改射速和射频等级
 //射速等级  摩擦电机
-fp32 shoot_fric_grade[4] = {0, 15 * fric_refree_para, 18 * fric_refree_para, 30 * fric_refree_para};
+fp32 shoot_fric_grade[4] = {0, 12 * fric_refree_para, 15 * fric_refree_para, 20 * fric_refree_para};
 
 //射频等级 拨弹电机
 fp32 shoot_grigger_grade[6] = {0, 5.0f * grigger_speed_to_radio, 10.0f * grigger_speed_to_radio, 15.0f * grigger_speed_to_radio, 28.0f * grigger_speed_to_radio, 40.0f * grigger_speed_to_radio};
@@ -475,9 +475,9 @@ void Shoot::feedback_update()
 
     //射速等级  摩擦电机
     shoot_fric_grade[0] = 0;
-    shoot_fric_grade[1] = 15 * fric_refree_para;
-    shoot_fric_grade[2] = 18 * fric_refree_para;
-    shoot_fric_grade[3] = 30 * fric_refree_para;
+    shoot_fric_grade[1] = 12 * fric_refree_para;
+    shoot_fric_grade[2] = 15 * fric_refree_para;
+    shoot_fric_grade[3] = 20 * fric_refree_para;
 
     //射频等级 拨弹电机
     shoot_grigger_grade[0] = 0;
@@ -615,12 +615,12 @@ void Shoot::cooling_ctrl()
 {
     //TODO 暂时未完善
     //17mm枪口热量上限, 17mm枪口实时热量
-    uint16_t id1_17mm_cooling_limit;
-    uint16_t id1_17mm_cooling_heat;
-    uint16_t id1_17mm_cooling_rate;
+    uint16_t id2_17mm_cooling_limit;
+    uint16_t id2_17mm_cooling_heat;
+    uint16_t id2_17mm_cooling_rate;
 
     //17mm枪口枪口射速上限,17mm实时射速
-    uint16_t id1_17mm_speed_limit;
+    uint16_t id2_17mm_speed_limit;
     fp32 bullet_speed;
 
     //保留被强制降速前的射频
@@ -637,11 +637,11 @@ void Shoot::cooling_ctrl()
     // else
     {
         //更新裁判数据
-        id1_17mm_cooling_limit = can_receive.gimbal_receive.id1_17mm_cooling_limit;
-        id1_17mm_cooling_heat = can_receive.gimbal_receive.id1_17mm_cooling_heat;
-        id1_17mm_cooling_rate = can_receive.gimbal_receive.id1_17mm_cooling_rate;
+        id2_17mm_cooling_limit = can_receive.gimbal_receive.id2_17mm_cooling_limit;
+        id2_17mm_cooling_heat = can_receive.gimbal_receive.id2_17mm_cooling_heat;
+        id2_17mm_cooling_rate = can_receive.gimbal_receive.id2_17mm_cooling_rate;
 
-        id1_17mm_speed_limit = can_receive.gimbal_receive.id1_17mm_speed_limit;
+        id2_17mm_speed_limit = can_receive.gimbal_receive.id2_17mm_speed_limit;
         bullet_speed = can_receive.gimbal_receive.bullet_speed;
 
         //手动调整射频
@@ -650,31 +650,31 @@ void Shoot::cooling_ctrl()
 #else
         //根据热量和射速上限修改等级
         //热量
-        if (id1_17mm_cooling_limit <= 50)
+        if (id2_17mm_cooling_limit <= 50)
             grigger_speed_grade = 1;
-        else if (id1_17mm_cooling_limit <= 100)
+        else if (id2_17mm_cooling_limit <= 100)
             grigger_speed_grade = 2;
-        else if (id1_17mm_cooling_limit <= 200)
+        else if (id2_17mm_cooling_limit <= 200)
             grigger_speed_grade = 3;
-        else if (id1_17mm_cooling_limit <= 280)
+        else if (id2_17mm_cooling_limit <= 280)
             grigger_speed_grade = 4;
-        else if (id1_17mm_cooling_limit <= 400)
+        else if (id2_17mm_cooling_limit <= 400)
             grigger_speed_grade = 5;
 
 
 #endif
 
         //射速
-        if (id1_17mm_speed_limit <= 15)
+        if (id2_17mm_speed_limit <= 15)
             fric_speed_grade = 1;
-        else if (id1_17mm_speed_limit <= 18)
+        else if (id2_17mm_speed_limit <= 18)
             fric_speed_grade = 2;
-        else if (id1_17mm_speed_limit <= 30)
+        else if (id2_17mm_speed_limit <= 30)
             fric_speed_grade = 3;
 
         //根据当前热量和射速修改等级,确保不会因超限扣血,
         //热量 当剩余热量低于30,强制制动
-        if (id1_17mm_cooling_limit - id1_17mm_cooling_heat <= 30 && grigger_speed_grade != 0)
+        if (id2_17mm_cooling_limit - id2_17mm_cooling_heat <= 30 && grigger_speed_grade != 0)
         {
             last_grigger_speed_grade = grigger_speed_grade;
             grigger_speed_grade = 0;
@@ -683,7 +683,7 @@ void Shoot::cooling_ctrl()
         }
 
         //超射速,强制降低摩擦轮转速
-        if (bullet_speed > id1_17mm_speed_limit)
+        if (bullet_speed > id2_17mm_speed_limit)
         {
             fric_speed_grade--;
         }

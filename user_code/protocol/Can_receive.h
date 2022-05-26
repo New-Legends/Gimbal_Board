@@ -8,9 +8,9 @@
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
 
-#define SHOOT_CAN hcan2
-#define GIMBAL_CAN hcan1
-#define BOARD_COM_CAN hcan1
+#define SHOOT_CAN hcan1
+#define GIMBAL_CAN hcan2
+#define BOARD_COM_CAN hcan2
 
 extern int field_event_outpost;
 
@@ -33,23 +33,24 @@ enum shoot_motor_id_e
 
 typedef enum
 {
-    //发射机构电机接受ID CAN1
+    //发射机构电机接受ID CAN2
     CAN_LEFT_FRIC_MOTOR_ID = 0x201,
     CAN_RIGHT_FRIC_MOTOR_ID = 0x202,
     CAN_TRIGGER_MOTOR_ID = 0x203,
     CAN_SHOOT_ALL_ID = 0x200,
 
+    CAN_PITCH_MOTOR_ID = 0x20A,//电机ID减四
+    CAN_GIMBAL_PITCH_ID = 0X2FF,
+
     //云台电机接收ID CAN1
     CAN_YAW_MOTOR_ID = 0x209,  //电机ID减四
-    CAN_PITCH_MOTOR_ID = 0x20A,//电机ID减四
-    CAN_GIMBAL_ALL_ID = 0x2FF,
+    CAN_GIMBAL_YAW_ID = 0x2FF,   
 
     //板间通信ID
-    CAN_COOLING_BOARM_COM_ID = 0x302,
-    CAN_17MM_SPEED_BOARD_COM_ID = 0x303,
-    CAN_RC_BOARM_COM_ID_2 = 0x304,
-    CAN_CHASSIS_UNDER = 0x305,
-    CAN_CHASSIS_YAW = 0x306,
+    CAN_RC_BOARM_COM_ID = 0x102,
+    CAN_COOLING_BOARM_COM_2_ID = 0x305,
+    CAN_17MM_SPEED_BOARD_COM_2_ID = 0x306,
+
 } can_msg_id_e;
 
 //rm motor data
@@ -81,14 +82,14 @@ typedef struct
 typedef struct
 {
     //测试热量及ID
-    uint16_t id1_17mm_cooling_limit; //17mm测速热量上限
-    uint16_t id1_17mm_cooling_rate;  //17mm测速热量冷却
-    uint16_t id1_17mm_cooling_heat;  //17mm测速实时热量
+    uint16_t id2_17mm_cooling_limit; //17mm测速热量上限
+    uint16_t id2_17mm_cooling_rate;  //17mm测速热量冷却
+    uint16_t id2_17mm_cooling_heat;  //17mm测速实时热量
     uint8_t color;                   //判断红蓝方
     uint8_t robot_id;                //机器人编号
 
     //测速速度及底盘模式
-    uint16_t id1_17mm_speed_limit; //17mm测速射速上限
+    uint16_t id2_17mm_speed_limit; //17mm测速射速上限
     uint16_t bullet_speed;        //17mm测速实时射速
 
     uint8_t chassis_behaviour;
@@ -97,13 +98,10 @@ typedef struct
     //遥控器数据
     int16_t ch_0;
     int16_t ch_1;
+    int16_t ch_2;
     int8_t s0;
+    int8_t s1;
 
-    //YAW电机数据
-    uint16_t ecd;
-    int16_t speed_rpm;
-    int16_t give_current;
-    uint8_t temperate;
     
 
 } gimbal_receive_t;
@@ -132,7 +130,8 @@ public:
 
     /*-------------------云台电机数据接收--------------------*/
     void get_gimbal_motor_measure(uint8_t num, uint8_t data[8]);
-    void can_cmd_gimbal_motor(int16_t yaw, int16_t pitch, int16_t empty1, int16_t empty2);
+    void can_cmd_gimbal_motor_yaw(int16_t yaw);
+    void can_cmd_gimbal_motor_pitch(int16_t pitch);
     const motor_measure_t *get_gimbal_motor_measure_point(uint8_t i);
 
     /*-------------------发射机构电机数据接收--------------------*/
@@ -145,9 +144,6 @@ public:
     void receive_cooling_and_id_board_com(uint8_t data[8]);
     void receive_17mm_speed_and_mode_board_com(uint8_t data[8]);
     void receive_rc_board_com(uint8_t data[8]);
-    void receive_yaw_motor(uint8_t data[8]);
-    void send_rc_board_com_2(int16_t give);            //发送YAW输出电流
-    void send_gimbal_board_com(uint8_t s0, uint8_t gimbal_behaviour, fp32 gimbal_yaw_angle); //发送云台模式及状态
 
     /*-------------------裁判系统数据判定-----------------*/
 

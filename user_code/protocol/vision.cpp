@@ -100,9 +100,9 @@ uint8_t CmdID = 0;
 void vision_send_data(uint8_t CmdID)
 {
   int i; //循环发送次数
-  uint16_t id1_17mm_speed_limit;
+  uint16_t id2_17mm_speed_limit;
   uint16_t bullet_speed;
-  //get_shooter_id1_17mm_speed_limit_and_bullet_speed(&id1_17mm_speed_limit, &bullet_speed);
+  //get_shooter_id2_17mm_speed_limit_and_bullet_speed(&id2_17mm_speed_limit, &bullet_speed);
 
   VisionSendData.BEGIN = VISION_BEGIN;
 
@@ -121,8 +121,8 @@ void vision_send_data(uint8_t CmdID)
 
 void vision_error_angle(float *yaw_angle_error, float *pitch_angle_error)
 {
-  *yaw_angle_error = -VisionRecvData.yaw_angle * PI / 180 /20;
-  *pitch_angle_error = -VisionRecvData.pitch_angle * PI / 180 /10;
+  *yaw_angle_error = -VisionRecvData.yaw_angle *2;
+  *pitch_angle_error = VisionRecvData.pitch_angle /3;
 
   if (VisionRecvData.yaw_angle == 0)
   {
