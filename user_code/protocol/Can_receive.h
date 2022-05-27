@@ -48,12 +48,13 @@ typedef enum
     CAN_PITCH_MOTOR_ID = 0x206,
     CAN_GIMBAL_ALL_ID = 0x1FF,
 
-    //板间通信ID
-    CAN_RC_BOARM_COM_ID = 0x100,
+    //板间通信ID 
+    CAN_UI_COM_ID = 0x100,
+    CAN_RC_BOARM_COM_ID = 0x101,
     CAN_GIMBAL_BOARD_COM_ID = 0x302,
     CAN_COOLING_BOARM_COM_ID = 0x303,
     CAN_SHOOT_SPEED_BOARD_COM_ID = 0x304,
-    CAN_UI_COM_ID = 0x305,
+
 } can_msg_id_e;
 
 // rm motor data
