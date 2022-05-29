@@ -6,7 +6,8 @@
 #include "arm_math.h"
 
 //循环限幅函数
-fp32 loop_fp32_constrain(fp32 Input, fp32 minValue, fp32 maxValue) {
+fp32 loop_fp32_constrain(fp32 Input, fp32 minValue, fp32 maxValue) 
+{
     if (maxValue < minValue) {
         return Input;
     }

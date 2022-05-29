@@ -12,7 +12,7 @@
 //循环限幅函数
 extern fp32 loop_fp32_constrain(fp32 Input, fp32 minValue, fp32 maxValue);
 //弧度格式化为-PI~PI
-#define rad_format(Ang) loop_fp32_constrain((Ang), -PI, PI)
+#define rad_format(Ang) loop_fp32_constrain((Ang), -PI,PI)
 
 //限幅函数
 extern fp32 fp32_constrain(fp32 Value, fp32 minValue, fp32 maxValue);

@@ -70,8 +70,8 @@ bool Communicate::game_start()
 }
 
 #ifdef __cplusplus //告诉编译器，这部分代码按C语言的格式进行编译，而不是C++的
-extern "C"
-{
+extern "C" 
+ {
 
     //遥控器串口
     void USART3_IRQHandler(void)
@@ -248,6 +248,22 @@ extern "C"
             case CAN_TRIGGER_MOTOR_ID:
                 can_receive.get_shoot_motor_measure(2, rx_data);
                 detect_hook(CAN_TRIGGER_MOTOR_ID);
+                if(can_receive.shoot_motor[2].round>35)
+                {
+                    can_receive.shoot_motor[2].round = can_receive.shoot_motor[2].round - 36;
+                }
+                if(can_receive.shoot_motor[2].round<0)
+                {
+                    can_receive.shoot_motor[2].round = can_receive.shoot_motor[2].round + 36;
+                }
+				if(  can_receive.shoot_motor[2].ecd - can_receive.shoot_motor[2].last_ecd > 5000)
+                {
+                    can_receive.shoot_motor[2].round--;
+                }
+                if(can_receive.shoot_motor[2].ecd - can_receive.shoot_motor[2].last_ecd < -5000)
+                {
+                   can_receive.shoot_motor[2].round++;
+                }
                 break;
             case CAN_COVER_MOTOR_ID:
                 can_receive.get_shoot_motor_measure(3, rx_data);

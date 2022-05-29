@@ -65,6 +65,7 @@ typedef struct
     int16_t given_current;
     uint8_t temperate;
     int16_t last_ecd;
+    int16_t round; //用于记圈
 } motor_measure_t;
 
 //云台发送数据结构体

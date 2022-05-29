@@ -96,6 +96,7 @@ public:
     fp32 speed;
     fp32 speed_set;
     fp32 angle;
+    fp32 angle_2;
     fp32 angle_set;
 
     fp32 current_set;

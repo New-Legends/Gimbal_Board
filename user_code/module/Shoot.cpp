@@ -119,7 +119,7 @@ void Shoot::init()
     trigger_motor.angle_set = trigger_motor.angle;
     trigger_motor.speed = 0.0f;
     trigger_motor.speed_set = 0.0f;
-
+    can_receive.shoot_motor[2].round = 0;
     //弹仓电机初始化
     cover_motor.init(can_receive.get_shoot_motor_measure_point(COVER));
     //初始化PID
@@ -146,7 +146,7 @@ void Shoot::init()
     move_flag = 0;
     cover_move_flag = 0;
     key_time = 0;
-
+    
     //未防止卡弹, 上电后自动开启摩擦轮,可以手动关闭
     // shoot_mode = SHOOT_READY_FRIC;
     // buzzer_on(5, 10000);
@@ -325,7 +325,7 @@ void Shoot::feedback_update()
     cover_speed_fliter_3 = cover_speed_fliter_2 * cover_fliter_num[0] + cover_speed_fliter_1 * cover_fliter_num[1] + (cover_motor.motor_measure->speed_rpm * MOTOR_RPM_TO_SPEED) * cover_fliter_num[2];
     cover_motor.speed = cover_speed_fliter_3;
 
-    //电机圈数重置， 因为输出轴旋转一圈， 电机轴旋转 36圈，将电机轴数据处理成输出轴数据，用于控制输出轴角度
+   // 电机圈数重置， 因为输出轴旋转一圈， 电机轴旋转 36圈，将电机轴数据处理成输出轴数据，用于控制输出轴角度
     if (trigger_motor.motor_measure->ecd - trigger_motor.motor_measure->last_ecd > HALF_ECD_RANGE)
     {
         trigger_motor.ecd_count--;
@@ -343,9 +343,9 @@ void Shoot::feedback_update()
     {
         trigger_motor.ecd_count = FULL_COUNT - 1;
     }
-    //计算拨盘电机输出轴角度
-    trigger_motor.angle = (trigger_motor.ecd_count * ECD_RANGE + trigger_motor.motor_measure->ecd) * MOTOR_ECD_TO_ANGLE;
-
+   // 计算拨盘电机输出轴角度
+    trigger_motor.angle_2 = (trigger_motor.ecd_count * ECD_RANGE + trigger_motor.motor_measure->ecd) * MOTOR_ECD_TO_ANGLE;
+    trigger_motor.angle =  -((1.0*(trigger_motor.motor_measure->round*2*PI)/36+1.0*(trigger_motor.motor_measure->ecd*2*PI)/19/8192)-PI);
     //电机圈数重置， 因为输出轴旋转一圈， 电机轴旋转 36圈，将电机轴数据处理成输出轴数据，用于控制输出轴角度
     if (cover_motor.motor_measure->ecd - cover_motor.motor_measure->last_ecd > HALF_ECD_RANGE)
     {
@@ -694,11 +694,10 @@ void Shoot::trigger_motor_turn_back()
      {
          trigger_motor.speed_set = -trigger_motor.speed_set;
      }
-
      if (fabs(trigger_motor.speed) < BLOCK_TRIGGER_SPEED && block_time < BLOCK_TIME)
      {
         block_time++;
-         reverse_time = 0;
+        reverse_time = 0;
      }
      else if (block_time == BLOCK_TIME && reverse_time < REVERSE_TIME)
      {
