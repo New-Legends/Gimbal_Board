@@ -121,8 +121,8 @@ void vision_send_data(uint8_t CmdID)
 
 void vision_error_angle(float *yaw_angle_error, float *pitch_angle_error)
 {
-  *yaw_angle_error = -VisionRecvData.yaw_angle *2;
-  *pitch_angle_error = VisionRecvData.pitch_angle /3;
+  *yaw_angle_error = -VisionRecvData.yaw_angle *1.2;
+  *pitch_angle_error = VisionRecvData.pitch_angle ;
 
   if (VisionRecvData.yaw_angle == 0)
   {
