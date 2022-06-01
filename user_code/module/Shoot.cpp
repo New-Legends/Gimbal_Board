@@ -300,7 +300,7 @@ void Shoot::feedback_update()
     //更新摩擦轮电机速度
     fric_motor[LEFT_FRIC].speed = -fric_motor[LEFT_FRIC].motor_measure->speed_rpm * FRIC_RPM_TO_SPEED;
     fric_motor[RIGHT_FRIC].speed = fric_motor[RIGHT_FRIC].motor_measure->speed_rpm * FRIC_RPM_TO_SPEED;
-
+   //trigger_motor.speed = trigger_motor.motor_measure->speed_rpm;
     // 拨弹轮电机速度滤波一下
     static fp32 trigger_speed_fliter_1 = 0.0f;
     static fp32 trigger_speed_fliter_2 = 0.0f;
@@ -345,7 +345,7 @@ void Shoot::feedback_update()
     }
    // 计算拨盘电机输出轴角度
     trigger_motor.angle_2 = (trigger_motor.ecd_count * ECD_RANGE + trigger_motor.motor_measure->ecd) * MOTOR_ECD_TO_ANGLE;
-    trigger_motor.angle =  -((1.0*(trigger_motor.motor_measure->round*2*PI)/36+1.0*(trigger_motor.motor_measure->ecd*2*PI)/19/8192)-PI);
+    trigger_motor.angle =  -((1.0*(trigger_motor.motor_measure->round*2*PI)/36+1.0*(trigger_motor.motor_measure->ecd*2*PI)/36/8192)-PI);
     //电机圈数重置， 因为输出轴旋转一圈， 电机轴旋转 36圈，将电机轴数据处理成输出轴数据，用于控制输出轴角度
     if (cover_motor.motor_measure->ecd - cover_motor.motor_measure->last_ecd > HALF_ECD_RANGE)
     {
