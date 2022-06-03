@@ -112,7 +112,6 @@ typedef __packed struct       //18 Byte
 	
 	uint8_t   END;
 	
-
 }VisionRecvData_t;
 extern VisionRecvData_t VisionRecvData; 
 

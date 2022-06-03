@@ -49,7 +49,7 @@ fp32 grigger_speed_to_radio = 0.6;
 
 //通过读取裁判数据,直接修改射速和射频等级
 //射速等级  摩擦电机
-fp32 shoot_fric_grade[4] = {0, 12 * fric_refree_para, 15 * fric_refree_para, 20 * fric_refree_para};
+fp32 shoot_fric_grade[4] = {0, 20 * fric_refree_para, 25 * fric_refree_para, 30 * fric_refree_para};
 
 //射频等级 拨弹电机
 fp32 shoot_grigger_grade[6] = {0, 5.0f * grigger_speed_to_radio, 10.0f * grigger_speed_to_radio, 15.0f * grigger_speed_to_radio, 28.0f * grigger_speed_to_radio, 40.0f * grigger_speed_to_radio};
@@ -475,9 +475,9 @@ void Shoot::feedback_update()
 
     //射速等级  摩擦电机
     shoot_fric_grade[0] = 0;
-    shoot_fric_grade[1] = 12 * fric_refree_para;
-    shoot_fric_grade[2] = 15 * fric_refree_para;
-    shoot_fric_grade[3] = 20 * fric_refree_para;
+    shoot_fric_grade[1] = 20 * fric_refree_para;
+    shoot_fric_grade[2] = 25 * fric_refree_para;
+    shoot_fric_grade[3] = 30 * fric_refree_para;
 
     //射频等级 拨弹电机
     shoot_grigger_grade[0] = 0;
@@ -570,8 +570,8 @@ void Shoot::solve()
         shoot_laser_off(); //激光关闭
 #endif
         //设置摩擦轮转速
-        // fric_motor[LEFT_FRIC].speed_set = shoot_fric_grade[1];
-        // fric_motor[RIGHT_FRIC].speed_set = shoot_fric_grade[1];
+        // fric_motor[LEFT_FRIC].speed_set = shoot_fric_grade[3];
+        // fric_motor[RIGHT_FRIC].speed_set = shoot_fric_grade[3];
 
         //连发模式 控制17mm发射机构射速和热量控制
         //if(shoot_mode == SHOOT_CONTINUE_BULLET)
@@ -665,11 +665,11 @@ void Shoot::cooling_ctrl()
 #endif
 
         //射速
-        if (id2_17mm_speed_limit <= 15)
-            fric_speed_grade = 1;
-        else if (id2_17mm_speed_limit <= 18)
-            fric_speed_grade = 2;
-        else if (id2_17mm_speed_limit <= 30)
+        // if (id2_17mm_speed_limit <= 15)
+        //     fric_speed_grade = 1;
+        // else if (id2_17mm_speed_limit <= 18)
+        //     fric_speed_grade = 2;
+        // else if (id2_17mm_speed_limit <= 30)
             fric_speed_grade = 3;
 
         //根据当前热量和射速修改等级,确保不会因超限扣血,

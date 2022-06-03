@@ -34,24 +34,24 @@ extern "C"
 /*----------------------pid系数------------------------*/
 //yaw speed close-loop PID params, max out and max iout
 //yaw 速度环 PID参数以及 PID最大输出，积分输出
-#define YAW_SPEED_PID_KP 5500.0f 
-#define YAW_SPEED_PID_KI 0.1f    
-#define YAW_SPEED_PID_KD 10.0f
-#define YAW_SPEED_PID_MAX_IOUT 2.0f
-#define YAW_SPEED_PID_MAX_OUT 20000.0f
+#define YAW_SPEED_PID_KP 6000.0f 
+#define YAW_SPEED_PID_KI 0.0f    
+#define YAW_SPEED_PID_KD 500.0f
+#define YAW_SPEED_PID_MAX_IOUT 10000.0f
+#define YAW_SPEED_PID_MAX_OUT 12000.0f
 
 //pitch speed close-loop PID params, max out and max iout
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
-#define PITCH_SPEED_PID_KP 6000.0f //2900
+#define PITCH_SPEED_PID_KP 5500.0f //2900
 #define PITCH_SPEED_PID_KI 0.5f
-#define PITCH_SPEED_PID_KD 5.0f
-#define PITCH_SPEED_PID_MAX_IOUT 0.5f
-#define PITCH_SPEED_PID_MAX_OUT 13000.0f
+#define PITCH_SPEED_PID_KD 50.0f
+#define PITCH_SPEED_PID_MAX_IOUT 10.0f
+#define PITCH_SPEED_PID_MAX_OUT 12000.0f
 
 //yaw gyro angle close-loop PID params, max out and max iout
 //yaw 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
 #define YAW_GYRO_ABSOLUTE_PID_KP 10.0f 
-#define YAW_GYRO_ABSOLUTE_PID_KI 0.0f
+#define YAW_GYRO_ABSOLUTE_PID_KI 0.2f
 #define YAW_GYRO_ABSOLUTE_PID_KD 3.0f
 #define YAW_GYRO_ABSOLUTE_PID_MAX_IOUT 2.0f
 #define YAW_GYRO_ABSOLUTE_PID_MAX_OUT 6.0f
@@ -59,7 +59,7 @@ extern "C"
 //pitch gyro angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
 #define PITCH_GYRO_ABSOLUTE_PID_KP 6.0f 
-#define PITCH_GYRO_ABSOLUTE_PID_KI 0.0f
+#define PITCH_GYRO_ABSOLUTE_PID_KI 0.0f 
 #define PITCH_GYRO_ABSOLUTE_PID_KD 3.0f  //0.1
 #define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 2.0f
 #define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 6.0f
@@ -68,47 +68,48 @@ extern "C"
 //yaw 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
 #define YAW_ENCODE_RELATIVE_PID_KP 15.0f 
 #define YAW_ENCODE_RELATIVE_PID_KI 0.0f
-#define YAW_ENCODE_RELATIVE_PID_KD 200.0f
-#define YAW_ENCODE_RELATIVE_PID_MAX_IOUT 2.8f
-#define YAW_ENCODE_RELATIVE_PID_MAX_OUT 8.0f
+#define YAW_ENCODE_RELATIVE_PID_KD 150.0f
+#define YAW_ENCODE_RELATIVE_PID_MAX_IOUT 2.0f
+#define YAW_ENCODE_RELATIVE_PID_MAX_OUT 6.0f
 
 //pitch encode angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define PITCH_ENCODE_RELATIVE_PID_KP 22.0f 
-#define PITCH_ENCODE_RELATIVE_PID_KI 0.1f
-#define PITCH_ENCODE_RELATIVE_PID_KD 4.0f
-#define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 1.0f
+#define PITCH_ENCODE_RELATIVE_PID_KP 25.0f 
+#define PITCH_ENCODE_RELATIVE_PID_KI 0.1f 
+#define PITCH_ENCODE_RELATIVE_PID_KD 20.0f 
+#define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 2.0f
 #define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 6.0f
 
 //yaw speed close-loop PID params, max out and max iout
 //yaw 速度环 PID参数以及 PID最大输出，积分输出
-#define YAW_SPEED_VITION_PID_KP 4000.0f 
+#define YAW_SPEED_VITION_PID_KP 6000.0f 
 #define YAW_SPEED_VITION_PID_KI 0.0f//-0.2f    
-#define YAW_SPEED_VITION_PID_KD 10.0f
+#define YAW_SPEED_VITION_PID_KD 500.0f
 #define YAW_SPEED_VITION_PID_MAX_IOUT 100.0f
 #define YAW_SPEED_VITION_PID_MAX_OUT 30000.0f
 
 //pitch speed close-loop PID params, max out and max iout
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
-#define PITCH_SPEED_VITION_PID_KP 3000.0f //2900
-#define PITCH_SPEED_VITION_PID_KI 0.0f
-#define PITCH_SPEED_VITION_PID_KD 10.0f
-#define PITCH_SPEED_VITION_PID_MAX_IOUT 1.0f
-#define PITCH_SPEED_VITION_PID_MAX_OUT 30000.0f
+#define PITCH_SPEED_VITION_PID_KP 5500.0f //2900
+#define PITCH_SPEED_VITION_PID_KI 0.5f
+#define PITCH_SPEED_VITION_PID_KD 50.0f
+#define PITCH_SPEED_VITION_PID_MAX_IOUT 10.0f
+#define PITCH_SPEED_VITION_PID_MAX_OUT 12000.0f
+
 //yaw vition angle close-loop PID params, max out and max iout
 //yaw 视觉角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define YAW_VISION_RELATIVE_PID_KP 3.0f 
-#define YAW_VISION_RELATIVE_PID_KI 0.2f
-#define YAW_VISION_RELATIVE_PID_KD 1.0f
-#define YAW_VISION_RELATIVE_PID_MAX_IOUT 5.0f
+#define YAW_VISION_RELATIVE_PID_KP 15.0f 
+#define YAW_VISION_RELATIVE_PID_KI 0.0f
+#define YAW_VISION_RELATIVE_PID_KD 130.0f
+#define YAW_VISION_RELATIVE_PID_MAX_IOUT 0.1f
 #define YAW_VISION_RELATIVE_PID_MAX_OUT 6.0f
 
 //pitch vition angle close-loop PID params, max out and max iout
 //pitch 视觉角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
-#define PITCH_VISION_RELATIVE_PID_KP 5.0f 
+#define PITCH_VISION_RELATIVE_PID_KP 25.0f 
 #define PITCH_VISION_RELATIVE_PID_KI 0.1f
-#define PITCH_VISION_RELATIVE_PID_KD 1.0f
-#define PITCH_VISION_RELATIVE_PID_MAX_IOUT 3.0f
+#define PITCH_VISION_RELATIVE_PID_KD 20.0f
+#define PITCH_VISION_RELATIVE_PID_MAX_IOUT 2.0f
 #define PITCH_VISION_RELATIVE_PID_MAX_OUT 6.0f
 
 /*---------------------按键--------------------*/
@@ -131,8 +132,8 @@ extern "C"
 #define YAW_RC_SEN -0.00003f
 #define PITCH_RC_SEN 0.00003f
 //转头云台速度
-#define TURN_SPEED_YAW    0.022f 
-#define TURN_SPEED_PITCH    0.016f 
+#define TURN_SPEED_YAW    0.02f 
+#define TURN_SPEED_PITCH    0.015f 
 
 //云台 鼠标速度
 // #define YAW_MOUSE_SEN 0.00015f
@@ -339,7 +340,8 @@ public:
 
     /***************************(C)  MOTOR control *******************************/
     void absolute_angle_limit(Gimbal_motor *gimbal_motor, fp32 add); //陀螺仪模式电机计算
-    void relative_angle_limit(Gimbal_motor *gimbal_motor, fp32 add); //编码器模式电机计算
+    void relative_angle_limit_yaw(Gimbal_motor *gimbal_motor, fp32 add); //编码器模式电机计算
+    void relative_angle_limit_pitch(Gimbal_motor *gimbal_motor, fp32 add); //编码器模式电机计算
     void motor_raw_angle_control(Gimbal_motor *gimbal_motor);        //云台直接电流计算
     void motor_absolute_angle_control(Gimbal_motor *gimbal_motor);   //云台陀螺仪模式电流计算
     void motor_relative_angle_control_yaw(Gimbal_motor *gimbal_motor);   //云台编码器模式电流计算

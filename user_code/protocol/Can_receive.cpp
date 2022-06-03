@@ -186,8 +186,7 @@ void Can_receive::receive_rc_board_com(uint8_t data[8])
 }
 
 
-void Can_receive::
-output_state(void){
+void Can_receive::output_state(void){
     if(gimbal_receive.base_HP > 0){
         field_event_outpost = 1;
     }
