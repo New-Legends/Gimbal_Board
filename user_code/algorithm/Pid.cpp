@@ -1,9 +1,15 @@
-#include "Pid.h"
+#include "pid.h"
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 #include "user_lib.h"
 
-
-
+#ifdef __cplusplus
+}
+#endif
 #define LimitMax(input, max)   \
     {                          \
         if (input > max)       \
@@ -39,7 +45,7 @@ void Pid::init(pid_mode_e mode_, const fp32 *pid_parm, fp32 *ref_, fp32 *set_, f
     data.ref = ref_;
     data.error = *set_ - *ref_;
 
-    if (data.mode == PID_ANGLE)
+    if (mode == PID_ANGLE)
         data.error_delta = erro_delta_;
 }
 
@@ -50,28 +56,33 @@ void Pid::init(pid_mode_e mode_, const fp32 *pid_parm, fp32 *ref_, fp32 *set_, f
   * @param[in]      set: 设定值
   * @retval         pid输出
   */
+fp32 Pid::pid_calc()
+{   
+    data.last_error = data.error;
+    data.error = *data.set - *data.ref;
 
 
- fp32 Pid::pid_calc()
- {
-     data.last_error = data.error;
-     data.error = *data.set - *data.ref;
-     if (mode == PID_SPEED)
-         *data.error_delta = data.error - data.last_error;
 
-     if (mode == PID_ANGLE)
-         data.error = rad_format(data.error);
+    if (mode == PID_ANGLE)
+        data.error = rad_format(data.error);
 
-     data.Pout = data.Kp * data.error;
-     data.Iout += data.Ki * data.error;
-     data.Dout = data.Kd * (*data.error_delta);
+    data.Pout = data.Kp * data.error;
+    data.Iout += data.Ki * data.error;
 
-     LimitMax(data.Iout, data.max_iout);
 
-     data.out = data.Pout + data.Iout + data.Dout;
-     LimitMax(data.out, data.max_out);
+    data.Dout = data.Kd * (*data.error_delta);
 
-     return data.out;
+    if (mode == PID_SPEED)
+    {
+        data.Dout = data.Kd * (data.error - data.last_error);
+    }
+
+    LimitMax(data.Iout, data.max_iout);
+
+    data.out = data.Pout + data.Iout + data.Dout;
+    LimitMax(data.out, data.max_out);
+
+    return data.out;
 }
 
 /**
@@ -81,6 +92,6 @@ void Pid::init(pid_mode_e mode_, const fp32 *pid_parm, fp32 *ref_, fp32 *set_, f
   */
 void Pid::pid_clear()
 {
-    data.last_error =data.error = *data.set = *data.ref = 0;
-    data.out =  data.Pout = data.Iout = data.Dout = 0;
+    data.last_error = data.error = *data.set = *data.ref = 0;
+    data.out = data.Pout = data.Iout = data.Dout = 0;
 }

@@ -67,7 +67,7 @@ uint32_t detect_task_stack;
   * @param[in]      pvParameters: NULL
   * @retval         none
   */
-void detect_task(void *pvParameters)
+void detect_task(void const *pvParameters)
 {
     static uint32_t system_time;
     system_time = xTaskGetTickCount();
@@ -240,21 +240,20 @@ static void detect_init(uint32_t time)
     uint16_t set_item[ERROR_LIST_LENGHT][3] =
         {
             {30, 40, 15},   //SBUS
-            {10, 10, 7},    //left_fric
-            {10, 10, 6},    //right_fric
-            {10, 10, 12},   //trigger
-            {10, 10, 8},    //cover
-            {10, 10, 11},   //motor1
-            {10, 10, 10},   //motor2
-            {10, 10, 9},    //motor3
-            {10, 10, 8},    //motor4
+            //{10, 10, 11},   //motor1
+            //{10, 10, 10},   //motor2
+            //{10, 10, 9},    //motor3
+            //{10, 10, 8},    //motor4
+            //{10, 10, 7},    //left_fric
+            //{10, 10, 6},    //right_fric
             {2, 3, 14},     //yaw
             {2, 3, 13},     //pitch
+            //{10, 10, 12},   //trigger
             {2, 3, 7},      //board gyro
             {5, 5, 7},      //board accel
             {40, 200, 7},   //board mag
-            {10, 10, 7},    //rm imu
             //{100, 100, 5},  //referee
+            {10, 10, 7},    //rm imu
             //{100, 100, 1},  //oled
         };
 

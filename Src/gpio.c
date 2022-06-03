@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -55,9 +55,6 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOE_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(CRAMA_TRI_GPIO_Port, CRAMA_TRI_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(RSTN_IST8310_GPIO_Port, RSTN_IST8310_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
@@ -67,11 +64,10 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOB, SPI2_CS_Pin|CS1_GYRO_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = CRAMA_TRI_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pin = BUTTON_TRIG_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(CRAMA_TRI_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(BUTTON_TRIG_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = RSTN_IST8310_Pin;

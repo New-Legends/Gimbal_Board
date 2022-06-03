@@ -1,25 +1,53 @@
-//
-// Created by WSJ on 2021/11/2.
-//
+#ifndef USER_LIB_H
+#define USER_LIB_H
 
-#ifndef CLASSIS_BOARD_USER_LIB_H
-#define CLASSIS_BOARD_USER_LIB_H
+
 
 #include "struct_typedef.h"
-#include "arm_math.h"
 
-#define PI 3.14159265358979f
-//å¾ªç¯é™å¹…å‡½æ•°
+typedef __packed struct
+{
+    fp32 input;        //ÊäÈëÊı¾İ
+    fp32 out;          //Êä³öÊı¾İ
+    fp32 min_value;    //ÏŞ·ù×îĞ¡Öµ
+    fp32 max_value;    //ÏŞ·ù×î´óÖµ
+    fp32 frame_period; //Ê±¼ä¼ä¸ô
+} ramp_function_source_t;
+
+typedef __packed struct
+{
+    fp32 input;        //ÊäÈëÊı¾İ
+    fp32 out;          //ÂË²¨Êä³öµÄÊı¾İ
+    fp32 num[1];       //ÂË²¨²ÎÊı
+    fp32 frame_period; //ÂË²¨µÄÊ±¼ä¼ä¸ô µ¥Î» s
+} first_order_filter_type_t;
+//¿ìËÙ¿ª·½
+extern fp32 invSqrt(fp32 num);
+
+//Ğ±²¨º¯Êı³õÊ¼»¯
+void ramp_init(ramp_function_source_t *ramp_source_type, fp32 frame_period, fp32 max, fp32 min);
+
+//Ğ±²¨º¯Êı¼ÆËã
+void ramp_calc(ramp_function_source_t *ramp_source_type, fp32 input);
+
+
+//¾ø¶ÔÏŞÖÆ
+extern void abs_limit(fp32 *num, fp32 Limit);
+//ÅĞ¶Ï·ûºÅÎ»
+extern fp32 sign(fp32 value);
+//¸¡µãËÀÇø
+extern fp32 fp32_deadline(fp32 Value, fp32 minValue, fp32 maxValue);
+//int26ËÀÇø
+extern int16_t int16_deadline(int16_t Value, int16_t minValue, int16_t maxValue);
+//ÏŞ·ùº¯Êı
+extern fp32 fp32_constrain(fp32 Value, fp32 minValue, fp32 maxValue);
+//ÏŞ·ùº¯Êı
+extern int16_t int16_constrain(int16_t Value, int16_t minValue, int16_t maxValue);
+//Ñ­»·ÏŞ·ùº¯Êı
 extern fp32 loop_fp32_constrain(fp32 Input, fp32 minValue, fp32 maxValue);
-//å¼§åº¦æ ¼å¼åŒ–ä¸º-PI~PI
+//½Ç¶È ¡ãÏŞ·ù 180 ~ -180
+extern fp32 theta_format(fp32 Ang);
+//»¡¶È¸ñÊ½»¯Îª-PI~PI
 #define rad_format(Ang) loop_fp32_constrain((Ang), -PI, PI)
 
-//é™å¹…å‡½æ•°
-extern fp32 fp32_constrain(fp32 Value, fp32 minValue, fp32 maxValue);
-//æœ€å¤§å€¼é™å¹…å‡½æ•°
-extern void abs_limit(fp32 Value, fp32 MaxValue);
-
-extern fp32 abs_fp32(fp32 Value);
-
-extern int16_t abs_int16(int16_t Value);
-#endif //CLASSIS_BOARD_USER_LIB_H
+#endif

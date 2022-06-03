@@ -1,27 +1,13 @@
-//
-// Created by WSJ on 2021/11/2.
-//
-
 #include "start_task.h"
-#ifdef  __cplusplus
-extern "C" {
-#endif
 
-#include "freertos.h"
+#include "FreeRTOS.h"
 #include "task.h"
+
 #include "bsp_delay.h"
 
-#ifdef  __cplusplus
-}
-#endif
 #include "communicate_task.h"
-#include "gimbal_task.h"
-#include "shoot_task.h"
-#include "ins_task.h"
-#include "calibrate_task.h"
-#include "detect_task.h"
-#include "interact_task.h"
-//#include "software_reset_task.h"
+#include "my_test_task.h"
+#include  "chassis_task.H"
 
 #define Tiny_Stack_Size       64
 #define Small_Stack_Size      128
@@ -37,47 +23,34 @@ extern "C" {
 #define PrioritySuperHigh     7
 #define PriorityRealtime      8
 
-TaskHandle_t ins_task_handle;
-TaskHandle_t gimbal_task_handle;
-TaskHandle_t shoot_task_handle;
-TaskHandle_t cali_task_handle;
+TaskHandle_t my_test_task_handle;
 TaskHandle_t communicate_task_handle;
-TaskHandle_t oled_task_handle;
-TaskHandle_t led_flow_task_handle;
-TaskHandle_t detect_task_handle;
-TaskHandle_t interact_task_handle;
-//TaskHandle_t software_reset_task_handle;
+TaskHandle_t chassis_task_handle;
 
-void System_Resource_Init(void)
-{
-    /* Syetem Service init --------------*/
-    delay_init();
-    cali_param_init();
-
-    /* Applications Init ----------------*/
-}
 
 /**
 * @brief Load and start User Tasks.
 * @note  Edit this function to add tasks into the activated tasks list.
 */
-void Task_start(void) {
+void System_Resource_Init(void)
+{
     /* Syetem Service init --------------*/
+    delay_init();
+
     /* Applications Init ----------------*/
+}
 
-    xTaskCreate(ins_task, "ins_task", Huge_Stack_Size, NULL, PriorityRealtime, &ins_task_handle);
+    /**
+* @brief Load and start User Tasks.
+* @note  Edit this function to add tasks into the activated tasks list.
+*/
+void Task_start(void)
+{
+        /* Syetem Service init --------------*/
+        /* Applications Init ----------------*/
+        xTaskCreate(chassis_task, "chassis_task", Large_Stack_Size, NULL, PriorityHigh, &chassis_task_handle);
 
-    xTaskCreate(gimbal_task, "gimbal_task", Normal_Stack_Size, NULL, PriorityHigh, &gimbal_task_handle);
+        xTaskCreate(communicate_task, "communicate_task", Large_Stack_Size, NULL, PriorityHigh, &communicate_task_handle);
 
-    xTaskCreate(shoot_task, "shoot_task", Normal_Stack_Size, NULL, PriorityHigh, &shoot_task_handle);
-
-    xTaskCreate(communicate_task, "communicate_task", Large_Stack_Size, NULL, PriorityHigh, &communicate_task_handle);
-
-    xTaskCreate(calibrate_task, "calibrate_task", Normal_Stack_Size, NULL, PriorityHigh, &cali_task_handle);
-
-    xTaskCreate(detect_task, "detect_task", Normal_Stack_Size, NULL, PriorityHigh, &detect_task_handle);
-
-    xTaskCreate(interact_task, "interact_task", Normal_Stack_Size, NULL, PriorityNormal, &interact_task_handle);
-
-    //xTaskCreate(software_reset_task, "software_reset_task", Normal_Stack_Size, NULL, PriorityNormal, &software_reset_task_handle);
+        xTaskCreate(my_test_task, "my_test_task", Small_Stack_Size, NULL, PriorityHigh, &my_test_task_handle);
 }

@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -50,7 +50,7 @@ void MX_TIM1_Init(void)
   htim1.Instance = TIM1;
   htim1.Init.Prescaler = 167;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 4999;
+  htim1.Init.Period = 19999;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -409,10 +409,6 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
   /* USER CODE END TIM1_MspInit 0 */
     /* TIM1 clock enable */
     __HAL_RCC_TIM1_CLK_ENABLE();
-
-    /* TIM1 interrupt Init */
-    HAL_NVIC_SetPriority(TIM1_UP_TIM10_IRQn, 5, 0);
-    HAL_NVIC_EnableIRQ(TIM1_UP_TIM10_IRQn);
   /* USER CODE BEGIN TIM1_MspInit 1 */
 
   /* USER CODE END TIM1_MspInit 1 */
@@ -468,10 +464,6 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
   /* USER CODE END TIM10_MspInit 0 */
     /* TIM10 clock enable */
     __HAL_RCC_TIM10_CLK_ENABLE();
-
-    /* TIM10 interrupt Init */
-    HAL_NVIC_SetPriority(TIM1_UP_TIM10_IRQn, 5, 0);
-    HAL_NVIC_EnableIRQ(TIM1_UP_TIM10_IRQn);
   /* USER CODE BEGIN TIM10_MspInit 1 */
 
   /* USER CODE END TIM10_MspInit 1 */
@@ -501,8 +493,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
     HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /* USER CODE BEGIN TIM1_MspPostInit 1 */
-    //TODO预测需要定时器,但是开启会导致电机震荡
-    //HAL_TIM_Base_Start_IT(&htim1);
+
   /* USER CODE END TIM1_MspPostInit 1 */
   }
   else if(timHandle->Instance==TIM3)
@@ -544,8 +535,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
     HAL_GPIO_Init(BUZZER_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN TIM4_MspPostInit 1 */
-    HAL_TIM_Base_Start(&htim4);
-    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+
   /* USER CODE END TIM4_MspPostInit 1 */
   }
   else if(timHandle->Instance==TIM5)
@@ -568,10 +558,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
     HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
 
   /* USER CODE BEGIN TIM5_MspPostInit 1 */
-    HAL_TIM_Base_Start(&htim5);
-    HAL_TIM_PWM_Start(&htim5, TIM_CHANNEL_1);
-    HAL_TIM_PWM_Start(&htim5, TIM_CHANNEL_2);
-    HAL_TIM_PWM_Start(&htim5, TIM_CHANNEL_3);
+
   /* USER CODE END TIM5_MspPostInit 1 */
   }
   else if(timHandle->Instance==TIM8)
@@ -622,8 +609,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
     HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /* USER CODE BEGIN TIM10_MspPostInit 1 */
-    HAL_TIM_Base_Start(&htim10);
-    HAL_TIM_PWM_Start(&htim10, TIM_CHANNEL_1);
+
   /* USER CODE END TIM10_MspPostInit 1 */
   }
 
@@ -639,16 +625,6 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
   /* USER CODE END TIM1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_TIM1_CLK_DISABLE();
-
-    /* TIM1 interrupt Deinit */
-  /* USER CODE BEGIN TIM1:TIM1_UP_TIM10_IRQn disable */
-    /**
-    * Uncomment the line below to disable the "TIM1_UP_TIM10_IRQn" interrupt
-    * Be aware, disabling shared interrupt may affect other IPs
-    */
-    /* HAL_NVIC_DisableIRQ(TIM1_UP_TIM10_IRQn); */
-  /* USER CODE END TIM1:TIM1_UP_TIM10_IRQn disable */
-
   /* USER CODE BEGIN TIM1_MspDeInit 1 */
 
   /* USER CODE END TIM1_MspDeInit 1 */
@@ -704,16 +680,6 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
   /* USER CODE END TIM10_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_TIM10_CLK_DISABLE();
-
-    /* TIM10 interrupt Deinit */
-  /* USER CODE BEGIN TIM10:TIM1_UP_TIM10_IRQn disable */
-    /**
-    * Uncomment the line below to disable the "TIM1_UP_TIM10_IRQn" interrupt
-    * Be aware, disabling shared interrupt may affect other IPs
-    */
-    /* HAL_NVIC_DisableIRQ(TIM1_UP_TIM10_IRQn); */
-  /* USER CODE END TIM10:TIM1_UP_TIM10_IRQn disable */
-
   /* USER CODE BEGIN TIM10_MspDeInit 1 */
 
   /* USER CODE END TIM10_MspDeInit 1 */

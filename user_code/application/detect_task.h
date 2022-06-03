@@ -49,10 +49,10 @@ enum errorList
   SHOOT_RIGHT_FRIC_MOTOR_ID,
   SHOOT_TRIGGER_MOTOR_TOE,
   SHOOT_COVER_MOTOR_TOE,
-  // CHASSIS_MOTIVE_FR_MOTOR_TOE,
-  // CHASSIS_MOTIVE_FL_MOTOR_TOE,
-  // CHASSIS_MOTIVE_BL_MOTOR_TOE,
-  // CHASSIS_MOTIVE_BR_MOTOR_TOE,
+  CHASSIS_MOTIVE_FR_MOTOR_TOE,
+  CHASSIS_MOTIVE_FL_MOTOR_TOE,
+  CHASSIS_MOTIVE_BL_MOTOR_TOE,
+  CHASSIS_MOTIVE_BR_MOTOR_TOE,
   CHASSIS_RUDDER_FR_MOTOR_TOE,
   CHASSIS_RUDDER_FL_MOTOR_TOE,
   CHASSIS_RUDDER_BL_MOTOR_TOE,
@@ -97,7 +97,7 @@ typedef __packed struct
   * @param[in]      pvParameters: NULL
   * @retval         none
   */
-extern void detect_task(void *pvParameters);
+extern void detect_task(void const *pvParameters);
 
 
 /**
