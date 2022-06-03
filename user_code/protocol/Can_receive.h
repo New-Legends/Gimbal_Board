@@ -33,21 +33,23 @@ enum shoot_motor_id_e
 
 typedef enum
 {
-    //发射机构电机接受ID CAN1
+    //发射机构电机接受ID CAN2
     CAN_LEFT_FRIC_MOTOR_ID = 0x201,
     CAN_RIGHT_FRIC_MOTOR_ID = 0x202,
     CAN_TRIGGER_MOTOR_ID = 0x203,
     CAN_SHOOT_ALL_ID = 0x200,
 
+    CAN_PITCH_MOTOR_ID = 0x206,//电机ID减四
+    CAN_GIMBAL_PITCH_ID = 0x1FF,
+
     //云台电机接收ID CAN1
     CAN_YAW_MOTOR_ID = 0x205,  //电机ID减四
-    CAN_PITCH_MOTOR_ID = 0x206,//电机ID减四
     CAN_GIMBAL_ALL_ID = 0x1FF,
 
     //板间通信ID
     CAN_RC_BOARM_COM_ID = 0x101,
-    CAN_COOLING_BOARM_COM_1_ID = 0x102,
-    CAN_17MM_SPEED_BOARD_COM_1_ID = 0x103,
+    CAN_COOLING_BOARM_COM_1_ID = 0x303,
+    CAN_17MM_SPEED_BOARD_COM_1_ID = 0x304,
 } can_msg_id_e;
 
 //rm motor data
@@ -120,7 +122,8 @@ public:
 
     /*-------------------云台电机数据接收--------------------*/
     void get_gimbal_motor_measure(uint8_t num, uint8_t data[8]);
-    void can_cmd_gimbal_motor(int16_t yaw, int16_t pitch, int16_t empty1, int16_t empty2);
+    void can_cmd_gimbal_motor_yaw(int16_t yaw);
+    void can_cmd_gimbal_motor_pitch(int16_t pitch);
     const motor_measure_t *get_gimbal_motor_measure_point(uint8_t i);
 
     /*-------------------发射机构电机数据接收--------------------*/
@@ -138,6 +141,7 @@ public:
     /*-------------------裁判系统数据判定-----------------*/
 
     void output_state(void); //根据前哨站血量判断情况
+
 };
 
 extern Can_receive can_receive;

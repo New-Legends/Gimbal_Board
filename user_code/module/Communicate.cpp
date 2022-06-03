@@ -193,11 +193,6 @@ extern "C"
                 detect_hook(GIMBAL_YAW_MOTOR_TOE);
                 break;
 
-            case CAN_PITCH_MOTOR_ID:
-                can_receive.get_gimbal_motor_measure(1, rx_data);
-                detect_hook(GIMBAL_PITCH_MOTOR_TOE);
-                break;
-
             case CAN_COOLING_BOARM_COM_1_ID:
                 can_receive.receive_cooling_and_id_board_com(rx_data);
                 detect_hook(BOARD_COM);
@@ -232,6 +227,11 @@ extern "C"
             case CAN_TRIGGER_MOTOR_ID:
                 can_receive.get_shoot_motor_measure(2, rx_data);
                 detect_hook(CAN_TRIGGER_MOTOR_ID);
+                break;
+
+            case CAN_PITCH_MOTOR_ID:
+                can_receive.get_gimbal_motor_measure(1, rx_data);
+                detect_hook(GIMBAL_PITCH_MOTOR_TOE);
                 break;
 
             default:

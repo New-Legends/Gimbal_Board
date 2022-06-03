@@ -895,7 +895,9 @@ void Gimbal::output()
 //     gimbal_pitch_motor.relative_angle_pid.init(PID_ANGLE, pitch_relative_angle_pid_parm, &gimbal_pitch_motor.relative_angle, &gimbal_pitch_motor.relative_angle_set, 0);
 // }
 
-    can_receive.can_cmd_gimbal_motor(gimbal_yaw_motor.current_give, gimbal_pitch_motor.current_give, 0, 0);
+    can_receive.can_cmd_gimbal_motor_yaw(gimbal_yaw_motor.current_give);
+    can_receive.can_cmd_gimbal_motor_pitch(gimbal_pitch_motor.current_give);
+
 }
 
 /**
@@ -1031,8 +1033,12 @@ void Gimbal::relative_angle_limit(Gimbal_motor *gimbal_motor, fp32 add)
     //     gimbal_motor->new_angle = gimbal_motor->relative_angle - gimbal_motor->min_relative_angle;
     // }
 
-    //旧解算
-    gimbal_motor->relative_angle_set += add;
+    if(vision_if_find_target() == TRUE){
+        gimbal_motor->relative_angle_set = gimbal_motor->relative_angle + add;
+    }
+    else{
+        gimbal_motor->relative_angle_set += add;
+    }
     //是否超过最大 最小值
     if (gimbal_motor->relative_angle_set > gimbal_motor->max_relative_angle)
     {
