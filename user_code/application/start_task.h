@@ -1,3 +1,7 @@
+//
+// Created by WSJ on 2021/11/2.
+//
+
 #ifndef START_TASK_H
 #define START_TASK_H
 
@@ -6,11 +10,8 @@ extern "C" {
 #endif
 
 #include "struct_typedef.h"
-
-
-
-extern void Task_start(void);
-extern void System_Resource_Init(void);
+void Task_start(void);
+void System_Resource_Init(void);
 
 #ifdef  __cplusplus
 }

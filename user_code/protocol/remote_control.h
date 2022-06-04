@@ -109,7 +109,6 @@ public:
         RC_ctrl_t *get_last_remote_control_point();
 
         void unpack(uint8_t num);
-        void sbus_to_usart1(uint8_t num);
 
         uint8_t RC_data_is_error();
         void slove_RC_lost();

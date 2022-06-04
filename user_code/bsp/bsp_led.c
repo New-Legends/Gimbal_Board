@@ -1,19 +1,21 @@
+#include "bsp_led.h"
 #include "main.h"
 
-#include "bsp_led.h"
-
-
 extern TIM_HandleTypeDef htim5;
-
 /**
-  * @brief          æ˜¾ç¤ºRGB
-  * @param[in]      aRGB:0xaaRRGGBB,'aa' æ˜¯é€æ˜Žåº¦,'RR'æ˜¯çº¢è‰²,'GG'æ˜¯ç»¿è‰²,'BB'æ˜¯è“è‰²
+  * @brief          aRGB show
+  * @param[in]      aRGB: 0xaaRRGGBB, 'aa' is alpha, 'RR' is red, 'GG' is green, 'BB' is blue
+  * @retval         none
+  */
+/**
+  * @brief          ÏÔÊ¾RGB
+  * @param[in]      aRGB:0xaaRRGGBB,'aa' ÊÇÍ¸Ã÷¶È,'RR'ÊÇºìÉ«,'GG'ÊÇÂÌÉ«,'BB'ÊÇÀ¶É«
   * @retval         none
   */
 void aRGB_led_show(uint32_t aRGB)
 {
     static uint8_t alpha;
-    static uint16_t red, green, blue;
+    static uint16_t red,green,blue;
 
     alpha = (aRGB & 0xFF000000) >> 24;
     red = ((aRGB & 0x00FF0000) >> 16) * alpha;
@@ -24,3 +26,5 @@ void aRGB_led_show(uint32_t aRGB)
     __HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_2, green);
     __HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_3, red);
 }
+
+

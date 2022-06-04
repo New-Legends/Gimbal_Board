@@ -35,7 +35,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "bsp_buzzer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,6 +45,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -76,7 +77,7 @@ void MX_FREERTOS_Init(void);
   */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */ 
+  /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
 
@@ -88,11 +89,11 @@ int main(void)
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
- 
-  /* Configure the system clock */
-  SystemClock_Config();
-  /* USER CODE BEGIN SysInit */
 
+  /* Configure the system clock */
+  SystemClock_Config(); 
+
+  /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
 
@@ -137,9 +138,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
-
-  
   }
   /* USER CODE END 3 */
 }
@@ -199,10 +197,7 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
-  while (1)
-  {
-  }
+
   /* USER CODE END Error_Handler_Debug */
 }
 
@@ -218,7 +213,7 @@ void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+     tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

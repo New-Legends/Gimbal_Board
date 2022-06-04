@@ -26,20 +26,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
-
 #include "start_task.h"
-
-
-
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-  osThreadId startTaskHandle;
-// osThreadId communicatTaskHandle;
-// osThreadId chassisTaskHandle;
-// osThreadId my_testTaskHandle;
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -55,14 +47,13 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 
-
 /* USER CODE END Variables */
 osThreadId testHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
+osThreadId startTaskHandle;
 void start_task(void const *argument);
-
 /* USER CODE END FunctionPrototypes */
 
 void test_task(void const * argument);
@@ -130,15 +121,13 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of test */
-  osThreadDef(test, test_task, osPriorityNormal, 0, 128);
-  testHandle = osThreadCreate(osThread(test), NULL);
+  // osThreadDef(test, test_task, osPriorityRealtime, 0, 128);
+  // testHandle = osThreadCreate(osThread(test), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-
   osThreadDef(start, start_task, osPriorityNormal, 0, 128);
   startTaskHandle = osThreadCreate(osThread(start), NULL);
-
 
   /* USER CODE END RTOS_THREADS */
 
@@ -157,32 +146,31 @@ __weak void test_task(void const * argument)
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN test_task */
   /* Infinite loop */
-  for(;;)
+  while(1)
   {
-    osDelay(1);
+    // HAL_GPIO_WritePin(CRAMA_TRI_GPIO_Port, CRAMA_TRI_Pin,GPIO_PIN_SET);
+    // vision_send_data(0x02);
+    // HAL_GPIO_WritePin(CRAMA_TRI_GPIO_Port, CRAMA_TRI_Pin,GPIO_PIN_RESET);
   }
   /* USER CODE END test_task */
 }
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
-
-
-
-__weak void start_task(void const *argument)
+__weak void start_task(void const * argument)
 {
-  /* USER CODE BEGIN test_task */
-  System_Resource_Init();
-  /* Infinite loop */
-  for (;;)
-  {
-    Task_start();
-    /* Delete_Graph the default task. */
-    osThreadTerminate(startTaskHandle);
-  }
-  /* USER CODE END test_task */
+    /* init code for USB_DEVICE */
+    System_Resource_Init();
+    /* USER CODE BEGIN test_task */
+    /* Infinite loop */
+    while(1) {
+        Task_start();
+        /* Delete the default task. */
+        osThreadTerminate(startTaskHandle);
+			  
+    }
+    /* USER CODE END test_task */
 }
-
 /* USER CODE END Application */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

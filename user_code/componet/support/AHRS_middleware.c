@@ -79,7 +79,7 @@ fp32 AHRS_invSqrt(fp32 num)
 
 fp32 AHRS_sinf(fp32 angle)
 {
-    return sin(angle);
+    return arm_sin_f32(angle);
 }
 /**
  * @brief          cosº¯Êý

@@ -65,24 +65,6 @@ void Remote_control::unpack(uint8_t num)
     rc_ctrl.rc.ch[4] -= RC_CH_VALUE_OFFSET;
 }
 
-/**
-  * @brief          通过usart1发送sbus数据,在usart3_IRQHandle调用
-  * @param[in]      sbus: sbus数据, 18字节
-  * @retval         none
-  */
-void Remote_control::sbus_to_usart1(uint8_t num)
-{
-    static uint8_t usart_tx_buf[20];
-    static uint8_t i = 0;
-    usart_tx_buf[0] = 0xA6;
-    memcpy(usart_tx_buf + 1, sbus_rx_buf[num], 18);
-    for (i = 0, usart_tx_buf[19] = 0; i < 19; i++)
-    {
-        usart_tx_buf[19] += usart_tx_buf[i];
-    }
-    usart1_tx_dma_enable(usart_tx_buf, 20);
-}
-
 uint8_t Remote_control::RC_data_is_error()
 {
     //使用了go to语句 方便出错统一处理遥控器变量数据归零

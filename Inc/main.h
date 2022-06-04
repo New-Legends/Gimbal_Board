@@ -32,7 +32,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+void Task_init();
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -58,8 +58,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define BUTTON_TRIG_Pin GPIO_PIN_7
-#define BUTTON_TRIG_GPIO_Port GPIOI
+#define CRAMA_TRI_Pin GPIO_PIN_7
+#define CRAMA_TRI_GPIO_Port GPIOI
 #define RSTN_IST8310_Pin GPIO_PIN_6
 #define RSTN_IST8310_GPIO_Port GPIOG
 #define LED_R_Pin GPIO_PIN_12
