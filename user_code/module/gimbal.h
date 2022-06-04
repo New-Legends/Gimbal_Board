@@ -130,7 +130,7 @@ extern "C"
 #define ECD_RANGE 8191
 
 //云台中值(中值所对应的编码器编码值)
-#define ECD_YAW_MID 3140
+#define ECD_YAW_MID 3108
 #define ECD_PITCH_MID 1951
 
 //限幅
