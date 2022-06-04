@@ -113,7 +113,7 @@ void vision_send_data(uint8_t CmdID)
 
   memcpy(vision_send_pack, &VisionSendData, 4);
 
-  //将打包好的数据通过串口移位发送到西奥迪男
+  //将打包好的数据通过串口移位发送到视觉
   HAL_UART_Transmit(&huart1, vision_send_pack, 4, 0xFFF);
 
   memset(vision_send_pack, 0, 50);
@@ -121,8 +121,7 @@ void vision_send_data(uint8_t CmdID)
 
 void vision_error_angle(float *yaw_angle_error, float *pitch_angle_error)
 {
-  *yaw_angle_error = -VisionRecvData.yaw_angle *1.2
-	;
+  *yaw_angle_error = -VisionRecvData.yaw_angle *1.2;
   *pitch_angle_error = VisionRecvData.pitch_angle / 160;
 
   if (VisionRecvData.yaw_angle == 0)
