@@ -213,3 +213,30 @@ void Can_receive::send_gimbal_board_com(uint8_t s0, uint8_t gimbal_behaviour, fp
 
     HAL_CAN_AddTxMessage(&BOARD_COM_CAN, &can_tx_message, can_send_data, &send_mail_box);
 }
+void Can_receive::send_UI_com(bool_t auto_s, bool_t aim_s, bool_t fric_s, fp32 gimbal_pitch_angle, uint16_t v)
+{
+    int16_t temp_gimbal_pitch_angle = (int16_t)(gimbal_pitch_angle * 1000);
+
+    //数据填充
+    gimbal_send.auto_state = auto_s;
+    gimbal_send.aim_state = aim_s;
+    gimbal_send.fric_state = fric_s;
+    gimbal_send.gimbal_pitch_angle = gimbal_pitch_angle;
+    gimbal_send.v = v;
+
+    uint32_t send_mail_box;
+    can_tx_message.StdId = CAN_UI_COM_ID;
+    can_tx_message.IDE = CAN_ID_STD;
+    can_tx_message.RTR = CAN_RTR_DATA;
+    can_tx_message.DLC = 0x08;
+    can_send_data[0] = auto_s;
+    can_send_data[1] = aim_s;
+    can_send_data[2] = fric_s;
+    can_send_data[3] = (uint8_t)((int16_t)temp_gimbal_pitch_angle >> 8);
+    can_send_data[4] = (uint8_t)((int16_t)temp_gimbal_pitch_angle);
+    can_send_data[5] = v >> 8;
+    can_send_data[6] = v;
+    can_send_data[7] = 0;
+
+    HAL_CAN_AddTxMessage(&BOARD_COM_CAN, &can_tx_message, can_send_data, &send_mail_box);
+}
