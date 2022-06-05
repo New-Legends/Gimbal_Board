@@ -91,9 +91,8 @@ typedef struct
     //测速速度及底盘模式
     uint16_t id2_17mm_speed_limit; //17mm测速射速上限
     uint16_t bullet_speed;        //17mm测速实时射速
-
-    uint8_t chassis_behaviour;
     uint16_t base_HP;
+    uint16_t bullet_remaining_num_17mm;
 
     //遥控器数据
     int16_t ch_0;
