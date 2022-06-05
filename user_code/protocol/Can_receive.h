@@ -92,8 +92,7 @@ typedef struct
     //测速速度及底盘模式
     uint16_t id1_17mm_speed_limit; //17mm测速射速上限
     uint16_t bullet_speed;        //17mm测速实时射速
-
-    uint8_t chassis_behaviour;
+    uint16_t bullet_remaining_num_17mm;
     uint16_t base_HP;
 
 } gimbal_receive_t;

@@ -173,8 +173,8 @@ void Can_receive::receive_17mm_speed_and_mode_board_com(uint8_t data[8])
 {
     gimbal_receive.id1_17mm_speed_limit = (uint16_t)(data[0] << 8 | data[1]);
     gimbal_receive.bullet_speed = (uint16_t)(data[2] << 8 | data[3]);
-    gimbal_receive.chassis_behaviour = data[4];
-    gimbal_receive.base_HP = (uint16_t)(data[5] << 8 | data[6]);
+    gimbal_receive.base_HP = (uint16_t)(data[4] << 8 | data[5]);
+    gimbal_receive.bullet_remaining_num_17mm = (uint16_t)(data[6] << 8 || data[7]);
 }
 
 void Can_receive::send_rc_board_com(int16_t ch_0, int16_t ch_2, int16_t ch_1, uint8_t s0, uint8_t s1)

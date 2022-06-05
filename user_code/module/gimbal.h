@@ -42,9 +42,9 @@ extern "C"
 
 //pitch speed close-loop PID params, max out and max iout
 //pitch 速度环 PID参数以及 PID最大输出，积分输出
-#define PITCH_SPEED_PID_KP 2500.0f //2900
+#define PITCH_SPEED_PID_KP 4000.0f //2900
 #define PITCH_SPEED_PID_KI 0.01f
-#define PITCH_SPEED_PID_KD 10.0f
+#define PITCH_SPEED_PID_KD 50.0f
 #define PITCH_SPEED_PID_MAX_IOUT 25000.0f
 #define PITCH_SPEED_PID_MAX_OUT 30000.0f
 
@@ -75,7 +75,7 @@ extern "C"
 //pitch encode angle close-loop PID params, max out and max iout
 //pitch 角度环 角度由编码器 PID参数以及 PID最大输出，积分输出
 #define PITCH_ENCODE_RELATIVE_PID_KP 30.0f 
-#define PITCH_ENCODE_RELATIVE_PID_KI 0.02f
+#define PITCH_ENCODE_RELATIVE_PID_KI 0.0f
 #define PITCH_ENCODE_RELATIVE_PID_KD 16.0f
 #define PITCH_ENCODE_RELATIVE_PID_MAX_IOUT 1.0f
 #define PITCH_ENCODE_RELATIVE_PID_MAX_OUT 6.0f

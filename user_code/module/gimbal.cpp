@@ -722,23 +722,31 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
         else{
             can_receive.output_state();
             if(field_event_outpost == 1){//前哨站存活
-                if(pitch_patrol_dir == CCW)  //yaw轴逆时针旋转
-                {
+                // if(pitch_patrol_dir == CCW)  //yaw轴逆时针旋转
+                // {
                     
-                    if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.05f)
-                    {
-                        pitch_patrol_dir =CW;
-                    }
-                    *pitch = TURN_SPEED_PITCH;
-                }
-                else if(pitch_patrol_dir == CW)  //yaw轴顺时针旋转
-                {
+                //     if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.05f)
+                //     {
+                //         pitch_patrol_dir =CW;
+                //     }
+                //     *pitch = TURN_SPEED_PITCH;
+                // }
+                // else if(pitch_patrol_dir == CW)  //yaw轴顺时针旋转
+                // {
                     
-                    if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.03f)
+                //     if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.03f)
+                //     {
+                //         pitch_patrol_dir = CCW;
+                //     }
+                //     *pitch = -TURN_SPEED_PITCH;
+                // }
+                if(can_receive.gimbal_receive.bullet_remaining_num_17mm <= 500)
+                {
+                    if(can_receive.gimbal_receive.bullet_remaining_num_17mm >= 300)
                     {
-                        pitch_patrol_dir = CCW;
+                        *pitch = 0;
+
                     }
-                    *pitch = -TURN_SPEED_PITCH;
                 }
             }
             if(field_event_outpost == 0){
@@ -1033,12 +1041,12 @@ void Gimbal::relative_angle_limit(Gimbal_motor *gimbal_motor, fp32 add)
     //     gimbal_motor->new_angle = gimbal_motor->relative_angle - gimbal_motor->min_relative_angle;
     // }
 
-    if(vision_if_find_target() == TRUE){
-        gimbal_motor->relative_angle_set = gimbal_motor->relative_angle + add;
-    }
-    else{
+    // if(vision_if_find_target() == TRUE){
+    //     gimbal_motor->relative_angle_set = gimbal_motor->relative_angle + add;
+    // }
+    // else{
         gimbal_motor->relative_angle_set += add;
-    }
+    // }
     //是否超过最大 最小值
     if (gimbal_motor->relative_angle_set > gimbal_motor->max_relative_angle)
     {

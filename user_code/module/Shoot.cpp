@@ -288,23 +288,31 @@ void Shoot::set_mode()
         }
         if(shoot_mode == SHOOT_READY)
         {
-            //识别装甲板边缘则单发
-            if ( VisionRecvData.identify_target == TRUE&&VisionRecvData.centre_lock == FALSE && shoot_time == 0)
+            // //识别装甲板边缘则单发
+            // if ( VisionRecvData.identify_target == TRUE&&VisionRecvData.centre_lock == FALSE && shoot_time == 0)
+            // {
+            //     shoot_mode = SHOOT_BULLET;
+            //     shoot_time = 1;
+            // }
+            // else if(VisionRecvData.identify_target == TRUE&&VisionRecvData.centre_lock == FALSE && shoot_time < 500){
+            //     shoot_time ++;
+            // }
+            // //识别到装甲板中心则连发
+            // if (VisionRecvData.identify_target == TRUE)
+            // {
+            //     shoot_mode = SHOOT_CONTINUE_BULLET;
+            // }
+            // else if(shoot_mode == SHOOT_CONTINUE_BULLET)
+            // {
+            //     shoot_mode = SHOOT_READY_BULLET;
+            // }
+            if(can_receive.gimbal_receive.bullet_remaining_num_17mm <= 500)
             {
-                shoot_mode = SHOOT_BULLET;
-                shoot_time = 1;
-            }
-            else if(VisionRecvData.identify_target == TRUE&&VisionRecvData.centre_lock == FALSE && shoot_time < 500){
-                shoot_time ++;
-            }
-            //识别到装甲板中心则连发
-            if (VisionRecvData.identify_target == TRUE)
-            {
-                shoot_mode = SHOOT_CONTINUE_BULLET;
-            }
-            else if(shoot_mode == SHOOT_CONTINUE_BULLET)
-            {
-                shoot_mode = SHOOT_READY_BULLET;
+                if(can_receive.gimbal_receive.bullet_remaining_num_17mm >= 300)
+                {
+                    shoot_mode = SHOOT_CONTINUE_BULLET;
+
+                }
             }
         }
 
