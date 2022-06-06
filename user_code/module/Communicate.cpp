@@ -33,7 +33,7 @@ void Communicate::run()
     //向底盘发送遥控器和云台数据
     int16_t temp_ch0, temp_ch2, temp_ch1;
     uint16_t temp_v;
-    uint8_t temp_s0, temp_gimbal_behaviour_mode,temp_s1;
+    uint8_t temp_s0,temp_s1;
     fp32 temp_gimbal_yaw_angle;
     fp32 temp_gimbal_yaw_current_give;
 
@@ -44,7 +44,6 @@ void Communicate::run()
     temp_s0 = remote_control.rc_ctrl.rc.s[0];
     temp_s1 = remote_control.rc_ctrl.rc.s[1];
 
-    temp_gimbal_behaviour_mode = gimbal.gimbal_behaviour_mode;
 
     can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_ch1, temp_s0, temp_s1);
 
