@@ -898,7 +898,6 @@ void Gimbal::output()
 //     fp32 pitch_relative_angle_pid_parm[5] = {PITCH_ENCODE_RELATIVE_PID_KP, PITCH_ENCODE_RELATIVE_PID_KI, PITCH_ENCODE_RELATIVE_PID_KD, PITCH_ENCODE_RELATIVE_PID_MAX_IOUT, PITCH_ENCODE_RELATIVE_PID_MAX_OUT};
 //     gimbal_pitch_motor.relative_angle_pid.init(PID_ANGLE, pitch_relative_angle_pid_parm, &gimbal_pitch_motor.relative_angle, &gimbal_pitch_motor.relative_angle_set, 0);
 // }
-// if(gimbal_yaw_motor.)
 
     can_receive.can_cmd_gimbal_motor_yaw(gimbal_yaw_motor.current_give);
     can_receive.can_cmd_gimbal_motor_pitch(gimbal_pitch_motor.current_give);
