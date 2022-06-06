@@ -19,9 +19,7 @@ Can_receive can_receive;
 
 Communicate communicate;
 
-extern bool_t if_identify_target;
-extern bool_t auto_switch;
-extern Shoot shoot;
+
 void Communicate::init()
 {
     remote_control.init();
@@ -48,14 +46,7 @@ void Communicate::run()
     temp_gimbal_behaviour_mode = gimbal.gimbal_behaviour_mode;
     temp_gimbal_yaw_angle = gimbal.gimbal_yaw_motor.relative_angle;
 
-//    if (game_start())
-//    {
-//        can_receive.send_UI_com(temp_auto, temp_aim, temp_fric, temp_gimbal_pitch_angle, temp_v);
-//    }
-//    else
-//    {
-        can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_ch3, temp_v);
-//    }
+    can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_ch3, temp_v);
     can_receive.send_gimbal_board_com(temp_s0, temp_gimbal_behaviour_mode, temp_gimbal_yaw_angle);
 }
 
