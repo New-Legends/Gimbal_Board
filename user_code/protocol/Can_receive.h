@@ -92,7 +92,9 @@ typedef struct
     uint16_t id1_17mm_speed_limit; //17mm测速射速上限
     uint16_t bullet_speed;        //17mm测速实时射速
     uint16_t bullet_remaining_num_17mm;
-    uint16_t base_HP;
+    uint8_t HP;
+    uint16_t stage_remain_time;
+    uint8_t game_progress;
 
 } gimbal_receive_t;
 

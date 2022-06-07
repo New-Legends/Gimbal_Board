@@ -160,7 +160,7 @@ extern "C"
 #define MIN_RELATIVE_YAW -PI
 
 #define MAX_RELATIVE_PITCH 0.2f
-#define MIN_RELATIVE_PITCH -0.15f
+#define MIN_RELATIVE_PITCH -0.5f//-0.15f
 
 
 

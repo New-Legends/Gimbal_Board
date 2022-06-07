@@ -306,12 +306,18 @@ void Shoot::set_mode()
             // {
             //     shoot_mode = SHOOT_READY_BULLET;
             // }
-            if(can_receive.gimbal_receive.bullet_remaining_num_17mm <= 500)
+            if(can_receive.gimbal_receive.game_progress == 4)
             {
-                if(can_receive.gimbal_receive.bullet_remaining_num_17mm >= 300)
+                if(can_receive.gimbal_receive.stage_remain_time < 380)
                 {
-                    shoot_mode = SHOOT_CONTINUE_BULLET;
+                    if(can_receive.gimbal_receive.bullet_remaining_num_17mm <= 500)
+                    {
+                        if(can_receive.gimbal_receive.bullet_remaining_num_17mm >= 300)
+                        {
+                            shoot_mode = SHOOT_CONTINUE_BULLET;
 
+                        }
+                    }
                 }
             }
         }

@@ -720,8 +720,8 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
             vision_send_data(CmdID);        //发送指令给小电脑
         }
         else{
-            can_receive.output_state();
-            if(field_event_outpost == 1){//前哨站存活
+            if(can_receive.gimbal_receive.HP == 1)
+            {//前哨站存活
                 // if(pitch_patrol_dir == CCW)  //yaw轴逆时针旋转
                 // {
                     
@@ -740,65 +740,65 @@ void Gimbal::gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch)
                 //     }
                 //     *pitch = -TURN_SPEED_PITCH;
                 // }
-                if(can_receive.gimbal_receive.bullet_remaining_num_17mm <= 500)
+                if(can_receive.gimbal_receive.game_progress == 4)
                 {
-                    if(can_receive.gimbal_receive.bullet_remaining_num_17mm >= 300)
+                    if(can_receive.gimbal_receive.stage_remain_time < 380)
                     {
-                        *pitch = 0;
+                        if(can_receive.gimbal_receive.bullet_remaining_num_17mm <= 500)
+                        {
+                            if(can_receive.gimbal_receive.bullet_remaining_num_17mm >= 300)
+                            {
+                                *pitch = 0;
+                            }
+                        }
+                    }
+                }               
+            }
+            if(can_receive.gimbal_receive.HP == 0)
+            {
+                //yaw轴巡逻
+                if(yaw_patrol_dir == CCW)  //yaw轴逆时针旋转
+                {
+                    
+                    if(MAX_PATROL_YAW - gimbal_yaw_motor.relative_angle < 0.3f)
+                    {
+                        yaw_patrol_dir = CW;
 
                     }
+                    *yaw = TURN_SPEED_YAW;
                 }
-            }
-            if(field_event_outpost == 0){
-                //yaw轴巡逻
-            if(yaw_patrol_dir == CCW)  //yaw轴逆时针旋转
-            {
                 
-                if(MAX_PATROL_YAW - gimbal_yaw_motor.relative_angle < 0.3f)
+                else if(yaw_patrol_dir == CW)  //yaw轴顺时针旋转
                 {
-                    yaw_patrol_dir = CW;
-
+                    
+                    if(gimbal_yaw_motor.relative_angle - MIN_PATROL_YAW < 0.3f)
+                    {
+                        yaw_patrol_dir = CCW;
+                    }
+                    *yaw = -TURN_SPEED_YAW;
                 }
-                *yaw = TURN_SPEED_YAW;
-            }
-            
-            else if(yaw_patrol_dir == CW)  //yaw轴顺时针旋转
-            {
-                
-                if(gimbal_yaw_motor.relative_angle - MIN_PATROL_YAW < 0.3f)
+                //pitch轴巡逻
+                if(pitch_patrol_dir == CCW)  //pitch轴逆时针旋转
                 {
-                    yaw_patrol_dir = CCW;
+                    
+                    if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.03f)
+                    {
+                        pitch_patrol_dir =CW;
+                    }
+                    *pitch = TURN_SPEED_PITCH;
                 }
-                *yaw = -TURN_SPEED_YAW;
-            }
-            //pitch轴巡逻
-            if(pitch_patrol_dir == CCW)  //pitch轴逆时针旋转
-            {
-                
-                if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.03f)
+                else if(pitch_patrol_dir == CW)  //pitch轴顺时针旋转
                 {
-                    pitch_patrol_dir =CW;
+                    
+                    if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.08f)
+                    {
+                        pitch_patrol_dir = CCW;
+                    }
+                    *pitch = -TURN_SPEED_PITCH;
                 }
-                *pitch = TURN_SPEED_PITCH;
-            }
-            else if(pitch_patrol_dir == CW)  //pitch轴顺时针旋转
-            {
-                
-                if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.08f)
-                {
-                    pitch_patrol_dir = CCW;
-
-                }
-                *pitch = -TURN_SPEED_PITCH;
-            }
-
             }
         }
     }
-
-    
-
-        
     temp_yaw = *yaw;
 }
 
