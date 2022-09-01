@@ -46,11 +46,11 @@ shoot热量冷却 20 40 60 80 100 120
 */
 fp32 fric_refree_para = 0.12f;//摩擦轮系数
 
-fp32 trigger_speed_to_radio = 0.8;//拨盘系数
+fp32 trigger_speed_to_radio = 0.8f;//拨盘系数
 
 //通过读取裁判数据,直接修改射速和射频等级
 //射速等级  摩擦电机
-fp32 shoot_fric_grade[4] = {0, 14.8 * fric_refree_para, 16.3 * fric_refree_para, 24.5* fric_refree_para};
+fp32 shoot_fric_grade[4] = {0, 15.7 * fric_refree_para, 16.3 * fric_refree_para, 24.5* fric_refree_para};
 
 
 //射频等级 拨弹电机
@@ -79,7 +79,7 @@ void Shoot::init()
     //设置初试模式
     shoot_mode = SHOOT_STOP;
 
-    cover_mode = COVER_CLOSE_DONE;
+    cover_mode = COVER_OPEN;
 
     //摩擦轮电机
     for (int i = 0; i < 2; ++i)
@@ -474,10 +474,10 @@ void Shoot::set_control()
         trigger_motor.speed_set = 0.0f;
     }
 
-    if (cover_mode == COVER_OPEN_DONE || cover_mode == COVER_CLOSE_DONE)
+    if (cover_mode == COVER_CLOSE_DONE)
     {
         //设置拨弹轮的速度
-        cover_motor.speed_set = 0.0f;
+        cover_motor.speed_set = -1.0f;
     }
     else
     {
@@ -752,16 +752,17 @@ void Shoot::cover_control()
     {    
  			cover_motor.speed_set = COVER_MOTOR_SPEED;
 			cover_time++;
-			if(cover_time ==1000)//电机运动打开时间
+			if(cover_time ==900)//电机运动打开时间
 			 {
 				cover_mode = COVER_OPEN_DONE;
+                cover_motor.speed_set = 0.0f;
 				cover_move_flag = 0;
 				cover_time =0;
 		 	 }
 		 } 
 		if(cover_mode == COVER_CLOSE)
     {    
-			cover_motor.speed_set =-COVER_MOTOR_SPEED;
+			cover_motor.speed_set =-4;
 			cover_time++;
 			if(cover_time ==1200)//电机运动关闭时间
 			 {

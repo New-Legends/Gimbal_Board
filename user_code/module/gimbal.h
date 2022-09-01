@@ -98,8 +98,8 @@ extern "C"
 #define PITCH_RC_SEN 0.000010f
 
 //云台 鼠标速度
-#define YAW_MOUSE_SEN   -0.00005f
-#define PITCH_MOUSE_SEN -0.00003f
+#define YAW_MOUSE_SEN   -0.00004f
+#define PITCH_MOUSE_SEN -0.00002f
 
 #define YAW_ENCODE_SEN 0.01f
 #define PITCH_ENCODE_SEN 0.01f
