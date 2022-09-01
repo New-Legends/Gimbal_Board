@@ -501,7 +501,6 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
     HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /* USER CODE BEGIN TIM1_MspPostInit 1 */
-    //TODO预测需要定时器,但是开启会导致电机震荡
     //HAL_TIM_Base_Start_IT(&htim1);
   /* USER CODE END TIM1_MspPostInit 1 */
   }

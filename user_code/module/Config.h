@@ -3,7 +3,6 @@
 
 /*------------------------陀螺仪---------------------------*/
 
-
 /*------------------------云台---------------------------*/
 //云台电机有电流输出
 #define GIMBAL_YAW_MOTOR_HAVE_CURRENT 1
@@ -31,14 +30,15 @@
 #define SHOOT_VISION_OPEN 0
 
 //激光是否开启
-#define SHOOT_LASER_OPEN 1
+#define SHOOT_LASER_OPEN 0
 
-//强制脱离裁判控制 简称开启狂暴
-#define SHOOT_VIOLENT_OPEN 0
+
 /*--------------------按键-------------------------------------*/
 // turn 180°
 //掉头180 按键 单击V 
 #define KEY_PRESSED_GIMBAL_TURN_180 'Z' 
+//云台自锁开关 长按C打开 单击C关闭
+#define KEY_PRESSED_STOP_GIMBAL 'C'
 
 //开启和关闭摩擦轮  单击G
 #define KEY_PRESSED_SHOOT_FRIC 'G'
@@ -47,3 +47,4 @@
 #define KEY_PRESSED_SHOOT_COVER 'R'
 
 #endif
+

@@ -14,7 +14,7 @@
   * @note
   * @history
   *  Version    Date            Author          Modification
-  *  V1.0.0     NOV-03-2021     Summerpray      1. doing
+  *  V1.0.0     NOV-03-2022     WSJ      1. doing
   *
   *
   @verbatim
@@ -48,14 +48,15 @@
 #include "gimbal_task.h"
 
 //为了让陀螺仪每次的初始位姿一致,等云台归中后再开启陀螺仪
-uint8_t gimbal_imu_open_flag = 0;
+bool_t gimbal_imu_open_flag = true;
 
 void gimbal_task(void *pvParameters)
 {
     vTaskDelay(GIMBAL_TASK_INIT_TIME);
     //云台初始化
     gimbal.init();
-
+    //云台数据反馈
+    gimbal.feedback_update();
     while (1)
     {
       //设置云台状态机

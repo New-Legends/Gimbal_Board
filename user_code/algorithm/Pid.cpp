@@ -81,6 +81,6 @@ void Pid::init(pid_mode_e mode_, const fp32 *pid_parm, fp32 *ref_, fp32 *set_, f
   */
 void Pid::pid_clear()
 {
-    data.last_error =data.error = *data.set = *data.ref = 0;
+    data.last_error = data.error = *data.set = *data.ref = 0;
     data.out =  data.Pout = data.Iout = data.Dout = 0;
 }

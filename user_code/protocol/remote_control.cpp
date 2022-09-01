@@ -4,7 +4,6 @@
 
 #include "bsp_usart.h"
 
-
 #include "string.h"
 
 void Remote_control::init()
@@ -13,7 +12,7 @@ void Remote_control::init()
     usart1_tx_dma_init();
 }
 
-const RC_ctrl_t * Remote_control::get_remote_control_point()
+const RC_ctrl_t *Remote_control::get_remote_control_point()
 {
     return &rc_ctrl;
 }
@@ -23,14 +22,12 @@ RC_ctrl_t *Remote_control::get_last_remote_control_point()
     return &last_rc_ctrl;
 }
 
-
-
 /**
-  * @brief          遥控器协议解析
-  * @param[in]      sbus_rx_buf[num]: 原生数据指针
-  * @param[out]     rc_ctrl: 遥控器数据指
-  * @retval         none
-  */
+ * @brief          遥控器协议解析
+ * @param[in]      sbus_rx_buf[num]: 原生数据指针
+ * @param[out]     rc_ctrl: 遥控器数据指
+ * @retval         none
+ */
 void Remote_control::unpack(uint8_t num)
 {
     if (sbus_rx_buf[num] == NULL)
@@ -41,22 +38,21 @@ void Remote_control::unpack(uint8_t num)
     //保留上一次遥控器值
     last_rc_ctrl = rc_ctrl;
 
-
     rc_ctrl.rc.ch[0] = (sbus_rx_buf[num][0] | (sbus_rx_buf[num][1] << 8)) & 0x07ff;        //!< Channel 0
     rc_ctrl.rc.ch[1] = ((sbus_rx_buf[num][1] >> 3) | (sbus_rx_buf[num][2] << 5)) & 0x07ff; //!< Channel 1
     rc_ctrl.rc.ch[2] = ((sbus_rx_buf[num][2] >> 6) | (sbus_rx_buf[num][3] << 2) |          //!< Channel 2
-                       (sbus_rx_buf[num][4] << 10)) &
-                        0x07ff;
+                        (sbus_rx_buf[num][4] << 10)) &
+                       0x07ff;
     rc_ctrl.rc.ch[3] = ((sbus_rx_buf[num][4] >> 1) | (sbus_rx_buf[num][5] << 7)) & 0x07ff; //!< Channel 3
-    rc_ctrl.rc.s[0] = ((sbus_rx_buf[num][5] >> 4) & 0x0003);                       //!< Switch left
-    rc_ctrl.rc.s[1] = ((sbus_rx_buf[num][5] >> 4) & 0x000C) >> 2;                  //!< Switch right
+    rc_ctrl.rc.s[0] = ((sbus_rx_buf[num][5] >> 4) & 0x0003);                               //!< Switch left
+    rc_ctrl.rc.s[1] = ((sbus_rx_buf[num][5] >> 4) & 0x000C) >> 2;                          //!< Switch right
     rc_ctrl.mouse.x = sbus_rx_buf[num][6] | (sbus_rx_buf[num][7] << 8);                    //!< Mouse X axis
     rc_ctrl.mouse.y = sbus_rx_buf[num][8] | (sbus_rx_buf[num][9] << 8);                    //!< Mouse Y axis
     rc_ctrl.mouse.z = sbus_rx_buf[num][10] | (sbus_rx_buf[num][11] << 8);                  //!< Mouse Z axis
-    rc_ctrl.mouse.press_l = sbus_rx_buf[num][12];                                  //!< Mouse Left Is Press ?
-    rc_ctrl.mouse.press_r = sbus_rx_buf[num][13];                                  //!< Mouse Right Is Press ?
+    rc_ctrl.mouse.press_l = sbus_rx_buf[num][12];                                          //!< Mouse Left Is Press ?
+    rc_ctrl.mouse.press_r = sbus_rx_buf[num][13];                                          //!< Mouse Right Is Press ?
     rc_ctrl.key.v = sbus_rx_buf[num][14] | (sbus_rx_buf[num][15] << 8);                    //!< KeyBoard value
-    rc_ctrl.rc.ch[4] = sbus_rx_buf[num][16] | (sbus_rx_buf[num][17] << 8);                 //NULL
+    rc_ctrl.rc.ch[4] = sbus_rx_buf[num][16] | (sbus_rx_buf[num][17] << 8);                 // NULL
 
     rc_ctrl.rc.ch[0] -= RC_CH_VALUE_OFFSET;
     rc_ctrl.rc.ch[1] -= RC_CH_VALUE_OFFSET;
@@ -111,8 +107,6 @@ error:
     return 1;
 }
 
-
-
 //取正函数
 int16_t Remote_control::RC_abs(int16_t value)
 {
@@ -136,7 +130,6 @@ void Remote_control::slove_data_error(void)
     RC_restart(SBUS_RX_BUF_NUM);
 }
 
-
 /*-----相比于官方的版本,将宏定义布尔值转化为可传参的函数,方便不同任务内的遥控器调用按键--*/
 
 //是否按下鼠标
@@ -150,7 +143,6 @@ uint16_t if_mouse_pessed(const RC_ctrl_t *_rc_ctrl, char mouse_num)
 
     return ans;
 }
-
 
 //是否按下对应按键
 uint16_t if_key_pessed(uint16_t key_value, char key_num)

@@ -7,7 +7,7 @@
 #include "CRC8_CRC16.h"
 #include "gimbal.h"
 
-#include "Can_receive.h"
+// #include "referee.h"
 
 extern UART_HandleTypeDef huart1;
 extern DMA_HandleTypeDef hdma_usart1_rx;
@@ -37,7 +37,7 @@ uint8_t Attack_Color_Choose = ATTACK_NONE; //默认不识别
 uint8_t Vision_Armor = FALSE;
 
 //是否识别到装甲板
-uint8_t if_identify_target = FALSE;
+bool_t if_identify_target = FALSE;
 
 //角度补偿,发送给视觉
 float Vision_Comps_Yaw_Send = COMPENSATION_YAW;
@@ -67,23 +67,22 @@ void vision_init()
 uint8_t Vision_Time_Test[2] = {0}; //当前数据和上一次数据
 uint8_t Vision_Ping = 0;           //发送时间间隔
 
-//TODO 有问题 先注释
-// /**
-//   * @brief          定时器周期给视觉发送陀螺仪数据
-//   * @param[in]      htim:定时器指针
-//   * @retval         none
-//   */
-// void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-// {
-//   if (htim == &htim1)
-//   {
-//     HAL_GPIO_TogglePin(CRAMA_TRI_GPIO_Port, CRAMA_TRI_Pin);
-//     if(send_cnt++ % 2 == 0)
-//     {
-//       vision_send_data(0x02);
-//     }
-//   }
-// }
+/**
+  * @brief          定时器周期给视觉发送陀螺仪数据
+  * @param[in]      htim:定时器指针
+  * @retval         none
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  if (htim == &htim1)
+  {
+    HAL_GPIO_TogglePin(CRAMA_TRI_GPIO_Port, CRAMA_TRI_Pin);
+    if(send_cnt++ % 2 == 0)
+    {
+      vision_send_data(0x02);
+    }
+  }
+}
 
 void vision_read_data(uint8_t *ReadFormUart)
 {
@@ -127,13 +126,14 @@ uint8_t CmdID = 0;
 void vision_send_data(uint8_t CmdID)
 {
 int i; //循环发送次数
-  uint8_t bullet_speed;
-  bullet_speed = uint8_t(can_receive.gimbal_receive.bullet_speed);
+  uint16_t shoot_speed_limit;
+  uint16_t bullet_speed;
+  //get_shooter_shoot_speed_limit_and_bullet_speed(&shoot_speed_limit, &bullet_speed);
 
   VisionSendData.BEGIN = VISION_BEGIN;
 
   VisionSendData.CmdID = CmdID;
-  VisionSendData.speed = bullet_speed;
+  VisionSendData.speed = 3;
   VisionSendData.yaw = imu.INS_angle[0];
   VisionSendData.pitch = imu.INS_angle[1];
   VisionSendData.roll = imu.INS_angle[2];
@@ -146,18 +146,19 @@ int i; //循环发送次数
 	{
 		HAL_UART_Transmit(&huart1, &vision_send_pack[i], sizeof(vision_send_pack[0]), 0xFFF);
 	}
+  //HAL_UART_Transmit(&huart1, vision_send_pack, VISION_SEND_LEN_PACKED, 0xFFF);
 
   memset(vision_send_pack, 0, 50);
 }
 
 //调解自瞄的跟随速度
-uint16_t yaw_para = 100;
-uint16_t pitch_para = 100;
+uint16_t yaw_para = 80;
+uint16_t pitch_para = 150;
 
 void vision_error_angle(float *yaw_angle_error, float *pitch_angle_error)
 {
-  *yaw_angle_error = -VisionRecvData.yaw_angle / yaw_para;
-  *pitch_angle_error = VisionRecvData.pitch_angle / pitch_para;
+  *yaw_angle_error = VisionRecvData.yaw_angle / yaw_para;
+  *pitch_angle_error = -VisionRecvData.pitch_angle / pitch_para;
 
   if (VisionRecvData.yaw_angle == 0)
   {

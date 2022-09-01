@@ -260,7 +260,7 @@ const fp32 *INS::get_INS_quat_point(void)
 }
 
 /**
-  * @brief          获取欧拉角, 0:yaw, 1:pitch, 2:roll 单位 rad
+  * @brief          获取欧拉角, 0:yaw, 1:roll, 2:pitch 单位 rad
   * @param[in]      none
   * @retval         INS_angle的指针
   */

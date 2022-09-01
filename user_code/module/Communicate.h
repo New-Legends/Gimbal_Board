@@ -3,16 +3,19 @@
 
 #include "cmsis_os.h"
 #include "main.h"
-#include "struct_typedef.h"
 
 #include "Remote_control.h"
 #include "Can_receive.h"
 
-class Communicate{
+
+class Communicate
+{
 public:
     void init();
 
     void run();
+
+    bool game_start();
 };
 
 extern Remote_control remote_control;
