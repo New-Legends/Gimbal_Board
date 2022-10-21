@@ -12,13 +12,15 @@
 #include "Remote_control.h"
 #include "Can_receive.h"
 #include "vision.h"
-
+#include "shoot.h"
 Remote_control remote_control;
 
 Can_receive can_receive;
 
 Communicate communicate;
-
+extern bool_t if_identify_target;
+extern bool_t auto_switch;
+extern Shoot shoot;
 
 void Communicate::init()
 {
@@ -36,7 +38,12 @@ void Communicate::run()
     uint16_t temp_v;
     uint8_t temp_s0, temp_gimbal_behaviour_mode;
     fp32 temp_gimbal_yaw_angle;
-
+	
+    fp32 temp_gimbal_pitch_angle;
+    bool_t temp_auto = auto_switch;
+    bool_t temp_aim = if_identify_target;
+    bool_t temp_fric = shoot.fric_status;
+	
     temp_ch0 = remote_control.rc_ctrl.rc.ch[0];
     temp_ch2 = remote_control.rc_ctrl.rc.ch[2];
     temp_ch3 = remote_control.rc_ctrl.rc.ch[3];
@@ -45,11 +52,22 @@ void Communicate::run()
 
     temp_gimbal_behaviour_mode = gimbal.gimbal_behaviour_mode;
     temp_gimbal_yaw_angle = gimbal.gimbal_yaw_motor.relative_angle;
-
-    can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_ch3, temp_v);
-    can_receive.send_gimbal_board_com(temp_s0, temp_gimbal_behaviour_mode, temp_gimbal_yaw_angle);
+		temp_gimbal_pitch_angle = gimbal.gimbal_pitch_motor.relative_angle;
+		    can_receive.send_gimbal_board_com(temp_s0, temp_gimbal_behaviour_mode, temp_gimbal_yaw_angle);
+    if (game_start())
+    {
+        can_receive.send_UI_com(temp_auto, temp_aim, temp_fric, temp_gimbal_pitch_angle, temp_v);
+    }
+    else
+    {
+        can_receive.send_rc_board_com(temp_ch0, temp_ch2, temp_ch3, temp_v);
+    }
 }
 
+bool Communicate::game_start()
+{
+    return can_receive.gimbal_receive.game_progress != 0;
+}
 #ifdef __cplusplus //告诉编译器，这部分代码按C语言的格式进行编译，而不是C++的
 extern "C"
 {

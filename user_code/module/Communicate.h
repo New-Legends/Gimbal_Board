@@ -13,6 +13,7 @@ public:
     void init();
 
     void run();
+    bool game_start();
 };
 
 extern Remote_control remote_control;

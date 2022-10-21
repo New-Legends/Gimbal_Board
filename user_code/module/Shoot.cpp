@@ -501,11 +501,15 @@ void Shoot::set_control()
         trigger_motor.speed_set = 0.0f;
     }
 
-    if (cover_mode == COVER_OPEN_DONE || cover_mode == COVER_CLOSE_DONE)
+    if (cover_mode == COVER_OPEN_DONE  )
     {
         //设置拨弹轮的速度
         cover_motor.speed_set = 0.0f;
     }
+		else if(cover_mode == COVER_CLOSE_DONE)
+		{
+			cover_motor.speed_set = -1.0f;
+		}
     else
     {
         cover_motor.speed_pid.data.max_out = COVER_BULLET_PID_MAX_OUT;
@@ -774,46 +778,69 @@ void Shoot::shoot_bullet_control()
   * @param[in]      void
   * @retval         void
   */
+int cover_time =0;
 void Shoot::cover_control()
 {
-    if(cover_move_flag == 0)
-    {
-        if (cover_mode == COVER_OPEN)
-        {
-            cover_motor.angle_set = rad_format(cover_motor.angle + COVER_OPEN_ANGLE);
-        }
-        else if (cover_mode == COVER_CLOSE)
-        {
-            cover_motor.angle_set = rad_format(cover_motor.angle - COVER_OPEN_ANGLE);
-        }
-        cover_move_flag = 1;
-    }
-    if(cover_mode == COVER_OPEN)
-    {    //到达角度判断
-        if (rad_format(cover_motor.angle_set - cover_motor.angle) > 0.05f)
-        {
-            //没到达一直设置旋转速度
-            cover_motor.speed_set = COVER_MOTOR_SPEED;
-        }
-        else
-        {
-            cover_mode = COVER_OPEN_DONE;
-            cover_move_flag = 0;
-        }
-    }
-    else if(cover_mode == COVER_CLOSE)
-    {
-			if (rad_format(cover_motor.angle_set - cover_motor.angle) < -0.05f)
-        {
-            //没到达一直设置旋转速度
-            cover_motor.speed_set = -COVER_MOTOR_SPEED;
-        }
-        else
-        {
+	    if(cover_mode == COVER_OPEN)
+     {    
+ 			cover_motor.speed_set = COVER_MOTOR_SPEED;
+			cover_time++;
+			if(cover_time ==2500)//电机运动打开时间
+			 {
+				cover_mode = COVER_OPEN_DONE;
+				cover_move_flag = 0;
+				cover_time =0;
+		 	 }
+		 } 
+		if(cover_mode == COVER_CLOSE)
+     {    
+			cover_motor.speed_set =-COVER_MOTOR_SPEED;
+			cover_time++;
+			if(cover_time ==1200)//电机运动关闭时间
+			 {
             cover_mode = COVER_CLOSE_DONE;
             cover_move_flag = 0;
-        }
-    }
+				    cover_time =0;
+			 }
+		 }
+//    if(cover_move_flag == 0)
+//    {
+//        if (cover_mode == COVER_OPEN)
+//        {
+//            cover_motor.angle_set = rad_format(cover_motor.angle + COVER_OPEN_ANGLE);
+//        }
+//        else if (cover_mode == COVER_CLOSE)
+//        {
+//            cover_motor.angle_set = rad_format(cover_motor.angle - COVER_OPEN_ANGLE);
+//        }
+//        cover_move_flag = 1;
+//    }
+//    if(cover_mode == COVER_OPEN)
+//    {    //到达角度判断
+//        if (rad_format(cover_motor.angle_set - cover_motor.angle) > 0.05f)
+//        {
+//            //没到达一直设置旋转速度
+//            cover_motor.speed_set = COVER_MOTOR_SPEED;
+//        }
+//        else
+//        {
+//            cover_mode = COVER_OPEN_DONE;
+//            cover_move_flag = 0;
+//        }
+//    }
+//    else if(cover_mode == COVER_CLOSE)
+//    {
+//			if (rad_format(cover_motor.angle_set - cover_motor.angle) < -0.05f)
+//        {
+//            //没到达一直设置旋转速度
+//            cover_motor.speed_set = -COVER_MOTOR_SPEED;
+//        }
+//        else
+//        {
+//            cover_mode = COVER_CLOSE_DONE;
+//            cover_move_flag = 0;
+//        }
+//    }
 
 }
 

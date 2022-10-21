@@ -112,12 +112,12 @@ extern "C"
 //遥控器输入死区，因为遥控器存在差异，摇杆在中间，其值不一定为零
 #define RC_DEADBAND 10
 //云台 遥控器速度
-#define YAW_RC_SEN -0.000006f // 右手系 z轴逆时针为正 但是遥控器通道向右为正 故加负号
+#define YAW_RC_SEN -0.000002f // 右手系 z轴逆时针为正 但是遥控器通道向右为正 故加负号
 #define PITCH_RC_SEN 0.000004f
 
 //云台 鼠标速度 
-#define YAW_MOUSE_SEN -0.00025f
-#define PITCH_MOUSE_SEN -0.00016f
+#define YAW_MOUSE_SEN -0.000025f
+#define PITCH_MOUSE_SEN -0.000016f
 
 #define YAW_ENCODE_SEN 0.01f
 #define PITCH_ENCODE_SEN 0.01f
@@ -147,7 +147,7 @@ extern "C"
 #define ECD_RANGE 8191
 
 //限幅 需要自己手动校准
-#define YAW_OFFSET  6120
+#define YAW_OFFSET  6133
 //编码器
 #define PITCH_OFFSET 5515 //编码器
 

@@ -49,6 +49,7 @@ typedef enum
     CAN_GIMBAL_BOARD_COM_ID = 0x102,
     CAN_COOLING_BOARM_COM_ID = 0x303,
     CAN_17MM_SPEED_BOARD_COM_ID = 0x304,
+	  CAN_UI_COM_ID = 0x305,
 } can_msg_id_e;
 
 //rm motor data
@@ -74,6 +75,11 @@ typedef struct
     uint8_t s0;
     uint8_t gimbal_behaviour;
     fp32 gimbal_yaw_angle;
+	
+	  fp32 gimbal_pitch_angle;
+    bool_t auto_state;
+    bool_t aim_state;
+    bool_t fric_state;
 } gimbal_send_t;
 
 //云台接收数据结构体
@@ -91,6 +97,7 @@ typedef struct
     uint16_t bullet_speed;        //17mm测速实时射速
 
     uint8_t chassis_behaviour;
+    uint8_t game_progress;
 
 } gimbal_receive_t;
 
@@ -132,6 +139,7 @@ public:
     void receive_17mm_speed_and_mode_board_com(uint8_t data[8]);
     void send_rc_board_com(int16_t ch_0, int16_t ch_2, int16_t ch_3, uint16_t v);            //发送遥控器数据
     void send_gimbal_board_com(uint8_t s0, uint8_t gimbal_behaviour, fp32 gimbal_yaw_angle); //发送云台模式及状态
+		void send_UI_com(bool_t auto_s, bool_t aim_s, bool_t fric_s, fp32 gimbal_pitch_angle,uint16_t v);   //发送UI数据
 };
 
 
