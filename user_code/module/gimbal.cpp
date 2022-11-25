@@ -495,16 +495,17 @@ void Gimbal::gimbal_auto_control(fp32 *yaw, fp32 *pitch)
     }
     else
     {
-        static int16_t yaw_channel = 0, pitch_channel = 0;
+        // static int16_t yaw_channel = 0, pitch_channel = 0;
 
-        rc_deadband_limit(gimbal_RC->rc.ch[YAW_CHANNEL], yaw_channel, RC_DEADBAND);
-        rc_deadband_limit(gimbal_RC->rc.ch[PITCH_CHANNEL], pitch_channel, RC_DEADBAND);
+        // rc_deadband_limit(gimbal_RC->rc.ch[YAW_CHANNEL], yaw_channel, RC_DEADBAND);
+        // rc_deadband_limit(gimbal_RC->rc.ch[PITCH_CHANNEL], pitch_channel, RC_DEADBAND);
 
-        *yaw = yaw_channel * YAW_RC_SEN + gimbal_RC->mouse.x * YAW_MOUSE_SEN;
-        *pitch = pitch_channel * PITCH_RC_SEN + gimbal_RC->mouse.y * PITCH_MOUSE_SEN;
+        // *yaw = yaw_channel * YAW_RC_SEN + gimbal_RC->mouse.x * YAW_MOUSE_SEN;
+        // *pitch = pitch_channel * PITCH_RC_SEN + gimbal_RC->mouse.y * PITCH_MOUSE_SEN;
 
-        //掉头控制
-        turn_around_control(yaw);
+        // //掉头控制
+        // turn_around_control(yaw);
+        *yaw += 0.01f; 
     }
     //云台自锁功能
     if (gimbal_stop_flag)
