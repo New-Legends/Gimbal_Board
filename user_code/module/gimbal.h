@@ -190,8 +190,8 @@ typedef enum
     GIMBAL_ZERO_FORCE = 0,
     GIMBAL_TO_MID,
     GIMBAL_CALI,
-    GIMBAL_CHASSIS,
-    GIMBAL_FREE,
+    GIMBAL_AUTO,
+    GIMBAL_RC,
 } gimbal_mode_e;
 
 //云台校准结构体
@@ -260,8 +260,8 @@ public:
 
     /***************************(C) GIMBAL control *******************************/
     void gimbal_to_mid_control(fp32 *yaw, fp32 *pitch);     //初始化模式
-    void gimbal_chassis_control(fp32 *yaw, fp32 *pitch);    //陀螺仪模式
-    void gimbal_free_control(fp32 *yaw, fp32 *pitch);       //编码器模式
+    void gimbal_auto_control(fp32 *yaw, fp32 *pitch);    //自动模式
+    void gimbal_rc_control(fp32 *yaw, fp32 *pitch);       //遥控器模式
     void gimbal_motionless_control(fp32 *yaw, fp32 *pitch); //无输入控制模式
     /***************************(C) GIMBAL control *******************************/
 

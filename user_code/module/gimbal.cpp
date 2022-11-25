@@ -127,13 +127,13 @@ void Gimbal::feedback_update()
 void Gimbal::mode_change_save()
 {
     //切入底盘跟随云台模式
-    if (last_gimbal_mode != GIMBAL_CHASSIS && gimbal_mode == GIMBAL_CHASSIS)
+    if (last_gimbal_mode != GIMBAL_AUTO && gimbal_mode == GIMBAL_AUTO)
     {
         gimbal_yaw_motor.gyro_angle_set = gimbal_yaw_motor.gyro_angle;
         gimbal_pitch_motor.encode_angle_set = gimbal_pitch_motor.encode_angle;
     }
     //切入自由控制模式
-    else if (last_gimbal_mode != GIMBAL_FREE && gimbal_mode == GIMBAL_FREE)
+    else if (last_gimbal_mode != GIMBAL_RC && gimbal_mode == GIMBAL_RC)
     {
         gimbal_yaw_motor.encode_angle_set = gimbal_yaw_motor.encode_angle;
         gimbal_pitch_motor.encode_angle_set = gimbal_pitch_motor.encode_angle;
@@ -175,7 +175,7 @@ void Gimbal::gimbal_data_update()
 #endif
 
     //在云台归中时,读取的速度为编码器反馈的
-    if (gimbal_mode == GIMBAL_TO_MID || gimbal_mode == GIMBAL_FREE)
+    if (gimbal_mode == GIMBAL_TO_MID || gimbal_mode == GIMBAL_RC)
         gimbal_pitch_motor.speed = GM6020_MOTOR_RPM_TO_VECTOR * gimbal_pitch_motor.motor_measure->speed_rpm;
     else
         gimbal_pitch_motor.speed = gimbal_INT_gyro_point[INS_GYRO_Y_ADDRESS_OFFSET];
@@ -344,11 +344,11 @@ void Gimbal::switch_control()
 {
     if (switch_is_up(gimbal_RC->rc.s[GIMBAL_MODE_CHANNEL]))
     {
-        gimbal_mode = GIMBAL_CHASSIS;
+        gimbal_mode = GIMBAL_AUTO;
     }
     else if (switch_is_mid(gimbal_RC->rc.s[GIMBAL_MODE_CHANNEL]))
     {
-        gimbal_mode = GIMBAL_FREE;
+        gimbal_mode = GIMBAL_RC;
     }
     else if (switch_is_down(gimbal_RC->rc.s[GIMBAL_MODE_CHANNEL]))
     {
@@ -414,19 +414,19 @@ void Gimbal::set_control()
         gimbal_yaw_motor.angle_limit(add_yaw_angle, ENCODE);
         gimbal_pitch_motor.angle_limit(add_pitch_angle, ENCODE);
     }
-    else if (gimbal_mode == GIMBAL_CHASSIS)
+    else if (gimbal_mode == GIMBAL_AUTO)
     {
-        //底盘跟随模式控制量计算
-        gimbal_chassis_control(&add_yaw_angle, &add_pitch_angle);
-        //底盘跟随模式下yaw使用陀螺仪控制,pitch使用编码器控制
+        //底盘自动模式控制量计算
+        gimbal_auto_control(&add_yaw_angle, &add_pitch_angle);
+        //底盘自动模式下yaw使用陀螺仪控制,pitch使用编码器控制
         gimbal_yaw_motor.angle_limit(add_yaw_angle, GYRO);
         gimbal_pitch_motor.angle_limit(add_pitch_angle, ENCODE);
     }
-    else if (gimbal_mode == GIMBAL_FREE)
+    else if (gimbal_mode == GIMBAL_RC)
     {
-        //自由模式控制量计算
-        gimbal_free_control(&add_yaw_angle, &add_pitch_angle);
-        //自由模式下yaw和pitch角度都由编码器控制
+        //遥控器模式控制量计算
+        gimbal_rc_control(&add_yaw_angle, &add_pitch_angle);
+        //遥控器模式下yaw和pitch角度都由编码器控制
         gimbal_yaw_motor.angle_limit(add_yaw_angle, ENCODE);
         gimbal_pitch_motor.angle_limit(add_pitch_angle, ENCODE);
     }
@@ -459,12 +459,12 @@ void Gimbal::gimbal_to_mid_control(fp32 *yaw, fp32 *pitch)
 }
 
 /**
- * @brief          云台陀螺仪控制，电机是陀螺仪角度控制，
+ * @brief          云台自动控制，电机是陀螺仪角度控制，
  * @param[out]     yaw: yaw轴角度控制，为角度的增量 单位 rad
  * @param[out]     pitch:pitch轴角度控制，为角度的增量 单位 rad
  * @retval         none
  */
-void Gimbal::gimbal_chassis_control(fp32 *yaw, fp32 *pitch)
+void Gimbal::gimbal_auto_control(fp32 *yaw, fp32 *pitch)
 {
     if (yaw == NULL || pitch == NULL)
     {
@@ -472,13 +472,13 @@ void Gimbal::gimbal_chassis_control(fp32 *yaw, fp32 *pitch)
     }
 
     //长按右键 打开自瞄 松开关闭自瞄
-    if (press_r_time == PRESS_R_LONG_TIME && auto_switch == FALSE)
+    if (VisionRecvData.identify_target == TRUE && auto_switch == FALSE)
     {
         //更新自瞄PID
         update_auto_pid();
         auto_switch = TRUE;
     }
-    else if (press_r_time != PRESS_R_LONG_TIME && auto_switch == TRUE)
+    else if (VisionRecvData.identify_target == FALSE && auto_switch == TRUE)
     {
         //恢复之前的PID
         recover_normal_pid();
@@ -591,12 +591,12 @@ void Gimbal::turn_around_control(fp32 *yaw)
     }
 }
 /**
- * @brief          云台编码值控制，电机是相对角度控制，
+ * @brief          云台遥控器控制，电机是相对角度控制，
  * @param[in]      yaw: yaw轴角度控制，为角度的增量 单位 rad
  * @param[in]      pitch: pitch轴角度控制，为角度的增量 单位 rad
  * @retval         none
  */
-void Gimbal::gimbal_free_control(fp32 *yaw, fp32 *pitch)
+void Gimbal::gimbal_rc_control(fp32 *yaw, fp32 *pitch)
 {
     if (yaw == NULL || pitch == NULL)
     {
@@ -644,13 +644,13 @@ void Gimbal::solve()
         gimbal_yaw_motor.motor_encode_angle_control();
         gimbal_pitch_motor.motor_encode_angle_control();
     }
-    else if (gimbal_mode == GIMBAL_CHASSIS)
+    else if (gimbal_mode == GIMBAL_AUTO)
     {
         //底盘跟随模式下yaw使用陀螺仪控制,pitch使用编码器控制
         gimbal_yaw_motor.motor_gyro_angle_control();
         gimbal_pitch_motor.motor_encode_angle_control();
     }
-    else if (gimbal_mode == GIMBAL_FREE)
+    else if (gimbal_mode == GIMBAL_RC)
     {
         //自由模式下yaw和pitch角度都由编码器控制
         gimbal_yaw_motor.motor_encode_angle_control();

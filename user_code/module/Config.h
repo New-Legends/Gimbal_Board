@@ -9,7 +9,7 @@
 #define GIMBAL_PITCH_MOTOR_HAVE_CURRENT 1
 
 //云台视觉调试模式 默认为0
-#define GIMABL_VISION_DEBUG 1
+#define GIMABL_VISION_DEBUG 0
 
 //云台一阶高通滤波是否开启
 #define GIMBAL_HIGH_PASS_FILTER 0
