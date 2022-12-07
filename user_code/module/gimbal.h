@@ -186,6 +186,8 @@ extern "C"
 
 #define CCW 1  //逆时针
 #define CW 0   //顺时针
+#define  TURN_SPEED_YAW 0.02f
+#define  TURN_SPEED_PITCH 0.02f
 
 //云台行为模式
 typedef enum
@@ -243,6 +245,9 @@ public:
     bool_t press_stop;
     bool_t last_press_C;
     uint16_t press_stop_time; //按键时间
+
+    uint8_t yaw_patrol_dir;     //yaw轴巡逻旋转方向
+    uint8_t pitch_patrol_dir;   //pitch轴巡逻旋转方向
 
     void init();                         //云台初始化
     void set_mode();                     //设置云台控制模式

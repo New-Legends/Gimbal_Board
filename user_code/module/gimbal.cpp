@@ -499,7 +499,7 @@ void Gimbal::gimbal_auto_control(fp32 *yaw, fp32 *pitch)
                 if(yaw_patrol_dir == CCW)  //yaw轴逆时针旋转
                 {
                     
-                    if(gimbal_yaw_motor.max_encode_angle - gimbal_yaw_motor.encode_angle < 0.3f)
+                    if(gimbal_yaw_motor.max_encode_angle - gimbal_yaw_motor.encode_angle < 0.05f)
                     {
                         yaw_patrol_dir = CW;
 
@@ -510,7 +510,7 @@ void Gimbal::gimbal_auto_control(fp32 *yaw, fp32 *pitch)
                 else if(yaw_patrol_dir == CW)  //yaw轴顺时针旋转
                 {
                     
-                    if(gimbal_yaw_motor.encode_angle - gimbal_yaw_motor.min_encode_angle < 0.3f)
+                    if(gimbal_yaw_motor.encode_angle - gimbal_yaw_motor.min_encode_angle < 0.05f)
                     {
                         yaw_patrol_dir = CCW;
                     }
@@ -520,7 +520,7 @@ void Gimbal::gimbal_auto_control(fp32 *yaw, fp32 *pitch)
                 if(pitch_patrol_dir == CCW)  //pitch轴逆时针旋转
                 {
                     
-                    if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.03f)
+                    if(gimbal_yaw_motor.max_encode_angle - gimbal_pitch_motor.encode_angle < 0.05f)
                     {
                         pitch_patrol_dir =CW;
                     }
@@ -529,7 +529,7 @@ void Gimbal::gimbal_auto_control(fp32 *yaw, fp32 *pitch)
                 else if(pitch_patrol_dir == CW)  //pitch轴顺时针旋转
                 {
                     
-                    if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.08f)
+                    if(gimbal_pitch_motor.encode_angle - gimbal_yaw_motor.min_encode_angle < 0.05f)
                     {
                         pitch_patrol_dir = CCW;
                     }
