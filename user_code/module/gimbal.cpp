@@ -495,17 +495,46 @@ void Gimbal::gimbal_auto_control(fp32 *yaw, fp32 *pitch)
     }
     else
     {
-        // static int16_t yaw_channel = 0, pitch_channel = 0;
+        //yaw轴巡逻
+                if(yaw_patrol_dir == CCW)  //yaw轴逆时针旋转
+                {
+                    
+                    if(gimbal_yaw_motor.max_encode_angle - gimbal_yaw_motor.encode_angle < 0.3f)
+                    {
+                        yaw_patrol_dir = CW;
 
-        // rc_deadband_limit(gimbal_RC->rc.ch[YAW_CHANNEL], yaw_channel, RC_DEADBAND);
-        // rc_deadband_limit(gimbal_RC->rc.ch[PITCH_CHANNEL], pitch_channel, RC_DEADBAND);
-
-        // *yaw = yaw_channel * YAW_RC_SEN + gimbal_RC->mouse.x * YAW_MOUSE_SEN;
-        // *pitch = pitch_channel * PITCH_RC_SEN + gimbal_RC->mouse.y * PITCH_MOUSE_SEN;
-
-        // //掉头控制
-        // turn_around_control(yaw);
-        *yaw += 0.01f; 
+                    }
+                    *yaw = TURN_SPEED_YAW;
+                }
+                
+                else if(yaw_patrol_dir == CW)  //yaw轴顺时针旋转
+                {
+                    
+                    if(gimbal_yaw_motor.encode_angle - gimbal_yaw_motor.min_encode_angle < 0.3f)
+                    {
+                        yaw_patrol_dir = CCW;
+                    }
+                    *yaw = -TURN_SPEED_YAW;
+                }
+                //pitch轴巡逻
+                if(pitch_patrol_dir == CCW)  //pitch轴逆时针旋转
+                {
+                    
+                    if(MAX_PATROL_PITCH - gimbal_pitch_motor.relative_angle < 0.03f)
+                    {
+                        pitch_patrol_dir =CW;
+                    }
+                    *pitch = TURN_SPEED_PITCH;
+                }
+                else if(pitch_patrol_dir == CW)  //pitch轴顺时针旋转
+                {
+                    
+                    if(gimbal_pitch_motor.relative_angle - MIN_PATROL_PITCH < 0.08f)
+                    {
+                        pitch_patrol_dir = CCW;
+                    }
+                    *pitch = -TURN_SPEED_PITCH;
+                }
     }
     //云台自锁功能
     if (gimbal_stop_flag)
