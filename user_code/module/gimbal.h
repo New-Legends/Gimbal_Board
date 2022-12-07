@@ -184,8 +184,8 @@ extern "C"
 #define PRESS_STOP_LONG_TIME 100
 #define KEY_STOP_GIMBAL if_key_singal_pessed(gimbal_RC, last_gimbal_RC, KEY_PRESSED_STOP_GIMBAL)
 
-#define CCW 1  //逆时针
-#define CW 0   //顺时针
+#define CCW 0  //逆时针
+#define CW  1   //顺时针
 #define  TURN_SPEED_YAW 0.02f
 #define  TURN_SPEED_PITCH 0.02f
 
